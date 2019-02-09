@@ -1,0 +1,22 @@
+import "error"
+
+type Int =
+
+def Int.toString(&self) string =
+    "int"
+
+def Int.duck_type(&self, other: CompilerType, thrower: Thrower) Maybe[&error.CompilerError] =
+    match other with
+        other_type as &Int -> None
+        _ -> Some make_Error thrower, "Expecting {self} not {other}"
+
+def Int.equals(&self, other: CompilerType) bool =
+    is_kind::[Int] other
+
+def Int.calc_size(&self) uint =
+    4
+
+int_type := Int{}
+
+def make_Int() &Int =
+    &int_type

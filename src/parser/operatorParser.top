@@ -1,0 +1,105 @@
+from "parser" import Parser
+from "error" import all
+import "ast"
+import "print"
+
+type OpDesc =
+    unary: bool
+    precedence: uint
+    kind: ast.OperatorKind
+    left_a: bool
+
+def is_unary(self: &Parser) bool =
+    token := self.behind!
+
+    unary_symbols := ["(", ")", ":=", ":", "\n"]
+
+    match token.kind with
+        Symbol -> unary_symbols.contains token.value
+        Operator -> true
+        Indent -> true
+        Invalid -> true
+        _ -> false
+
+def OpDesc.add_to(using &self, p: &Parser) Maybe[&CompilerError] =
+    takes := if self.unary then 1 else 2
+
+    if p.current_node.nodes.length < takes then
+        Some make_Error p, "Not enough values for operator {print.obj_toString kind}"
+    else
+        op := ast.make_AST p, ast.Operator kind
+
+        if unary then
+            op.add p.current_node.nodes.pop!
+        else
+            b := p.current_node.nodes.pop!
+            a := p.current_node.nodes.pop!
+
+            op.add a
+            op.add b
+
+        p.current_node.add op
+
+        None
+
+type OpStack =
+    scopes: [..][..]OpDesc
+
+def make_OpStack() OpStack =
+    OpStack{ scopes = [..][..]OpDesc }
+
+def OpStack.push_op(using &self, p: &Parser, desc: OpDesc) Maybe[&CompilerError] =
+    ops := &self.scopes[self.scopes.length - 1]
+    while ops.length > 0 do
+        current := ops[ops.length - 1]
+        same := current.precedence == desc.precedence and current.left_a
+        greater := current.precedence > desc.precedence
+
+        if greater or same then
+            if Some e := current.add_to p then return Some e
+            _ := ops.pop!
+        else
+            break
+
+    ops.append desc
+    None
+
+def parse_operator(self: &Parser, kind: string) Maybe[&CompilerError] =
+    match kind with
+        "+" ->
+            self.op_stack.push_op self, OpDesc{
+                unary = false
+                precedence = 10
+                kind = ast.Add
+                left_a = true
+            }
+
+        "*" ->
+            self.op_stack.push_op self, OpDesc{
+                unary = false
+                precedence = 20
+                kind = ast.Mul
+                left_a = true
+            }
+
+        "/" ->
+            self.op_stack.push_op self, OpDesc{
+                unary = false
+                precedence = 20
+                kind = ast.Div
+                left_a = true
+            }
+
+        _ -> Some make_Error self, "Unknown operator {kind}"
+
+def OpStack.push(using &self, p: &Parser) =
+    scopes.append [..]OpDesc
+
+def OpStack.pop(using &self, p: &Parser) Maybe[&CompilerError] =
+    op_left := scopes.pop!
+
+    for i := 0..op_left.length do
+        if Some e := op_left[op_left.length - i - 1].add_to p then
+            return Some e
+
+    None

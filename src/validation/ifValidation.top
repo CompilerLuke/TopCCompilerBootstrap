@@ -1,0 +1,12 @@
+import "ast"
+from "error" import all
+import "validator"
+import "types"
+
+def validate(state: &validator.State, node: &ast.AST) Maybe[&CompilerError] =
+    condition := node.nodes[0].nodes[0]
+
+    if not types.is_type::[types.Bool] condition._type then
+        return error.make_Error state, "Expecting boolean expression"
+
+    None

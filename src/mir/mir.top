@@ -1,0 +1,49 @@
+import "types"
+
+type ID is uint
+
+type ReadInfo =
+    is_global: bool
+    _type: types.CompilerType
+    id: uint
+
+type OpCode either
+    Add_i32
+    Mul_i32
+    Div_i32
+
+    Add_f32
+    Mul_f32
+    Div_f32
+
+    Store_i32(i32)
+    Store_f32(float)
+    Store_bool(bool)
+
+    Create(&ReadInfo)
+    Read(&ReadInfo)
+    Assign(&ReadInfo)
+
+    FuncCall(&types.FuncPtr)
+    FuncReturn
+
+    CondJump(uint, uint)
+    Jump(uint)
+
+type Block =
+    id: ID
+    code: &[..]OpCode
+
+type CreateVar =
+    name: ID
+
+def CreateVar.toString(&self) string =
+    self.name.toString!
+
+type Function =
+    name: string
+    args: []CreateVar
+    all_blocks: []&Block
+
+type Program =
+    functions: []Function

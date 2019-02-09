@@ -1,0 +1,73 @@
+import "ast"
+from "error" import all
+import "operatorValidation"
+import "varValidation"
+import "scope"
+import "types"
+
+type State =
+    scope: &scope.Scope
+
+def State.validate(&state, syntax_tree: &ast.AST) Maybe[&error.CompilerError] =
+    match syntax_tree.payload with
+        Operator kind -> operatorValidation.validate state, kind, syntax_tree
+        Identifier read_info -> varValidation.validate_read state, read_info, syntax_tree
+        CreateAssign -> varValidation.validate_create_assign state, syntax_tree
+        _ -> state.validate_nodes syntax_tree.nodes
+
+def State.validate_nodes(&self, nodes: []&ast.AST) Maybe[&error.CompilerError] =
+    for node := nodes do
+        if Some e := self.validate node then
+            return Some e
+
+    None
+
+def validate(syntax_tree: &ast.AST) Maybe[&error.CompilerError] =
+    state := State{
+        scope = scope.make_Scope!
+    }
+
+    log_func_type := types.make_FuncPtr!
+    log_func_type.args = box [types.make_Float! as types.CompilerType]
+    log_func_type.external = true
+
+    decl_info := scope.make_DeclInfo!
+    decl_info._type = log_func_type
+
+    log_func_type_int := types.make_FuncPtr!
+    log_func_type_int.args = box [types.make_Int! as types.CompilerType]
+    log_func_type_int.external = true
+
+    decl_info_2 := scope.make_DeclInfo!
+    decl_info_2._type = log_func_type
+
+    assert (not (state.scope.create_decl "log", &decl_info)), "Log already defined"
+    assert (not (state.scope.create_decl "log_int", &decl_info_2)), "Log_int already defined"
+
+    if Some e := state.validate syntax_tree then
+        return Some e
+
+    if Some e := check_useless syntax_tree then
+        return Some e
+
+    check_other syntax_tree
+
+def useless(i: &ast.AST, mesg: string) Maybe[&error.CompilerError] =
+    Some make_Error i, "Useless {mesg}"
+
+def check_useless(i: &ast.AST) Maybe[&error.CompilerError] =
+    match i.payload with
+        Identifier _ -> useless i, "read"
+        Int -> useless i, "int literal"
+        Float -> useless i, "float literal"
+        Bool -> useless i, "bool literal"
+        Operator kind -> useless i, "operator"
+        Root ->
+            for node := i.nodes do
+                if Some e := check_useless node then
+                    return Some e
+            None
+        _ -> None
+
+def check_other(node: &ast.AST) Maybe[&error.CompilerError] =
+    None

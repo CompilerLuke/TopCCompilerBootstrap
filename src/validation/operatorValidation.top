@@ -1,0 +1,19 @@
+import "ast"
+from "error" import all
+import "validator"
+
+def validate(state: &validator.State, kind: ast.OperatorKind, node: &ast.AST) Maybe[&CompilerError] =
+    if Some e := state.validate_nodes node.nodes then
+        return Some e
+
+    op_t := node.nodes[0]._type
+
+    for i := 1..node.nodes.length do
+        _type := node.nodes[i]._type
+
+        if Some e := op_t.duck_type _type, node then
+            return Some e
+
+    node._type = op_t
+
+    None

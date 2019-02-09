@@ -1,0 +1,30 @@
+type FuncPtr =
+    args: []CompilerType
+    return_type: CompilerType
+    external: bool
+
+def FuncPtr.toString(&self) string =
+    s := stringBuilder.make_StringBuilder!
+    s.append "def("
+    for arg := self.args do
+        s.append arg.toString!
+        if i < self.args.length - 1 then
+            s.append ","
+
+    s.append ")"
+    s.toString!
+
+def FuncPtr.duck_type(&self, other: CompilerType, thrower: Thrower) Maybe[&CompilerError] =
+    None
+
+def FuncPtr.equals(&self, other: CompilerType) bool =
+    true
+
+def FuncPtr.calc_size(&self) uint = 8
+
+def make_FuncPtr() &FuncPtr =
+    box FuncPtr{
+        args = []
+        return_type = make_Void!
+        external = false
+    }

@@ -1,0 +1,36 @@
+from "error" import all
+import "stringBuilder"
+
+type CompilerType with
+    def toString() string
+    def duck_type(CompilerType, Thrower) Maybe[&CompilerError]
+    def equals(CompilerType) bool
+    def calc_size() uint
+
+//None Type
+type Void =
+def Void.toString(&self) string = "none"
+
+def Void.duck_type(&self, other: CompilerType, thrower: Thrower) Maybe[&CompilerError] =
+    match other with
+        other_type as &Void -> None
+        _ -> Some make_Error thrower, "Expecting none, not {other}"
+
+def Void.equals(&self, other: CompilerType) bool =
+    is_kind::[Void] other
+
+def Void.calc_size(&self) uint = 0
+
+none_type := Void{}
+
+def make_Void() &Void =
+    &none_type
+
+def is_kind[T](_type: CompilerType) bool =
+    type_a := get_type T
+    type_b := _type.get_type!
+
+    ptr_type_a := type_a.get_pointer_to_data!
+    ptr_type_b := type_b.get_pointer_to_data!
+
+    (ptr_type_a cast u64) == (ptr_type_b cast u64)

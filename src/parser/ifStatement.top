@@ -1,0 +1,76 @@
+import "parser"
+from "error" import all
+import "ast"
+
+def if_body(self: &parser.Parser) Maybe[&CompilerError] =
+    cond := ast.make_AST self, ast.IfCondition
+
+    self.push_current_node cond
+
+    in_block := false
+    indent := self.num_indent
+
+    while not ((self.is_end indent) and in_block) do
+        token := self.next!
+
+        if token.value == ":" and not in_block then
+            _ := self.pop_current_node!
+
+            block := ast.make_AST self, ast.Block
+            in_block = true
+
+            self.push_current_node block
+            continue
+
+        self.eval!
+
+    _ := self.pop_current_node!
+    None
+
+def if_expr(self: &parser.Parser) Maybe[&CompilerError] =
+    toplevel := ast.make_AST self, ast.If
+
+    self.push_current_node toplevel
+
+    if Some e := if_body self then
+        return Some e
+
+    _ := self.pop_current_node!
+
+    None
+
+def else_expr(self: &parser.Parser) Maybe[&error.CompilerError] =
+    is_if_condition := false
+
+    if self.current_node.nodes.length > 0 then
+        node := self.current_node.nodes[self.current_node.nodes.length - 1]
+
+        if node.payload.tag == ast.If.tag then
+            assert node.nodes.length >= 2, "If block is empty"
+
+            if_condition := node.nodes[node.nodes.length - 2]
+            is_if_condition = if_condition.payload.tag == ast.IfCondition.tag
+
+    if not is_if_condition then
+        return Some make_Error self, "Unexpected else"
+
+    if not self.next!.value == ":" then
+        return Some make_Error self, "Expecting :"
+
+    self.current_node = self.current_node.nodes[self.current_node.nodes.length - 1]
+
+    self.current_node.add ast.make_AST self, ast.Else
+
+    block := ast.make_AST self, ast.Block
+    self.push_current_node block
+
+    indent := self.num_indent
+
+    while (not self.is_end indent) do
+        _ := self.next!
+        self.eval!
+
+    self.pop_current_node!
+    self.current_node = self.current_node.owner.unwrap!
+
+    None

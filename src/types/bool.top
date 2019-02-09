@@ -1,0 +1,20 @@
+import "error"
+
+type Bool =
+
+def Bool.toString(&self) string =
+    "bool"
+
+def Bool.duck_type(&self, other: CompilerType, thrower: Thrower) Maybe[&error.CompilerError] =
+    if is_kind::[Bool] other then None
+    else Some error.make_Error thrower, "Expecting boolean, not {other}"
+
+def Bool.equals(&self, other: CompilerType) bool =
+    is_kind::[Bool] other
+
+def Bool.calc_size(&self) uint = 1
+
+bool_type := Bool{}
+
+def make_Bool() &Bool =
+    &bool_type

@@ -1,0 +1,100 @@
+from "stringBuilder" import all
+import "types"
+
+def type_to_string(kind: Type, ptr: &none, tab: string, s: &StringBuilder) =
+    match kind with
+        struct_type as &StructType ->
+            s.append "{struct_type.package}.{struct_type.name}"
+            s.append '{\n'
+
+            for field := struct_type.fields do
+                if struct_type.name == "AST" and field.name == "owner" then
+                    continue
+
+                s.append "{tab}\t{field.name} : "
+                type_to_string field.field_type, (offsetPtr ptr, field.offset), tab + "\t", s
+                s.append "\n"
+
+            s.append tab
+            s.append '}'
+
+        int_type as &IntType ->
+            if int_type.sign then
+                s.append "{ptr cast &int}"
+            else
+                s.append "{ptr cast &uint}"
+
+        float_type as &FloatType ->
+            if float_type.size == 4 then
+                s.append "{ptr cast &float}"
+            else
+                s.append "{ptr cast &f64}"
+
+        string_type as &StringType ->
+            s.append "'{ptr cast &string}'"
+
+        alias_type as &AliasType ->
+            type_to_string alias_type.real_type, ptr, tab, s
+
+        array_type as &ArrayType ->
+            elem_type := array_type.array_type
+            elem_size := elem_type.get_size!
+
+            (length, data) := match *array_type.size with
+                Both ->
+                    arr := ptr cast &[]none
+                    (arr.length, arr.data)
+
+                Dynamic ->
+                    arr := ptr cast &[..]none
+                    (arr.length, arr.data cast &none)
+
+                Static length ->
+                    (length, ptr cast &none)
+
+            if length == 0 then s.append "[]"
+            else
+                s.append "[\n"
+                for i := 0..length do
+                    s.append "{tab}\t"
+                    type_to_string elem_type, (offsetPtr data, i * elem_size), tab + "\t", s
+                    s.append "\n"
+                s.append "{tab}]"
+
+        p_type as &PointerType ->
+            ptr = *(ptr cast &&none)
+            type_to_string p_type.p_type, ptr, tab, s
+
+        bool_type as &BoolType ->
+            s.append (ptr cast &bool).toString!
+
+        enum_type as &EnumType ->
+            tag := enum_type.get_tag ptr
+
+            s.append "{enum_type.cases[tag].name}("
+
+            for arg := enum_type.cases[tag].args do
+                type_to_string arg.arg_type, (offsetPtr ptr, arg.offset), tab , s
+                s.append ","
+
+            s.append ")"
+
+        interface_type as &InterfaceType ->
+            if interface_type.name == "CompilerType" then
+                ptr_to_interface := ptr cast &types.CompilerType
+                s.append ptr_to_interface.toString!
+            else
+                s.append "Unsupported type {interface_type}"
+
+        _ -> s.append "Unsupported"
+
+def obj_toString[T](t: T) string =
+    s := make_StringBuilder!
+
+    type_to_string get_type T, &t, "", &s
+    s.toString!
+
+def print_obj[T](t: T) =
+    defer context.allocator.reset_to context.allocator.get_occupied!
+    log obj_toString t
+

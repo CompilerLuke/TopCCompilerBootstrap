@@ -1,0 +1,31 @@
+from "parser" import Parser
+from "error" import all
+import "ast"
+import "types"
+
+def parse_int_literal(self: &Parser, token: string) Maybe[&CompilerError] =
+    int_literal := ast.make_AST self, ast.Int token
+    int_literal._type = types.make_Int!
+
+    self.current_node.add int_literal
+    None
+
+def parse_float_literal(self: &Parser, token: string) Maybe[&CompilerError] =
+    float_literal := ast.make_AST self, ast.Float token
+    float_literal._type = types.make_Float!
+
+    self.current_node.add float_literal
+    None
+
+def parse_bool_literal(self: &Parser, token: string) Maybe[&CompilerError] =
+    as_bool := match token with
+        "true" -> true
+        _ -> false
+
+    bool_literal := ast.make_AST self, ast.Bool as_bool
+    bool_literal._type = types.make_Bool!
+
+    self.current_node.add bool_literal
+
+    None
+

@@ -1,0 +1,112 @@
+import "mir"
+import "print"
+import "types"
+
+def next_tmp(t: &uint) string =
+    s := "tmp.{t}"
+    *t += 1
+    s
+
+def op(builder: &LLVMBuilderRef, stack: &[..]LLVMValueRef, tmp: &uint, func: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, string| -> LLVMValueRef) =
+    a := stack.pop!
+    b := stack.pop!
+
+    stack.append func *builder, a, b, next_tmp tmp
+
+def convert_to_LLVMModule(program: &mir.Program) =
+    llvmInitializeNativeTarget!
+    llvmInitializeNativeAsmParser!
+    llvmInitializeNativeAsmPrinter!
+
+    mod := llvmModuleCreateWithName "my_module"
+    builder := llvmCreateBuilder!
+    stack := [..]LLVMValueRef
+
+    global_vars := [..]LLVMValueRef
+
+    //0 - log_float
+    log_float_type := llvmFunctionType llvmVoidType!, box [llvmFloatType!]
+    log_float_func := llvmAddFunction mod, "log_float", log_float_type
+    global_vars.append log_float_func
+
+    //1 - log_int
+    log_int_type := llvmFunctionType llvmVoidType!, box [llvmInt32Type!]
+    log_int_func := llvmAddFunction mod, "log_int", log_int_type
+    global_vars.append log_int_func
+
+
+    for mir_func := program.functions do
+        //param_types := []
+        ret_type := llvmFunctionType llvmVoidType!, []
+        llvm_func := llvmAddFunction mod, "foo", ret_type
+        tmp := 0
+
+        for mir_block := mir_func.all_blocks do
+            name :=
+                if i == 0 then "entry"
+                else mir_block.id.toString!
+
+            block := llvmAppendBasicBlock llvm_func, name
+
+            llvmPositionBuilderAtEnd builder, block
+
+            for inst := *mir_block.code do
+                match inst with
+                    Add_i32 -> op &builder, &stack, &tmp, llvmBuildAdd
+                    Add_f32 -> op &builder, &stack, &tmp, llvmBuildAdd
+                    Mul_i32 -> op &builder, &stack, &tmp, llvmBuildMul
+                    Mul_f32 -> op &builder, &stack, &tmp, llvmBuildMul
+                    Div_i32 -> op &builder, &stack, &tmp, llvmBuildDiv
+                    Div_f32 -> op &builder, &stack, &tmp, llvmBuildDiv
+                    Store_bool b -> stack.append llvmConstInt llvmInt8Type!, b cast i64, false
+                    Store_i32 integer -> stack.append llvmConstInt llvmInt32Type!, integer, true
+                    Store_f32 f -> stack.append llvmConstReal llvmFloatType!, f
+                    FuncReturn -> llvmBuildRetVoid builder
+                    Read info ->
+                        assert info.is_global, "Can't handle locals yet!"
+                        stack.append global_vars[info.id]
+
+                    FuncCall fptr_type ->
+                        arg_count := fptr_type.args.length
+
+                        func := stack[stack.length - arg_count - 1]
+                        args := [..]LLVMValueRef
+
+                        for c := 0..arg_count do
+                            args.append stack[stack.length - arg_count + c]
+
+                        log args.length
+
+                        if types.is_kind::[types.Void] fptr_type.return_type then
+                            _ := llvmBuildCall builder, func, args, ""
+                        else
+                            stack.append llvmBuildCall builder, func, args, next_tmp &tmp
+
+                    _ -> panic print.obj_toString inst
+
+    error : Maybe[&char] = None
+
+    log "verifying module"
+
+    if llvmVerifyModule mod, llvmAbortProcessAction, &error then
+        log "llvm error"
+        log char_buffer_toString error.unwrap!
+        panic "LLVM ERROR"
+
+    llvmDisposeMessage error
+
+    target_triple := llvmGetDefaultTargetTriple!
+    target : LLVMTargetRef = _
+
+    if llvmGetTargetFromTriple target_triple, &target, &error then
+        log char_buffer_toString error.unwrap!
+        log char_buffer_toString target_triple
+        panic "LLVM GET TARGET FROM TRIPLE ERROR"
+
+    log char_buffer_toString error.unwrap!
+
+    if llvmTargetMachineEmitToFile target, mod, "test/main.o", llvmObjectFile, &error then
+        log char_buffer_toString error.unwrap!
+        panic "LLVM EMIT"
+
+    log "passed"

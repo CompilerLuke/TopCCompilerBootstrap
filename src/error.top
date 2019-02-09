@@ -1,0 +1,55 @@
+import "stringBuilder"
+
+type CompilerError =
+    filename: string
+    line: uint
+    mesg: string
+    column: uint
+
+def CompilerError.toString(&self) string =
+    s_buffer := stringBuilder.make_StringBuilder!
+
+    s_buffer.append "Compilation Error\n\nFile '{self.filename}', line {self.line}\n\t"
+    s_buffer.append self.mesg
+    s_buffer.append "\n\n\t"
+
+    guard Some source_file := open self.filename, ReadFile
+    else return "{s_buffer}\nCould not load source file"
+
+    defer source_file.free!
+
+    src := source_file.read!
+
+    at := 1
+
+    for i := 0..src.length do
+        if at == self.line then
+            s_buffer.chars.append src[i]
+
+        if src[i] == `\n` then
+            at += 1
+
+        if at > self.line then
+            break
+
+    s_buffer.append "\t"
+    for i := 0..self.column do
+        s_buffer.append " "
+    s_buffer.append "^"
+
+    s_buffer.toString!
+
+type Thrower with
+    def get_filename() string
+    def get_line() uint
+    def get_column() uint
+
+def make_Error[T: Thrower](self: T, mesg: string) &CompilerError =
+    box_longterm CompilerError{
+        filename = self.get_filename!
+        line = self.get_line!
+        mesg = mesg
+        column = self.get_column!
+    }
+
+type CompilerResult[T] is Result[T, &CompilerError]

@@ -1,0 +1,8 @@
+{
+    "name": "TopCCompilerBootstrap",
+    "version": 0.0,
+    "link": [],
+    "target": "windows",
+    "headerIncludePath": ["/usr/local/Cellar/llvm/7.0.1/include/"],
+    "linkWith": []
+}

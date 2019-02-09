@@ -1,0 +1,263 @@
+import "ast"
+import "mir"
+import "types"
+from "hashMap" import all
+import "print"
+
+ext atoi: |&char| -> int = "atoi"
+ext atof: |&char| -> int = "atof"
+
+type CFG =
+    return_to: uint
+    block: Maybe[&mir.Block]
+
+def CFG.toString(&self) string =
+    "CFG {self.return_to}"
+
+type Converter =
+    global_var_counter: uint
+    var_counter: uint
+    vars: HashMap[uint]
+    cfgs: [..]CFG
+    block: &mir.Block
+    block_counter: uint
+    all_blocks: &[..]&mir.Block
+
+def Converter.push_block(&self) uint =
+    self.block_counter += 1
+    self.block_counter
+
+def Converter.append(&self, code: mir.OpCode) =
+    self.block.code.append code
+
+def Converter.pop_block(&self) =
+    self.block_counter -= 1
+
+def Converter.push_cfg(&self, cfg: CFG) =
+    self.cfgs.append cfg
+
+    guard Some block := cfg.block
+    else return
+
+    self.block = block
+    self.all_blocks.append block
+
+def Converter.add_block(&self, block: &mir.Block) =
+    self.block = block
+    self.all_blocks.append block
+
+
+def Converter.pop_cfg(&self) =
+    _ := self.cfgs.pop!
+
+def Converter.current_cfg(&self) &CFG =
+    &self.cfgs[self.cfgs.length - 1]
+
+def unsupported(mesg: string) mir.OpCode =
+    panic mesg
+    mir.Add_i32
+
+def is_block(node: &ast.AST) bool =
+    node.payload.tag == ast.Block.tag
+
+def Converter.convert_node(&self, node: &ast.AST) =
+    previous_num_vars := self.var_counter
+
+    match node.payload with
+        Create ->
+        If ->
+            self.push_cfg CFG{
+                return_to = self.push_block!
+                block = None
+            }
+
+            for n := node.nodes do
+                self.convert_node n
+
+        _ ->
+            for n := node.nodes do
+                self.convert_node n
+
+
+    if is_block node then
+        self.var_counter = previous_num_vars
+
+    match node.payload with
+        Identifier read_info ->
+            self.append mir.Read box mir.ReadInfo{
+                is_global = read_info.is_global
+                _type = node._type
+                id = self.vars[read_info.name]
+            }
+
+        CreateAssign ->
+        Block ->
+            cfg := self.cfgs[self.cfgs.length - 2]
+            self.append mir.Jump cfg.return_to
+
+        If ->
+            codes := box [..]mir.OpCode
+
+            self.pop_cfg! //pushed by condition
+
+            cfg := self.current_cfg!
+            to := cfg.return_to
+
+            self.pop_cfg!
+
+            self.add_block box mir.Block{ to, codes }
+
+        IfCondition ->
+            to := self.push_block!
+
+            guard Some owner := node.owner
+            else panic "If Condition has no owner"
+
+            return_to :=
+                if owner.nodes.length == 2 then
+                    self.cfgs[self.cfgs.length - 1].return_to
+                else
+                    self.push_block!
+
+            codes := box [..]mir.OpCode
+
+            self.append mir.CondJump to, return_to
+
+            self.push_cfg CFG{
+                return_to = return_to
+                block = Some box mir.Block{ to, codes }
+            }
+
+        Else ->
+            cfg := self.current_cfg!
+
+            to := cfg.return_to
+            end_if := self.cfgs[self.cfgs.length - 2].return_to
+
+            codes := box [..]mir.OpCode
+
+            self.pop_cfg!
+            self.push_cfg CFG{
+                return_to = end_if
+                block = Some box mir.Block{ to, codes }
+            }
+
+        Assign ->
+            guard Some owner := node.owner
+            else return
+
+            create := owner.nodes[0]
+            ident := create.nodes[0]
+
+            guard Identifier read_info := ident.payload
+            else panic "Only single variable create are supported"
+
+            self.append mir.Assign box mir.ReadInfo{
+                is_global = read_info.is_global
+                _type = ident._type
+                id = self.vars[read_info.name]
+            }
+
+        Create ->
+            ident := node.nodes[0]
+
+            guard Identifier read_info := ident.payload
+            else panic "Only single variable create are supported"
+
+            id :=
+                if read_info.is_global then
+                    self.global_var_counter += 1
+                    self.global_var_counter - 1
+                else
+                    self.var_counter += 1
+                    self.var_counter - 1
+
+            self.vars.insert read_info.name, id
+
+            self.append mir.Create box mir.ReadInfo{
+                is_global = read_info.is_global
+                _type = ident._type
+                id = id
+            }
+
+        FuncCall ->
+            func_ptr := node.nodes[0]._type
+            match func_ptr with
+                func as &types.FuncPtr -> self.append mir.FuncCall func
+                _ -> panic "Expecting func pointer as argument to function"
+
+        Operator op_kind ->
+            node_type := node._type
+
+            is_int := types.is_kind::[types.Int] node_type
+            is_float := types.is_kind::[types.Float] node_type
+
+            self.append match op_kind with
+                Add ->
+                    if is_int then mir.Add_i32
+                    elif is_float then mir.Add_f32
+                    else unsupported "Unsupported type {node._type}"
+
+                Mul ->
+                    if is_int then mir.Mul_i32
+                    elif is_float then mir.Mul_f32
+                    else unsupported "Unsupported type {node._type}"
+
+                Div ->
+                    if is_int then mir.Div_i32
+                    elif is_float then mir.Div_f32
+                    else unsupported "Unsupported type {node._type}"
+
+        Bool is_true ->
+            self.append mir.Store_bool is_true
+
+        Int s ->
+            self.append mir.Store_i32 atoi s.to_c_string!
+
+        Float s ->
+            self.append mir.Store_f32 atof s.to_c_string!
+
+        Root ->
+
+def convert(node: &ast.AST) mir.Program =
+    functions := [..]mir.Function
+    op_codes := box [..]mir.OpCode
+    all_blocks := [..]&mir.Block
+    cfgs := [..]CFG
+
+    block := box mir.Block{0, op_codes}
+
+    converter := Converter{
+        var_counter = 0
+        global_var_counter = 0
+        block_counter = 0
+        cfgs = cfgs
+        block = block
+        vars = make_HashMap::[uint]!
+        all_blocks = &all_blocks
+    }
+
+    converter.push_cfg CFG{
+        return_to = 0
+        block = Some block
+    }
+
+    converter.vars.insert "log", 0
+    converter.global_var_counter += 1
+
+    converter.vars.insert "log_int", 1
+    converter.global_var_counter += 1
+
+    converter.convert_node node
+
+    all_blocks[all_blocks.length - 1].code.append mir.FuncReturn
+
+    main := mir.Function{
+        name = "main"
+        args = []
+        all_blocks = all_blocks
+    }
+
+    functions.append main
+
+    mir.Program{ functions }

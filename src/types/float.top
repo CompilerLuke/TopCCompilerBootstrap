@@ -1,0 +1,21 @@
+//Float type
+type Float =
+
+def Float.toString(&self) string =
+    "float"
+
+def Float.duck_type(&self, other: CompilerType, thrower: Thrower) Maybe[&CompilerError] =
+    match other with
+        other_type as &Float -> None
+        other_type as &Int -> None
+        _ -> Some make_Error thrower, "Expecting {self} not {other}"
+
+def Float.equals(&self, other: CompilerType) bool =
+    is_kind::[Float] other
+
+def Float.calc_size(&self) uint = 4
+
+float_type := Float{}
+
+def make_Float() &Float =
+    &float_type

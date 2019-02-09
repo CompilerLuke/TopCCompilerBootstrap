@@ -1,0 +1,52 @@
+import "hashMap"
+import "types"
+from "ast" import ReadInfo
+
+type DeclInfo = //might become an interface
+    _type: types.CompilerType
+    is_global: bool
+
+def DeclInfo.type_of_desc(&self) types.CompilerType =
+    self._type
+
+def make_DeclInfo() DeclInfo =
+    DeclInfo{
+        _type = types.make_Void!
+        is_global = false
+    }
+
+type Scope =
+    vars: [..]hashMap.HashMap[DeclInfo]
+
+def make_Scope() &Scope =
+    vars := [..]hashMap.HashMap[DeclInfo]
+    vars.append hashMap.make_HashMap::[DeclInfo]!
+
+    box Scope{
+        vars = vars
+    }
+
+def Scope.get_var(&self, name: string) Maybe[&DeclInfo] =
+    i : int = self.vars.length - 1
+    while i >= 0 do
+        vars := &self.vars[i cast uint]
+
+        if vars.contains name then
+            return Some &vars[name]
+
+        i -= 1
+
+    None
+
+def Scope.create_decl(&self, name: string, info: &DeclInfo) bool =
+    assert self.vars.length > 0, "Missing global scope"
+
+    vars := &self.vars[self.vars.length - 1]
+
+    if self.vars.length == 1 then
+        info.is_global = true
+
+    if vars.contains name then true
+    else
+        vars.insert name, *info
+        false

@@ -1,0 +1,56 @@
+import "types"
+from "error" import Thrower
+
+type OperatorKind either
+    Add or Mul or Div
+
+type ReadInfo =
+    is_global: bool
+    name: string
+
+type Payload either
+    Root
+    Int(string)
+    Float(string)
+    Bool(bool)
+    Operator(OperatorKind)
+    Identifier(&ReadInfo)
+    FuncCall
+    CreateAssign or Create or Assign
+    If or Block or IfCondition or Else
+
+def Payload.toString(&self) string =
+    payload_type := get_type Payload
+    payload_type.cases[self.tag].name
+
+type AST =
+    payload: Payload
+    nodes: [..]&AST
+    _type: types.CompilerType
+    owner: Maybe[&AST]
+
+    _filename: string
+    _line: uint
+    _column: uint
+
+def AST.get_filename(&self) string = self._filename
+def AST.get_line(&self) uint = self._line
+def AST.get_column(&self) uint = self._column
+
+def AST.add(&self, node: &AST) =
+    node.owner = Some self
+    self.nodes.append node
+
+def make_AST[T: Thrower](t: T, payload: Payload) &AST =
+    nodes := [..]&AST
+    nodes.allocator = Some context.longterm_storage
+
+    box_longterm AST{
+        payload = payload
+        nodes = nodes
+        owner = None
+        _type = types.make_Void!
+        _filename = t.get_filename!
+        _line = t.get_line!
+        _column = t.get_column!
+    }

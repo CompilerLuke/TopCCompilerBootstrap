@@ -1,0 +1,252 @@
+from "error" import all
+from "stringBuilder" import make_StringBuilder
+
+type TokenType either
+    Integer
+    Float
+    Identifier
+    Operator
+    Invalid
+    Symbol
+    Indent
+    Keyword
+
+def TokenType.toString(&self) string =
+    enum_type := get_type TokenType
+    enum_type.cases[self.tag].name
+
+type Token =
+    kind: TokenType
+    value: string
+    line: uint
+    column: uint
+
+def Token.toString(&self) string =
+    "{self.kind} : {self.value}"
+
+type Lexer =
+    tok: [..]char
+    src: string
+    i: uint
+    tokens: [..]Token
+    filename: string
+    line: uint
+    column: uint
+
+def Lexer.get_filename(&self) string = self.filename
+def Lexer.get_line(&self) uint = self.line
+
+def Lexer.current(&self) char =
+    self.src[self.i]
+
+def Lexer.advance(&self) char =
+    self.i += 1
+    if self.i < self.src.length then
+        self.src[self.i]
+    else
+        `\0`
+
+def Lexer.next(&self) char =
+    if self.i + 1 < self.src.length then
+        self.src[self.i + 1]
+    else
+        `\0`
+
+def char_array_toString(arr: []char) string =
+    buffer := longterm_alloc::[char] arr.length
+    memcpy buffer, arr.data, arr.length
+    make_String arr.length, buffer
+
+def Lexer.reset_tok(&self) Maybe[&CompilerError] = //returns error
+    if self.tok.length > 0 then
+        (kind, value) := determine_token char_array_toString self.tok
+
+        if kind.tag == Invalid.tag then
+            return Some make_Error self, "Unknown token {char_array_toString self.tok}"
+
+        self.append_token kind, value
+
+    self.tok.clear!
+
+    None
+
+def Lexer.get_column(&self) uint = self.column
+
+//determine token
+def is_digit(c: char) bool =
+    (`0` cast int) <= (c cast int) and (c cast int) <= (`9` cast int)
+
+def is_number(s: string) Maybe[(TokenType, string)] =
+    dot := false
+
+    for i := 0..s.length do
+        if s[i] == `.` then
+            if dot then return None
+            dot = true
+        elif not is_digit s[i] then return None
+
+    if dot then
+        Some (Float, s)
+    else
+        Some (Integer, s)
+
+def is_identifier(s: string) bool =
+    true
+
+keywords := ["true", "false", "if", "else"]
+
+def is_keyword(s: string) bool =
+    keywords.contains s
+
+def determine_token(s: string) (TokenType, string) =
+    if Some token := is_number s then token
+    else
+        if is_keyword s then (Keyword, s)
+        elif is_identifier s then (Identifier, s)
+        else (Invalid, s)
+
+def lex(src: string, filename: string) Result[[]Token, &CompilerError] =
+    tokens := [..]Token
+    tokens.allocator = Some context.longterm_storage
+
+    lexer := Lexer{
+        i = 0
+        src = src
+        tokens = tokens
+        tok = [..]char
+        filename = filename
+        line = 1
+        column = 0
+    }
+
+    lexer.lex!
+
+def Lexer.append_token(&self, kind: TokenType, value: string) =
+    tok := Token{
+        kind = kind
+        value = value
+        line = self.line
+        column = (self.column - (value.length / 2)) - 1
+    }
+
+    self.tokens.append tok
+
+def Lexer.lex(using &self) Result[[]Token, &CompilerError] =
+    defer context.allocator.reset_to context.allocator.get_occupied!
+
+    while i < src.length do
+        t := self.current!
+        self.column += 1
+
+        match t with
+            `(` ->
+                if Some e := self.reset_tok! then
+                    return Error e
+                self.append_token Symbol, "("
+
+            `)` ->
+                if Some e := self.reset_tok! then
+                    return Error e
+                self.append_token Symbol, ")"
+            ` ` ->
+                if Some e := self.reset_tok! then
+                    return Error e
+            `:` ->
+                if Some e := self.reset_tok! then
+                    return Error e
+                match self.next! with
+                    `=` ->
+                        _ := self.advance!
+                        self.append_token Symbol, ":="
+
+                    _ ->
+                        self.append_token Symbol, ":"
+
+            `\n` ->
+                if Some e := self.reset_tok! then
+                    return Error e
+
+                s := make_StringBuilder!
+                s.chars.allocator = Some context.longterm_storage
+
+                while self.next! == ` ` do
+                    _ := self.advance!
+                    s.chars.append ` `
+                s.chars.append `\0`
+
+                self.line += 1
+                self.column = 0
+
+                self.append_token Symbol, "\n"
+                self.append_token Indent, make_String s.chars.length - 1, s.chars.data.unwrap!
+
+            `+` ->
+                if Some e := self.reset_tok! then
+                    return Error e
+
+                match self.next! with
+                    `+` ->
+                        _ := self.advance!
+                        self.append_token Operator, "++"
+                    _ ->
+                        self.append_token Operator, "+"
+            `*` ->
+                if Some e := self.reset_tok! then
+                    return Error e
+
+                self.append_token Operator, "*"
+
+            `/` ->
+                if Some e := self.reset_tok! then
+                    return Error e
+
+                match self.next! with
+                    `/` -> //comment
+                        if Some e := self.reset_tok! then
+                            return Error e
+
+                        while not self.current! == `\n` do
+                            self.advance!
+
+                    `*` ->
+                        if Some e := self.reset_tok! then
+                            return Error e
+
+                        num := 1
+                        while num > 0 do
+                            match self.advance! with
+                                `*` ->
+                                    match self.next! with
+                                        `/` ->
+                                            num -= 1
+                                            _ := self.advance!
+
+                                        _ ->
+
+                                `/` ->
+                                    match self.next! with
+                                        `*` ->
+                                            num += 1
+                                            _ := self.advance!
+
+                                        _ ->
+
+                                `\0` ->
+                                    return Error make_Error self, "Expecting */"
+                                _ ->
+
+                        log "exited"
+                    _ -> self.append_token Operator, "/"
+
+            _ -> tok.append t
+
+        _ := self.advance!
+
+    self.append_token Symbol, "\n"
+    self.append_token Indent, ""
+
+    if Some e := self.reset_tok! then
+        return Error e
+
+    ts := self.tokens
+    Ok (ts as []Token)

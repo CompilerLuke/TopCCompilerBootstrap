@@ -1,0 +1,3 @@
+{
+  "files": ["types", "float", "int", "bool", "funcPtr"]
+}

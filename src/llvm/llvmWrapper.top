@@ -1,0 +1,96 @@
+ext _ = '#include <llvm-c/Core.h>'
+ext _ = '#include <llvm-c/ExecutionEngine.h>'
+ext _ = '#include <llvm-c/Target.h>'
+ext _ = '#include <llvm-c/TargetMachine.h>'
+ext _ = '#include <llvm-c/Analysis.h>'
+ext _ = "#include <llvm-c/BitWriter.h>"
+
+type ext LLVMModuleRef =
+type ext LLVMTypeRef =
+type ext LLVMValueRef =
+type ext LLVMBasicBlockRef =
+type ext LLVMBuilderRef =
+type ext LLVMBuildRet =
+type ext LLVMVerifierFailureAction =
+type ext LLVMExecutionEngineRef =
+type ext LLVMTargetRef =
+type ext LLVMCodeGenFileType =
+
+ext _llvmModuleCreateWithName: |&char| -> LLVMModuleRef = "LLVMModuleCreateWithName"
+
+def llvmModuleCreateWithName(name: string) LLVMModuleRef =
+    _llvmModuleCreateWithName name.to_c_string!
+
+ext llvmInt8Type: || -> LLVMTypeRef = "LLVMInt8Type"
+ext llvmInt32Type: || -> LLVMTypeRef = "LLVMInt32Type"
+ext llvmFloatType: || -> LLVMTypeRef = "LLVMFloatType"
+ext llvmVoidType: || -> LLVMTypeRef = "LLVMVoidType"
+ext _llvmFunctionType: |LLVMTypeRef, &LLVMTypeRef, uint, bool| -> LLVMTypeRef = "LLVMFunctionType"
+
+def llvmFunctionType(return_type: LLVMTypeRef, args: []LLVMTypeRef) LLVMTypeRef =
+    _llvmFunctionType return_type, args.data, args.length, false
+
+ext _llvmAppendBasicBlock: |LLVMValueRef, &char| -> LLVMBasicBlockRef = "LLVMAppendBasicBlock"
+
+def llvmAppendBasicBlock(sum: LLVMValueRef, name: string) LLVMBasicBlockRef =
+    _llvmAppendBasicBlock sum, name.to_c_string!
+
+ext llvmCreateBuilder: || -> LLVMBuilderRef = "LLVMCreateBuilder"
+ext llvmPositionBuilderAtEnd: |LLVMBuilderRef, LLVMBasicBlockRef| -> none = "LLVMPositionBuilderAtEnd"
+
+ext _llvmBuildAdd: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildAdd"
+def llvmBuildAdd(builder: LLVMBuilderRef, a: LLVMValueRef, b: LLVMValueRef, name: string) LLVMValueRef =
+    _llvmBuildAdd builder, a, b, name.to_c_string!
+
+ext _llvmBuildMul: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildMul"
+def llvmBuildMul(builder: LLVMBuilderRef, a: LLVMValueRef, b: LLVMValueRef, name: string) LLVMValueRef =
+    _llvmBuildMul builder, a, b, name.to_c_string!
+
+ext _llvmBuildDiv: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildSDiv"
+def llvmBuildDiv(builder: LLVMBuilderRef, a: LLVMValueRef, b: LLVMValueRef, name: string) LLVMValueRef =
+    _llvmBuildDiv builder, a, b, name.to_c_string!
+
+ext llvmConstInt: |LLVMTypeRef, i64, bool| -> LLVMValueRef = "LLVMConstInt"
+ext llvmConstReal: |LLVMTypeRef, f64| -> LLVMValueRef = "LLVMConstReal"
+
+ext llvmBuildRetVoid: |LLVMBuilderRef| -> none = "LLVMBuildRetVoid"
+
+ext _llvmAddFunction: |LLVMModuleRef, &char, LLVMTypeRef| -> LLVMValueRef = "LLVMAddFunction"
+def llvmAddFunction(mod: LLVMModuleRef, name: string, ret: LLVMTypeRef) LLVMValueRef =
+    _llvmAddFunction mod, name.to_c_string!, ret
+
+ext llvmVerifyModule: |LLVMModuleRef, LLVMVerifierFailureAction, &Maybe[&char]| -> bool = "LLVMVerifyModule"
+ext llvmDisposeMessage: |Maybe[&char]| -> none = "LLVMDisposeMessage"
+
+ext llvmAbortProcessAction: LLVMVerifierFailureAction = "LLVMAbortProcessAction"
+
+//ext llvmLinkInJIT: || -> none = "LLVMLinkInJIT"
+//ext llvmInitializeNativeTarget: || -> none = "LLVMInitializeNativeTarget"
+//ext llvmCreateExecutionEngineForModule: |&LLVMExecutionEngineRef, LLVMModuleRef, &Maybe[&char]| -> bool = "LLVMCreateExecutionEngineForModule"
+
+ext _llvmBuildCall: |LLVMBuilderRef, LLVMValueRef, &LLVMValueRef, uint, &char| -> LLVMValueRef = "LLVMBuildCall"
+def llvmBuildCall(builder: LLVMBuilderRef, f: LLVMValueRef, args: []LLVMValueRef, name: string) LLVMValueRef =
+    _llvmBuildCall builder, f, args.data, args.length, name.to_c_string!
+
+ext llvmGetDefaultTargetTriple: || -> &char = "LLVMGetDefaultTargetTriple"
+ext llvmGetTargetFromTriple: |&char, &LLVMTargetRef, &Maybe[&char]| -> bool = "LLVMGetTargetFromTriple"
+
+ext _llvmTargetMachineEmitToFile: |LLVMTargetRef, LLVMModuleRef, &char, LLVMCodeGenFileType, &Maybe[&char]| -> bool = "LLVMTargetMachineEmitToFile"
+def llvmTargetMachineEmitToFile(t: LLVMTargetRef, m: LLVMModuleRef, file: string, typ: LLVMCodeGenFileType, err: &Maybe[&char]) bool =
+    _llvmTargetMachineEmitToFile t, m, file.to_c_string!, typ, err
+
+ext llvmObjectFile: LLVMCodeGenFileType = "LLVMObjectFile"
+
+ext llvmInitializeNativeTarget: || -> none = "LLVMInitializeNativeTarget"
+ext llvmInitializeNativeAsmParser: || -> none = "LLVMInitializeNativeAsmParser"
+ext llvmInitializeNativeAsmPrinter: || -> none = "LLVMInitializeNativeAsmPrinter"
+
+
+
+/*
+ext llvmInitializeAllTargets: || -> none = "LLVMInitializeAllTargets"
+ext llvmInitializeAllTargetInfos: || -> none = "LLVMInitializeAllTargetInfos"
+ext llvmInitializeAllTargetMCs: || -> none = "LLVMInitializeAllTargetMCs"
+ext llvmInitializeAllAsmParsers: || -> none = "LLVMInitializeAllAsmParsers"
+ext llvmInitializeAllAsmPrinters: || -> none = "LLVMInitializeAllAsmPrinters"
+*/

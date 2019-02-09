@@ -1,0 +1,9 @@
+import "types"
+import "ast"
+import "astToMIR"
+
+def insert(self: astToMIR.Converter, original_type: types.CompilerType, new_type: types.CompilerType) =
+    if original_type.equals new_type then
+
+
+    self.op_codes.append

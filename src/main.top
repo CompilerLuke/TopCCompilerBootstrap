@@ -1,0 +1,4 @@
+import "compiler"
+
+if Error e := compiler.compile_file "test/main.top" then
+    panic e

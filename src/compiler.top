@@ -1,0 +1,48 @@
+import "lexer"
+import "parser"
+from "error" import all
+import "astToMIR"
+from "print" import print_obj
+import "interpreter"
+import "validator"
+import "llvm"
+
+def compile_file(filename: string) Result[_,string] =
+    guard Some f := open filename, ReadFile
+    else return Error "could Not open file {filename}"
+
+    defer f.free!
+
+    src := f.read!
+
+    log "=== read source files ==="
+    //log src
+
+    guard Ok tokens := lexer.lex src, filename
+    elif Error lex_e then return Error lex_e.toString!
+
+    log "=== tokenize ==="
+    //log tokens
+
+    guard Ok syntax_tree := parser.parse tokens, filename
+    elif Error ast_e then return Error ast_e.toString!
+
+    log "=== parsed =="
+    //print_obj syntax_tree
+
+    if Some validation_error := validator.validate syntax_tree then
+        return Error validation_error.toString!
+
+    log "=== validated ==="
+
+    ir := astToMIR.convert syntax_tree
+
+    log "=== generated id ===="
+    //print_obj ir
+
+    interpreter.exec ir
+    llvm.convert_to_LLVMModule &ir
+
+
+
+    Ok _
