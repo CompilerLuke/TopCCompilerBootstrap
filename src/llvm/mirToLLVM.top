@@ -14,9 +14,12 @@ def op(builder: &LLVMBuilderRef, stack: &[..]LLVMValueRef, tmp: &uint, func: |LL
     stack.append func *builder, a, b, next_tmp tmp
 
 def convert_to_LLVMModule(program: &mir.Program) =
-    llvmInitializeNativeTarget!
-    llvmInitializeNativeAsmParser!
-    llvmInitializeNativeAsmPrinter!
+
+    llvmInitializeAllTargets!
+    llvmInitializeAllTargetInfos!
+    llvmInitializeAllTargetMCs!
+    llvmInitializeAllAsmParsers!
+    llvmInitializeAllAsmPrinters!
 
     mod := llvmModuleCreateWithName "my_module"
     builder := llvmCreateBuilder!
@@ -38,16 +41,27 @@ def convert_to_LLVMModule(program: &mir.Program) =
     for mir_func := program.functions do
         //param_types := []
         ret_type := llvmFunctionType llvmVoidType!, []
-        llvm_func := llvmAddFunction mod, "foo", ret_type
+        llvm_func := llvmAddFunction mod, "main", ret_type
         tmp := 0
 
-        for mir_block := mir_func.all_blocks do
+        blocks := [..]Maybe[LLVMBasicBlockRef]
+
+        for mir_block := mir_func.all_blocks do //create indexable block list
+            id := mir_block.id
             name :=
                 if i == 0 then "entry"
-                else mir_block.id.toString!
-
+                else id.toString!
             block := llvmAppendBasicBlock llvm_func, name
 
+            if id >= blocks.length then
+                for c := 0..(id - blocks.length + 1) do
+                    blocks.append None
+
+            log "setting {id}"
+            blocks[id] = Some block
+
+        for mir_block := mir_func.all_blocks do
+            block := blocks[mir_block.id].unwrap!
             llvmPositionBuilderAtEnd builder, block
 
             for inst := *mir_block.code do
@@ -58,13 +72,23 @@ def convert_to_LLVMModule(program: &mir.Program) =
                     Mul_f32 -> op &builder, &stack, &tmp, llvmBuildMul
                     Div_i32 -> op &builder, &stack, &tmp, llvmBuildDiv
                     Div_f32 -> op &builder, &stack, &tmp, llvmBuildDiv
-                    Store_bool b -> stack.append llvmConstInt llvmInt8Type!, b cast i64, false
+                    Store_bool b -> stack.append llvmConstInt llvmInt1Type!, b cast i64, false
                     Store_i32 integer -> stack.append llvmConstInt llvmInt32Type!, integer, true
                     Store_f32 f -> stack.append llvmConstReal llvmFloatType!, f
                     FuncReturn -> llvmBuildRetVoid builder
                     Read info ->
                         assert info.is_global, "Can't handle locals yet!"
                         stack.append global_vars[info.id]
+
+                    CondJump a, b ->
+                        cond := stack.pop!
+                        block_then := blocks[a].unwrap!
+                        block_else := blocks[b].unwrap!
+
+                        llvmBuildCondBr builder, cond, block_then, block_else
+
+                    Jump a ->
+                        llvmBuildBr builder, blocks[a].unwrap!
 
                     FuncCall fptr_type ->
                         arg_count := fptr_type.args.length
@@ -74,8 +98,7 @@ def convert_to_LLVMModule(program: &mir.Program) =
 
                         for c := 0..arg_count do
                             args.append stack[stack.length - arg_count + c]
-
-                        log args.length
+                        stack.shorten 1 + arg_count
 
                         if types.is_kind::[types.Void] fptr_type.return_type then
                             _ := llvmBuildCall builder, func, args, ""
@@ -89,11 +112,9 @@ def convert_to_LLVMModule(program: &mir.Program) =
     log "verifying module"
 
     if llvmVerifyModule mod, llvmAbortProcessAction, &error then
-        log "llvm error"
+        log "llvm verification error"
         log char_buffer_toString error.unwrap!
         panic "LLVM ERROR"
-
-    llvmDisposeMessage error
 
     target_triple := llvmGetDefaultTargetTriple!
     target : LLVMTargetRef = _
@@ -103,9 +124,13 @@ def convert_to_LLVMModule(program: &mir.Program) =
         log char_buffer_toString target_triple
         panic "LLVM GET TARGET FROM TRIPLE ERROR"
 
-    log char_buffer_toString error.unwrap!
+    cpu := "generic"
+    features := ""
 
-    if llvmTargetMachineEmitToFile target, mod, "test/main.o", llvmObjectFile, &error then
+    target_machine := llvmCreateTargetMachine target, target_triple, cpu.to_c_string!, features.to_c_string!, llvmCodeGenLevelNone, llvmRelocStatic, llvmCodeModelDefault
+
+    if llvmTargetMachineEmitToFile target_machine, mod, "test/main.o", llvmObjectFile, &error then
+        log "error"
         log char_buffer_toString error.unwrap!
         panic "LLVM EMIT"
 

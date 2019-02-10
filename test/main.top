@@ -1,1 +1,4 @@
-log_int(10 + 30)
+if true:
+    log_int(30)
+
+log_int(50)

@@ -28,8 +28,8 @@ d.data=data;d.length=length;return d;
 };
 struct _global_ArrayType _global_StaticArray_StaticArray_S_llvm_LLVMValueRefType;struct _global_ArrayType* _global_StaticArray_StaticArray_S_llvm_LLVMValueRef_get_type(struct _global_StaticArray_StaticArray_S_llvm_LLVMValueRef* self, struct _global_Context* c){return &_global_StaticArray_StaticArray_S_llvm_LLVMValueRefType;}
 struct _global_ArrayType* _global_StaticArray_StaticArray_S_llvm_LLVMValueRef_get_typeByValue(struct _global_StaticArray_StaticArray_S_llvm_LLVMValueRef self, struct _global_Context* c){return &_global_StaticArray_StaticArray_S_llvm_LLVMValueRefType;}
-struct _global_ArrayType _global_StaticArray_StaticArray_S_llvm_LLVMValueRefType;struct _global_StructType llvm_LLVMTargetRefType;struct _global_StructType* llvm_LLVMTargetRef_get_type(struct LLVMTargetRef* self, struct _global_Context* c){return &llvm_LLVMTargetRefType;}
-struct _global_Field* llvm_LLVMTargetRefType_fields;
+struct _global_ArrayType _global_StaticArray_StaticArray_S_llvm_LLVMValueRefType;struct _global_StructType llvm_LLVMTargetMachineRefType;struct _global_StructType* llvm_LLVMTargetMachineRef_get_type(struct LLVMTargetMachineRef* self, struct _global_Context* c){return &llvm_LLVMTargetMachineRefType;}
+struct _global_Field* llvm_LLVMTargetMachineRefType_fields;
 struct _global_StructType llvm_LLVMCodeGenFileTypeType;struct _global_StructType* llvm_LLVMCodeGenFileType_get_type(struct LLVMCodeGenFileType* self, struct _global_Context* c){return &llvm_LLVMCodeGenFileTypeType;}
 struct _global_Field* llvm_LLVMCodeGenFileTypeType_fields;
 struct _global_Array_llvm_LLVMValueRef {
@@ -47,7 +47,38 @@ struct _global_ArrayType* _global_Array_llvm_LLVMValueRef_get_typeByValue(struct
 struct _global_ArrayType _global_Array_llvm_LLVMValueRefType;struct _global_PointerType _global_Maybe_rllvm_LLVMValueRefType;struct _global_PointerType* _global_Maybe_rllvm_LLVMValueRef_get_type(LLVMValueRef*** self, struct _global_Context* c){return &_global_Maybe_rllvm_LLVMValueRefType;}
 struct _global_PointerType* _global_Maybe_rllvm_LLVMValueRef_get_typeByValue(LLVMValueRef** self, struct _global_Context* c){return &_global_Maybe_rllvm_LLVMValueRefType;}
 typedef LLVMValueRef(*pllvm_LLVMBuilderRefc_llvm_LLVMValueRefc_llvm_LLVMValueRefc_stringp___llvm_LLVMValueRef)(LLVMBuilderRef,LLVMValueRef,LLVMValueRef,struct _global_String,struct _global_Context*) ;
-struct _global_StaticArray_1_llvm_LLVMTypeRef {
+struct _global_Maybe_llvm_LLVMBasicBlockRef_Some {
+LLVMBasicBlockRef field0;
+
+};union _global_Maybe_llvm_LLVMBasicBlockRef_cases {
+struct _global_Maybe_llvm_LLVMBasicBlockRef_Some Some;
+
+};
+struct _global_Maybe_llvm_LLVMBasicBlockRef {
+union _global_Maybe_llvm_LLVMBasicBlockRef_cases cases;
+unsigned char tag;
+};
+struct _global_Maybe_llvm_LLVMBasicBlockRef _global_Some_llvm_LLVMBasicBlockRef(LLVMBasicBlockRef g,struct _global_Context* h){
+struct _global_Maybe_llvm_LLVMBasicBlockRef j;
+j.cases.Some.field0 = g;j.tag = 0;
+return j;}
+struct _global_EnumType _global_Maybe_llvm_LLVMBasicBlockRefType;struct _global_EnumType* _global_Maybe_llvm_LLVMBasicBlockRef_get_type(struct _global_Maybe_llvm_LLVMBasicBlockRef* self, struct _global_Context* c){return &_global_Maybe_llvm_LLVMBasicBlockRefType;}
+struct _global_EnumType* _global_Maybe_llvm_LLVMBasicBlockRef_get_typeByValue(struct _global_Maybe_llvm_LLVMBasicBlockRef self, struct _global_Context* c){return &_global_Maybe_llvm_LLVMBasicBlockRefType;}
+struct _global_PointerType _global_Maybe_rMaybe_llvm_LLVMBasicBlockRef_Type;struct _global_PointerType* _global_Maybe_rMaybe_llvm_LLVMBasicBlockRef__get_type(struct _global_Maybe_llvm_LLVMBasicBlockRef*** self, struct _global_Context* c){return &_global_Maybe_rMaybe_llvm_LLVMBasicBlockRef_Type;}
+struct _global_PointerType* _global_Maybe_rMaybe_llvm_LLVMBasicBlockRef__get_typeByValue(struct _global_Maybe_llvm_LLVMBasicBlockRef** self, struct _global_Context* c){return &_global_Maybe_rMaybe_llvm_LLVMBasicBlockRef_Type;}
+struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_ {
+unsigned int length;
+unsigned int capacity;
+struct _global_Allocator* allocator;
+struct _global_Maybe_llvm_LLVMBasicBlockRef* data;
+};
+static inline struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_ _global_Array_Maybe_llvm_LLVMBasicBlockRef_Init(unsigned int length,unsigned int capacity,struct _global_Allocator* allocator,struct _global_Maybe_llvm_LLVMBasicBlockRef* data){
+struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_ m;
+m.length=length;m.capacity=capacity;m.allocator=allocator;m.data=data;return m;
+};
+struct _global_ArrayType _global_Array_Maybe_llvm_LLVMBasicBlockRef_Type;struct _global_ArrayType* _global_Array_Maybe_llvm_LLVMBasicBlockRef__get_type(struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_* self, struct _global_Context* c){return &_global_Array_Maybe_llvm_LLVMBasicBlockRef_Type;}
+struct _global_ArrayType* _global_Array_Maybe_llvm_LLVMBasicBlockRef__get_typeByValue(struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_ self, struct _global_Context* c){return &_global_Array_Maybe_llvm_LLVMBasicBlockRef_Type;}
+struct _global_ArrayType _global_Array_Maybe_llvm_LLVMBasicBlockRef_Type;struct _global_StaticArray_1_llvm_LLVMTypeRef {
 LLVMTypeRef data[1];
 };
 struct _global_StaticArray_1_llvm_LLVMTypeRef _global_StaticArray_1_llvm_LLVMTypeRefFill_array(LLVMTypeRef with){
@@ -55,13 +86,15 @@ struct _global_StaticArray_1_llvm_LLVMTypeRef tmp;
 for (unsigned int i = 0; i < 1; i++) {
 tmp.data[i] = with;
 }; return tmp; }
-struct _global_StaticArray_1_llvm_LLVMTypeRef _global_StaticArray_1_llvm_LLVMTypeRefInit(LLVMTypeRef g){
+struct _global_StaticArray_1_llvm_LLVMTypeRef _global_StaticArray_1_llvm_LLVMTypeRefInit(LLVMTypeRef n){
 struct _global_StaticArray_1_llvm_LLVMTypeRef tmp;
-tmp.data[0] = g;
+tmp.data[0] = n;
 return tmp; }
 struct _global_ArrayType _global_StaticArray_1_llvm_LLVMTypeRefType;struct _global_ArrayType* _global_StaticArray_1_llvm_LLVMTypeRef_get_type(struct _global_StaticArray_1_llvm_LLVMTypeRef* self, struct _global_Context* c){return &_global_StaticArray_1_llvm_LLVMTypeRefType;}
 struct _global_ArrayType* _global_StaticArray_1_llvm_LLVMTypeRef_get_typeByValue(struct _global_StaticArray_1_llvm_LLVMTypeRef self, struct _global_Context* c){return &_global_StaticArray_1_llvm_LLVMTypeRefType;}
-struct _global_ArrayType _global_StaticArray_1_llvm_LLVMTypeRefType;
+struct _global_ArrayType _global_StaticArray_1_llvm_LLVMTypeRefType;struct _global_StructType llvm_LLVMTargetRefType;struct _global_StructType* llvm_LLVMTargetRef_get_type(struct LLVMTargetRef* self, struct _global_Context* c){return &llvm_LLVMTargetRefType;}
+struct _global_Field* llvm_LLVMTargetRefType_fields;
+
 LLVMModuleRef llvm_llvmModuleCreateWithName(struct _global_String llvm_name, struct _global_Context* b);
 LLVMTypeRef llvm_llvmFunctionType(LLVMTypeRef llvm_return_type, struct _global_StaticArray_StaticArray_S_llvm_LLVMTypeRef llvm_args, struct _global_Context* c);
 LLVMBasicBlockRef llvm_llvmAppendBasicBlock(LLVMValueRef llvm_sum, struct _global_String llvm_name, struct _global_Context* d);
@@ -70,7 +103,7 @@ LLVMValueRef llvm_llvmBuildMul(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_a,
 LLVMValueRef llvm_llvmBuildDiv(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_a, LLVMValueRef llvm_b, struct _global_String llvm_name, struct _global_Context* h);
 LLVMValueRef llvm_llvmAddFunction(LLVMModuleRef llvm_mod, struct _global_String llvm_name, LLVMTypeRef llvm_ret, struct _global_Context* j);
 LLVMValueRef llvm_llvmBuildCall(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_f, struct _global_StaticArray_StaticArray_S_llvm_LLVMValueRef llvm_args, struct _global_String llvm_name, struct _global_Context* k);
-_Bool llvm_llvmTargetMachineEmitToFile(LLVMTargetRef llvm_t, LLVMModuleRef llvm_m, struct _global_String llvm_file, LLVMCodeGenFileType llvm_typ, char** llvm_err, struct _global_Context* l);
+_Bool llvm_llvmTargetMachineEmitToFile(LLVMTargetMachineRef llvm_t, LLVMModuleRef llvm_m, struct _global_String llvm_file, LLVMCodeGenFileType llvm_typ, char** llvm_err, struct _global_Context* l);
 struct _global_String llvm_next_tmp(unsigned int* llvm_t, struct _global_Context* m);
 void llvm_op(LLVMBuilderRef* llvm_builder, struct _global_Array_llvm_LLVMValueRef* llvm_stack, unsigned int* llvm_tmp, pllvm_LLVMBuilderRefc_llvm_LLVMValueRefc_llvm_LLVMValueRefc_stringp___llvm_LLVMValueRef llvm_func, struct _global_Context* n);
 void llvm_convert_to_LLVMModule(struct mir_Program* llvm_program, struct _global_Context* p);

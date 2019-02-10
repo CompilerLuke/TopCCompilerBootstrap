@@ -15,12 +15,17 @@ type ext LLVMVerifierFailureAction =
 type ext LLVMExecutionEngineRef =
 type ext LLVMTargetRef =
 type ext LLVMCodeGenFileType =
+type ext LLVMTargetMachineRef =
+type ext LLVMCodeGenOptLevel =
+type ext LLVMRelocMode =
+type ext LLVMCodeModel =
 
 ext _llvmModuleCreateWithName: |&char| -> LLVMModuleRef = "LLVMModuleCreateWithName"
 
 def llvmModuleCreateWithName(name: string) LLVMModuleRef =
     _llvmModuleCreateWithName name.to_c_string!
 
+ext llvmInt1Type: || -> LLVMTypeRef = "LLVMInt1Type"
 ext llvmInt8Type: || -> LLVMTypeRef = "LLVMInt8Type"
 ext llvmInt32Type: || -> LLVMTypeRef = "LLVMInt32Type"
 ext llvmFloatType: || -> LLVMTypeRef = "LLVMFloatType"
@@ -59,6 +64,9 @@ ext _llvmAddFunction: |LLVMModuleRef, &char, LLVMTypeRef| -> LLVMValueRef = "LLV
 def llvmAddFunction(mod: LLVMModuleRef, name: string, ret: LLVMTypeRef) LLVMValueRef =
     _llvmAddFunction mod, name.to_c_string!, ret
 
+ext llvmBuildCondBr: |LLVMBuilderRef, LLVMValueRef, LLVMBasicBlockRef, LLVMBasicBlockRef| -> none = "LLVMBuildCondBr"
+ext llvmBuildBr: |LLVMBuilderRef, LLVMBasicBlockRef| -> none = "LLVMBuildBr"
+
 ext llvmVerifyModule: |LLVMModuleRef, LLVMVerifierFailureAction, &Maybe[&char]| -> bool = "LLVMVerifyModule"
 ext llvmDisposeMessage: |Maybe[&char]| -> none = "LLVMDisposeMessage"
 
@@ -75,22 +83,28 @@ def llvmBuildCall(builder: LLVMBuilderRef, f: LLVMValueRef, args: []LLVMValueRef
 ext llvmGetDefaultTargetTriple: || -> &char = "LLVMGetDefaultTargetTriple"
 ext llvmGetTargetFromTriple: |&char, &LLVMTargetRef, &Maybe[&char]| -> bool = "LLVMGetTargetFromTriple"
 
-ext _llvmTargetMachineEmitToFile: |LLVMTargetRef, LLVMModuleRef, &char, LLVMCodeGenFileType, &Maybe[&char]| -> bool = "LLVMTargetMachineEmitToFile"
-def llvmTargetMachineEmitToFile(t: LLVMTargetRef, m: LLVMModuleRef, file: string, typ: LLVMCodeGenFileType, err: &Maybe[&char]) bool =
+ext _llvmTargetMachineEmitToFile: |LLVMTargetMachineRef, LLVMModuleRef, &char, LLVMCodeGenFileType, &Maybe[&char]| -> bool = "LLVMTargetMachineEmitToFile"
+def llvmTargetMachineEmitToFile(t: LLVMTargetMachineRef, m: LLVMModuleRef, file: string, typ: LLVMCodeGenFileType, err: &Maybe[&char]) bool =
     _llvmTargetMachineEmitToFile t, m, file.to_c_string!, typ, err
 
 ext llvmObjectFile: LLVMCodeGenFileType = "LLVMObjectFile"
 
-ext llvmInitializeNativeTarget: || -> none = "LLVMInitializeNativeTarget"
-ext llvmInitializeNativeAsmParser: || -> none = "LLVMInitializeNativeAsmParser"
-ext llvmInitializeNativeAsmPrinter: || -> none = "LLVMInitializeNativeAsmPrinter"
+
+//ext llvmInitializeNativeTarget: || -> none = "LLVMInitializeNativeTarget"
+//ext llvmInitializeNativeAsmParser: || -> none = "LLVMInitializeNativeAsmParser"
+//ext llvmInitializeNativeAsmPrinter: || -> none = "LLVMInitializeNativeAsmPrinter"
+//ext llvmInitializeNativeTargetMC: || -> none = "LLVMInitializeNativeTargetMC"
 
 
 
-/*
 ext llvmInitializeAllTargets: || -> none = "LLVMInitializeAllTargets"
 ext llvmInitializeAllTargetInfos: || -> none = "LLVMInitializeAllTargetInfos"
 ext llvmInitializeAllTargetMCs: || -> none = "LLVMInitializeAllTargetMCs"
 ext llvmInitializeAllAsmParsers: || -> none = "LLVMInitializeAllAsmParsers"
 ext llvmInitializeAllAsmPrinters: || -> none = "LLVMInitializeAllAsmPrinters"
-*/
+
+ext llvmCreateTargetMachine: |LLVMTargetRef, &char, &char, &char, LLVMCodeGenOptLevel, LLVMRelocMode, LLVMCodeModel| -> LLVMTargetMachineRef = "LLVMCreateTargetMachine"
+
+ext llvmCodeGenLevelNone: LLVMCodeGenOptLevel = "LLVMCodeGenLevelNone"
+ext llvmRelocStatic: LLVMRelocMode = "LLVMRelocStatic"
+ext llvmCodeModelDefault: LLVMCodeModel = "LLVMCodeModelDefault"

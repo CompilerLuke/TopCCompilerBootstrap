@@ -28,7 +28,7 @@ void _global_Array_append_____operatorParser_OpDesc(struct _global_Array_____ope
 struct _global_Array_operatorParser_OpDesc _global_Array_pop_____operatorParser_OpDesc(struct _global_Array_____operatorParser_OpDesc* _global_self, struct _global_Context* k);
 _Bool operatorParser_is_unary(struct parser_Parser* operatorParser_self, struct _global_Context* k){;
 struct lexer_Token operatorParser_token;operatorParser_token = parser_Parser_behind(operatorParser_self,k);;
-struct _global_StaticArray_5_string operatorParser_unary_symbols;operatorParser_unary_symbols = _global_StaticArray_5_stringInit(_global_StringInit(1,"("),_global_StringInit(1,")"),_global_StringInit(2,":="),_global_StringInit(1,":"),_global_StringInit(1,"\n"));;
+struct _global_StaticArray_5_string operatorParser_unary_symbols;operatorParser_unary_symbols = _global_StaticArray_5_stringInit(_global_StringInit(1,"("),_global_StringInit(1,")"),_global_StringInit(2,":="),_global_StringInit(1,":"),_global_StringInit(2,"\n"));;
 ;struct lexer_TokenType l =(operatorParser_token).kind;
 if(l.tag==5){return _global_StaticArray_contains_5_string(&(operatorParser_unary_symbols),(operatorParser_token).value,k);}else if(l.tag==3){return 1;}else if(l.tag==6){return 1;}else if(l.tag==4){return 1;}else if(1){return 0;};
 ;}

@@ -225,7 +225,7 @@ struct stringBuilder_StringBuilder lexer_s;lexer_s = stringBuilder_make_StringBu
 _global_Array_append_char(&((lexer_s).chars),'\0',x);
 (lexer_self)->line=(lexer_self)->line+1;;
 (lexer_self)->column=0;;
-lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,"\n"),x);
+lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(2,"\n"),x);
 lexer_Lexer_append_token(lexer_self,lexer_Indent,_global_make_String(((lexer_s).chars).length-1,_global_Maybe_unwrap_rcharByValue(((lexer_s).chars).data,x),x),x);
 ;}
 else if(B=='+'){
@@ -329,7 +329,7 @@ else if(1){
 _global_Array_append_char(&((lexer_self)->tok),lexer_t,x);
 ;}
 ;lexer_Lexer_advance(lexer_self,x);};
-lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,"\n"),x);
+lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(2,"\n"),x);
 lexer_Lexer_append_token(lexer_self,lexer_Indent,_global_StringInit(0,""),x);
 struct error_CompilerError* bx =lexer_Lexer_reset_tok(lexer_self,x);if(bx != NULL){struct error_CompilerError* lexer_e = bx;
 

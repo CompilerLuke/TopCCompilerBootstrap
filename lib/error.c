@@ -1,14 +1,14 @@
 struct _global_String error_CompilerError_toString(struct error_CompilerError* error_self, struct _global_Context* c){;
 struct stringBuilder_StringBuilder error_s_buffer;error_s_buffer = stringBuilder_make_StringBuilder(c);;
-stringBuilder_StringBuilder_append(&(error_s_buffer),_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(25,"Compilation Error\n\nFile '"),((error_self)->filename),c),_global_StringInit(8,"', line "),c),_global_uint_toStringByValue(((error_self)->line),c),c),_global_StringInit(2,"\n\t"),c),c);
+stringBuilder_StringBuilder_append(&(error_s_buffer),_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(27,"Compilation Error\n\nFile '"),((error_self)->filename),c),_global_StringInit(8,"', line "),c),_global_uint_toStringByValue(((error_self)->line),c),c),_global_StringInit(4,"\n\t"),c),c);
 stringBuilder_StringBuilder_append(&(error_s_buffer),(error_self)->mesg,c);
-stringBuilder_StringBuilder_append(&(error_s_buffer),_global_StringInit(3,"\n\n\t"),c);
+stringBuilder_StringBuilder_append(&(error_s_buffer),_global_StringInit(6,"\n\n\t"),c);
 struct _global_File error_source_file;;
 struct _global_Maybe_File d =_global_open((error_self)->filename,_global_ReadFile,c);if(d.tag==0){error_source_file = d.cases.Some.field0;
 
 ;}
 else if(1){
-return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),stringBuilder_StringBuilder_toStringByValue((error_s_buffer),c),c),_global_StringInit(27,"\nCould not load source file"),c);
+return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),stringBuilder_StringBuilder_toStringByValue((error_s_buffer),c),c),_global_StringInit(28,"\nCould not load source file"),c);
 ;
 ;}
 ;
@@ -30,7 +30,7 @@ break;;
 ;};
 }
 ;
-stringBuilder_StringBuilder_append(&(error_s_buffer),_global_StringInit(1,"\t"),c);
+stringBuilder_StringBuilder_append(&(error_s_buffer),_global_StringInit(2,"\t"),c);
 struct _global_Range j =_global_RangeInit(0,(error_self)->column);
 for (unsigned int k = j.start; k < j.end; k++) {
 unsigned int error_i;error_i = k;

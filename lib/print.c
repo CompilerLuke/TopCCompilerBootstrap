@@ -14,7 +14,7 @@ void print_type_to_string(struct _global_Type print_kind, void* print_ptr, struc
 ;
 struct _global_Type d =print_kind;if(d.vtable->type.data == _global_StructType_get_type(NULL,c)){struct _global_StructType* print_struct_type = (struct _global_StructType*)d.data;
 stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((print_struct_type)->package),c),_global_StringInit(1,"."),c),((print_struct_type)->name),c),_global_StringInit(0,""),c),c);
-stringBuilder_StringBuilder_append(print_s,_global_StringInit(2,"{\n"),c);
+stringBuilder_StringBuilder_append(print_s,_global_StringInit(3,"{\n"),c);
 struct _global_StaticArray_StaticArray_S_Field f =(print_struct_type)->fields;
 for (unsigned int g = 0;g < f.length; g++) {
 struct _global_Field print_field;print_field = *_global_StaticArray_op_get_StaticArray_S_Field(&f, g, c);
@@ -22,9 +22,9 @@ struct _global_Field print_field;print_field = *_global_StaticArray_op_get_Stati
 if(_global_String_op_eqByValue((print_struct_type)->name,_global_StringInit(3,"AST"),c)&&_global_String_op_eqByValue((print_field).name,_global_StringInit(5,"owner"),c)){;
  continue;;
 ;};
-stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(print_tab),c),_global_StringInit(1,"\t"),c),((print_field).name),c),_global_StringInit(3," : "),c),c);
-print_type_to_string((print_field).field_type,(_global_offsetPtr(print_ptr,(int64_t)(print_field).offset,c)),_global_String_op_addByValue(print_tab,_global_StringInit(1,"\t"),c),print_s,c);
-stringBuilder_StringBuilder_append(print_s,_global_StringInit(1,"\n"),c);
+stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(print_tab),c),_global_StringInit(2,"\t"),c),((print_field).name),c),_global_StringInit(3," : "),c),c);
+print_type_to_string((print_field).field_type,(_global_offsetPtr(print_ptr,(int64_t)(print_field).offset,c)),_global_String_op_addByValue(print_tab,_global_StringInit(2,"\t"),c),print_s,c);
+stringBuilder_StringBuilder_append(print_s,_global_StringInit(2,"\n"),c);
 }
 ;
 stringBuilder_StringBuilder_append(print_s,print_tab,c);
@@ -57,13 +57,13 @@ unsigned int print_length;void* print_data;struct puintcrnonep h;h = tmpprintx(&
 if(print_length==0){;
 stringBuilder_StringBuilder_append(print_s,_global_StringInit(2,"[]"),c);
 ;}
-else{stringBuilder_StringBuilder_append(print_s,_global_StringInit(2,"[\n"),c);
+else{stringBuilder_StringBuilder_append(print_s,_global_StringInit(3,"[\n"),c);
 struct _global_Range k =_global_RangeInit(0,print_length);
 for (unsigned int l = k.start; l < k.end; l++) {
 unsigned int print_i;print_i = l;
-;stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(print_tab),c),_global_StringInit(1,"\t"),c),c);
-print_type_to_string(print_elem_type,(_global_offsetPtr(print_data,(int64_t)(uint64_t)print_i*print_elem_size,c)),_global_String_op_addByValue(print_tab,_global_StringInit(1,"\t"),c),print_s,c);
-stringBuilder_StringBuilder_append(print_s,_global_StringInit(1,"\n"),c);
+;stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(print_tab),c),_global_StringInit(2,"\t"),c),c);
+print_type_to_string(print_elem_type,(_global_offsetPtr(print_data,(int64_t)(uint64_t)print_i*print_elem_size,c)),_global_String_op_addByValue(print_tab,_global_StringInit(2,"\t"),c),print_s,c);
+stringBuilder_StringBuilder_append(print_s,_global_StringInit(2,"\n"),c);
 }
 ;
 stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(print_tab),c),_global_StringInit(1,"]"),c),c);

@@ -89,10 +89,10 @@ else{_global_Array_reserve_char(_global_self,(_global_self)->capacity*2,g);
 ;}
 void _global_Array_shorten_char(struct _global_Array_char* _global_self, unsigned int _global_num, struct _global_Context* g){;
 ;
-if(((int)(_global_self)->length)-(int)_global_num<(int)0){;
-_global_panic(_global_StringInit(21,"Shorten out of bounds"),g);
-;};
 (_global_self)->length=(_global_self)->length-_global_num;;
+if((_global_self)->length<0){;
+_global_panic(_global_StringInit(21,"shorten out of bounds"),g);
+;};
 ;}
 char* _global_Array_op_get_char(struct _global_Array_char* _global_self, unsigned int _global_index, struct _global_Context* g){;
 ;

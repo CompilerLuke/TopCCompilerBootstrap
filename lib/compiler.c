@@ -1,4 +1,4 @@
-static inline struct _global_Result_string_Result_T tmpcompilerbf(struct _global_Result_Result_E_Result_T m) {
+static inline struct _global_Result_string_Result_T tmpcompilerbh(struct _global_Result_Result_E_Result_T m) {
 struct _global_Result_string_Result_T l;l.tag = m.tag;l.cases = *(union _global_Result_string_Result_T_cases*) &(m.cases);return l;
 }
 struct _global_Result_string_Result_T compiler_compile_file(struct _global_String compiler_filename, struct _global_Context* c){;
@@ -53,7 +53,7 @@ struct mir_Program compiler_ir;compiler_ir = astToMIR_convert(compiler_syntax_tr
 _global_log_string(_global_StringInit(21,"=== generated id ===="),c);
 interpreter_exec(compiler_ir,c);
 llvm_convert_to_LLVMModule(&(compiler_ir),c);
-;struct _global_Result_string_Result_T k =tmpcompilerbf(_global_Ok_Result_E_Result_T(NULL,c));
+;struct _global_Result_string_Result_T k =tmpcompilerbh(_global_Ok_Result_E_Result_T(NULL,c));
 _global_File_freeByValue(f,c);
 return k;
  }
