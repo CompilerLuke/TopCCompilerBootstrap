@@ -1,0 +1,6 @@
+def insert_at_index[T](arr: &[..]Maybe[T], id: uint, data: T) =
+    if id >= arr.length then
+        for c := 0..(id - arr.length + 1) do
+            arr.append None
+
+    arr[id] = Some data

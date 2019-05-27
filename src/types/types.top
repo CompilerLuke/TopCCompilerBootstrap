@@ -1,23 +1,34 @@
 from "error" import all
 import "stringBuilder"
+import "hashMap"
+import "scope"
 
-type CompilerType with
+type CompilerType either
+    Void
+
+
     def toString() string
-    def duck_type(CompilerType, Thrower) Maybe[&CompilerError]
-    def equals(CompilerType) bool
+    def duck_type(CompilerType, &scope.Scope, Thrower) Maybe[&CompilerError]
+    def to_real_type(&scope.Scope) Result[CompilerType, &error.CompilerError]
+    def equals(CompilerType, &scope.Scope) bool
     def calc_size() uint
 
 //None Type
 type Void =
 def Void.toString(&self) string = "none"
 
-def Void.duck_type(&self, other: CompilerType, thrower: Thrower) Maybe[&CompilerError] =
-    match other with
+def Void.to_real_type(&self, sc: &scope.Scope) Result[CompilerType, &error.CompilerError]  = Ok self as CompilerType
+
+def Void.duck_type(&self, other: CompilerType, sc: &scope.Scope, thrower: Thrower) Maybe[&CompilerError] =
+    guard Ok typ := other.to_real_type sc
+    elif Error e then return Some e
+
+    match typ with
         other_type as &Void -> None
         _ -> Some make_Error thrower, "Expecting none, not {other}"
 
-def Void.equals(&self, other: CompilerType) bool =
-    is_kind::[Void] other
+def Void.equals(&self, other: CompilerType, sc: &scope.Scope) bool =
+    is_kind::[Void] other, sc
 
 def Void.calc_size(&self) uint = 0
 
@@ -26,7 +37,20 @@ none_type := Void{}
 def make_Void() &Void =
     &none_type
 
-def is_kind[T](_type: CompilerType) bool =
+def is_kind[T](_type: CompilerType, sc: &scope.Scope) bool =
+    type_a := get_type T
+
+    guard Ok real_type_b := _type.to_real_type sc
+    else return false
+
+    type_b := real_type_b.get_type!
+
+    ptr_type_a := type_a.get_pointer_to_data!
+    ptr_type_b := type_b.get_pointer_to_data!
+
+    (ptr_type_a cast u64) == (ptr_type_b cast u64)
+
+def is_actual_kind[T](_type: CompilerType) bool =
     type_a := get_type T
     type_b := _type.get_type!
 
@@ -34,3 +58,10 @@ def is_kind[T](_type: CompilerType) bool =
     ptr_type_b := type_b.get_pointer_to_data!
 
     (ptr_type_a cast u64) == (ptr_type_b cast u64)
+
+_ := make_FuncPtr! as CompilerType
+_ := make_Bool! as CompilerType
+_ := make_Int! as CompilerType
+_ := make_Float! as CompilerType //check if all satisfy interface
+_ := make_StringType! as CompilerType
+_ := make_Struct "", hashMap.make_HashMap::[CompilerType]!

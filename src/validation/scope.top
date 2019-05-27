@@ -1,6 +1,7 @@
 import "hashMap"
 import "types"
-from "ast" import ReadInfo
+from "ast" import (ReadInfo, AST)
+import "error"
 
 type DeclInfo = //might become an interface
     _type: types.CompilerType
@@ -26,6 +27,12 @@ def make_Scope() &Scope =
         vars = vars
     }
 
+def Scope.push(&self) =
+    self.vars.append hashMap.make_HashMap::[DeclInfo]!
+
+def Scope.pop(&self) =
+    _ := self.vars.pop!
+
 def Scope.get_var(&self, name: string) Maybe[&DeclInfo] =
     i : int = self.vars.length - 1
     while i >= 0 do
@@ -38,15 +45,14 @@ def Scope.get_var(&self, name: string) Maybe[&DeclInfo] =
 
     None
 
-def Scope.create_decl(&self, name: string, info: &DeclInfo) bool =
+def Scope.create_decl(&self, name: string, info: &DeclInfo, node: &ast.AST) Maybe[&error.CompilerError] =
     assert self.vars.length > 0, "Missing global scope"
 
     vars := &self.vars[self.vars.length - 1]
 
-    if self.vars.length == 1 then
-        info.is_global = true
+    info.is_global = self.vars.length == 1
 
-    if vars.contains name then true
+    if vars.contains name then Some error.make_Error node, "Var {name} already exists"
     else
         vars.insert name, *info
-        false
+        None

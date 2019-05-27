@@ -2,6 +2,7 @@ from "parser" import Parser
 from "error" import all
 import "ast"
 import "print"
+import "lexer"
 
 type OpDesc =
     unary: bool
@@ -12,19 +13,20 @@ type OpDesc =
 def is_unary(self: &Parser) bool =
     token := self.behind!
 
-    unary_symbols := ["(", ")", ":=", ":", "\n"]
-
+    unary_symbols := ["(", ")", ":=", ":", "\n", ",", "+=", "-=", "*=", "/=", "%="]
+    unary_kinds := [lexer.Operator.tag, lexer.Indent.tag, lexer.Invalid.tag, lexer.Keyword.tag]
     match token.kind with
         Symbol -> unary_symbols.contains token.value
-        Operator -> true
-        Indent -> true
-        Invalid -> true
-        _ -> false
+        _ -> unary_kinds.contains token.kind.tag
+
+import "print"
 
 def OpDesc.add_to(using &self, p: &Parser) Maybe[&CompilerError] =
     takes := if self.unary then 1 else 2
 
-    if p.current_node.nodes.length < takes then
+    active_index := p.active_index[p.active_index.length - 1]
+
+    if (p.current_node.nodes.length - active_index) < takes then
         Some make_Error p, "Not enough values for operator {print.obj_toString kind}"
     else
         op := ast.make_AST p, ast.Operator kind
@@ -56,7 +58,7 @@ def OpStack.push_op(using &self, p: &Parser, desc: OpDesc) Maybe[&CompilerError]
         greater := current.precedence > desc.precedence
 
         if greater or same then
-            if Some e := current.add_to p then return Some e
+            ?current.add_to p
             _ := ops.pop!
         else
             break
@@ -74,11 +76,27 @@ def parse_operator(self: &Parser, kind: string) Maybe[&CompilerError] =
                 left_a = true
             }
 
+        "-" ->
+            self.op_stack.push_op self, OpDesc{
+                unary = false
+                precedence = 10
+                kind = ast.Sub
+                left_a = true
+            }
+
         "*" ->
             self.op_stack.push_op self, OpDesc{
                 unary = false
                 precedence = 20
                 kind = ast.Mul
+                left_a = true
+            }
+
+        "<" ->
+            self.op_stack.push_op self, OpDesc{
+                unary = false
+                precedence = 5
+                kind = ast.LT
                 left_a = true
             }
 
@@ -99,7 +117,8 @@ def OpStack.pop(using &self, p: &Parser) Maybe[&CompilerError] =
     op_left := scopes.pop!
 
     for i := 0..op_left.length do
-        if Some e := op_left[op_left.length - i - 1].add_to p then
-            return Some e
+        ?op_left[op_left.length - i - 1].add_to p
 
     None
+
+

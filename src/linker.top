@@ -1,0 +1,34 @@
+import "process"
+from "stringBuilder" import make_StringBuilder
+
+type Linker =
+    path_to_exe: string
+    path_to_runtime: string
+    object_files: []string
+    linker: string
+
+def Linker.link(using &self) =
+    s := make_StringBuilder!
+    s.append linker
+    s.append " "
+    s.append path_to_runtime
+    s.append " "
+
+    for obj := self.object_files do
+        s.append obj
+        s.append " "
+
+    s.append "-o "
+    s.append path_to_exe
+
+    (status, output) := process.popen s.toString!
+    log output
+
+    if status != 0 then
+        panic "Failed to link"
+
+def Linker.run(&self) =
+    (status, output) := process.popen "./{self.path_to_exe}"
+    log output
+
+

@@ -1,0 +1,64 @@
+import "ast"
+
+def add_global_var(converter: &Converter, name: string) uint =
+    self := converter.get_scope!
+
+    converter.global_var_counter += 1
+    id := converter.global_var_counter - 1
+    self.vars.insert name, id
+
+    id
+
+def add_local_var(converter: &Converter, name: string) uint =
+    self := converter.get_scope!
+
+    self.var_counter += 1
+    id := self.var_counter - 1
+
+    self.vars.insert name, id
+
+    id
+
+def add_var(converter: &Converter, is_global: bool, name: string) uint =
+    if is_global then add_global_var converter, name
+    else add_local_var converter, name
+
+def convert_create(converter: &Converter, node: &ast.AST) =
+    self := converter.get_scope!
+    ident := node.nodes[0]
+
+    guard Identifier read_info := ident.payload
+    else panic "Only single variable create are supported"
+
+    id := add_var converter, read_info.is_global, read_info.name
+
+
+    self.append Create box ReadInfo{
+        is_global = read_info.is_global
+        _type = ident._type
+        id = id
+        name = read_info.name
+    }
+
+def convert_assign(converter: &Converter, node: &ast.AST) =
+    self := converter.get_scope!
+    ident := get_lhs_of_assign node
+
+    guard Identifier read_info := ident.payload
+    else panic "Only single variable create are supported"
+
+    self.append Assign box ReadInfo{
+        is_global = read_info.is_global
+        _type = ident._type
+        id = self.vars[read_info.name]
+        name = read_info.name
+    }
+
+def convert_identifier(converter: &Converter, node: &ast.AST, read_info: &ast.ReadInfo) =
+    self := converter.get_scope!
+    self.append Read box ReadInfo{
+        is_global = read_info.is_global
+        _type = node._type
+        id = converter.get_id_of_var read_info.name
+        name = read_info.name
+    }

@@ -7,6 +7,10 @@ from "varParser" import all
 from "tuple" import all
 from "funcCall" import all
 from "ifStatement" import all
+from "whileStatement" import all
+from "funcParser" import all
+from "stringParser" import all
+from "structParser" import all
 
 type Parser =
     tokens: []lexer.Token
@@ -14,9 +18,13 @@ type Parser =
     current_node: &ast.AST
     iter: uint
     op_stack: OpStack
+    active_index: [..]uint
 
     num_paren: uint
     num_indent: uint
+
+    paren_stack: [..]uint
+    indent_stack: [..]uint
 
 def parse(tokens: []lexer.Token, filename: string) Result[&ast.AST,&CompilerError] =
     p := Parser{
@@ -27,6 +35,9 @@ def parse(tokens: []lexer.Token, filename: string) Result[&ast.AST,&CompilerErro
         op_stack = make_OpStack!
         num_paren = 0
         num_indent = 0
+        active_index = [..]uint
+        paren_stack = [..]uint
+        indent_stack = [..]uint
     }
 
     p.current_node = ast.make_AST &p, ast.Root
@@ -36,6 +47,12 @@ def parse(tokens: []lexer.Token, filename: string) Result[&ast.AST,&CompilerErro
 def Parser.get_filename(&self) string = self.filename
 def Parser.get_line(&self) uint = self.current!.line
 def Parser.get_column(&self) uint = self.current!.column
+
+def Parser.get_active_index(&self) uint =
+    self.active_index[self.active_index.length - 1]
+
+def Parser.set_active_index(&self, val: uint) =
+    self.active_index[self.active_index.length - 1] = val
 
 def Parser.peek(using &self) lexer.Token =
     if iter + 1 < tokens.length then
@@ -67,16 +84,48 @@ def Parser.next(using &self) lexer.Token =
     iter += 1
     t
 
+def Parser.eval_till_end(&self) Maybe[&error.CompilerError] =
+    indent := self.num_indent
+    paren := self.num_paren
+
+    while not self.is_end! do
+        _ := self.next!
+        ?self.eval!
+
+    None
+
+def Parser.comma(&self) Maybe[&error.CompilerError] =
+    ?self.op_stack.pop self
+    self.op_stack.push self
+    self.active_index[self.active_index.length - 1] = self.current_node.length!
+    None
+
+def Parser.pop_last(&self) Result[&ast.AST, &error.CompilerError] =
+    if self.current_node.nodes.length == 0 then
+        return Error error.make_Error self, "Unexpected"
+
+    Ok self.current_node.nodes.pop!
+
 def Parser.eval(using &self) Maybe[&error.CompilerError] =
+    self.eval_not_func_call false
+
+def Parser.eval_not_func_call(using &self, ignore_func_call: bool) Maybe[&error.CompilerError] =
     token := self.current!
 
-    match token.kind with
+    self.paren_stack.append self.num_paren
+    self.indent_stack.append self.num_indent
+
+    value := match token.kind with
         Operator -> parse_operator self, token.value
         Integer -> parse_int_literal self, token.value
         Float -> parse_float_literal self, token.value
         Identifier -> parse_identifier self, token.value
         Indent ->
-            self.num_indent = token.value.length
+            if self.peek!.value == "\n" then
+                _ := self.next!
+            else
+                self.num_indent = token.value.length
+
             None
 
         Keyword ->
@@ -84,6 +133,9 @@ def Parser.eval(using &self) Maybe[&error.CompilerError] =
                 "true" or "false" -> parse_bool_literal self, token.value
                 "if" -> if_expr self
                 "else" -> else_expr self
+                "while" -> while_expr self
+                "def" -> parse_funcDef self
+                "type" -> parse_struct self
                 _ -> Some error.make_Error self, "{token.value} token, not handled"
 
         Symbol ->
@@ -95,35 +147,80 @@ def Parser.eval(using &self) Maybe[&error.CompilerError] =
                         parse_funcCall self
 
                 ":=" -> parse_create_assign self
-
+                "=" -> parse_assign self
+                "+=" -> parse_add_assign self
+                "-=" -> parse_sub_assign self
+                "," -> Some error.make_Error self, "Unexpected ,"
                 "\n" -> None
-
                 ")" ->
-                    if self.num_paren == 0 then
-                        Some error.make_Error self, "Unexpected )"
-                    else
-                        self.num_paren -= 1
+                    self.num_paren -= 1
+                    if self.num_paren > 0 then
+                        //self.num_paren -= 1
                         None
-
+                    else
+                        Some error.make_Error self, "Unexpected )"
                 _ -> Some error.make_Error self, "{token.value} token, not handled"
+
+        String -> parse_string self
         _  -> Some error.make_Error self, "{token.kind} token, not handled"
+
+    _ := self.paren_stack.pop!
+    _ := self.indent_stack.pop!
+
+    value
 
 def Parser.push_current_node(using &self, node: &ast.AST) =
     self.current_node.add node
     self.current_node = node
 
     self.op_stack.push self
+    self.active_index.append 0
 
 def Parser.pop_current_node(using &self) Maybe[&CompilerError] =
     guard Some owner := self.current_node.owner
     else panic "Tried to pop current node which didn't have an owner"
 
-    if Some e := self.op_stack.pop self then return Some e
+    ?self.op_stack.pop self
+    _ := self.active_index.pop!
     self.current_node = owner
 
     None
 
-def Parser.is_end(&self, num_indent: uint) bool =
+def Parser.pop(&self, mesg: string) Result[&ast.AST, &CompilerError] =
+    if self.current_node.nodes.length == 0 then
+        return Error error.make_Error self, mesg
+
+    Ok self.current_node.nodes.pop!
+
+def Parser.push_paren(&self) uint =
+    self.num_paren += 1
+    self.num_paren - 1
+
+def Parser.expect_tag(&self, typ: lexer.TokenType, mesg: string) Maybe[&CompilerError] =
+    if self.current!.kind.tag != typ.tag then
+        Some error.make_Error self, mesg
+    else
+        None
+
+def Parser.expect_next_tag(&self, typ: lexer.TokenType, mesg: string) Maybe[&CompilerError] =
+    _ := self.next!
+    self.expect_tag typ, mesg
+
+def Parser.expect_token(&self, tok: string, mesg: string) Maybe[&CompilerError] =
+    if self.current!.value != tok then
+        Some error.make_Error self, mesg
+    else
+        None
+
+def Parser.expect_next_token(&self, tok: string, mesg: string) Maybe[&CompilerError] =
+    _ := self.next!
+    self.expect_token tok, mesg
+
+def Parser.is_end(&self) bool =
+    num_indent := self.indent_stack[self.indent_stack.length - 1]
+    num_paren := self.paren_stack[self.paren_stack.length - 1]
+
+    if num_paren > self.num_paren then return true
     match self.current!.kind with
         Indent -> self.num_indent <= num_indent
         _ -> false
@@ -132,11 +229,11 @@ def Parser.parse(using &self) Result[&ast.AST, &CompilerError] =
     op_stack.push self
 
     while iter < tokens.length do
-        if Some e := self.eval! then return Error e
+        ?e self.eval!
         self.next!
 
     iter = tokens.length - 1
-    if Some e := op_stack.pop self then return Error e
+    ?e op_stack.pop self
 
     Ok self.current_node
 

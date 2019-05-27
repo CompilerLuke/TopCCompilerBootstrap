@@ -1,5 +1,3 @@
-let default_table_size = 1003
-
 type Hash is uint
 
 def hash_string(s_key: string, table_size: uint) Hash =
@@ -31,15 +29,30 @@ def make_HashBucket[V]() HashBucket[V] =
 
 type HashMap[V] =
     buckets: []HashBucket[V]
+    length: uint
 
 def HashMap[V].insert(&self, key: string, value: V) =
-    hash := hash_string key, default_table_size
+    if self.length > self.buckets.length/3*4 then
+        new_hash := make_HashMap_size::[V] self.buckets.length * 2
+
+        for per_bucket := self.buckets do
+            for c := 0..per_bucket.keys.length do
+                new_hash.insert per_bucket.keys[c], per_bucket.values[c]
+
+        self.free!
+
+        *self = new_hash
+
+    hash := hash_string key, self.buckets.length
     bucket := &self.buckets[hash]
+
     bucket.keys.append key
     bucket.values.append value
 
+    self.length += 1
+
 def HashMap[V].op_get(&self, key: string) &V =
-    hash := hash_string key, default_table_size
+    hash := hash_string key, self.buckets.length
     bucket := &self.buckets[hash]
     for b_key := bucket.keys do
         if b_key == key then
@@ -49,7 +62,7 @@ def HashMap[V].op_get(&self, key: string) &V =
     0 cast &V
 
 def HashMap[V].contains(&self, key: string) bool =
-    hash := hash_string key, default_table_size
+    hash := hash_string key, self.buckets.length
     bucket := &self.buckets[hash]
     for b_key := bucket.keys do
         if b_key == key then
@@ -68,11 +81,15 @@ def HashMap[V].keys(&self) []string =
             arr.append key
     arr
 
-def make_HashMap[V]() HashMap[V] =
+def make_HashMap_size[V](size: uint) HashMap[V] =
     buckets := [..]HashBucket[V]
-    for i := 0..default_table_size do
+    for i := 0..size do
         buckets.append make_HashBucket::[V]!
 
     HashMap{
         buckets = buckets
+        length = 0
     }
+
+def make_HashMap[V]() HashMap[V] =
+    make_HashMap_size::[V] 2 ^ 3

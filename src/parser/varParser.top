@@ -2,6 +2,7 @@ import "parser"
 import "ast"
 import "error"
 import "types"
+import "print"
 
 def parse_identifier(self: &parser.Parser, name: string) Maybe[&error.CompilerError] =
     id := ast.make_AST self, ast.Identifier box ast.ReadInfo{
@@ -13,11 +14,11 @@ def parse_identifier(self: &parser.Parser, name: string) Maybe[&error.CompilerEr
 
     None
 
-def parse_create_assign(self: &parser.Parser) Maybe[&error.CompilerError] =
-    if self.current_node.nodes.length == 0 then
-        return Some error.make_Error self, "Unexpected assign"
 
-    v := self.current_node.nodes.pop!
+
+def parse_create_assign(self: &parser.Parser) Maybe[&error.CompilerError] =
+    guard Ok v := self.pop_last!
+    elif Error err then return Some err
 
     node := ast.make_AST self, ast.CreateAssign
     create := ast.make_AST self, ast.Create
@@ -30,13 +31,49 @@ def parse_create_assign(self: &parser.Parser) Maybe[&error.CompilerError] =
     self.push_current_node node
     self.push_current_node assign
 
-    indent := self.num_indent
-    while not (self.is_end indent) do
-        _ := self.next!
-        if Some e := self.eval! then
-            return Some e
-
-    self.pop_current_node!
-    self.pop_current_node!
+    ?self.eval_till_end!
+    ?self.pop_current_node!
+    ?self.pop_current_node!
 
     None
+
+import "print"
+
+def parse_assign(self: &parser.Parser) Maybe[&error.CompilerError] =
+    if self.current_node.nodes.length == 0 then
+        return Some error.make_Error self, "Unexpected assign"
+
+    v := self.current_node.nodes.pop!
+
+    assign := ast.make_AST self, ast.Assign
+    assign.add v
+
+    self.push_current_node assign
+
+    self.set_active_index 1
+
+    ?self.eval_till_end!
+    ?self.pop_current_node!
+
+    None
+
+def parse_op_assign(self: &parser.Parser, op: ast.OperatorKind) Maybe[&error.CompilerError] =
+    ?parse_assign self
+    assign := self.current_node[self.current_node.length! - 1]
+
+    add := ast.make_AST assign, ast.Operator op
+
+    value := assign[1]
+    add.add box *assign[0]
+    add.add value
+    add.owner = Some assign
+
+    assign[1] = add
+
+    None
+
+def parse_add_assign(self: &parser.Parser) Maybe[&error.CompilerError] =
+    parse_op_assign self, ast.Add
+
+def parse_sub_assign(self: &parser.Parser) Maybe[&error.CompilerError] =
+    parse_op_assign self, ast.Sub

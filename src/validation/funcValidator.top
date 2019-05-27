@@ -1,0 +1,83 @@
+import "error"
+import "validator"
+import "ast"
+import "print"
+import "scope"
+from "ifValidation" import block_returns_value
+import "types"
+
+def add_func_to_scope(state: &validator.State, node: &ast.AST, func_info: &ast.FuncInfo) Maybe[&error.CompilerError] =
+    func_type := func_info._type
+
+    decl_info := scope.DeclInfo{
+        is_global = true
+        _type = func_type
+    }
+
+    ?state.scope.create_decl func_info.name, &decl_info, node
+
+    None
+
+def validate(state: &validator.State, node: &ast.AST, func_info: &ast.FuncInfo) Maybe[&error.CompilerError] =
+    state.scope.push!
+    defer state.scope.pop!
+
+    func_type := func_info._type
+
+    args := node[0]
+    for arg := args.nodes do
+        guard FuncArg name, _type := arg.payload
+        else panic "Expecting args in func not something else"
+
+        var_decl_info := scope.DeclInfo{
+            is_global = true
+            _type = _type
+        }
+
+        ?state.scope.create_decl name, &var_decl_info, arg
+
+    ?state.validate node[1]
+
+    block := node[1]
+
+    should_be := func_type.return_type
+    real_ret := (block_returns_value block).default types.make_Void!
+
+    if Some e := should_be.duck_type real_ret, state.scope, block then
+        return Some e.before "Function return type: "
+
+    None
+
+def validate_call(state: &validator.State, node: &ast.AST) Maybe[&error.CompilerError] =
+    ?state.validate_nodes node.nodes
+
+    func := node[0]
+
+    guard func_type as &types.FuncPtr := func._type
+    else return Some error.make_Error func, "Cannot call {func._type}"
+
+    /*
+    func_type : &types.FuncPtr = _
+    match func._type with
+        x as &types.FuncPtr -> func_type = x
+        _ -> return Some error.make_Error func, "Cannot call {func._type}"
+    */
+
+    num_args := node.length! - 1
+
+    //print.print_obj node
+
+    if func_type.args.length < num_args then
+        return Some error.make_Error node, "Function takes {num_args - func_type.args.length} less arguments"
+    elif func_type.args.length > num_args then
+        return Some error.make_Error node, "Function expects {func_type.args.length - num_args} more arguments"
+
+    for i := 1..node.length! do
+        should_be := func_type.args[i - 1]
+        actually := node[i]._type
+
+        ?should_be.duck_type actually, state.scope, node[i]
+
+    node._type = func_type.return_type
+
+    None

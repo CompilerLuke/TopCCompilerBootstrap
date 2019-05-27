@@ -1,17 +1,20 @@
 import "error"
+import "scope"
 
 type Int =
 
 def Int.toString(&self) string =
     "int"
 
-def Int.duck_type(&self, other: CompilerType, thrower: Thrower) Maybe[&error.CompilerError] =
-    match other with
-        other_type as &Int -> None
-        _ -> Some make_Error thrower, "Expecting {self} not {other}"
+def Int.to_real_type(&self, sc: &scope.Scope) Result[CompilerType, &error.CompilerError] =
+    Ok self as CompilerType
 
-def Int.equals(&self, other: CompilerType) bool =
-    is_kind::[Int] other
+def Int.duck_type(&self, other: CompilerType, sc: &scope.Scope, thrower: Thrower) Maybe[&error.CompilerError] =
+    if not is_kind::[Int] other, sc then Some make_Error thrower, "Expecting {self} not {other}"
+    else None
+
+def Int.equals(&self, other: CompilerType, sc: &scope.Scope) bool =
+    is_kind::[Int] other, sc
 
 def Int.calc_size(&self) uint =
     4

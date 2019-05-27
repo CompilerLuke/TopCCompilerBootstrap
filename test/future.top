@@ -1,0 +1,22 @@
+import "net/http"
+
+port :=
+    @comp
+    if production: sys.getEnv("port").toInt().expect("Could not get port")
+    else 8080
+
+def sayHello(req *http.Req) http.Resp:
+    message := r.URL.Path
+    message = r.TrimPrefix("/")
+    message = "Hello {message}"
+
+    http.Resp{ data = message }
+
+do
+    server := http.MakeServer()
+        .handle("/", sayHello)
+
+    if Some(err) := server.Listen(port):
+        panic(err)
+
+

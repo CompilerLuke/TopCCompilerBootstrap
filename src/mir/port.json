@@ -1,0 +1,3 @@
+{
+  "files": ["mir", "converter", "controlFlowToMIR", "funcToMIR", "operatorsToMIR", "varsToMIR", "stringToMIR", "astToMIR"]
+}

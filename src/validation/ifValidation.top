@@ -2,11 +2,34 @@ import "ast"
 from "error" import all
 import "validator"
 import "types"
+import "print"
+import "scope"
 
-def validate(state: &validator.State, node: &ast.AST) Maybe[&CompilerError] =
-    condition := node.nodes[0].nodes[0]
+def block_returns_value(node: &ast.AST) Maybe[types.CompilerType] =
+    assert node.payload.tag == ast.Block.tag, "Expecting block"
 
-    if not types.is_type::[types.Bool] condition._type then
-        return error.make_Error state, "Expecting boolean expression"
+    if node.length! > 0 and not types.is_actual_kind::[types.Void] node[node.length! - 1]._type then
+        Some node.nodes[node.length! - 1]._type
+    else
+        None
+
+def validate_if(state: &validator.State, node: &ast.AST) Maybe[&CompilerError] =
+    ?state.validate_nodes node.nodes
+
+    i := 1
+    while i < node.length! do
+        if Some ret := block_returns_value node[i] then
+            node._type = ret
+        i += 2
 
     None
+
+def validate_condition(state: &validator.State, node: &ast.AST) Maybe[&CompilerError] =
+    ?state.validate_nodes node.nodes
+
+    condition := node.nodes[0]
+
+    if not types.is_kind::[types.Bool] condition._type, state.scope then
+        Some error.make_Error condition, "Expecting boolean expression, not {condition._type}"
+    else
+        None

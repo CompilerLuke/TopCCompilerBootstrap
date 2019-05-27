@@ -1,3 +1,6 @@
+import "scope"
+import "error"
+
 type FuncPtr =
     args: []CompilerType
     return_type: CompilerType
@@ -14,10 +17,13 @@ def FuncPtr.toString(&self) string =
     s.append ")"
     s.toString!
 
-def FuncPtr.duck_type(&self, other: CompilerType, thrower: Thrower) Maybe[&CompilerError] =
+def FuncPtr.to_real_type(&self, sc: &scope.Scope) Result[CompilerType, &error.CompilerError] =
+    Ok self as CompilerType
+
+def FuncPtr.duck_type(&self, other: CompilerType, sc: &scope.Scope, thrower: Thrower) Maybe[&CompilerError] =
     None
 
-def FuncPtr.equals(&self, other: CompilerType) bool =
+def FuncPtr.equals(&self, other: CompilerType, sc: &scope.Scope) bool =
     true
 
 def FuncPtr.calc_size(&self) uint = 8

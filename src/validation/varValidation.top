@@ -14,11 +14,9 @@ def validate_read(state: &validator.State, read_info: &ast.ReadInfo, node: &ast.
     None
 
 def validate_create_assign(state: &validator.State, node: &ast.AST) Maybe[&error.CompilerError] =
-    create := node.nodes[0]
-    assign := node.nodes[1]
+    (create, assign) := (node.nodes[0], node.nodes[1])
 
-    if Some e := state.validate_nodes assign.nodes then
-        return Some e
+    ?state.validate_nodes assign.nodes
 
     typ := assign.nodes[0]._type
 
@@ -31,9 +29,7 @@ def validate_create_assign(state: &validator.State, node: &ast.AST) Maybe[&error
     decl_info := scope.make_DeclInfo!
     decl_info._type = typ
 
-    var_exists := state.scope.create_decl read_info.name, &decl_info
-
-    if var_exists then return Some error.make_Error node, "Var {read_info.name} already exists"
+    ?state.scope.create_decl read_info.name, &decl_info, create
 
     read_info.is_global = decl_info.is_global
 

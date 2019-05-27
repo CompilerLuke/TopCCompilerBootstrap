@@ -11,15 +11,18 @@ def StringBuilder.shorten(using &self, num: uint) =
     chars.shorten num
 
 def StringBuilder.toString(&self) string =
+    /*
     chars := [..]char
     chars.reserve self.chars.length + 1
 
     for c := self.chars do
         chars.append c
+    */
 
-    chars.append `\0` //null terminated
+    self.chars.append `\0` //null terminated
+    s := make_String self.chars.length - 1, self.chars.data.unwrap! //unwrap is safe as we just added one char
+    _ := self.chars.pop!
 
-    make_String self.chars.length, chars.data.unwrap! //unwrap is safe as we just added one char
-
+    s
 def make_StringBuilder() StringBuilder =
     StringBuilder{ [..]char }

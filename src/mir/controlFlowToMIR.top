@@ -1,0 +1,131 @@
+import "ast"
+
+def convert_if(converter: &Converter, node: &ast.AST) =
+    self := converter.get_scope!
+
+    id := self.push_block!
+
+    if not types.is_actual_kind::[types.Void] node._type then
+        name := "if_result_{id}"
+
+        self.append mir.Create box mir.ReadInfo{
+            is_global = true
+            _type = node._type
+            id = add_global_var converter, name
+            name = name
+        }
+
+    self.push_cfg CFG{
+        return_to = id
+        block = None
+    }
+
+    converter.convert_nodes node.nodes
+
+    codes := box [..]OpCode
+
+    self.pop_cfg! //pushed by condition
+
+    cfg := self.current_cfg!
+    to := cfg.return_to
+
+    self.pop_cfg!
+
+    self.add_block box Block{ to, codes }
+
+    if not types.is_actual_kind::[types.Void] node._type then
+        name := "if_result_{to}"
+
+        self.append Read box ReadInfo{
+            name = name
+            id = self.vars[name]
+            is_global = true
+            _type =  node._type
+        }
+
+def convert_while(converter: &Converter, node: &ast.AST) =
+    self := converter.get_scope!
+
+    //block which performs while check
+    check := self.push_block!
+    self.append Jump check
+
+    self.push_cfg CFG{
+        return_to = check
+        block = Some box Block{ check, box [..]OpCode }
+    }
+
+    //block to return to, when while terminates
+    self.push_cfg CFG{
+        return_to = self.push_block!
+        block = None
+    }
+
+    for n := node.nodes do
+        converter.convert_node n
+
+    cfg := self.current_cfg!
+    to := cfg.return_to
+
+    self.pop_cfg! //pushed by condition
+    self.pop_cfg!
+
+    check_cfg := self.current_cfg!
+    self.append Jump check_cfg.return_to //return to check block
+    self.pop_cfg!
+
+    self.add_block box Block{ to, box [..]OpCode }
+
+def convert_else(converter: &Converter, node: &ast.AST) =
+    self := converter.get_scope!
+    cfg := self.current_cfg!
+
+    to := cfg.return_to
+    end_if := self.cfgs[self.cfgs.length - 2].return_to
+
+    codes := box [..]OpCode
+
+    self.pop_cfg!
+    self.push_cfg CFG{
+        return_to = end_if
+        block = Some box Block{ to, codes }
+    }
+
+def convert_condition(converter: &Converter, node: &ast.AST) =
+    self := converter.get_scope!
+    to := self.push_block!
+
+    guard Some owner := node.owner
+    else panic "Condition has no owner"
+
+    return_to :=
+        if owner.nodes.length == 2 then
+            self.cfgs[self.cfgs.length - 1].return_to
+        else
+            self.push_block!
+
+    codes := box [..]OpCode
+
+    self.append CondJump to, return_to
+
+    self.push_cfg CFG{
+        return_to = return_to
+        block = Some box Block{ to, codes }
+    }
+
+def convert_block(converter: &Converter, node: &ast.AST) =
+    self := converter.get_scope!
+
+    if node.owner.unwrap!.payload.tag == ast.If.tag then
+        cfg := self.cfgs[self.cfgs.length - 2]
+
+        if Some ret_typ := block_returns_value node then
+            name := "if_result_{cfg.return_to}"
+            self.append Assign box ReadInfo{
+                name = name
+                id = self.vars[name]
+                is_global = true
+                _type = ret_typ
+            }
+
+        self.append Jump cfg.return_to

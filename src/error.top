@@ -6,12 +6,18 @@ type CompilerError =
     mesg: string
     column: uint
 
+def CompilerError.before(&self, mesg: string) &CompilerError =
+    e := box *self
+    e.mesg = self.mesg + " : " + mesg
+    e
+
 def CompilerError.toString(&self) string =
     s_buffer := stringBuilder.make_StringBuilder!
 
     s_buffer.append "Compilation Error\n\nFile '{self.filename}', line {self.line}\n\t"
     s_buffer.append self.mesg
     s_buffer.append "\n\n\t"
+
 
     guard Some source_file := open self.filename, ReadFile
     else return "{s_buffer}\nCould not load source file"

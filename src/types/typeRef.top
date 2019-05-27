@@ -1,0 +1,66 @@
+import "scope"
+import "error"
+
+type TypeDecl =
+    kind: CompilerType
+
+def TypeDecl.toString(&self) string =
+    "type {self.kind}"
+
+def TypeDecl.to_real_type(&self, sc: &scope.Scope) Result[CompilerType, &error.CompilerError] =
+    Ok self as CompilerType
+
+def TypeDecl.duck_type(&self, other: CompilerType, sc: &scope.Scope, thrower: Thrower) Maybe[&error.CompilerError] =
+    None
+
+def TypeDecl.equals(&self, other: CompilerType, sc: &scope.Scope) bool =
+    false
+
+def TypeDecl.calc_size(&self) uint =
+    4
+
+def make_TypeDecl(kind: CompilerType) &TypeDecl =
+    box TypeDecl{ kind }
+
+type TypeRef =
+    name: string
+    real: Maybe[CompilerType]
+    _filename: string
+    _column: uint
+    _line: uint
+
+def TypeRef.get_filename(&self) string = self._filename
+def TypeRef.get_column(&self) uint = self._column
+def TypeRef.get_line(&self) uint = self._line
+
+def TypeRef.toString(&self) string =
+    self.name
+
+def TypeRef.to_real_type(&self, sc: &scope.Scope) Result[CompilerType, &error.CompilerError] =
+    if self.real.is_none! then
+        guard Some typ := sc.get_var self.name
+        else return Error error.make_Error self, "Unknown type {self.name}"
+
+        match typ._type with
+            r as &TypeDecl -> self.real = Some r.kind
+            _ -> return Error error.make_Error self, "{self.name} is not a type declaration, it's {typ._type}"
+
+    Ok self.real.unwrap!
+
+def TypeRef.duck_type(&self, other: CompilerType, sc: &scope.Scope, thrower: Thrower) Maybe[&error.CompilerError] =
+    None
+
+def TypeRef.equals(&self, other: CompilerType, sc: &scope.Scope) bool =
+    false
+
+def TypeRef.calc_size(&self) uint =
+    0
+
+def make_TypeRef(name: string, thrower: Thrower) &TypeRef =
+    box TypeRef{
+        name = name
+        real = None
+        _column = thrower.get_column!
+        _filename = thrower.get_filename!
+        _line = thrower.get_line!
+    }

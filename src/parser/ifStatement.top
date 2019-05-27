@@ -3,28 +3,29 @@ from "error" import all
 import "ast"
 
 def if_body(self: &parser.Parser) Maybe[&CompilerError] =
-    cond := ast.make_AST self, ast.IfCondition
+    cond := ast.make_AST self, ast.Condition
 
     self.push_current_node cond
 
     in_block := false
-    indent := self.num_indent
 
-    while not ((self.is_end indent) and in_block) do
+    while not self.is_end! do
         token := self.next!
-
         if token.value == ":" and not in_block then
-            _ := self.pop_current_node!
+            ?self.pop_current_node!
 
             block := ast.make_AST self, ast.Block
             in_block = true
 
             self.push_current_node block
-            continue
+        else
+            ?self.eval!
 
-        self.eval!
+    if not in_block then
+        return Some error.make_Error self, "Expecting :"
 
-    _ := self.pop_current_node!
+    ?self.pop_current_node!
+
     None
 
 def if_expr(self: &parser.Parser) Maybe[&CompilerError] =
@@ -32,14 +33,13 @@ def if_expr(self: &parser.Parser) Maybe[&CompilerError] =
 
     self.push_current_node toplevel
 
-    if Some e := if_body self then
-        return Some e
-
-    _ := self.pop_current_node!
-
+    ?if_body self
+    ?self.pop_current_node!
     None
 
 def else_expr(self: &parser.Parser) Maybe[&error.CompilerError] =
+    self.expect_next_token ":", "Expecting :"
+
     is_if_condition := false
 
     if self.current_node.nodes.length > 0 then
@@ -49,13 +49,10 @@ def else_expr(self: &parser.Parser) Maybe[&error.CompilerError] =
             assert node.nodes.length >= 2, "If block is empty"
 
             if_condition := node.nodes[node.nodes.length - 2]
-            is_if_condition = if_condition.payload.tag == ast.IfCondition.tag
+            is_if_condition = if_condition.payload.tag == ast.Condition.tag
 
     if not is_if_condition then
         return Some make_Error self, "Unexpected else"
-
-    if not self.next!.value == ":" then
-        return Some make_Error self, "Expecting :"
 
     self.current_node = self.current_node.nodes[self.current_node.nodes.length - 1]
 
@@ -64,13 +61,11 @@ def else_expr(self: &parser.Parser) Maybe[&error.CompilerError] =
     block := ast.make_AST self, ast.Block
     self.push_current_node block
 
-    indent := self.num_indent
-
-    while (not self.is_end indent) do
+    while not self.is_end! do
         _ := self.next!
-        self.eval!
+        ?self.eval!
 
-    self.pop_current_node!
+    ?self.pop_current_node!
     self.current_node = self.current_node.owner.unwrap!
 
     None

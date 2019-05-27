@@ -1,0 +1,200 @@
+import "mir"
+import "print"
+
+type Interpreter =
+    string_literals: [..]Maybe[string]
+    var_ptr: [..]Maybe[&none]
+    stack: TemporaryStorage
+    var_stack: TemporaryStorage
+    blocks: [..][..]Maybe[&mir.Block]
+    all_blocks: [..]Maybe[[..]Maybe[&mir.Block]]
+
+def push_stack[T](self: &Interpreter, value: T) =
+    ptr := (self.stack.alloc sizeof T) cast &T
+    *ptr = value
+
+def pop_stack[T](self: &Interpreter) T =
+    assert self.stack.occupied >= sizeof T, "Popped empty stack"
+
+    self.stack.occupied -= sizeof T
+
+    *(offsetPtr self.stack.data, self.stack.occupied) cast &T
+
+def pop_under[T](self: &Interpreter) T =
+    *(offsetPtr self.stack.data, self.stack.occupied - 2 * sizeof T) cast &T
+
+def pop_2_stack[T](self: &Interpreter) T =
+    assert self.stack.occupied >= 2 * sizeof T, "Popped empty stack"
+
+    ptr := (offsetPtr self.stack.data, self.stack.occupied - sizeof T) cast &T
+
+    self.stack.occupied -= 2 * sizeof T
+
+    *ptr
+
+def pop_dynamic(self: &Interpreter, size: SizeT) &none =
+    //log "pop {size}"
+    self.stack.occupied -= size
+    offsetPtr self.stack.data, self.stack.occupied
+
+def push_dynamic(self: &Interpreter, size: SizeT) &none =
+    self.stack.alloc size
+
+//library functions
+def log_impl[T: Stringer](state: &Interpreter) =
+    defer context.allocator.reset_to context.allocator.get_occupied!
+    log pop_stack::[T] state
+    _ := pop_stack::[|| -> none] state
+
+//get around compiler bug
+def log_float(state: &Interpreter) = log_impl::[float] state
+def log_int(state: &Interpreter) = log_impl::[int] state
+def log_string(state: &Interpreter) = log_impl::[string] state
+
+def Interpreter.exec_block(using &self, block: &mir.Block, local_var_stack: &TemporaryStorage, local_args: &[..]&none) Maybe[&mir.Block] =
+    for inst := *block.code do
+        match inst with
+            FuncArg id, read_info ->
+                size := read_info._type.calc_size!
+                ptr_to_var := local_var_stack.alloc size
+
+                local_args.append ptr_to_var
+
+            Create read_info ->
+                size := read_info._type.calc_size!
+                ptr_to_var := local_var_stack.alloc size
+
+                if read_info.is_global then
+                    insert_at_index &var_ptr, read_info.id, ptr_to_var
+                else
+                    local_args.append ptr_to_var //assume creation is in order
+                    assert (local_args.length - 1) == read_info.id, "Incorrect id assigned"
+
+            CondJump a, b ->
+                cond := pop_stack::[bool] self
+                return self.blocks[self.blocks.length - 1][if cond then a else b]
+
+            Jump a ->
+                return self.blocks[self.blocks.length - 1][a]
+
+            StringDecl id, str ->
+                insert_at_index &self.string_literals, id, str
+
+            StringRef id ->
+                push_stack self, self.string_literals[id].unwrap!
+
+            Assign read_info ->
+                ptr_to_var :=
+                    if read_info.is_global then var_ptr[read_info.id].expect "Could not assign global variable"
+                    else local_args[read_info.id]
+
+                size := read_info._type.calc_size!
+                set_to := pop_dynamic self, size
+
+                memcpy ptr_to_var, set_to, size
+
+                if i > 0 then
+                    if FuncArg id, name := block.code[i - 1] then
+                        if id == 0 then //asume that func args are in reverse order
+                            _ := pop_stack::[&mir.Function] self
+
+
+            Read read_info ->
+                ptr_to_var :=
+                    if read_info.is_global then var_ptr[read_info.id].expect "Could not read global variable"
+                    else local_args[read_info.id]
+
+                size := read_info._type.calc_size!
+                ptr := push_dynamic self, size
+                memcpy ptr, ptr_to_var, size
+
+            LT_i32 -> push_stack self, (pop_under::[int] self) < (pop_2_stack::[int] self)
+            Add_i32 -> push_stack self, (pop_stack::[int] self) + pop_stack::[int] self
+            Sub_i32 -> push_stack self, (pop_under::[int] self) - pop_2_stack::[int] self
+            Mul_i32 -> push_stack self, (pop_stack::[int] self) * pop_stack::[int] self
+            Div_i32 -> push_stack self, (pop_under::[int] self) / pop_2_stack::[int] self
+
+            FuncCall func_ptr_type ->
+                size_of_args := sizeof || -> none
+
+                for arg := func_ptr_type.args do
+                    size_of_args += arg.calc_size!
+
+                if func_ptr_type.external then
+                    func_ptr := *(offsetPtr self.stack.data, self.stack.occupied - size_of_args) cast &|&Interpreter| -> none
+                    func_ptr self
+                else
+                    func_ptr := *(offsetPtr self.stack.data, self.stack.occupied - size_of_args) cast &&mir.Function
+
+                    self.exec_function func_ptr
+
+            FuncReturn typ -> return None
+
+            Add_f32 -> push_stack self, (pop_stack::[float] self) + pop_stack::[float] self
+            Sub_f32 -> push_stack self, (pop_under::[float] self) - pop_2_stack::[float] self
+            Mul_f32 -> push_stack self, (pop_stack::[float] self) * pop_stack::[float] self
+            Div_f32 -> push_stack self, (pop_under::[float] self) / pop_2_stack::[float] self
+            LT_f32 -> push_stack self, (pop_under::[float] self) < pop_2_stack::[float] self
+
+            Store_i32 num -> push_stack::[int] self, num
+            Store_f32 num -> push_stack self, num
+            Store_bool b -> push_stack self, b
+
+    None
+
+from "insertByID" import insert_at_index
+
+def Interpreter.exec_function(&self, func: &mir.Function) =
+    defer self.var_stack.reset_to self.var_stack.get_occupied!
+
+    local_args := [..]&none
+
+    block := func.all_blocks[0]
+
+    self.blocks.append self.all_blocks[func.id].unwrap!
+
+    while true do
+        if Some next_block := self.exec_block block, &self.var_stack, &local_args then
+            block = next_block
+        else
+            break
+
+    _ := self.blocks.pop!
+
+def Interpreter.set_functions(&self, ir: &mir.Program) =
+    for i := 0..ir.functions.length do
+        func := &ir.functions[i]
+
+        func_ptr := (self.stack.alloc sizeof &mir.Function) cast &&mir.Function
+        *func_ptr = func
+
+        insert_at_index &self.var_ptr, func.id, func_ptr
+
+        blocks := [..]Maybe[&mir.Block]
+        for block := func.all_blocks do
+            insert_at_index &blocks, block.id, block
+
+        insert_at_index &self.all_blocks, func.id, blocks
+
+def exec(ir: mir.Program) =
+    all_blocks := [..]Maybe[[..]Maybe[&mir.Block]]
+
+    i := Interpreter{
+        string_literals = [..]Maybe[string]
+        var_ptr = [..]Maybe[&none]
+        stack = new_TemporaryStorage 10_000
+        all_blocks = all_blocks
+        blocks = [..][..]Maybe[&mir.Block]
+        var_stack = new_TemporaryStorage 100_000
+    }
+
+    ptr_to_func := [log_int, log_float, log_string]
+
+    for c := 0..ptr_to_func.length do
+        i.var_ptr.append Some (&ptr_to_func[c]) as &none
+
+    defer i.stack.free_allocator!
+    defer i.var_stack.free_allocator!
+
+    i.set_functions &ir
+    i.exec_function *(i.var_ptr[3] cast &&mir.Function) // ir.functions[0]

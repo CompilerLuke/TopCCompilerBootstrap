@@ -1,0 +1,43 @@
+import "parser"
+import "types"
+import "error"
+import "lexer"
+import "print"
+import "hashMap"
+import "scope"
+
+def parse_struct(self: &parser.Parser) Maybe[&error.CompilerError] =
+    self.expect_next_tag lexer.Identifier, "Name has to be an identifier"
+    name := self.current!.value
+
+    self.expect_next_token ":", "Expecting :"
+
+    hash_map := hashMap.make_HashMap::[types.CompilerType]!
+
+    while not self.is_end! do
+        match self.next!.kind with
+            Symbol ->
+                if self.current!.value == "\n" then
+                    ?self.eval!
+                else
+                    return Some error.make_Error self, "Unexpected token"
+
+            Indent -> ?self.eval!
+            Identifier ->
+                field_name := self.current!.value
+                _ := self.next!
+
+                guard Ok typ := types.parse_type self
+                elif Error e then return Some e
+
+                if hash_map.contains field_name then
+                    return Some error.make_Error self, "{field_name} already field in struct"
+
+                hash_map.insert field_name, typ
+
+            _ -> return Some error.make_Error self, "Unexpected token"
+
+    for key := hash_map.keys! do
+        log "{key} : {hash_map[key]}"
+
+    None

@@ -1,0 +1,8 @@
+import "ast"
+
+def convert_string(converter: &Converter, node: &ast.AST, str: string) =
+    string_id := converter.string_literal_counter
+    converter.string_literal_counter += 1
+
+    converter.scopes[0].append StringDecl string_id, str
+    converter.get_scope!.append StringRef string_id

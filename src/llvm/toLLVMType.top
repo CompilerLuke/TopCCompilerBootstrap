@@ -1,0 +1,26 @@
+import "types"
+
+def llvm_type_for(typ: types.CompilerType) LLVMTypeRef =
+    match typ with
+        x as &types.Int -> llvmInt32Type!
+        x as &types.Float -> llvmFloatType!
+        x as &types.Bool -> llvmInt1Type!
+        x as &types.FuncPtr ->
+            args := [..]LLVMTypeRef
+            for arg := x.args do
+                args.append llvm_type_for arg
+            llvmFunctionType (llvm_type_for x.return_type), args
+        x as &types.Void -> llvmVoidType!
+        _ ->
+            panic "Unknown type: {typ.get_type!}"
+            0 cast LLVMTypeRef
+
+def llvm_initial_value_for(typ: types.CompilerType) LLVMValueRef =
+    match typ with
+        x as &types.Bool -> llvmConstInt llvmInt1Type!, 0, false
+        x as &types.Int -> llvmConstInt llvmInt32Type!, 0, true
+        x as &types.Float -> llvmConstReal llvmFloatType!, 0
+
+        _ ->
+            panic "Unknown type: {typ.get_type!}"
+            0 cast LLVMValueRef

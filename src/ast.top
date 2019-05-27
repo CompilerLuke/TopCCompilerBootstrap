@@ -2,11 +2,15 @@ import "types"
 from "error" import Thrower
 
 type OperatorKind either
-    Add or Mul or Div
+    Add or Mul or Div or LT or Sub
 
 type ReadInfo =
     is_global: bool
     name: string
+
+type FuncInfo =
+    name: string
+    _type: &types.FuncPtr
 
 type Payload either
     Root
@@ -17,7 +21,12 @@ type Payload either
     Identifier(&ReadInfo)
     FuncCall
     CreateAssign or Create or Assign
-    If or Block or IfCondition or Else
+    If or Block or Condition or Else
+    While
+    FuncDef(&FuncInfo)
+    Tuple
+    FuncArg(string, types.CompilerType)
+    String(string)
 
 def Payload.toString(&self) string =
     payload_type := get_type Payload
@@ -41,6 +50,12 @@ def AST.add(&self, node: &AST) =
     node.owner = Some self
     self.nodes.append node
 
+def AST.op_get(&self, index: uint) &&AST =
+    &self.nodes[index]
+
+def AST.length(&self) uint =
+    self.nodes.length
+
 def make_AST[T: Thrower](t: T, payload: Payload) &AST =
     nodes := [..]&AST
     nodes.allocator = Some context.longterm_storage
@@ -54,3 +69,7 @@ def make_AST[T: Thrower](t: T, payload: Payload) &AST =
         _line = t.get_line!
         _column = t.get_column!
     }
+
+def op_type(node: &AST) types.CompilerType =
+    assert node.payload.tag == (Operator Add).tag, "Passing incorrect node to op_type"
+    node.nodes[0]._type

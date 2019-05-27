@@ -1,0 +1,67 @@
+import "parser"
+import "ast"
+import "error"
+import "print"
+import "lexer"
+import "types"
+
+def parse_funcDef(self: &parser.Parser) Maybe[&error.CompilerError] =
+    ?self.expect_next_tag lexer.Identifier, "Expecting identifier"
+
+    name := self.current!.value
+
+    func_type := types.make_FuncPtr!
+    func_info := box ast.FuncInfo{ name = name, _type = func_type}
+
+    func_def := ast.make_AST self, ast.FuncDef func_info
+    self.push_current_node func_def
+
+    args := ast.make_AST self, ast.Tuple
+    self.push_current_node args
+
+    func_args := [..]types.CompilerType
+
+    ?self.expect_next_token "(", "Expecting ("
+
+    while self.next!.value != ")" do
+        ?self.expect_tag lexer.Identifier, "Expecting identifier"
+
+        arg_name := self.current!.value
+
+        _ := self.next!
+
+        guard Ok arg_type := types.parse_type self
+        elif Error e then return Some e
+
+        func_args.append arg_type
+
+        self.current_node.add ast.make_AST self, ast.FuncArg arg_name, arg_type
+
+        if self.peek!.value == "," then
+            _ := self.next!
+
+    ?self.pop_current_node!
+
+    ret : types.CompilerType = types.make_Void!
+
+    if self.next!.value != ":" then
+        match types.parse_type self with
+            Ok x -> ret = x
+            Error e -> return Some e
+
+    ?self.expect_next_token ":", "Expecting : to terminate function definition"
+
+    func_type.return_type = ret
+    func_type.args = func_args
+
+    block := ast.make_AST self, ast.Block
+    self.push_current_node block
+
+    while not self.is_end! do
+        _ := self.next!
+        ?self.eval!
+
+    ?self.pop_current_node!
+    ?self.pop_current_node!
+
+    None

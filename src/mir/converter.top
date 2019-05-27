@@ -1,0 +1,127 @@
+import "ast"
+import "mir"
+import "types"
+from "hashMap" import all
+import "print"
+from "ifValidation" import (block_returns_value)
+
+ext atoi: |&char| -> int = "atoi"
+ext atof: |&char| -> int = "atof"
+
+type CFG =
+    return_to: uint
+    block: Maybe[&mir.Block]
+
+def CFG.toString(&self) string =
+    "CFG {self.return_to}"
+
+type Converter =
+    global_var_counter: uint
+    string_literal_counter: uint
+    scopes: [..]&FuncScope
+    functions: &[..]mir.Function
+
+type FuncScope =
+    var_counter: uint
+    cfgs: [..]CFG
+    block: &mir.Block
+    block_counter: uint
+    all_blocks: &[..]&mir.Block
+    vars: HashMap[uint]
+    num_args: uint
+
+def Converter.push_scope(&self) &FuncScope =
+    op_codes := box [..]mir.OpCode
+    all_blocks := box [..]&mir.Block
+    cfgs := [..]CFG
+
+    block := box mir.Block{0, op_codes}
+
+    scope := box FuncScope{
+        var_counter = 0
+        block_counter = 0
+        cfgs = cfgs
+        block = block
+        vars = make_HashMap::[uint]!
+        all_blocks = all_blocks
+        num_args = 0
+    }
+
+    self.scopes.append scope
+
+    scope.push_cfg CFG{
+        return_to = 0
+        block = Some block
+    }
+
+    scope
+
+def Converter.pop_scope(&self) &FuncScope =
+    self.scopes.pop!
+
+def Converter.get_scope(&self) &FuncScope =
+    self.scopes[self.scopes.length - 1]
+
+def FuncScope.push_block(&self) uint =
+    self.block_counter += 1
+    self.block_counter
+
+def FuncScope.append(&self, code: mir.OpCode) =
+    self.block.code.append code
+
+def FuncScope.pop_block(&self) =
+    self.block_counter -= 1
+
+def FuncScope.push_cfg(&scope, cfg: CFG) =
+    scope.cfgs.append cfg
+
+    guard Some block := cfg.block
+    else return
+
+    scope.block = block
+    scope.all_blocks.append block
+
+def FuncScope.add_block(&scope, block: &mir.Block) =
+    scope.block = block
+    scope.all_blocks.append block
+
+def FuncScope.pop_cfg(&scope) =
+    _ := scope.cfgs.pop!
+
+def FuncScope.current_cfg(&scope) &CFG =
+    &scope.cfgs[scope.cfgs.length - 1]
+
+def unsupported(mesg: string) mir.OpCode =
+    panic mesg
+    mir.Add_i32
+
+def is_block(node: &ast.AST) bool =
+    node.payload.tag == ast.Block.tag
+
+def get_rhs_of_assign(node: &ast.AST) &ast.AST =
+    if node.nodes.length == 1 then node.nodes[0]
+    else node.nodes[1]
+
+def get_lhs_of_assign(node: &ast.AST) &ast.AST =
+    if node.nodes.length == 1 then
+        guard Some owner := node.owner
+        else panic "Assign missing owner"
+
+        create := owner.nodes[0]
+        create.nodes[0]
+    else
+        node.nodes[0]
+
+def Converter.get_id_of_var(&self, name: string) uint =
+    i : int = self.scopes.length - 1
+    while i >= 0 do
+        scope := self.scopes[i cast uint]
+        if scope.vars.contains name then return scope.vars[name]
+        i -= 1
+
+    panic "Could not find variable convert to mir: {name}"
+    0
+
+def Converter.convert_nodes(&self, nodes: []&ast.AST) =
+    for n := nodes do
+        self.convert_node n

@@ -1,0 +1,22 @@
+ext _ = "#include <stdio.h>"
+ext _popen: |&char, &char| -> Maybe[&FILE] = "popen"
+ext _pclose: |&FILE| -> int = "pclose"
+ext _fgetc: |&FILE| -> char = "fgetc"
+ext _eof: char = "EOF"
+
+from "stringBuilder" import make_StringBuilder
+
+def popen(cmd: string) (int, string) =
+    guard Some p := _popen cmd.to_c_string!, "r".to_c_string!
+    else return (1 as int, "Unable to open process")
+
+    s := make_StringBuilder!
+
+    while true do
+        ch := _fgetc p
+        if ch == _eof then break
+        s.chars.append ch
+
+    status := _pclose p
+
+    (status, s.toString!)

@@ -1,11 +1,15 @@
 import "lexer"
 import "parser"
 from "error" import all
-import "astToMIR"
+import "mir"
 from "print" import print_obj
 import "interpreter"
 import "validator"
 import "llvm"
+import "linker"
+
+def log_memory_usage() =
+    log "USED: {context.allocator.get_occupied! + context.longterm_storage.get_occupied!}"
 
 def compile_file(filename: string) Result[_,string] =
     guard Some f := open filename, ReadFile
@@ -13,36 +17,65 @@ def compile_file(filename: string) Result[_,string] =
 
     defer f.free!
 
-    src := f.read!
+    src : string = ""
+
+    new_context := *context
+    new_context.allocator = &malloc_as_allocator
+    #pushContext new_context do
+        src = f.read!
 
     log "=== read source files ==="
-    //log src
+    log_memory_usage!
 
     guard Ok tokens := lexer.lex src, filename
     elif Error lex_e then return Error lex_e.toString!
 
+    new_context.allocator.dealloc(src.to_c_string!)
+
     log "=== tokenize ==="
-    //log tokens
+    log_memory_usage!
 
     guard Ok syntax_tree := parser.parse tokens, filename
     elif Error ast_e then return Error ast_e.toString!
 
     log "=== parsed =="
-    //print_obj syntax_tree
+    log_memory_usage!
 
     if Some validation_error := validator.validate syntax_tree then
         return Error validation_error.toString!
 
     log "=== validated ==="
+    log_memory_usage!
+    //print_obj syntax_tree
 
-    ir := astToMIR.convert syntax_tree
+    ir := mir.convert syntax_tree
 
-    log "=== generated id ===="
-    //print_obj ir
+    log "=== generated ir ===="
+    log_memory_usage!
+    print_obj ir
 
     interpreter.exec ir
+
+    log "=== llvm ir ===="
+    log_memory_usage!
     llvm.convert_to_LLVMModule &ir
 
+    //print_obj ir
 
+    log "=== linking ==="
+    object_files := ["test/main.o"]
+
+    l := linker.Linker{
+        path_to_exe = "test/prog.exe"
+        path_to_runtime = "test/runtime.o"
+        object_files = &object_files
+        linker = "clang"
+    }
+
+
+    l.link!
+
+    log "=== running executable ==="
+    l.run!
 
     Ok _
