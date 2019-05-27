@@ -201,7 +201,6 @@ unsigned int llvm_c;llvm_c = Jb;
 }
 ;
 ;};
-_global_log_string(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(8,"setting "),_global_uint_toStringByValue((llvm_id),zb),zb),_global_StringInit(0,""),zb),zb);
 *(_global_Array_op_get_Maybe_llvm_LLVMBasicBlockRef_(&(llvm_blocks),(unsigned int)llvm_id,zb))=_global_Some_llvm_LLVMBasicBlockRef(llvm_block,zb);;
 }
 ;

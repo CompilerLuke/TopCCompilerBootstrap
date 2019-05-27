@@ -57,7 +57,6 @@ def convert_to_LLVMModule(program: &mir.Program) =
                 for c := 0..(id - blocks.length + 1) do
                     blocks.append None
 
-            log "setting {id}"
             blocks[id] = Some block
 
         for mir_block := mir_func.all_blocks do

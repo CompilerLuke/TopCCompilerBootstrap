@@ -6,6 +6,7 @@ from "print" import print_obj
 import "interpreter"
 import "validator"
 import "llvm"
+import "linker"
 
 def compile_file(filename: string) Result[_,string] =
     guard Some f := open filename, ReadFile
@@ -43,6 +44,16 @@ def compile_file(filename: string) Result[_,string] =
     interpreter.exec ir
     llvm.convert_to_LLVMModule &ir
 
+    obj_files := ["test/main.o"]
 
+    l := linker.Linker{
+        linker = "clang"
+        exe_path = "test/prog.exe"
+        runtime_path = "test/runtime.o"
+        object_files = &obj_files
+    }
+
+    l.link!
+    l.run!
 
     Ok _

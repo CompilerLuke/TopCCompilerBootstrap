@@ -1,5 +1,7 @@
-static inline struct _global_Result_string_Result_T tmpcompilerbh(struct _global_Result_Result_E_Result_T m) {
-struct _global_Result_string_Result_T l;l.tag = m.tag;l.cases = *(union _global_Result_string_Result_T_cases*) &(m.cases);return l;
+struct _global_StaticArray_StaticArray_S_string tmpcompilerbh(struct _global_StaticArray_1_string* k) {
+return _global_StaticArray_StaticArray_S_stringInit(k->data, 1);};
+static inline struct _global_Result_string_Result_T tmpcompilerbj(struct _global_Result_Result_E_Result_T n) {
+struct _global_Result_string_Result_T m;m.tag = n.tag;m.cases = *(union _global_Result_string_Result_T_cases*) &(n.cases);return m;
 }
 struct _global_Result_string_Result_T compiler_compile_file(struct _global_String compiler_filename, struct _global_Context* c){;
 struct _global_File compiler_f;;
@@ -53,12 +55,16 @@ struct mir_Program compiler_ir;compiler_ir = astToMIR_convert(compiler_syntax_tr
 _global_log_string(_global_StringInit(21,"=== generated id ===="),c);
 interpreter_exec(compiler_ir,c);
 llvm_convert_to_LLVMModule(&(compiler_ir),c);
-;struct _global_Result_string_Result_T k =tmpcompilerbh(_global_Ok_Result_E_Result_T(NULL,c));
+struct _global_StaticArray_1_string compiler_obj_files;compiler_obj_files = _global_StaticArray_1_stringInit(_global_StringInit(11,"test/main.o"));;
+struct linker_Linker compiler_l;compiler_l = linker_LinkerInit(_global_StringInit(5,"clang"),_global_StringInit(13,"test/prog.exe"),_global_StringInit(14,"test/runtime.o"),tmpcompilerbh(&(compiler_obj_files)));;
+linker_Linker_link(&(compiler_l),c);
+linker_Linker_run(&(compiler_l),c);
+;struct _global_Result_string_Result_T l =tmpcompilerbj(_global_Ok_Result_E_Result_T(NULL,c));
 _global_File_freeByValue(f,c);
-return k;
+return l;
  }
 void compilerInitTypes() { 
- lexerInitTypes();parserInitTypes();astToMIRInitTypes();interpreterInitTypes();validatorInitTypes();llvmInitTypes();
+ lexerInitTypes();parserInitTypes();astToMIRInitTypes();interpreterInitTypes();validatorInitTypes();llvmInitTypes();linkerInitTypes();
 struct _global_Case* k =
 (struct _global_Case*) malloc(sizeof(struct _global_Case) * 2);
 k[0].name = _global_StringInit(2, "Ok");
@@ -108,11 +114,24 @@ _global_Result_string_Result_TType.package = _global_StringInit(7, "_global");
 _global_Result_string_Result_TType.name = _global_StringInit(22, "Result_string_Result_T");
 _global_Result_string_Result_TType.cases.data = k;
 _global_Result_string_Result_TType.cases.length = 2;
-struct _global_Case* t =
+_global_StaticArray_1_stringType.size = malloc(sizeof(struct _global_ArraySize));
+_global_StaticArray_1_stringType.size->tag = 0;
+_global_StaticArray_1_stringType.size->cases.Static.field0 = 1;
+_global_StaticArray_1_stringType.array_type = 
+_global_TypeFromStruct(
+_global_String_get_type(NULL,(&_global_context))
+,
+&rStringType_VTABLE_FOR_Type
+,
+rStringType_VTABLE_FOR_Type.type
+, &_global_StringType_toString
+, &_global_StringType_get_size
+)
+;struct _global_Case* v =
 (struct _global_Case*) malloc(sizeof(struct _global_Case) * 2);
-t[0].name = _global_StringInit(2, "Ok");
-t[0].args = _global_StaticArray_StaticArray_S_CaseArgInit(malloc(sizeof(struct _global_CaseArg) * 1), 1);
-t[0].args.data[0].arg_type = 
+v[0].name = _global_StringInit(2, "Ok");
+v[0].args = _global_StaticArray_StaticArray_S_CaseArgInit(malloc(sizeof(struct _global_CaseArg) * 1), 1);
+v[0].args.data[0].arg_type = 
 _global_TypeFromStruct(
 &None_Type
 ,
@@ -122,10 +141,10 @@ rNoneType_VTABLE_FOR_Type.type
 , &_global_NoneType_toString
 , &_global_NoneType_get_size
 )
-; t[0].args.data[0].offset = offsetof(struct _global_Result_Result_E_Result_T_Ok, field0);
-t[1].name = _global_StringInit(5, "Error");
-t[1].args = _global_StaticArray_StaticArray_S_CaseArgInit(malloc(sizeof(struct _global_CaseArg) * 1), 1);
-t[1].args.data[0].arg_type = 
+; v[0].args.data[0].offset = offsetof(struct _global_Result_Result_E_Result_T_Ok, field0);
+v[1].name = _global_StringInit(5, "Error");
+v[1].args = _global_StaticArray_StaticArray_S_CaseArgInit(malloc(sizeof(struct _global_CaseArg) * 1), 1);
+v[1].args.data[0].arg_type = 
 _global_TypeFromStruct(
 &None_Type
 ,
@@ -135,7 +154,7 @@ rNoneType_VTABLE_FOR_Type.type
 , &_global_NoneType_toString
 , &_global_NoneType_get_size
 )
-; t[1].args.data[0].offset = offsetof(struct _global_Result_Result_E_Result_T_Error, field0);
+; v[1].args.data[0].offset = offsetof(struct _global_Result_Result_E_Result_T_Error, field0);
 _global_Result_Result_E_Result_TType.tag_field.name = _global_StringInit(3, "tag");
 
 _global_Result_Result_E_Result_TType.tag_field.offset = offsetof(struct _global_Result_Result_E_Result_T, tag);
@@ -155,7 +174,7 @@ _global_Result_Result_E_Result_TType.size = sizeof(struct _global_Result_Result_
 
 _global_Result_Result_E_Result_TType.package = _global_StringInit(7, "_global");
 _global_Result_Result_E_Result_TType.name = _global_StringInit(24, "Result_Result_E_Result_T");
-_global_Result_Result_E_Result_TType.cases.data = t;
+_global_Result_Result_E_Result_TType.cases.data = v;
 _global_Result_Result_E_Result_TType.cases.length = 2;
  }
 void compilerInit() { 
@@ -167,5 +186,6 @@ astToMIRInit();;
 interpreterInit();;
 validatorInit();;
 llvmInit();;
+linkerInit();;
 ;
 };
