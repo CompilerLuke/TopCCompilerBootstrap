@@ -2,4 +2,7 @@ import "parser"
 import "error"
 
 def parse_tuple(self: &parser.Parser) Maybe[&error.CompilerError] =
+    self.num_paren += 1
+    ?self.eval_till_end!
+
     None

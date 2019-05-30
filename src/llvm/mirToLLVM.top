@@ -1,6 +1,7 @@
 import "mir"
 import "print"
 import "types"
+from "insertByID" import insert_at_index
 
 def next_tmp(t: &uint) string =
     s := "tmp.{t}"
@@ -8,86 +9,137 @@ def next_tmp(t: &uint) string =
     s
 
 def op(builder: &LLVMBuilderRef, stack: &[..]LLVMValueRef, tmp: &uint, func: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, string| -> LLVMValueRef) =
-    a := stack.pop!
     b := stack.pop!
+    a := stack.pop!
 
     stack.append func *builder, a, b, next_tmp tmp
 
 def convert_to_LLVMModule(program: &mir.Program) =
+    defer context.allocator.reset_to context.allocator.get_occupied!
 
-    llvmInitializeAllTargets!
-    llvmInitializeAllTargetInfos!
-    llvmInitializeAllTargetMCs!
-    llvmInitializeAllAsmParsers!
-    llvmInitializeAllAsmPrinters!
+    llvmInitializeNativeTarget!
+    llvmInitializeNativeAsmParser!
+    llvmInitializeNativeAsmPrinter!
 
     mod := llvmModuleCreateWithName "my_module"
     builder := llvmCreateBuilder!
     stack := [..]LLVMValueRef
 
-    global_vars := [..]LLVMValueRef
+    global_vars := [..]Maybe[LLVMValueRef]
 
-    //0 - log_float
-    log_float_type := llvmFunctionType llvmVoidType!, box [llvmFloatType!]
-    log_float_func := llvmAddFunction mod, "log_float", log_float_type
-    global_vars.append log_float_func
-
-    //1 - log_int
+    //0 - log_int
     log_int_type := llvmFunctionType llvmVoidType!, box [llvmInt32Type!]
-    log_int_func := llvmAddFunction mod, "log_int", log_int_type
-    global_vars.append log_int_func
+    log_int_func := llvmAddFunction mod, "c_log_int", log_int_type
+    global_vars.append Some log_int_func
 
+    //1 - log_float
+    log_float_type := llvmFunctionType llvmVoidType!, box [llvmFloatType!]
+    log_float_func := llvmAddFunction mod, "c_log_float", log_float_type
+    global_vars.append Some log_float_func
+
+    //2 - log_string
 
     for mir_func := program.functions do
         //param_types := []
-        ret_type := llvmFunctionType llvmVoidType!, []
-        llvm_func := llvmAddFunction mod, "main", ret_type
+        ret_type := llvm_type_for mir_func._type
+        llvm_func := llvmAddFunction mod, mir_func.name, ret_type
         tmp := 0
 
         blocks := [..]Maybe[LLVMBasicBlockRef]
 
-        for mir_block := mir_func.all_blocks do //create indexable block list
-            id := mir_block.id
-            name :=
-                if i == 0 then "entry"
-                else id.toString!
-            block := llvmAppendBasicBlock llvm_func, name
+        local_vars := [..]Maybe[LLVMValueRef]
 
-            if id >= blocks.length then
-                for c := 0..(id - blocks.length + 1) do
-                    blocks.append None
-
-            blocks[id] = Some block
+        insert_at_index &global_vars, mir_func.id, llvm_func
 
         for mir_block := mir_func.all_blocks do
-            block := blocks[mir_block.id].unwrap!
+            name :=
+                if i == 0 then "entry"
+                else mir_block.id.toString!
+
+            block := llvmAppendBasicBlock llvm_func, name
+
+            insert_at_index &blocks, mir_block.id, block
+
+        for mir_block := mir_func.all_blocks do
+            block := blocks[mir_block.id].expect "Could not get llvm block"
             llvmPositionBuilderAtEnd builder, block
 
             for inst := *mir_block.code do
+                //if stack.length == 0 then
+                //    log "======="
+                //print.print_obj inst
+
                 match inst with
                     Add_i32 -> op &builder, &stack, &tmp, llvmBuildAdd
-                    Add_f32 -> op &builder, &stack, &tmp, llvmBuildAdd
+                    Add_f32 -> op &builder, &stack, &tmp, llvmBuildFAdd
+                    Sub_i32 -> op &builder, &stack, &tmp, llvmBuildSub
+                    Sub_f32 -> op &builder, &stack, &tmp, llvmBuildFSub
                     Mul_i32 -> op &builder, &stack, &tmp, llvmBuildMul
-                    Mul_f32 -> op &builder, &stack, &tmp, llvmBuildMul
-                    Div_i32 -> op &builder, &stack, &tmp, llvmBuildDiv
+                    Mul_f32 -> op &builder, &stack, &tmp, llvmBuildFMul
+                    Div_i32 -> op &builder, &stack, &tmp, llvmBuildFDiv
                     Div_f32 -> op &builder, &stack, &tmp, llvmBuildDiv
+
+                    LT_i32 ->
+                        b := stack.pop!
+                        a := stack.pop!
+
+                        stack.append llvmBuildICmp builder, llvmIntSLT, a, b, next_tmp &tmp
+                    LT_f32 ->
+                        b := stack.pop!
+                        a := stack.pop!
+
+                        stack.append llvmBuildFCmp builder, llvmRealOLT, a, b, next_tmp &tmp
+
                     Store_bool b -> stack.append llvmConstInt llvmInt1Type!, b cast i64, false
                     Store_i32 integer -> stack.append llvmConstInt llvmInt32Type!, integer, true
                     Store_f32 f -> stack.append llvmConstReal llvmFloatType!, f
-                    FuncReturn -> llvmBuildRetVoid builder
-                    Read info ->
-                        assert info.is_global, "Can't handle locals yet!"
-                        stack.append global_vars[info.id]
 
+                    FuncReturn typ ->
+                        if types.is_actual_kind::[types.Void] typ then
+                            llvmBuildRetVoid builder
+                        else
+                            llvmBuildRet builder, stack.pop!
+
+                    Jump a -> llvmBuildBr builder, blocks[a].expect "Could not find block"
                     CondJump a, b ->
                         cond := stack.pop!
-                        block_then := blocks[a].unwrap!
-                        block_else := blocks[b].unwrap!
+                        block_a := blocks[a].expect "Could not find block"
+                        block_b := blocks[b].expect "Could not find block"
+                        llvmBuildCondBr builder, cond, block_a, block_b
 
-                        llvmBuildCondBr builder, cond, block_then, block_else
 
-                    Jump a ->
-                        llvmBuildBr builder, blocks[a].unwrap!
+                    Read info ->
+                        if info.is_global then
+                            v := global_vars[info.id].unwrap!
+
+                            if types.is_actual_kind::[types.FuncPtr] info._type then
+                                stack.append v
+                            else
+                                stack.append llvmBuildLoad builder, v, next_tmp &tmp
+                        else
+                            stack.append llvmBuildLoad builder, local_vars[info.id].unwrap!, next_tmp &tmp
+
+                    Create info ->
+                        assert info.is_global, "Can't handle local create yet!"
+
+                        llvm_var := llvmAddGlobal mod, (llvm_type_for info._type), info.name
+                        insert_at_index &global_vars, info.id, llvm_var
+                        llvmSetInitializer llvm_var, llvm_initial_value_for info._type
+
+                    FuncArg id, info ->
+                        arg := llvmGetParam llvm_func, id
+
+                        llvm_var := llvmBuildAlloca builder, (llvm_type_for info._type), next_tmp &tmp
+                        insert_at_index &local_vars, info.id, llvm_var
+
+                        stack.append arg
+
+                    Assign info ->
+                        v :=
+                            if info.is_global then global_vars[info.id].unwrap!
+                            else local_vars[info.id].unwrap!
+
+                        llvmBuildStore builder, stack.pop!, v
 
                     FuncCall fptr_type ->
                         arg_count := fptr_type.args.length
@@ -97,9 +149,10 @@ def convert_to_LLVMModule(program: &mir.Program) =
 
                         for c := 0..arg_count do
                             args.append stack[stack.length - arg_count + c]
-                        stack.shorten 1 + arg_count
 
-                        if types.is_kind::[types.Void] fptr_type.return_type then
+                        stack.shorten arg_count + 1
+
+                        if types.is_actual_kind::[types.Void] fptr_type.return_type then
                             _ := llvmBuildCall builder, func, args, ""
                         else
                             stack.append llvmBuildCall builder, func, args, next_tmp &tmp
@@ -108,29 +161,21 @@ def convert_to_LLVMModule(program: &mir.Program) =
 
     error : Maybe[&char] = None
 
-    log "verifying module"
-
     if llvmVerifyModule mod, llvmAbortProcessAction, &error then
-        log "llvm verification error"
-        log char_buffer_toString error.unwrap!
-        panic "LLVM ERROR"
+        panic "LLVM ERROR: {char_buffer_toString error.unwrap!}"
+
+    llvmDisposeMessage error
 
     target_triple := llvmGetDefaultTargetTriple!
     target : LLVMTargetRef = _
 
     if llvmGetTargetFromTriple target_triple, &target, &error then
-        log char_buffer_toString error.unwrap!
-        log char_buffer_toString target_triple
-        panic "LLVM GET TARGET FROM TRIPLE ERROR"
+        panic "LLVM GET TARGET FROM TRIPLE ERROR: {char_buffer_toString error.unwrap!}"
 
     cpu := "generic"
     features := ""
 
-    target_machine := llvmCreateTargetMachine target, target_triple, cpu.to_c_string!, features.to_c_string!, llvmCodeGenLevelNone, llvmRelocStatic, llvmCodeModelDefault
+    target_machine := llvmCreateTargetMachine target, target_triple, cpu, features, llvmCodeGenLevelNone, llvmRelocDefault, llvmCodeModelDefault
 
     if llvmTargetMachineEmitToFile target_machine, mod, "test/main.o", llvmObjectFile, &error then
-        log "error"
-        log char_buffer_toString error.unwrap!
-        panic "LLVM EMIT"
-
-    log "passed"
+        panic "LLVM EMIT: {char_buffer_toString error.unwrap!}"

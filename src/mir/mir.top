@@ -6,15 +6,21 @@ type ReadInfo =
     is_global: bool
     _type: types.CompilerType
     id: uint
+    name: string
 
 type OpCode either
     Add_i32
+    Sub_i32
     Mul_i32
     Div_i32
+    LT_i32
+
 
     Add_f32
+    Sub_f32
     Mul_f32
     Div_f32
+    LT_f32
 
     Store_i32(i32)
     Store_f32(float)
@@ -23,27 +29,34 @@ type OpCode either
     Create(&ReadInfo)
     Read(&ReadInfo)
     Assign(&ReadInfo)
+    FuncArg(uint, &ReadInfo)
 
     FuncCall(&types.FuncPtr)
-    FuncReturn
+    FuncReturn(types.CompilerType)
 
     CondJump(uint, uint)
     Jump(uint)
+
+    StringRef(uint)
+    StringDecl(uint, string)
 
 type Block =
     id: ID
     code: &[..]OpCode
 
+/*
 type CreateVar =
     name: ID
 
 def CreateVar.toString(&self) string =
     self.name.toString!
+*/
 
 type Function =
     name: string
-    args: []CreateVar
+    _type: &types.FuncPtr
     all_blocks: []&Block
+    id: uint
 
 type Program =
     functions: []Function

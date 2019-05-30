@@ -10,6 +10,7 @@ type TokenType either
     Symbol
     Indent
     Keyword
+    String
 
 def TokenType.toString(&self) string =
     enum_type := get_type TokenType
@@ -24,8 +25,29 @@ type Token =
 def Token.toString(&self) string =
     "{self.kind} : {self.value}"
 
+type Tok =
+    active: bool
+    start: uint
+    end: uint
+
+def Tok.length(&self) uint =
+    self.end - self.start
+
+def Tok.slice(&self, s: string) string =
+    s.slice self.start, self.end
+
+def Tok.clear(&self) =
+    self.active = false
+    self.end = self.start
+
+def Tok.include(&self, i: uint) =
+    if not self.active then
+        self.active = true
+        self.start = i
+    self.end = i + 1
+
 type Lexer =
-    tok: [..]char
+    tok: Tok
     src: string
     i: uint
     tokens: [..]Token
@@ -53,16 +75,16 @@ def Lexer.next(&self) char =
         `\0`
 
 def char_array_toString(arr: []char) string =
-    buffer := longterm_alloc::[char] arr.length
+    buffer := longterm_alloc::[char] arr.length + 1
     memcpy buffer, arr.data, arr.length
+    *(indexPtr buffer, arr.length) = null_terminated
     make_String arr.length, buffer
 
 def Lexer.reset_tok(&self) Maybe[&CompilerError] = //returns error
-    if self.tok.length > 0 then
-        (kind, value) := determine_token char_array_toString self.tok
-
+    if self.tok.length! > 0 then
+        (kind, value) := determine_token self.tok.slice self.src
         if kind.tag == Invalid.tag then
-            return Some make_Error self, "Unknown token {char_array_toString self.tok}"
+            return Some make_Error self, "Unknown token {self.tok.slice self.src}"
 
         self.append_token kind, value
 
@@ -93,7 +115,7 @@ def is_number(s: string) Maybe[(TokenType, string)] =
 def is_identifier(s: string) bool =
     true
 
-keywords := ["true", "false", "if", "else"]
+keywords := ["true", "false", "if", "else", "while", "def", "type"]
 
 def is_keyword(s: string) bool =
     keywords.contains s
@@ -102,7 +124,7 @@ def determine_token(s: string) (TokenType, string) =
     if Some token := is_number s then token
     else
         if is_keyword s then (Keyword, s)
-        elif is_identifier s then (Identifier, s)
+        elif (is_identifier s) then (Identifier, s)
         else (Invalid, s)
 
 def lex(src: string, filename: string) Result[[]Token, &CompilerError] =
@@ -113,7 +135,7 @@ def lex(src: string, filename: string) Result[[]Token, &CompilerError] =
         i = 0
         src = src
         tokens = tokens
-        tok = [..]char
+        tok = Tok{false,0,0}
         filename = filename
         line = 1
         column = 0
@@ -122,38 +144,39 @@ def lex(src: string, filename: string) Result[[]Token, &CompilerError] =
     lexer.lex!
 
 def Lexer.append_token(&self, kind: TokenType, value: string) =
+    column := self.column - (value.length / 2)
+    if column > 0 then
+        column -= 1
+
     tok := Token{
         kind = kind
         value = value
         line = self.line
-        column = (self.column - (value.length / 2)) - 1
+        column = column
     }
 
     self.tokens.append tok
 
 def Lexer.lex(using &self) Result[[]Token, &CompilerError] =
-    defer context.allocator.reset_to context.allocator.get_occupied!
-
     while i < src.length do
         t := self.current!
         self.column += 1
 
         match t with
             `(` ->
-                if Some e := self.reset_tok! then
-                    return Error e
+                ?e self.reset_tok!
                 self.append_token Symbol, "("
 
             `)` ->
-                if Some e := self.reset_tok! then
-                    return Error e
+                ?e self.reset_tok!
                 self.append_token Symbol, ")"
+            `=` ->
+                ?e self.reset_tok!
+                self.append_token Symbol, "="
             ` ` ->
-                if Some e := self.reset_tok! then
-                    return Error e
+                ?e self.reset_tok!
             `:` ->
-                if Some e := self.reset_tok! then
-                    return Error e
+                ?e self.reset_tok!
                 match self.next! with
                     `=` ->
                         _ := self.advance!
@@ -163,54 +186,80 @@ def Lexer.lex(using &self) Result[[]Token, &CompilerError] =
                         self.append_token Symbol, ":"
 
             `\n` ->
-                if Some e := self.reset_tok! then
-                    return Error e
+                ?e self.reset_tok!
 
                 s := make_StringBuilder!
                 s.chars.allocator = Some context.longterm_storage
 
+                self.line += 1
+                self.column = 0
+
                 while self.next! == ` ` do
                     _ := self.advance!
                     s.chars.append ` `
+                    self.column += 1
                 s.chars.append `\0`
-
-                self.line += 1
-                self.column = 0
 
                 self.append_token Symbol, "\n"
                 self.append_token Indent, make_String s.chars.length - 1, s.chars.data.unwrap!
 
             `+` ->
-                if Some e := self.reset_tok! then
-                    return Error e
+                ?e self.reset_tok!
 
                 match self.next! with
                     `+` ->
                         _ := self.advance!
                         self.append_token Operator, "++"
+                    `=` ->
+                        _ := self.advance!
+                        self.append_token Symbol, "+="
                     _ ->
                         self.append_token Operator, "+"
-            `*` ->
-                if Some e := self.reset_tok! then
-                    return Error e
 
+            `-` ->
+                ?e self.reset_tok!
+
+                match self.next! with
+                    `=` ->
+                        _ := self.advance!
+                        self.append_token Symbol, "-="
+                    _ ->
+                        self.append_token Operator, "-"
+            `*` ->
+                ?e self.reset_tok!
                 self.append_token Operator, "*"
 
+            `<` ->
+                ?e self.reset_tok!
+                self.append_token Operator, "<"
+
+            `,` ->
+                ?e self.reset_tok!
+                self.append_token Symbol, ","
+
+            `"` ->
+                ?e self.reset_tok!
+
+                while self.i < self.src.length and not self.next! == `"` do
+                    _ := self.advance!
+                    tok.include i
+
+                self.append_token String, tok.slice src
+                self.tok.clear!
+                _ := self.advance!
+
             `/` ->
-                if Some e := self.reset_tok! then
-                    return Error e
+                ?e self.reset_tok!
 
                 match self.next! with
                     `/` -> //comment
-                        if Some e := self.reset_tok! then
-                            return Error e
+                        ?e self.reset_tok!
 
                         while not self.current! == `\n` do
                             self.advance!
 
                     `*` ->
-                        if Some e := self.reset_tok! then
-                            return Error e
+                        ?e self.reset_tok!
 
                         num := 1
                         while num > 0 do
@@ -235,18 +284,17 @@ def Lexer.lex(using &self) Result[[]Token, &CompilerError] =
                                     return Error make_Error self, "Expecting */"
                                 _ ->
 
-                        log "exited"
                     _ -> self.append_token Operator, "/"
 
-            _ -> tok.append t
+            _ -> tok.include i
 
         _ := self.advance!
+
+    ?e self.reset_tok!
 
     self.append_token Symbol, "\n"
     self.append_token Indent, ""
 
-    if Some e := self.reset_tok! then
-        return Error e
-
     ts := self.tokens
+
     Ok (ts as []Token)

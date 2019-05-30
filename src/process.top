@@ -1,31 +1,22 @@
+ext _ = "#include <stdio.h>"
+ext _popen: |&char, &char| -> Maybe[&FILE] = "popen"
+ext _pclose: |&FILE| -> int = "pclose"
+ext _fgetc: |&FILE| -> char = "fgetc"
+ext _eof: char = "EOF"
+
 from "stringBuilder" import make_StringBuilder
 
-ext _ = "#include <stdlib.h>"
-ext _ = "#include <stdio.h>"
+def popen(cmd: string) (int, string) =
+    guard Some p := _popen cmd.to_c_string!, "r".to_c_string!
+    else return (1 as int, "Unable to open process")
 
-ext _system: |&char| -> int = "system"
-ext _popen: |&char, &char| -> Maybe[&FILE] = "_popen"
-ext _fgets: |&char, uint, &FILE| -> Maybe[&char] = "fgets"
-ext _pclose: |&FILE| -> int = "_pclose"
-
-def call(arg: string) int =
-    _system arg.to_c_string!
-
-def popen(arg: string) (int, string) =
-    log "_popen({arg}, r)"
-
-
-    guard Some fp := _popen arg.to_c_string!, "r".to_c_string!
-    else return (-1, "")
-
-    log "crashed"
-
-    path_buf := alloc::[char] 1024
     s := make_StringBuilder!
 
-    while not (_fgets path_buf, 1024, fp).is_none!  do
-        s.append char_buffer_toString path_buf
+    while true do
+        ch := _fgetc p
+        if ch == _eof then break
+        s.chars.append ch
 
-    status := _pclose fp
+    status := _pclose p
 
     (status, s.toString!)

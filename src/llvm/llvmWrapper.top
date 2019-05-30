@@ -16,9 +16,11 @@ type ext LLVMExecutionEngineRef =
 type ext LLVMTargetRef =
 type ext LLVMCodeGenFileType =
 type ext LLVMTargetMachineRef =
-type ext LLVMCodeGenOptLevel =
 type ext LLVMRelocMode =
 type ext LLVMCodeModel =
+type ext LLVMCodeGenOptLevel =
+type ext LLVMIntPredicate =
+type ext LLVMRealPredicate =
 
 ext _llvmModuleCreateWithName: |&char| -> LLVMModuleRef = "LLVMModuleCreateWithName"
 
@@ -47,6 +49,10 @@ ext _llvmBuildAdd: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, &char| -> LLVMVa
 def llvmBuildAdd(builder: LLVMBuilderRef, a: LLVMValueRef, b: LLVMValueRef, name: string) LLVMValueRef =
     _llvmBuildAdd builder, a, b, name.to_c_string!
 
+ext _llvmBuildSub: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildSub"
+def llvmBuildSub(builder: LLVMBuilderRef, a: LLVMValueRef, b: LLVMValueRef, name: string) LLVMValueRef =
+    _llvmBuildSub builder, a, b, name.to_c_string!
+
 ext _llvmBuildMul: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildMul"
 def llvmBuildMul(builder: LLVMBuilderRef, a: LLVMValueRef, b: LLVMValueRef, name: string) LLVMValueRef =
     _llvmBuildMul builder, a, b, name.to_c_string!
@@ -55,22 +61,68 @@ ext _llvmBuildDiv: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, &char| -> LLVMVa
 def llvmBuildDiv(builder: LLVMBuilderRef, a: LLVMValueRef, b: LLVMValueRef, name: string) LLVMValueRef =
     _llvmBuildDiv builder, a, b, name.to_c_string!
 
+ext _llvmBuildFAdd: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildFAdd"
+def llvmBuildFAdd(builder: LLVMBuilderRef, a: LLVMValueRef, b: LLVMValueRef, name: string) LLVMValueRef =
+    _llvmBuildFAdd builder, a, b, name.to_c_string!
+
+ext llvmGetParam: |LLVMValueRef, uint| -> LLVMValueRef = "LLVMGetParam"
+
+ext _llvmBuildFSub: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildFSub"
+def llvmBuildFSub(builder: LLVMBuilderRef, a: LLVMValueRef, b: LLVMValueRef, name: string) LLVMValueRef =
+    _llvmBuildFSub builder, a, b, name.to_c_string!
+
+ext _llvmBuildFMul: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildFMul"
+def llvmBuildFMul(builder: LLVMBuilderRef, a: LLVMValueRef, b: LLVMValueRef, name: string) LLVMValueRef =
+    _llvmBuildFMul builder, a, b, name.to_c_string!
+
+ext _llvmBuildFDiv: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildFDiv"
+def llvmBuildFDiv(builder: LLVMBuilderRef, a: LLVMValueRef, b: LLVMValueRef, name: string) LLVMValueRef =
+    _llvmBuildFDiv builder, a, b, name.to_c_string!
+
+
 ext llvmConstInt: |LLVMTypeRef, i64, bool| -> LLVMValueRef = "LLVMConstInt"
 ext llvmConstReal: |LLVMTypeRef, f64| -> LLVMValueRef = "LLVMConstReal"
 
 ext llvmBuildRetVoid: |LLVMBuilderRef| -> none = "LLVMBuildRetVoid"
+ext llvmBuildRet: |LLVMBuilderRef, LLVMValueRef| -> none = "LLVMBuildRet"
+
+ext llvmBuildBr: |LLVMBuilderRef, LLVMBasicBlockRef| -> none = "LLVMBuildBr"
+ext llvmBuildCondBr: |LLVMBuilderRef, LLVMValueRef, LLVMBasicBlockRef, LLVMBasicBlockRef| -> none = "LLVMBuildCondBr"
 
 ext _llvmAddFunction: |LLVMModuleRef, &char, LLVMTypeRef| -> LLVMValueRef = "LLVMAddFunction"
 def llvmAddFunction(mod: LLVMModuleRef, name: string, ret: LLVMTypeRef) LLVMValueRef =
     _llvmAddFunction mod, name.to_c_string!, ret
 
-ext llvmBuildCondBr: |LLVMBuilderRef, LLVMValueRef, LLVMBasicBlockRef, LLVMBasicBlockRef| -> none = "LLVMBuildCondBr"
-ext llvmBuildBr: |LLVMBuilderRef, LLVMBasicBlockRef| -> none = "LLVMBuildBr"
-
 ext llvmVerifyModule: |LLVMModuleRef, LLVMVerifierFailureAction, &Maybe[&char]| -> bool = "LLVMVerifyModule"
 ext llvmDisposeMessage: |Maybe[&char]| -> none = "LLVMDisposeMessage"
 
 ext llvmAbortProcessAction: LLVMVerifierFailureAction = "LLVMAbortProcessAction"
+
+ext _llvmAddGlobal: |LLVMModuleRef, LLVMTypeRef, &char| -> LLVMValueRef = "LLVMAddGlobal"
+def llvmAddGlobal(mod: LLVMModuleRef, typ: LLVMTypeRef, s: string)  LLVMValueRef =
+    _llvmAddGlobal mod, typ, s.to_c_string!
+
+ext llvmBuildStore: |LLVMBuilderRef, LLVMValueRef, LLVMValueRef| -> none = "LLVMBuildStore"
+ext _llvmBuildLoad: |LLVMBuilderRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildLoad"
+def llvmBuildLoad(builder: LLVMBuilderRef, ptr: LLVMValueRef, name: string) LLVMValueRef =
+    _llvmBuildLoad builder, ptr, name.to_c_string!
+
+ext llvmSetInitializer: |LLVMValueRef, LLVMValueRef| -> none = "LLVMSetInitializer"
+
+ext _llvmBuildICmp: |LLVMBuilderRef, LLVMIntPredicate, LLVMValueRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildICmp"
+def llvmBuildICmp(a: LLVMBuilderRef, b: LLVMIntPredicate, c: LLVMValueRef, d: LLVMValueRef, e: string) LLVMValueRef =
+    _llvmBuildICmp a, b, c, d, e.to_c_string!
+
+ext _llvmBuildFCmp: |LLVMBuilderRef, LLVMRealPredicate, LLVMValueRef, LLVMValueRef, &char| -> LLVMValueRef = "LLVMBuildFCmp"
+def llvmBuildFCmp(a: LLVMBuilderRef, b: LLVMRealPredicate, c: LLVMValueRef, d: LLVMValueRef, e: string) LLVMValueRef =
+    _llvmBuildFCmp a, b, c, d, e.to_c_string!
+
+ext llvmIntSLT: LLVMIntPredicate = "LLVMIntSLT"
+ext llvmRealOLT: LLVMRealPredicate = "LLVMRealOLT"
+
+ext _llvmBuildAlloca: |LLVMBuilderRef, LLVMTypeRef, &char| -> LLVMValueRef = "LLVMBuildAlloca"
+def llvmBuildAlloca(builder: LLVMBuilderRef, typ: LLVMTypeRef, e: string) LLVMValueRef =
+    _llvmBuildAlloca builder, typ, e.to_c_string!
 
 //ext llvmLinkInJIT: || -> none = "LLVMLinkInJIT"
 //ext llvmInitializeNativeTarget: || -> none = "LLVMInitializeNativeTarget"
@@ -87,24 +139,29 @@ ext _llvmTargetMachineEmitToFile: |LLVMTargetMachineRef, LLVMModuleRef, &char, L
 def llvmTargetMachineEmitToFile(t: LLVMTargetMachineRef, m: LLVMModuleRef, file: string, typ: LLVMCodeGenFileType, err: &Maybe[&char]) bool =
     _llvmTargetMachineEmitToFile t, m, file.to_c_string!, typ, err
 
+
+
+ext _llvmCreateTargetMachine: |LLVMTargetRef, &char, &char, &char, LLVMCodeGenOptLevel, LLVMRelocMode, LLVMCodeModel| -> LLVMTargetMachineRef = "LLVMCreateTargetMachine"
+def llvmCreateTargetMachine(t: LLVMTargetRef, triple: &char, cpu: string, features: string, opt: LLVMCodeGenOptLevel, reloc: LLVMRelocMode, m: LLVMCodeModel) LLVMTargetMachineRef =
+    _llvmCreateTargetMachine t, triple, cpu.to_c_string!, features.to_c_string!, opt, reloc, m
+
 ext llvmObjectFile: LLVMCodeGenFileType = "LLVMObjectFile"
 
+ext llvmInitializeNativeTarget: || -> none = "LLVMInitializeNativeTarget"
+ext llvmInitializeNativeAsmParser: || -> none = "LLVMInitializeNativeAsmParser"
+ext llvmInitializeNativeAsmPrinter: || -> none = "LLVMInitializeNativeAsmPrinter"
 
-//ext llvmInitializeNativeTarget: || -> none = "LLVMInitializeNativeTarget"
-//ext llvmInitializeNativeAsmParser: || -> none = "LLVMInitializeNativeAsmParser"
-//ext llvmInitializeNativeAsmPrinter: || -> none = "LLVMInitializeNativeAsmPrinter"
-//ext llvmInitializeNativeTargetMC: || -> none = "LLVMInitializeNativeTargetMC"
+ext llvmCodeGenLevelNone: LLVMCodeGenOptLevel = "LLVMCodeGenLevelNone"
 
+ext llvmRelocDefault: LLVMRelocMode = "LLVMRelocDefault"
+ext llvmRelocStatic: LLVMRelocMode = "LLVMRelocStatic"
 
+ext llvmCodeModelDefault: LLVMCodeModel = "LLVMCodeModelDefault"
 
+/*
 ext llvmInitializeAllTargets: || -> none = "LLVMInitializeAllTargets"
 ext llvmInitializeAllTargetInfos: || -> none = "LLVMInitializeAllTargetInfos"
 ext llvmInitializeAllTargetMCs: || -> none = "LLVMInitializeAllTargetMCs"
 ext llvmInitializeAllAsmParsers: || -> none = "LLVMInitializeAllAsmParsers"
 ext llvmInitializeAllAsmPrinters: || -> none = "LLVMInitializeAllAsmPrinters"
-
-ext llvmCreateTargetMachine: |LLVMTargetRef, &char, &char, &char, LLVMCodeGenOptLevel, LLVMRelocMode, LLVMCodeModel| -> LLVMTargetMachineRef = "LLVMCreateTargetMachine"
-
-ext llvmCodeGenLevelNone: LLVMCodeGenOptLevel = "LLVMCodeGenLevelNone"
-ext llvmRelocStatic: LLVMRelocMode = "LLVMRelocStatic"
-ext llvmCodeModelDefault: LLVMCodeModel = "LLVMCodeModelDefault"
+*/

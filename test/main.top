@@ -1,4 +1,7 @@
-if true:
-    log_int(30)
+i := 10
 
-log_int(50)
+while i < 10:
+    log("hello")
+    log_int(i)
+
+    i += 1

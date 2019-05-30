@@ -1,0 +1,64 @@
+import "ast"
+import "types"
+
+def convert_func_call(converter: &Converter, node: &ast.AST) =
+    self := converter.get_scope!
+
+    func_ptr := node.nodes[0]._type
+    match func_ptr with
+        func as &types.FuncPtr -> self.append mir.FuncCall func
+        _ ->
+            log func_ptr
+            panic "Expecting func pointer as argument to function"
+
+
+def register_func_def(converter: &Converter, node: &ast.AST, info: &ast.FuncInfo) =
+    self := converter.get_scope!
+    _ := add_global_var converter, info.name
+
+def convert_func_def(converter: &Converter, node: &ast.AST, info: &ast.FuncInfo) =
+    self := converter.get_scope!
+
+    id := converter.get_id_of_var info.name
+
+    self = converter.push_scope!
+
+    args := node.nodes[0]
+    self.num_args = args.length!
+
+    for i := 0..args.length! do
+        converter.convert_node args[args.length! - i - 1]
+
+    body := node.nodes[1]
+
+    converter.convert_nodes body.nodes
+
+    all_blocks := converter.pop_scope!.all_blocks
+    all_blocks[all_blocks.length - 1].code.append FuncReturn info._type.return_type
+
+    deref_all_blocks := *all_blocks
+
+    func := Function{
+        name = info.name
+        _type = info._type
+        all_blocks = deref_all_blocks
+        id = id
+    }
+
+    converter.functions.append func
+
+def convert_func_arg(converter: &Converter, node: &ast.AST, name: string, typ: types.CompilerType) =
+    self := converter.get_scope!
+    id := add_local_var converter, name
+
+    info := box ReadInfo{
+        is_global = false
+        _type = typ
+        id = id
+        name = name
+    }
+
+    self.num_args -= 1
+
+    self.append FuncArg self.num_args, info
+    self.append Assign info

@@ -1,0 +1,10 @@
+import "parser"
+import "types"
+import "ast"
+import "error"
+
+def parse_string(self: &parser.Parser) Maybe[&error.CompilerError] =
+    s_ast := ast.make_AST self, ast.String self.current!.value
+    s_ast._type = types.make_StringType!
+    self.current_node.add s_ast
+    None

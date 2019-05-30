@@ -1,0 +1,9 @@
+import "validator"
+import "ast"
+import "error"
+
+def validate_tuple(state: &validator.State, node: &ast.AST) Maybe[&error.CompilerError] =
+    state.validate_nodes node.nodes
+    node._type = node.nodes[0]._type
+
+    None

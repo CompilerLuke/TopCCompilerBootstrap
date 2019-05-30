@@ -1,263 +1,104 @@
 import "ast"
-import "mir"
-import "types"
-from "hashMap" import all
-import "print"
 
-ext atoi: |&char| -> int = "atoi"
-ext atof: |&char| -> int = "atof"
+def Converter.create_decls(&converter, node: &ast.AST) =
+    for n := node.nodes do
+        match n.payload with
+            FuncDef info -> register_func_def converter, node, info
+            _ ->
 
-type CFG =
-    return_to: uint
-    block: Maybe[&mir.Block]
+def Converter.convert_node(&converter, node: &ast.AST) =
+    self := converter.get_scope!
 
-def CFG.toString(&self) string =
-    "CFG {self.return_to}"
-
-type Converter =
-    global_var_counter: uint
-    var_counter: uint
-    vars: HashMap[uint]
-    cfgs: [..]CFG
-    block: &mir.Block
-    block_counter: uint
-    all_blocks: &[..]&mir.Block
-
-def Converter.push_block(&self) uint =
-    self.block_counter += 1
-    self.block_counter
-
-def Converter.append(&self, code: mir.OpCode) =
-    self.block.code.append code
-
-def Converter.pop_block(&self) =
-    self.block_counter -= 1
-
-def Converter.push_cfg(&self, cfg: CFG) =
-    self.cfgs.append cfg
-
-    guard Some block := cfg.block
-    else return
-
-    self.block = block
-    self.all_blocks.append block
-
-def Converter.add_block(&self, block: &mir.Block) =
-    self.block = block
-    self.all_blocks.append block
-
-
-def Converter.pop_cfg(&self) =
-    _ := self.cfgs.pop!
-
-def Converter.current_cfg(&self) &CFG =
-    &self.cfgs[self.cfgs.length - 1]
-
-def unsupported(mesg: string) mir.OpCode =
-    panic mesg
-    mir.Add_i32
-
-def is_block(node: &ast.AST) bool =
-    node.payload.tag == ast.Block.tag
-
-def Converter.convert_node(&self, node: &ast.AST) =
     previous_num_vars := self.var_counter
 
     match node.payload with
         Create ->
-        If ->
-            self.push_cfg CFG{
-                return_to = self.push_block!
-                block = None
-            }
+        If -> convert_if converter, node
+        While ->
+            convert_while converter, node
+            return
 
-            for n := node.nodes do
-                self.convert_node n
+        Assign -> converter.convert_node get_rhs_of_assign node
+        FuncDef info ->
+            convert_func_def converter, node, info
+            return
 
-        _ ->
-            for n := node.nodes do
-                self.convert_node n
-
+        _ -> converter.convert_nodes node.nodes
 
     if is_block node then
         self.var_counter = previous_num_vars
 
     match node.payload with
-        Identifier read_info ->
-            self.append mir.Read box mir.ReadInfo{
-                is_global = read_info.is_global
-                _type = node._type
-                id = self.vars[read_info.name]
-            }
+        Identifier read_info -> convert_identifier converter, node, read_info
+
+        FuncDef info ->
+        Tuple ->
 
         CreateAssign ->
-        Block ->
-            cfg := self.cfgs[self.cfgs.length - 2]
-            self.append mir.Jump cfg.return_to
+        Block -> convert_block converter, node
 
         If ->
-            codes := box [..]mir.OpCode
 
-            self.pop_cfg! //pushed by condition
+        While ->
 
-            cfg := self.current_cfg!
-            to := cfg.return_to
+        Condition -> convert_condition converter, node
 
-            self.pop_cfg!
+        Else -> convert_else converter, node
 
-            self.add_block box mir.Block{ to, codes }
+        Assign -> convert_assign converter, node
 
-        IfCondition ->
-            to := self.push_block!
+        String str -> convert_string converter, node, str
 
-            guard Some owner := node.owner
-            else panic "If Condition has no owner"
+        Create -> convert_create converter, node
 
-            return_to :=
-                if owner.nodes.length == 2 then
-                    self.cfgs[self.cfgs.length - 1].return_to
-                else
-                    self.push_block!
-
-            codes := box [..]mir.OpCode
-
-            self.append mir.CondJump to, return_to
-
-            self.push_cfg CFG{
-                return_to = return_to
-                block = Some box mir.Block{ to, codes }
-            }
-
-        Else ->
-            cfg := self.current_cfg!
-
-            to := cfg.return_to
-            end_if := self.cfgs[self.cfgs.length - 2].return_to
-
-            codes := box [..]mir.OpCode
-
-            self.pop_cfg!
-            self.push_cfg CFG{
-                return_to = end_if
-                block = Some box mir.Block{ to, codes }
-            }
-
-        Assign ->
-            guard Some owner := node.owner
-            else return
-
-            create := owner.nodes[0]
-            ident := create.nodes[0]
-
-            guard Identifier read_info := ident.payload
-            else panic "Only single variable create are supported"
-
-            self.append mir.Assign box mir.ReadInfo{
-                is_global = read_info.is_global
-                _type = ident._type
-                id = self.vars[read_info.name]
-            }
-
-        Create ->
-            ident := node.nodes[0]
-
-            guard Identifier read_info := ident.payload
-            else panic "Only single variable create are supported"
-
-            id :=
-                if read_info.is_global then
-                    self.global_var_counter += 1
-                    self.global_var_counter - 1
-                else
-                    self.var_counter += 1
-                    self.var_counter - 1
-
-            self.vars.insert read_info.name, id
-
-            self.append mir.Create box mir.ReadInfo{
-                is_global = read_info.is_global
-                _type = ident._type
-                id = id
-            }
+        FuncArg name, typ -> convert_func_arg converter, node, name, typ
 
         FuncCall ->
-            func_ptr := node.nodes[0]._type
-            match func_ptr with
-                func as &types.FuncPtr -> self.append mir.FuncCall func
-                _ -> panic "Expecting func pointer as argument to function"
+            convert_func_call converter, node
 
-        Operator op_kind ->
-            node_type := node._type
+        Operator op_kind -> convert_operator converter, node, op_kind
 
-            is_int := types.is_kind::[types.Int] node_type
-            is_float := types.is_kind::[types.Float] node_type
+        Bool is_true -> self.append Store_bool is_true
 
-            self.append match op_kind with
-                Add ->
-                    if is_int then mir.Add_i32
-                    elif is_float then mir.Add_f32
-                    else unsupported "Unsupported type {node._type}"
+        Int s -> self.append Store_i32 atoi s.to_c_string!
 
-                Mul ->
-                    if is_int then mir.Mul_i32
-                    elif is_float then mir.Mul_f32
-                    else unsupported "Unsupported type {node._type}"
-
-                Div ->
-                    if is_int then mir.Div_i32
-                    elif is_float then mir.Div_f32
-                    else unsupported "Unsupported type {node._type}"
-
-        Bool is_true ->
-            self.append mir.Store_bool is_true
-
-        Int s ->
-            self.append mir.Store_i32 atoi s.to_c_string!
-
-        Float s ->
-            self.append mir.Store_f32 atof s.to_c_string!
+        Float s -> self.append Store_f32 atof s.to_c_string!
 
         Root ->
 
-def convert(node: &ast.AST) mir.Program =
-    functions := [..]mir.Function
-    op_codes := box [..]mir.OpCode
-    all_blocks := [..]&mir.Block
-    cfgs := [..]CFG
 
-    block := box mir.Block{0, op_codes}
+def convert(node: &ast.AST) Program =
+    functions := box [..]Function
 
     converter := Converter{
-        var_counter = 0
+        string_literal_counter = 0
         global_var_counter = 0
-        block_counter = 0
-        cfgs = cfgs
-        block = block
-        vars = make_HashMap::[uint]!
-        all_blocks = &all_blocks
+        functions = functions
+        scopes = []
     }
 
-    converter.push_cfg CFG{
-        return_to = 0
-        block = Some block
-    }
+    global_scope := converter.push_scope!
 
-    converter.vars.insert "log", 0
-    converter.global_var_counter += 1
+    add_global_var &converter, "log_int"
+    add_global_var &converter, "log_float"
+    add_global_var &converter, "log"
+    add_global_var &converter, "main"
 
-    converter.vars.insert "log_int", 1
-    converter.global_var_counter += 1
-
+    converter.create_decls node
     converter.convert_node node
 
-    all_blocks[all_blocks.length - 1].code.append mir.FuncReturn
+    main_all_blocks := converter.scopes[0].all_blocks
+    main_all_blocks[main_all_blocks.length - 1].code.append FuncReturn types.make_Void!
 
-    main := mir.Function{
+    deref_all_blocks := *main_all_blocks
+    main := Function{
         name = "main"
-        args = []
-        all_blocks = all_blocks
+        _type = types.make_FuncPtr!
+        all_blocks = deref_all_blocks
+        id = converter.get_id_of_var "main"
     }
 
     functions.append main
 
-    mir.Program{ functions }
+    deref_functions := *functions
+    Program{ deref_functions }

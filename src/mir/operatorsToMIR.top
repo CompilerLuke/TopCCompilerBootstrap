@@ -1,0 +1,35 @@
+import "ast"
+
+def convert_operator(converter: &Converter, node: &ast.AST, op_kind: ast.OperatorKind) =
+    self := converter.get_scope!
+
+    node_type := ast.op_type node
+
+    is_int := types.is_actual_kind::[types.Int] node_type
+    is_float := types.is_actual_kind::[types.Float] node_type
+
+    self.append match op_kind with
+        Add ->
+            if is_int then mir.Add_i32
+            elif is_float then mir.Add_f32
+            else unsupported "Unsupported type {node._type}"
+
+        Mul ->
+            if is_int then mir.Mul_i32
+            elif is_float then mir.Mul_f32
+            else unsupported "Unsupported type {node._type}"
+
+        Div ->
+            if is_int then mir.Div_i32
+            elif is_float then mir.Div_f32
+            else unsupported "Unsupported type {node._type}"
+
+        LT ->
+            if is_int then mir.LT_i32
+            elif is_float then mir.LT_f32
+            else unsupported "Unsupported type {node._type}"
+
+        Sub ->
+            if is_int then mir.Sub_i32
+            elif is_float then mir.Sub_f32
+            else unsupported "Unsupported type {node._type}"

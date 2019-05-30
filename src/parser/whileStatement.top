@@ -1,0 +1,32 @@
+import "parser"
+import "types"
+import "error"
+import "ast"
+
+def while_expr(self: &parser.Parser) Maybe[&error.CompilerError] =
+    toplevel := ast.make_AST self, ast.While
+    self.push_current_node toplevel
+
+    cond := ast.make_AST self, ast.Condition
+    self.push_current_node cond
+
+    in_condition := true
+    while not self.is_end! do
+        tok := self.next!
+        match tok.value with
+            ":" ->
+                in_condition = false
+                ?self.pop_current_node!
+
+                block := ast.make_AST self, ast.Block
+                self.push_current_node block
+            _ ->
+                ?self.eval!
+
+    ?self.pop_current_node!
+    ?self.pop_current_node!
+
+    if in_condition then
+        Some error.make_Error self, "Expecting do"
+    else
+        None

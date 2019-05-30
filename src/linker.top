@@ -2,20 +2,16 @@ import "process"
 from "stringBuilder" import make_StringBuilder
 
 type Linker =
-    linker: string
-    exe_path: string
-    runtime_path: string
+    path_to_exe: string
+    path_to_runtime: string
     object_files: []string
+    linker: string
 
-def Linker.link(&self) =
-    //defer context.allocator.reset_to context.allocator.get_occupied!
-
-    log "linking"
-
+def Linker.link(using &self) =
     s := make_StringBuilder!
-    s.append self.linker
+    s.append linker
     s.append " "
-    s.append self.runtime_path
+    s.append path_to_runtime
     s.append " "
 
     for obj := self.object_files do
@@ -23,17 +19,16 @@ def Linker.link(&self) =
         s.append " "
 
     s.append "-o "
-    s.append self.exe_path
+    s.append path_to_exe
 
     (status, output) := process.popen s.toString!
+    log output
+
     if status != 0 then
-        log output
-        log "failed to link: {status}"
-    log "linked"
+        panic "Failed to link"
 
 def Linker.run(&self) =
-    log "running"
-    (status, output) := process.popen "{self.exe_path}"
+    (status, output) := process.popen "./{self.path_to_exe}"
     log output
-    if status != 0 then
-        log "failed to run"
+
+

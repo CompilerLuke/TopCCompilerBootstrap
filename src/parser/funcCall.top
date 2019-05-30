@@ -4,25 +4,21 @@ import "error"
 import "print"
 
 def parse_funcCall(self: &parser.Parser) Maybe[&error.CompilerError] =
-    num_paren := self.num_paren
-
     func_call := ast.make_AST self, ast.FuncCall
 
-    if self.current_node.nodes.length == 0 then
-        return Some error.make_Error self, "Unexpected function call"
-
-    calling := self.current_node.nodes.pop!
+    guard Ok calling := self.pop "Unexpected function call"
+    elif Error e then return Some e
 
     func_call.add calling
 
     self.push_current_node func_call
 
-    self.num_paren += 1
-
+    num_paren := self.push_paren!
     while self.num_paren > num_paren do
-        _ := self.next!
-        self.eval!
+        match self.next!.value with
+            "," -> ?self.comma!
+            _ -> ?self.eval!
 
-    self.pop_current_node!
+    ?self.pop_current_node!
 
     None
