@@ -41,7 +41,7 @@ def convert_to_LLVMModule(program: &mir.Program) =
 
     for mir_func := program.functions do
         //param_types := []
-        ret_type := llvm_type_for mir_func._type
+        ret_type := llvm_type_for types.Func mir_func._type
         llvm_func := llvmAddFunction mod, mir_func.name, ret_type
         tmp := 0
 
@@ -95,7 +95,7 @@ def convert_to_LLVMModule(program: &mir.Program) =
                     Store_f32 f -> stack.append llvmConstReal llvmFloatType!, f
 
                     FuncReturn typ ->
-                        if types.is_actual_kind::[types.Void] typ then
+                        if typ.is_type types.Void then
                             llvmBuildRetVoid builder
                         else
                             llvmBuildRet builder, stack.pop!
@@ -112,7 +112,7 @@ def convert_to_LLVMModule(program: &mir.Program) =
                         if info.is_global then
                             v := global_vars[info.id].unwrap!
 
-                            if types.is_actual_kind::[types.FuncPtr] info._type then
+                            if info._type.is_type types.func_type then
                                 stack.append v
                             else
                                 stack.append llvmBuildLoad builder, v, next_tmp &tmp
@@ -152,7 +152,7 @@ def convert_to_LLVMModule(program: &mir.Program) =
 
                         stack.shorten arg_count + 1
 
-                        if types.is_actual_kind::[types.Void] fptr_type.return_type then
+                        if fptr_type.return_type.is_type types.Void then
                             _ := llvmBuildCall builder, func, args, ""
                         else
                             stack.append llvmBuildCall builder, func, args, next_tmp &tmp

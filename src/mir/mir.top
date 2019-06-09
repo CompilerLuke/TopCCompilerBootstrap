@@ -60,3 +60,16 @@ type Function =
 
 type Program =
     functions: []Function
+
+def calc_size(self: types.CompilerType) uint =
+    match self with
+        Void -> sizeof none
+        Bool -> sizeof bool
+        String -> sizeof string
+        Float size -> size / 4
+        Int unsigned, size -> size / 4
+        Struct info ->
+            panic "Not handled yet!"
+            0
+
+        Func info -> sizeof || -> none

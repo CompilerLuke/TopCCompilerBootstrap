@@ -21,10 +21,16 @@ def HashBucket[V].free(&self) =
     self.keys.free!
     self.values.free!
 
-def make_HashBucket[V]() HashBucket[V] =
+def make_HashBucket[V](allocator: &Allocator) HashBucket[V] =
+    keys := [..]string
+    values := [..]V
+
+    keys.allocator = Some allocator
+    values.allocator = Some allocator
+
     HashBucket{
-        keys = [..]string
-        values = [..]V
+        keys = keys
+        values = values
     }
 
 type HashMap[V] =
@@ -33,7 +39,11 @@ type HashMap[V] =
 
 def HashMap[V].insert(&self, key: string, value: V) =
     if self.length > self.buckets.length/3*4 then
-        new_hash := make_HashMap_size::[V] self.buckets.length * 2
+        assert self.buckets.length > 0, "Resizing empty hash map!"
+
+        hash_map_allocator := self.buckets[0].keys.allocator.default context.allocator
+
+        new_hash := make_HashMap_size::[V] self.buckets.length * 2, hash_map_allocator
 
         for per_bucket := self.buckets do
             for c := 0..per_bucket.keys.length do
@@ -81,10 +91,12 @@ def HashMap[V].keys(&self) []string =
             arr.append key
     arr
 
-def make_HashMap_size[V](size: uint) HashMap[V] =
+def make_HashMap_size[V](size: uint, allocator: &Allocator) HashMap[V] =
     buckets := [..]HashBucket[V]
+    buckets.allocator = Some allocator
+
     for i := 0..size do
-        buckets.append make_HashBucket::[V]!
+        buckets.append make_HashBucket::[V] allocator
 
     HashMap{
         buckets = buckets
@@ -92,4 +104,4 @@ def make_HashMap_size[V](size: uint) HashMap[V] =
     }
 
 def make_HashMap[V]() HashMap[V] =
-    make_HashMap_size::[V] 2 ^ 3
+    make_HashMap_size::[V] 2 ^ 3, context.allocator

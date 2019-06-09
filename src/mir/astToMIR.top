@@ -88,7 +88,7 @@ def convert(node: &ast.AST) Program =
     converter.convert_node node
 
     main_all_blocks := converter.scopes[0].all_blocks
-    main_all_blocks[main_all_blocks.length - 1].code.append FuncReturn types.make_Void!
+    main_all_blocks[main_all_blocks.length - 1].code.append FuncReturn types.Void
 
     deref_all_blocks := *main_all_blocks
     main := Function{

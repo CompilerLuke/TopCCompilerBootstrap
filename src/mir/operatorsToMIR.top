@@ -5,8 +5,8 @@ def convert_operator(converter: &Converter, node: &ast.AST, op_kind: ast.Operato
 
     node_type := ast.op_type node
 
-    is_int := types.is_actual_kind::[types.Int] node_type
-    is_float := types.is_actual_kind::[types.Float] node_type
+    is_int := node_type.is_type types.Int false, 0
+    is_float := node_type.is_type types.Float 0
 
     self.append match op_kind with
         Add ->

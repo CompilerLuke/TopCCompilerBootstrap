@@ -34,9 +34,7 @@ def register_log_func(state: &State, name: string, typ: types.CompilerType, synt
     log_func_type.args = box [typ]
     log_func_type.external = true
 
-    decl_info := scope.make_DeclInfo!
-    decl_info._type = log_func_type
-
+    decl_info := scope.make_DeclInfo types.Func log_func_type
     state.scope.create_decl name, &decl_info, syntax_tree
 
 def validate(syntax_tree: &ast.AST) Maybe[&error.CompilerError] =
@@ -46,7 +44,7 @@ def validate(syntax_tree: &ast.AST) Maybe[&error.CompilerError] =
 
     ?register_log_func &state, "log_float", types.make_Float!, syntax_tree
     ?register_log_func &state, "log_int", types.make_Int!, syntax_tree
-    ?register_log_func &state, "log", types.make_StringType!, syntax_tree
+    ?register_log_func &state, "log", types.String, syntax_tree
 
     ?state.create_decl syntax_tree
     ?state.validate syntax_tree

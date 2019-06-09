@@ -8,7 +8,7 @@ def validate_read(state: &validator.State, read_info: &ast.ReadInfo, node: &ast.
     guard Some desc_info := state.scope.get_var read_info.name
     else return Some error.make_Error node, "No variable called {read_info.name}"
 
-    node._type = desc_info.type_of_desc!
+    node._type = desc_info._type
     read_info.is_global = desc_info.is_global
 
     None
@@ -26,9 +26,7 @@ def validate_create_assign(state: &validator.State, node: &ast.AST) Maybe[&error
     guard Identifier read_info := v.payload
     else panic "Expecting identifier in create assign"
 
-    decl_info := scope.make_DeclInfo!
-    decl_info._type = typ
-
+    decl_info := scope.make_DeclInfo typ
     ?state.scope.create_decl read_info.name, &decl_info, create
 
     read_info.is_global = decl_info.is_global

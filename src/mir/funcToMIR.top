@@ -6,7 +6,7 @@ def convert_func_call(converter: &Converter, node: &ast.AST) =
 
     func_ptr := node.nodes[0]._type
     match func_ptr with
-        func as &types.FuncPtr -> self.append mir.FuncCall func
+        Func func -> self.append mir.FuncCall func
         _ ->
             log func_ptr
             panic "Expecting func pointer as argument to function"

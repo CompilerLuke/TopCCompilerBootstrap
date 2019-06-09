@@ -55,13 +55,13 @@ def Interpreter.exec_block(using &self, block: &mir.Block, local_var_stack: &Tem
     for inst := *block.code do
         match inst with
             FuncArg id, read_info ->
-                size := read_info._type.calc_size!
+                size := mir.calc_size read_info._type
                 ptr_to_var := local_var_stack.alloc size
 
                 local_args.append ptr_to_var
 
             Create read_info ->
-                size := read_info._type.calc_size!
+                size := mir.calc_size read_info._type
                 ptr_to_var := local_var_stack.alloc size
 
                 if read_info.is_global then
@@ -88,7 +88,7 @@ def Interpreter.exec_block(using &self, block: &mir.Block, local_var_stack: &Tem
                     if read_info.is_global then var_ptr[read_info.id].expect "Could not assign global variable"
                     else local_args[read_info.id]
 
-                size := read_info._type.calc_size!
+                size := mir.calc_size read_info._type
                 set_to := pop_dynamic self, size
 
                 memcpy ptr_to_var, set_to, size
@@ -104,7 +104,7 @@ def Interpreter.exec_block(using &self, block: &mir.Block, local_var_stack: &Tem
                     if read_info.is_global then var_ptr[read_info.id].expect "Could not read global variable"
                     else local_args[read_info.id]
 
-                size := read_info._type.calc_size!
+                size := mir.calc_size read_info._type
                 ptr := push_dynamic self, size
                 memcpy ptr, ptr_to_var, size
 
@@ -118,7 +118,7 @@ def Interpreter.exec_block(using &self, block: &mir.Block, local_var_stack: &Tem
                 size_of_args := sizeof || -> none
 
                 for arg := func_ptr_type.args do
-                    size_of_args += arg.calc_size!
+                    size_of_args += mir.calc_size arg
 
                 if func_ptr_type.external then
                     func_ptr := *(offsetPtr self.stack.data, self.stack.occupied - size_of_args) cast &|&Interpreter| -> none

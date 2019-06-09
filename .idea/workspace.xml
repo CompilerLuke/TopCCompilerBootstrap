@@ -2,39 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="866ab8c0-526a-43f8-b26c-76ef6ced4a04" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/interpreter.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/linker.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/llvm/conditions.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/llvm/toLLVMType.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mir/controlFlowToMIR.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mir/converter.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mir/funcToMIR.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mir/operatorsToMIR.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mir/port.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mir/stringToMIR.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mir/varsToMIR.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/parser/funcParser.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/parser/stringParser.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/parser/structParser.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/parser/whileStatement.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/process.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/parseType.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/string.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/struct.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/typeRef.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/validation/funcValidator.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/validation/tupleValidator.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/future.top" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/runtime.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/TopCCompilerBootstrap" beforeDir="false" afterPath="$PROJECT_DIR$/bin/TopCCompilerBootstrap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/TopCCompilerBootstrap.c" beforeDir="false" afterPath="$PROJECT_DIR$/bin/TopCCompilerBootstrap.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/TopCCompilerBootstrap.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/TopCCompilerBootstrap.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ast.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ast.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ast.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ast.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/astToMIR.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/astToMIR.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/astToMIR.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/astToMIR.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/basicTypes.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/basicTypes.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/compiler.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compiler.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/compiler.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compiler.h" afterDir="false" />
@@ -49,6 +21,7 @@
       <change beforePath="$PROJECT_DIR$/lib/lexer.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/lexer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/llvm.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/llvm.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/llvm.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/llvm.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/mir.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/mir.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/mir.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/mir.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/operatorParser.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/operatorParser.c" afterDir="false" />
@@ -71,36 +44,36 @@
       <change beforePath="$PROJECT_DIR$/lib/varValidation.c" beforeDir="false" afterPath="$PROJECT_DIR$/lib/varValidation.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/varValidation.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/varValidation.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ast.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/error.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/error.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hashMap.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/hashMap.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/llvm/llvmWrapper.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/llvm/llvmWrapper.top" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interpreter.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/interpreter.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/llvm/mirToLLVM.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/llvm/mirToLLVM.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/llvm/port.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/llvm/port.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/llvm/toLLVMType.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/llvm/toLLVMType.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mir/astToMIR.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/mir/astToMIR.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mir/interpreter.top" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mir/controlFlowToMIR.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/mir/controlFlowToMIR.top" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mir/funcToMIR.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/mir/funcToMIR.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mir/mir.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/mir/mir.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/funcCall.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/funcCall.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/ifStatement.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/ifStatement.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/operatorParser.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/operatorParser.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/parser.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/parser.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/tuple.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/tuple.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/varParser.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/varParser.top" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mir/operatorsToMIR.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/mir/operatorsToMIR.top" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/basicTypes.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/basicTypes.top" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/funcParser.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/funcParser.top" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/stringParser.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/stringParser.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/port.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/port.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stringBuilder.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/stringBuilder.top" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/process.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/process.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/types/bool.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/bool.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/types/float.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/float.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/types/funcPtr.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/funcPtr.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/types/int.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/int.top" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/parseType.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/parseType.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/types/port.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/port.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/string.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/string.top" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/struct.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/struct.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/types/types.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.top" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validation/funcValidator.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/validation/funcValidator.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/validation/ifValidation.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/validation/ifValidation.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/validation/operatorValidation.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/validation/operatorValidation.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/validation/scope.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/validation/scope.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/validation/validator.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/validation/validator.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/validation/varValidation.top" beforeDir="false" afterPath="$PROJECT_DIR$/src/validation/varValidation.top" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/insertByID.top" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/main.top" beforeDir="false" afterPath="$PROJECT_DIR$/test/main.top" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -116,20 +89,52 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.top" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/main.top">
+      <file leaf-file-name="types.top" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/types/types.top">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="10" lean-forward="true" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+            <state relative-caret-position="1403">
+              <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scope.top" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/validation/scope.top">
+      <file leaf-file-name="TopCCompilerBootstrap.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bin/TopCCompilerBootstrap.c">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="make.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/make.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+            <state relative-caret-position="230">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.top" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/main.top">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="error.top" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/error.top">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="667">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stringBuilder.top" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/stringBuilder.top">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="621">
+              <caret line="27" column="29" selection-start-line="27" selection-end-line="27" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -137,71 +142,35 @@
       <file leaf-file-name="controlFlowToMIR.top" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/mir/controlFlowToMIR.top">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-745">
-              <caret line="57" column="34" lean-forward="true" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+            <state relative-caret-position="782">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stringToMIR.top" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mir/stringToMIR.top">
+      <file leaf-file-name="parseType.top" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/types/parseType.top">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+            <state relative-caret-position="230">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parser.top" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/parser/parser.top">
+      <file leaf-file-name="port.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/port.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
+            <state relative-caret-position="138">
+              <caret line="6" column="117" selection-start-line="6" selection-start-column="117" selection-end-line="6" selection-end-column="117" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mir.top" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mir/mir.top">
+      <file leaf-file-name="process.top" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/process.top">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="61" column="25" lean-forward="true" selection-start-line="61" selection-start-column="25" selection-end-line="61" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="astToMIR.top" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mir/astToMIR.top">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="930">
-              <caret line="62" column="43" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ast.top" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ast.top">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="converter.top" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mir/converter.top">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="103" lean-forward="true" selection-start-line="103" selection-end-line="103" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="funcToMIR.top" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mir/funcToMIR.top">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-280">
-              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="46">
+              <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -210,11 +179,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>String</find>
-      <find>def is</find>
-      <find>Block</find>
-      <find>FuncReturn</find>
-      <find>print.print_</find>
       <find>generate</find>
       <find>Parser{</find>
       <find>is_end(</find>
@@ -240,11 +204,17 @@
       <find>Int</find>
       <find>type AST</find>
       <find>atoi</find>
+      <find>def int_</find>
+      <find>type String</find>
+      <find>FuncPtr</find>
+      <find>def make_HashBucket</find>
+      <find>get_type</find>
     </findStrings>
     <replaceStrings>
       <replace>self.append_token</replace>
       <replace>X86</replace>
       <replace>converter.global_var_counter</replace>
+      <replace>FuncInfo</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -253,63 +223,65 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/parser/varParser.top" />
-        <option value="$PROJECT_DIR$/test/future.top" />
-        <option value="$PROJECT_DIR$/src/types/parseType.top" />
-        <option value="/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/TopCCompiler-0.1-py3.6.egg/TopCompiler/WhileExpr.py" />
-        <option value="$PROJECT_DIR$/src/error.top" />
-        <option value="$PROJECT_DIR$/src/validation/scope.top" />
-        <option value="$PROJECT_DIR$/src/llvm/toLLVMType.top" />
-        <option value="$PROJECT_DIR$/src/llvm/llvmWrapper.top" />
-        <option value="$PROJECT_DIR$/src/mir/interpreter.top" />
         <option value="$PROJECT_DIR$/src/mir/varsToMIR.top" />
-        <option value="$PROJECT_DIR$/src/ast.top" />
         <option value="$PROJECT_DIR$/src/mir/port.json" />
-        <option value="$PROJECT_DIR$/src/mir/mir.top" />
         <option value="$PROJECT_DIR$/src/mir/converter.top" />
         <option value="$PROJECT_DIR$/src/parser/stringParser.top" />
         <option value="$PROJECT_DIR$/src/mir/stringToMIR.top" />
         <option value="$PROJECT_DIR$/src/main.top" />
-        <option value="$PROJECT_DIR$/src/mir/funcToMIR.top" />
         <option value="$PROJECT_DIR$/src/parser/funcCall.top" />
         <option value="$PROJECT_DIR$/src/parser/tuple.top" />
         <option value="$PROJECT_DIR$/src/parser/ifStatement.top" />
         <option value="$PROJECT_DIR$/src/parser/whileStatement.top" />
         <option value="$PROJECT_DIR$/src/parser/funcParser.top" />
         <option value="$PROJECT_DIR$/src/parser/operatorParser.top" />
-        <option value="$PROJECT_DIR$/src/interpreter.top" />
         <option value="$PROJECT_DIR$/src/validation/varValidation.top" />
         <option value="$PROJECT_DIR$/src/validation/tupleValidator.top" />
-        <option value="$PROJECT_DIR$/src/mir/astToMIR.top" />
-        <option value="$PROJECT_DIR$/src/validation/validator.top" />
-        <option value="$PROJECT_DIR$/src/hashMap.top" />
         <option value="$PROJECT_DIR$/src/lexer.top" />
         <option value="$PROJECT_DIR$/src/parser/resolveDecl.top" />
         <option value="$PROJECT_DIR$/src/parser/structParser.top" />
         <option value="$PROJECT_DIR$/src/compiler.top" />
-        <option value="$PROJECT_DIR$/src/types/port.json" />
-        <option value="$PROJECT_DIR$/src/types/bool.top" />
-        <option value="$PROJECT_DIR$/src/types/float.top" />
-        <option value="$PROJECT_DIR$/src/types/int.top" />
-        <option value="$PROJECT_DIR$/src/types/string.top" />
-        <option value="$PROJECT_DIR$/src/types/funcPtr.top" />
-        <option value="$PROJECT_DIR$/src/types/struct.top" />
         <option value="$PROJECT_DIR$/src/types/typeRef.top" />
         <option value="$PROJECT_DIR$/src/validation/operatorValidation.top" />
+        <option value="$PROJECT_DIR$/src/parser/parser.top" />
+        <option value="$PROJECT_DIR$/src/types/string.top" />
+        <option value="$PROJECT_DIR$/src/types/bool.top" />
+        <option value="$PROJECT_DIR$/src/hashMap.top" />
+        <option value="$PROJECT_DIR$/src/validation/scope.top" />
+        <option value="$PROJECT_DIR$/src/types/struct.top" />
+        <option value="$PROJECT_DIR$/src/types/port.json" />
+        <option value="$PROJECT_DIR$/src/types/parseType.top" />
+        <option value="$PROJECT_DIR$/src/types/funcPtr.top" />
+        <option value="$PROJECT_DIR$/src/ast.top" />
+        <option value="$PROJECT_DIR$/src/types/int.top" />
+        <option value="$PROJECT_DIR$/src/types/float.top" />
+        <option value="$PROJECT_DIR$/src/parser/basicTypes.top" />
+        <option value="$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/TopCCompiler-0.1-py3.6.egg/TopCompiler/topc.py" />
         <option value="$PROJECT_DIR$/src/validation/funcValidator.top" />
+        <option value="$PROJECT_DIR$/src/validation/validator.top" />
         <option value="$PROJECT_DIR$/src/validation/ifValidation.top" />
         <option value="$PROJECT_DIR$/src/mir/controlFlowToMIR.top" />
+        <option value="$PROJECT_DIR$/src/mir/funcToMIR.top" />
         <option value="$PROJECT_DIR$/src/mir/operatorsToMIR.top" />
+        <option value="$PROJECT_DIR$/src/mir/astToMIR.top" />
+        <option value="$PROJECT_DIR$/src/mir/mir.top" />
+        <option value="$PROJECT_DIR$/src/interpreter.top" />
+        <option value="$PROJECT_DIR$/src/llvm/toLLVMType.top" />
         <option value="$PROJECT_DIR$/src/llvm/mirToLLVM.top" />
         <option value="$PROJECT_DIR$/src/types/types.top" />
+        <option value="$PROJECT_DIR$/src/port.json" />
+        <option value="$PROJECT_DIR$/src/process.top" />
         <option value="$PROJECT_DIR$/test/main.top" />
-        <option value="$PROJECT_DIR$/src/parser/parser.top" />
+        <option value="$PROJECT_DIR$/src/error.top" />
+        <option value="$PROJECT_DIR$/src/stringBuilder.top" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
     <option name="width" value="1440" />
-    <option name="height" value="853" />
+    <option name="height" value="855" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -324,6 +296,11 @@
             <path>
               <item name="TopCCompilerBootstrap" type="b2602c69:ProjectViewProjectNode" />
               <item name="TopCCompilerBootstrap" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TopCCompilerBootstrap" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TopCCompilerBootstrap" type="462c0819:PsiDirectoryNode" />
+              <item name="bin" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TopCCompilerBootstrap" type="b2602c69:ProjectViewProjectNode" />
@@ -406,12 +383,35 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../games/TopCCompiler/bin/topc.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/games/TopCCompiler/bin/topc.py" />
       <option name="PARAMETERS" value="run" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="make" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="TopCCompilerBootstrap" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/local/bin/python3.6" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/make.py" />
+      <option name="PARAMETERS" value="run" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.make" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -427,97 +427,34 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="853" extended-state="6" />
+    <frame x="-7" y="-7" width="2575" height="1415" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13627489" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Cargo" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5028612" side_tool="true" weight="0.36821193" />
-      <window_info anchor="right" id="Elm" order="4" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989429" visible="true" weight="0.36507937" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989429" weight="0.36482334" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32969698" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49713877" weight="0.5714286" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2274678" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49713877" weight="0.5714286" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="right" id="Elm" order="4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Cargo" order="3" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/mir/port.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="110" selection-start-line="1" selection-start-column="110" selection-end-line="1" selection-end-column="110" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mir/varsToMIR.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/tuple.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/ifStatement.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="61" column="32" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/whileStatement.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/funcCall.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/funcParser.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="63" column="9" selection-start-line="63" selection-start-column="9" selection-end-line="63" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/stringParser.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/operatorParser.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1285">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/validation/tupleValidator.top">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -539,20 +476,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/validation/validator.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="71" selection-start-line="71" selection-end-line="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/interpreter.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="84" selection-start-line="84" selection-end-line="84" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Makefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -562,22 +485,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/llvm/llvmWrapper.top">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="86" column="73" selection-start-line="86" selection-start-column="73" selection-end-line="86" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/llvm/toLLVMType.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        <state relative-caret-position="644">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.top">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="92">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
@@ -585,13 +501,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2790">
           <caret line="186" selection-start-line="186" selection-end-line="186" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/hashMap.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1380">
-          <caret line="92" selection-start-line="92" selection-end-line="92" />
         </state>
       </provider>
     </entry>
@@ -609,13 +518,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/types/parseType.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/parser/structParser.top">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
@@ -623,73 +525,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/resolveDecl.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/resolveDecl.top" />
     <entry file="file://$PROJECT_DIR$/src/compiler.top">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="47" column="14" selection-start-line="47" selection-start-column="14" selection-end-line="47" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/types/port.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="86" selection-start-line="1" selection-start-column="86" selection-end-line="1" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/types/bool.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/types/float.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/types/int.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/types/string.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/types/funcPtr.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/types/struct.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/types/typeRef.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="47" column="24" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
+        <state relative-caret-position="1771">
+          <caret line="77" column="36" selection-start-line="77" selection-start-column="36" selection-end-line="77" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -697,62 +537,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/validation/funcValidator.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="78" column="52" selection-start-line="78" selection-start-column="52" selection-end-line="78" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/validation/ifValidation.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mir/operatorsToMIR.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/llvm/mirToLLVM.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="154" column="43" selection-start-line="154" selection-start-column="43" selection-end-line="154" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/types/types.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/basicTypes.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mir/funcToMIR.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-280">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mir/controlFlowToMIR.top">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-745">
-          <caret line="57" column="34" lean-forward="true" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -770,45 +554,237 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mir/mir.top">
+    <entry file="file://$PROJECT_DIR$/src/parser/parser.top">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="61" column="25" lean-forward="true" selection-start-line="61" selection-start-column="25" selection-end-line="61" selection-end-column="25" />
+        <state relative-caret-position="340">
+          <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mir/astToMIR.top">
+    <entry file="file://$PROJECT_DIR$/src/linker.top">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
-          <caret line="62" column="43" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="43" />
+        <state relative-caret-position="92">
+          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ast.top">
+    <entry file="file://$PROJECT_DIR$/src/types/bool.top">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/types/struct.top">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
+        <state relative-caret-position="357">
+          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/validation/scope.top">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="284">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hashMap.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-806">
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/types/typeRef.top" />
+    <entry file="file://$PROJECT_DIR$/src/types/string.top">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/types/port.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="75" selection-start-line="1" selection-start-column="75" selection-end-line="1" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/types/funcPtr.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ast.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1518">
+          <caret line="66" column="26" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/types/int.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/types/float.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/TopCCompiler-0.1-py3.6.egg/TopCompiler/topc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="649" column="4" selection-start-line="649" selection-start-column="4" selection-end-line="649" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/basicTypes.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/validation/funcValidator.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="70" selection-start-line="70" selection-end-line="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/validation/validator.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/validation/ifValidation.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mir/operatorsToMIR.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mir/astToMIR.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="710">
+          <caret line="88" selection-start-line="88" selection-end-line="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mir/funcToMIR.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mir/mir.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1679">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/interpreter.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2783">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/llvm/toLLVMType.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/print.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2185">
+          <caret line="95" selection-start-line="95" selection-end-line="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/llvm/mirToLLVM.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2599">
+          <caret line="113" selection-start-line="113" selection-end-line="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/types/types.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1403">
+          <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/TopCCompilerBootstrap.c">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/port.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="6" column="117" selection-start-line="6" selection-start-column="117" selection-end-line="6" selection-end-column="117" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/process.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/make.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/main.top">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="10" lean-forward="true" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+        <state relative-caret-position="138">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/parser.top">
+    <entry file="file://$PROJECT_DIR$/src/error.top">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
+        <state relative-caret-position="667">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/stringBuilder.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="27" column="29" selection-start-line="27" selection-end-line="27" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mir/controlFlowToMIR.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/types/parseType.top">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>

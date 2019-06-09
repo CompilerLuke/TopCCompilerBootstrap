@@ -1,25 +1,15 @@
-import "error"
-import "scope"
+def int_to_string(unsigned: bool, size: uint) string =
+    prefix := if unsigned then "u" else "i"
+    "{prefix}{size}"
 
-type Int =
+def int_duck_type(unsigned: bool, size: uint, other: CompilerType, thrower: Thrower) Maybe[&CompilerError] =
+    match other.to_real_type! with
+        Int unsigned2, size2 ->
+            if unsigned and not unsigned2 then Some error.make_Error thrower, "Cannot convert from signed to unsigned int"
+            elif size2 > size then Some error.make_Error thrower, "Loosing information by casting from {other}, {int_to_string unsigned, size}"
+            else None
 
-def Int.toString(&self) string =
-    "int"
+        _ -> Some error.make_Error thrower, "Expecting {int_to_string unsigned, size}, not {other}"
 
-def Int.to_real_type(&self, sc: &scope.Scope) Result[CompilerType, &error.CompilerError] =
-    Ok self as CompilerType
-
-def Int.duck_type(&self, other: CompilerType, sc: &scope.Scope, thrower: Thrower) Maybe[&error.CompilerError] =
-    if not is_kind::[Int] other, sc then Some make_Error thrower, "Expecting {self} not {other}"
-    else None
-
-def Int.equals(&self, other: CompilerType, sc: &scope.Scope) bool =
-    is_kind::[Int] other, sc
-
-def Int.calc_size(&self) uint =
-    4
-
-int_type := Int{}
-
-def make_Int() &Int =
-    &int_type
+def make_Int() CompilerType =
+    Int false, 32

@@ -3,56 +3,70 @@ import "types"
 from "ast" import (ReadInfo, AST)
 import "error"
 
-type DeclInfo = //might become an interface
+type DeclInfo =
     _type: types.CompilerType
     is_global: bool
 
-def DeclInfo.type_of_desc(&self) types.CompilerType =
-    self._type
-
-def make_DeclInfo() DeclInfo =
+def make_DeclInfo(_type: types.CompilerType) DeclInfo =
     DeclInfo{
-        _type = types.make_Void!
+        _type = _type
         is_global = false
     }
 
-type Scope =
-    vars: [..]hashMap.HashMap[DeclInfo]
+type ScopeBlock =
+    vars: hashMap.HashMap[DeclInfo]
 
-def make_Scope() &Scope =
-    vars := [..]hashMap.HashMap[DeclInfo]
-    vars.append hashMap.make_HashMap::[DeclInfo]!
+def make_ScopeBlock() ScopeBlock =
+    vars := hashMap.make_HashMap_size::[DeclInfo] 2 ^ 3, &malloc_as_allocator
 
-    box Scope{
+    ScopeBlock{
         vars = vars
     }
 
+def ScopeBlock.free(&self) =
+    self.vars.free!
+
+type Scope =
+    blocks: [..]ScopeBlock
+
+def make_Scope() &Scope =
+    blocks := [..]ScopeBlock
+    blocks.append make_ScopeBlock!
+
+    box Scope{
+        blocks = blocks
+    }
+
+def Scope.free(using &self) =
+    for i := 0..blocks.length do
+        blocks[i].free!
+
+    blocks.free!
+
 def Scope.push(&self) =
-    self.vars.append hashMap.make_HashMap::[DeclInfo]!
+    self.blocks.append make_ScopeBlock!
 
 def Scope.pop(&self) =
-    _ := self.vars.pop!
+    self.blocks[self.blocks.length - 1].free!
+    _ := self.blocks.pop!
 
 def Scope.get_var(&self, name: string) Maybe[&DeclInfo] =
-    i : int = self.vars.length - 1
-    while i >= 0 do
-        vars := &self.vars[i cast uint]
+    for i := 0..self.blocks.length do
+        vars := &self.blocks[self.blocks.length - 1 - i].vars
 
         if vars.contains name then
             return Some &vars[name]
 
-        i -= 1
-
     None
 
 def Scope.create_decl(&self, name: string, info: &DeclInfo, node: &ast.AST) Maybe[&error.CompilerError] =
-    assert self.vars.length > 0, "Missing global scope"
+    assert self.blocks.length > 0, "Missing global scope"
 
-    vars := &self.vars[self.vars.length - 1]
+    outer_block := &self.blocks[self.blocks.length - 1]
 
-    info.is_global = self.vars.length == 1
+    info.is_global = self.blocks.length == 1
 
-    if vars.contains name then Some error.make_Error node, "Var {name} already exists"
+    if outer_block.vars.contains name then Some error.make_Error node, "Var {name} already exists"
     else
-        vars.insert name, *info
+        outer_block.vars.insert name, *info
         None

@@ -5,63 +5,58 @@ import "scope"
 
 type CompilerType either
     Void
+    String
+    Bool
+    Int(bool, uint)
+    Float(uint)
+    Struct(&StructInfo)
+    Func(&FuncPtr)
 
+def CompilerType.toString(self) string =
+    match self with
+        Void -> "none"
+        String -> "string"
+        Bool -> "bool"
+        Int unsigned, size -> int_to_string unsigned, size
+        Float size -> float_to_string size
+        Struct info -> info.toString!
+        Func info -> info.toString!
 
-    def toString() string
-    def duck_type(CompilerType, &scope.Scope, Thrower) Maybe[&CompilerError]
-    def to_real_type(&scope.Scope) Result[CompilerType, &error.CompilerError]
-    def equals(CompilerType, &scope.Scope) bool
-    def calc_size() uint
+def CompilerType.expect_equals(self, other: CompilerType, thrower: Thrower) Maybe[&CompilerError] =
+    if self.equals other then None
+    else Some error.make_Error thrower, "Expecting {self}, not {other}"
 
-//None Type
-type Void =
-def Void.toString(&self) string = "none"
+def CompilerType.equals(self, other: CompilerType) bool =
+    self = self.to_real_type!
+    other = other.to_real_type!
 
-def Void.to_real_type(&self, sc: &scope.Scope) Result[CompilerType, &error.CompilerError]  = Ok self as CompilerType
+    if self.tag != other.tag then return false
+    match (self, other) with
+        ((Int unsigned1, size1), Int unsigned2, size2) ->
+            unsigned1 == unsigned2 and size1 == size2
 
-def Void.duck_type(&self, other: CompilerType, sc: &scope.Scope, thrower: Thrower) Maybe[&CompilerError] =
-    guard Ok typ := other.to_real_type sc
-    elif Error e then return Some e
+        ((Float size), Float size1) -> size == size1
 
-    match typ with
-        other_type as &Void -> None
-        _ -> Some make_Error thrower, "Expecting none, not {other}"
+        ((Struct info1), Struct info2) -> info1 == info2
 
-def Void.equals(&self, other: CompilerType, sc: &scope.Scope) bool =
-    is_kind::[Void] other, sc
+        ((Func info1), (Func info2)) -> info1 == info2
 
-def Void.calc_size(&self) uint = 0
+        _ -> true
 
-none_type := Void{}
+def CompilerType.duck_type(self, other: CompilerType, thrower: Thrower) Maybe[&CompilerError] =
+    match self with
+        Void or String or Bool -> self.expect_equals other, thrower
+        Int unsigned, size -> int_duck_type unsigned, size, other, thrower
+        Float size -> float_duck_type size, other, thrower
+        Struct info -> info.duck_type other, thrower
+        Func info -> info.duck_type other, thrower
 
-def make_Void() &Void =
-    &none_type
+def CompilerType.to_real_type(self) CompilerType =
+    match self with
+        _ -> self
 
-def is_kind[T](_type: CompilerType, sc: &scope.Scope) bool =
-    type_a := get_type T
+def CompilerType.is_type(self, other: CompilerType) bool =
+    self.to_real_type!.tag == other.to_real_type!.tag
 
-    guard Ok real_type_b := _type.to_real_type sc
-    else return false
-
-    type_b := real_type_b.get_type!
-
-    ptr_type_a := type_a.get_pointer_to_data!
-    ptr_type_b := type_b.get_pointer_to_data!
-
-    (ptr_type_a cast u64) == (ptr_type_b cast u64)
-
-def is_actual_kind[T](_type: CompilerType) bool =
-    type_a := get_type T
-    type_b := _type.get_type!
-
-    ptr_type_a := type_a.get_pointer_to_data!
-    ptr_type_b := type_b.get_pointer_to_data!
-
-    (ptr_type_a cast u64) == (ptr_type_b cast u64)
-
-_ := make_FuncPtr! as CompilerType
-_ := make_Bool! as CompilerType
-_ := make_Int! as CompilerType
-_ := make_Float! as CompilerType //check if all satisfy interface
-_ := make_StringType! as CompilerType
-_ := make_Struct "", hashMap.make_HashMap::[CompilerType]!
+let func_type = Func 0 cast &FuncPtr
+let struct_type = Struct 0 cast &StructInfo

@@ -23,7 +23,7 @@ def parse_bool_literal(self: &Parser, token: string) Maybe[&CompilerError] =
         _ -> false
 
     bool_literal := ast.make_AST self, ast.Bool as_bool
-    bool_literal._type = types.make_Bool!
+    bool_literal._type = types.Bool
 
     self.current_node.add bool_literal
 

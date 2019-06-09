@@ -3,7 +3,8 @@
     "version": 0.0,
     "link": [],
     "target": "windows",
-    "headerIncludePath": ["/usr/local/Cellar/llvm/7.0.1/include/"],
+    "headerIncludePath_mac": ["/usr/local/Cellar/llvm/7.0.1/include/"],
+    "headerIncludePath": ["C:\\Users\\User\\Desktop\\llvm\\build\\include", "C:\\Users\\User\\Desktop\\llvm\\include"],
     "linkWith": [],
     "tags": {
         "back-end": ""

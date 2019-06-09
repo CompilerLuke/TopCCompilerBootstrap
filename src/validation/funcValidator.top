@@ -11,7 +11,7 @@ def add_func_to_scope(state: &validator.State, node: &ast.AST, func_info: &ast.F
 
     decl_info := scope.DeclInfo{
         is_global = true
-        _type = func_type
+        _type = types.Func func_type
     }
 
     ?state.scope.create_decl func_info.name, &decl_info, node
@@ -41,9 +41,9 @@ def validate(state: &validator.State, node: &ast.AST, func_info: &ast.FuncInfo) 
     block := node[1]
 
     should_be := func_type.return_type
-    real_ret := (block_returns_value block).default types.make_Void!
+    real_ret := (block_returns_value block).default types.Void
 
-    if Some e := should_be.duck_type real_ret, state.scope, block then
+    if Some e := should_be.duck_type real_ret, block then
         return Some e.before "Function return type: "
 
     None
@@ -53,15 +53,8 @@ def validate_call(state: &validator.State, node: &ast.AST) Maybe[&error.Compiler
 
     func := node[0]
 
-    guard func_type as &types.FuncPtr := func._type
+    guard Func func_type := func._type.to_real_type!
     else return Some error.make_Error func, "Cannot call {func._type}"
-
-    /*
-    func_type : &types.FuncPtr = _
-    match func._type with
-        x as &types.FuncPtr -> func_type = x
-        _ -> return Some error.make_Error func, "Cannot call {func._type}"
-    */
 
     num_args := node.length! - 1
 
@@ -76,7 +69,7 @@ def validate_call(state: &validator.State, node: &ast.AST) Maybe[&error.Compiler
         should_be := func_type.args[i - 1]
         actually := node[i]._type
 
-        ?should_be.duck_type actually, state.scope, node[i]
+        ?should_be.duck_type actually, node[i]
 
     node._type = func_type.return_type
 

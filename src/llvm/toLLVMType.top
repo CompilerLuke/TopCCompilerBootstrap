@@ -1,26 +1,29 @@
 import "types"
+import "print"
 
 def llvm_type_for(typ: types.CompilerType) LLVMTypeRef =
     match typ with
-        x as &types.Int -> llvmInt32Type!
-        x as &types.Float -> llvmFloatType!
-        x as &types.Bool -> llvmInt1Type!
-        x as &types.FuncPtr ->
+        Int unsigned, size -> llvmInt32Type!
+        Float size -> llvmFloatType!
+        Bool -> llvmInt1Type!
+        Func x ->
             args := [..]LLVMTypeRef
             for arg := x.args do
                 args.append llvm_type_for arg
             llvmFunctionType (llvm_type_for x.return_type), args
-        x as &types.Void -> llvmVoidType!
+        Void -> llvmVoidType!
         _ ->
-            panic "Unknown type: {typ.get_type!}"
+            enum_typ := get_type types.CompilerType
+            panic "Unknown type: {enum_typ.cases[typ.tag].name}"
             0 cast LLVMTypeRef
 
 def llvm_initial_value_for(typ: types.CompilerType) LLVMValueRef =
     match typ with
-        x as &types.Bool -> llvmConstInt llvmInt1Type!, 0, false
-        x as &types.Int -> llvmConstInt llvmInt32Type!, 0, true
-        x as &types.Float -> llvmConstReal llvmFloatType!, 0
+        Bool -> llvmConstInt llvmInt1Type!, 0, false
+        Int unsigned, size -> llvmConstInt llvmInt32Type!, 0, true
+        Float size -> llvmConstReal llvmFloatType!, 0
 
         _ ->
-            panic "Unknown type: {typ.get_type!}"
+            enum_typ := get_type types.CompilerType
+            panic "Unknown type: {enum_typ.cases[typ.tag].name}"
             0 cast LLVMValueRef

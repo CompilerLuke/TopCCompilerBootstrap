@@ -42,7 +42,7 @@ def parse_funcDef(self: &parser.Parser) Maybe[&error.CompilerError] =
 
     ?self.pop_current_node!
 
-    ret : types.CompilerType = types.make_Void!
+    ret : types.CompilerType = types.Void
 
     if self.next!.value != ":" then
         match types.parse_type self with

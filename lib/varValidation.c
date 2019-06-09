@@ -1,62 +1,101 @@
-struct error_CompilerError* error_make_Error_rast_AST(struct ast_AST* error_self, struct _global_String error_mesg, struct _global_Context* d);
 struct error_CompilerError* varValidation_validate_read(struct validator_State* varValidation_state, struct ast_ReadInfo* varValidation_read_info, struct ast_AST* varValidation_node, struct _global_Context* d){;
+#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
+#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
+#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct scope_DeclInfo* varValidation_desc_info;;
+#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct scope_DeclInfo* f =scope_Scope_get_var((varValidation_state)->scope,(varValidation_read_info)->name,d);if(f != NULL){varValidation_desc_info = f;
 
+#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
+#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 else if(1){
+#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 return error_make_Error_rast_AST(varValidation_node,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(19,"No variable called "),((varValidation_read_info)->name),d),_global_StringInit(0,""),d),d);
+#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
+#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
+#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-(varValidation_node)->_type=scope_DeclInfo_type_of_desc(varValidation_desc_info,d);;
-(varValidation_read_info)->is_global=(varValidation_desc_info)->is_global;;
+#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+(varValidation_node)->_type = (varValidation_desc_info)->_type;;
+#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+(varValidation_read_info)->is_global = (varValidation_desc_info)->is_global;;
+#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;return NULL;
+#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* varValidation_validate_create_assign(struct validator_State* varValidation_state, struct ast_AST* varValidation_node, struct _global_Context* d){;
+#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-struct ast_AST* varValidation_create;varValidation_create = *(_global_Array_op_get_rast_AST(&((varValidation_node)->nodes),(unsigned int)0,d));;
-struct ast_AST* varValidation_assign;varValidation_assign = *(_global_Array_op_get_rast_AST(&((varValidation_node)->nodes),(unsigned int)1,d));;
-struct error_CompilerError* f =validator_State_validate_nodes(varValidation_state,_global_StaticArray_StaticArray_S_rast_ASTInit((varValidation_assign)->nodes.data, (varValidation_assign)->nodes.length),d);if(f != NULL){struct error_CompilerError* varValidation_e = f;
+#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+struct ast_AST* varValidation_create;struct ast_AST* varValidation_assign;struct prast_ASTcrast_ASTp f;f = prast_ASTcrast_ASTpInit(*(_global_Array_op_get_rast_AST(&((varValidation_node)->nodes),(unsigned int)0,d)),*(_global_Array_op_get_rast_AST(&((varValidation_node)->nodes),(unsigned int)1,d)));varValidation_create=f.field0;varValidation_assign=f.field1;;
+#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+struct error_CompilerError* g =validator_State_validate_nodes(varValidation_state,_global_StaticArray_StaticArray_S_rast_ASTInit((varValidation_assign)->nodes.data, (varValidation_assign)->nodes.length),d);if(g != NULL){struct error_CompilerError* varValidation__x = g;
 
-return varValidation_e;
+#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+return varValidation__x;
+#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
+#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
+#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 else if(1){
+#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
+#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
+#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct types_CompilerType varValidation_typ;varValidation_typ = (*(_global_Array_op_get_rast_AST(&((varValidation_assign)->nodes),(unsigned int)0,d)))->_type;;
+#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct ast_AST* varValidation_v;varValidation_v = *(_global_Array_op_get_rast_AST(&((varValidation_create)->nodes),(unsigned int)0,d));;
-(varValidation_v)->_type=varValidation_typ;;
+#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+(varValidation_v)->_type = varValidation_typ;;
+#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct ast_ReadInfo* varValidation_read_info;;
-struct ast_Payload g =(varValidation_v)->payload;if(g.tag==5){varValidation_read_info = g.cases.Identifier.field0;
+#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+struct ast_Payload h =(varValidation_v)->payload;if(h.tag==5){varValidation_read_info = h.cases.Identifier.field0;
 
+#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
+#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 else if(1){
+#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 _global_panic(_global_StringInit(37,"Expecting identifier in create assign"),d);
+#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
+#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-struct scope_DeclInfo varValidation_decl_info;varValidation_decl_info = scope_make_DeclInfo(d);;
-(varValidation_decl_info)._type=varValidation_typ;;
-_Bool varValidation_var_exists;varValidation_var_exists = scope_Scope_create_decl((varValidation_state)->scope,(varValidation_read_info)->name,&(varValidation_decl_info),d);;
-if(varValidation_var_exists){;
-return error_make_Error_rast_AST(varValidation_node,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(4,"Var "),((varValidation_read_info)->name),d),_global_StringInit(15," already exists"),d),d);
+#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+struct scope_DeclInfo varValidation_decl_info;varValidation_decl_info = scope_make_DeclInfo(varValidation_typ,d);;
+#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+struct error_CompilerError* j =scope_Scope_create_decl((varValidation_state)->scope,(varValidation_read_info)->name,&(varValidation_decl_info),varValidation_create,d);if(j != NULL){struct error_CompilerError* varValidation__x = j;
+
+#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+return varValidation__x;
+#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-;};
-(varValidation_read_info)->is_global=(varValidation_decl_info).is_global;;
+#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+;}
+#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+else if(1){
+#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+;}
+#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+;
+#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
+(varValidation_read_info)->is_global = (varValidation_decl_info).is_global;;
+#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;return NULL;
-;}
-struct error_CompilerError* error_make_Error_rast_AST(struct ast_AST* error_self, struct _global_String error_mesg, struct _global_Context* d){;
-;
-;return _global_box_longterm_error_CompilerError(error_CompilerErrorInit(ast_AST_get_filename(error_self,d),ast_AST_get_line(error_self,d),error_mesg,ast_AST_get_column(error_self,d)),d);
+#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 
 void varValidationInitTypes() { 
- scopeInitTypes();
+ 
  }
 void varValidationInit() { 
-scopeInit();;
 ;
 };

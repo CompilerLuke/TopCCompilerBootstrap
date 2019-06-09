@@ -3,8 +3,8 @@ import "parser"
 
 def parse_type(self: &parser.Parser) Result[CompilerType, &error.CompilerError] =
     match self.current!.value with
-        "int" -> Ok make_Int! as CompilerType
-        "float" -> Ok make_Float! as CompilerType
-        "none" -> Ok make_Void! as CompilerType
+        "int" -> Ok Int false, 32
+        "float" -> Ok Float 32
+        "none" -> Ok Void
         _ -> Error error.make_Error self, "Unknown type: {self.current!.value}"
 

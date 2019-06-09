@@ -8,7 +8,7 @@ import "scope"
 def block_returns_value(node: &ast.AST) Maybe[types.CompilerType] =
     assert node.payload.tag == ast.Block.tag, "Expecting block"
 
-    if node.length! > 0 and not types.is_actual_kind::[types.Void] node[node.length! - 1]._type then
+    if node.length! > 0 and not types.Void.is_type node[node.length! - 1]._type then
         Some node.nodes[node.length! - 1]._type
     else
         None
@@ -29,7 +29,7 @@ def validate_condition(state: &validator.State, node: &ast.AST) Maybe[&CompilerE
 
     condition := node.nodes[0]
 
-    if not types.is_kind::[types.Bool] condition._type, state.scope then
+    if not types.Bool.is_type condition._type then
         Some error.make_Error condition, "Expecting boolean expression, not {condition._type}"
     else
         None

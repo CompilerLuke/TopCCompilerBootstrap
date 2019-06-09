@@ -1,30 +1,14 @@
-import "scope"
 import "error"
 
 //Float type
-type Float =
+def float_to_string(size: uint) string =
+    "f{size}"
 
-def Float.toString(&self) string =
-    "float"
+def float_duck_type(size: uint, other: CompilerType, thrower: Thrower) Maybe[&CompilerError] =
+    match other.to_real_type! with
+        Float size2 -> None
+        Int unsigned, size2 -> None
+        _ -> Some make_Error thrower, "Expecting {float_to_string size} not {other}"
 
-def Float.to_real_type(&self, sc: &scope.Scope) Result[CompilerType, &error.CompilerError] =
-    Ok self as CompilerType
-
-def Float.duck_type(&self, other: CompilerType, sc: &scope.Scope, thrower: Thrower) Maybe[&CompilerError] =
-    guard Ok real_type := other.to_real_type sc
-    elif Error e then return Some e
-
-    match real_type with
-        other_type as &Float -> None
-        other_type as &Int -> None
-        _ -> Some make_Error thrower, "Expecting {self} not {other}"
-
-def Float.equals(&self, other: CompilerType, sc: &scope.Scope) bool =
-    is_kind::[Float] other, sc
-
-def Float.calc_size(&self) uint = 4
-
-float_type := Float{}
-
-def make_Float() &Float =
-    &float_type
+def make_Float() CompilerType =
+    Float 32

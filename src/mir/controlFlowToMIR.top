@@ -5,7 +5,7 @@ def convert_if(converter: &Converter, node: &ast.AST) =
 
     id := self.push_block!
 
-    if not types.is_actual_kind::[types.Void] node._type then
+    if not node._type.is_type types.Void then
         name := "if_result_{id}"
 
         self.append mir.Create box mir.ReadInfo{
@@ -33,7 +33,7 @@ def convert_if(converter: &Converter, node: &ast.AST) =
 
     self.add_block box Block{ to, codes }
 
-    if not types.is_actual_kind::[types.Void] node._type then
+    if not node._type.is_type types.Void then
         name := "if_result_{to}"
 
         self.append Read box ReadInfo{

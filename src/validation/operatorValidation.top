@@ -11,12 +11,12 @@ def validate(state: &validator.State, kind: ast.OperatorKind, node: &ast.AST) Ma
     for i := 1..node.nodes.length do
         _type := node.nodes[i]._type
 
-        ? op_t.duck_type _type, state.scope, node
+        ? op_t.duck_type _type, node
 
     comparison := [ast.LT.tag]
 
     node._type =
-        if comparison.contains kind.tag then types.make_Bool!
+        if comparison.contains kind.tag then types.Bool
         else op_t
 
     None

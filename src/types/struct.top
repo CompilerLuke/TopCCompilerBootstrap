@@ -1,31 +1,27 @@
 from "hashMap" import HashMap
 import "error"
-import "scope"
 
-type Struct =
+type StructInfo =
     name: string
     fields: HashMap[CompilerType]
 
-def Struct.toString(&self) string =
+def StructInfo.toString(&self) string =
     self.name
 
-def Struct.equals(&self, other: CompilerType, sc: &scope.Scope) bool =
-    guard Ok real_type := other.to_real_type sc
-    elif Error e then return false
-
-    match real_type with
-        o as &Struct -> o.name == self.name
+def StructInfo.equals(&self, other: CompilerType) bool =
+    match other.to_real_type! with
+        Struct o -> o.name == self.name
         _ -> false
 
-def Struct.duck_type(&self, other: CompilerType, sc: &scope.Scope, thrower: Thrower) Maybe[&error.CompilerError] =
-    if self.equals other, sc then None
+def StructInfo.duck_type(&self, other: CompilerType, thrower: Thrower) Maybe[&error.CompilerError] =
+    if self.equals other then None
     else Some error.make_Error thrower, "Expecting {self} not {other}"
 
-def Struct.calc_size(&self) uint =
-    0
+def StructInfo.op_eq(&self, other: &StructInfo) bool =
+    self.name == other.name
 
-def make_Struct(name: string, fields: HashMap[CompilerType]) &Struct =
-    box Struct{
+def make_StructInfo(name: string, fields: HashMap[CompilerType]) &StructInfo =
+    box StructInfo{
         name = name
         fields = fields
     }

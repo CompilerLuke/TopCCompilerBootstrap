@@ -1,6 +1,6 @@
 ext _ = "#include <stdio.h>"
-ext _popen: |&char, &char| -> Maybe[&FILE] = "popen"
-ext _pclose: |&FILE| -> int = "pclose"
+ext _popen: |&char, &char| -> Maybe[&FILE] = "_popen"
+ext _pclose: |&FILE| -> int = "_pclose"
 ext _fgetc: |&FILE| -> char = "fgetc"
 ext _eof: char = "EOF"
 

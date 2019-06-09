@@ -63,4 +63,5 @@ return t;}
 struct _global_EnumType _global_Result_Result_E_Result_TType;struct _global_EnumType* _global_Result_Result_E_Result_T_get_type(struct _global_Result_Result_E_Result_T* self, struct _global_Context* c){return &_global_Result_Result_E_Result_TType;}
 struct _global_EnumType* _global_Result_Result_E_Result_T_get_typeByValue(struct _global_Result_Result_E_Result_T self, struct _global_Context* c){return &_global_Result_Result_E_Result_TType;}
 
-struct _global_Result_string_Result_T compiler_compile_file(struct _global_String compiler_filename, struct _global_Context* b);
+void compiler_log_memory_usage(struct _global_Context* b);
+struct _global_Result_string_Result_T compiler_compile_file(struct _global_String compiler_filename, struct _global_Context* c);

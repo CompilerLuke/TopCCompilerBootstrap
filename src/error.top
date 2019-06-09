@@ -51,11 +51,16 @@ type Thrower with
     def get_column() uint
 
 def make_Error[T: Thrower](self: T, mesg: string) &CompilerError =
-    box_longterm CompilerError{
+    err := box_longterm CompilerError{
         filename = self.get_filename!
         line = self.get_line!
         mesg = mesg
         column = self.get_column!
     }
+
+    panic err.toString!
+
+
+    err
 
 type CompilerResult[T] is Result[T, &CompilerError]
