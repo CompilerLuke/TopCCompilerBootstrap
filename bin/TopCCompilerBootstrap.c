@@ -1008,13 +1008,15 @@ _global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_
 #define _global_c_alloc(bs,bt) malloc(bs)
 
 #define _global_c_free(bv,bw) free(bv)
-struct _global_TemporaryStorage _global_temporary_storage;struct _global_TemporaryStorage _global_longterm_storage_allocator;struct _global_Malloc _global_malloc;struct _global_Allocator _global_temporary_storage_as_allocator;struct _global_Allocator_VTABLE rTemporaryStorage_VTABLE_FOR_Allocator;struct _global_Allocator _global_malloc_as_allocator;struct _global_Allocator_VTABLE rMalloc_VTABLE_FOR_Allocator;struct _global_Allocator _global_longterm_storage_as_allocator;struct _global_TemporaryStorage _global_new_TemporaryStorage(uint64_t _global_maxSize, struct _global_Context* bx){;
-;return _global_TemporaryStorageInit((uint64_t)0,(uint64_t)0,_global_c_alloc(_global_maxSize,bx),_global_maxSize);
+
+#define _global_c_memset(bx,by,bz,bB) memset(bx,by,bz)
+struct _global_TemporaryStorage _global_temporary_storage;struct _global_TemporaryStorage _global_longterm_storage_allocator;struct _global_Malloc _global_malloc;struct _global_Allocator _global_temporary_storage_as_allocator;struct _global_Allocator_VTABLE rTemporaryStorage_VTABLE_FOR_Allocator;struct _global_Allocator _global_malloc_as_allocator;struct _global_Allocator_VTABLE rMalloc_VTABLE_FOR_Allocator;struct _global_Allocator _global_longterm_storage_as_allocator;struct _global_TemporaryStorage _global_new_TemporaryStorage(uint64_t _global_maxSize, struct _global_Context* bC){;
+;return _global_TemporaryStorageInit((uint64_t)0,(uint64_t)0,_global_c_alloc(_global_maxSize,bC),_global_maxSize);
 ;}
-uint64_t _global_TemporaryStorage_get_occupied(struct _global_TemporaryStorage* _global_self, struct _global_Context* bx){;
+uint64_t _global_TemporaryStorage_get_occupied(struct _global_TemporaryStorage* _global_self, struct _global_Context* bC){;
 ;return (_global_self)->occupied;
 ;}
-void* _global_TemporaryStorage_alloc(struct _global_TemporaryStorage* _global_self, uint64_t _global_size, struct _global_Context* bx){;
+void* _global_TemporaryStorage_alloc(struct _global_TemporaryStorage* _global_self, uint64_t _global_size, struct _global_Context* bC){;
 ;
 uint64_t _global_occupied;_global_occupied = (_global_self)->occupied;;
 (_global_self)->occupied = (_global_self)->occupied+_global_size;;
@@ -1022,234 +1024,234 @@ if((_global_self)->occupied>(_global_self)->highest){;
 (_global_self)->highest = (_global_self)->occupied;;
 ;};
 if((_global_self)->occupied>=(_global_self)->maxSize){;
-(bx)->allocator = &(_global_malloc_as_allocator);;
-_global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(48,"ERROR: used more tempory memory than available: "),_global_u64_toStringByValue(((_global_self)->maxSize),bx),bx),_global_StringInit(0,""),bx),bx);
+(bC)->allocator = &(_global_malloc_as_allocator);;
+_global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(48,"ERROR: used more tempory memory than available: "),_global_u64_toStringByValue(((_global_self)->maxSize),bC),bC),_global_StringInit(0,""),bC),bC);
 ;};
-;return _global_offsetPtr((_global_self)->data,(int64_t)_global_occupied,bx);
+;return _global_offsetPtr((_global_self)->data,(int64_t)_global_occupied,bC);
 ;}
-void _global_TemporaryStorage_dealloc(struct _global_TemporaryStorage* _global_self, void* _global_p, struct _global_Context* bx){;
+void _global_TemporaryStorage_dealloc(struct _global_TemporaryStorage* _global_self, void* _global_p, struct _global_Context* bC){;
 ;
 ;}
-void _global_TemporaryStorage_reset_to(struct _global_TemporaryStorage* _global_self, uint64_t _global_occupied, struct _global_Context* bx){;
+void _global_TemporaryStorage_reset_to(struct _global_TemporaryStorage* _global_self, uint64_t _global_occupied, struct _global_Context* bC){;
 ;
 (_global_self)->occupied = _global_occupied;;
 if((_global_self)->occupied>=(_global_self)->maxSize){;
-(bx)->allocator = &(_global_malloc_as_allocator);;
-_global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(48,"ERROR: used more tempory memory than available: "),_global_u64_toStringByValue(((_global_self)->occupied),bx),bx),_global_StringInit(0,""),bx),bx);
+(bC)->allocator = &(_global_malloc_as_allocator);;
+_global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(48,"ERROR: used more tempory memory than available: "),_global_u64_toStringByValue(((_global_self)->occupied),bC),bC),_global_StringInit(0,""),bC),bC);
 ;};
 ;}
-void* _global_Malloc_alloc(struct _global_Malloc* _global_self, uint64_t _global_size, struct _global_Context* bx){;
+void* _global_Malloc_alloc(struct _global_Malloc* _global_self, uint64_t _global_size, struct _global_Context* bC){;
 ;
-;return _global_c_alloc(_global_size,bx);
+;return _global_c_alloc(_global_size,bC);
 ;}
-void _global_Malloc_dealloc(struct _global_Malloc* _global_self, void* _global_pointer, struct _global_Context* bx){;
+void _global_Malloc_dealloc(struct _global_Malloc* _global_self, void* _global_pointer, struct _global_Context* bC){;
 ;
-_global_c_free(_global_pointer,bx);
+_global_c_free(_global_pointer,bC);
 ;}
-unsigned int _global_Malloc_get_occupied(struct _global_Malloc* _global_self, struct _global_Context* bx){;
+unsigned int _global_Malloc_get_occupied(struct _global_Malloc* _global_self, struct _global_Context* bC){;
 ;return 0;
 ;}
-void _global_Malloc_free_allocator(struct _global_Malloc* _global_self, struct _global_Context* bx){;
+void _global_Malloc_free_allocator(struct _global_Malloc* _global_self, struct _global_Context* bC){;
 ;}
-void _global_Malloc_reset_to(struct _global_Malloc* _global_self, uint64_t _global_to, struct _global_Context* bx){;
+void _global_Malloc_reset_to(struct _global_Malloc* _global_self, uint64_t _global_to, struct _global_Context* bC){;
 ;
 ;}
-void _global_free(void* _global_p, struct _global_Context* bx){;
-_global_Allocator_dealloc((bx)->allocator,_global_p,bx);
+void _global_free(void* _global_p, struct _global_Context* bC){;
+_global_Allocator_dealloc((bC)->allocator,_global_p,bC);
 ;}
-void _global_free_longterm(void* _global_p, struct _global_Context* bx){;
-_global_Allocator_dealloc((bx)->longterm_storage,_global_p,bx);
+void _global_free_longterm(void* _global_p, struct _global_Context* bC){;
+_global_Allocator_dealloc((bC)->longterm_storage,_global_p,bC);
 ;}
-void _global_TemporaryStorage_free_allocator(struct _global_TemporaryStorage* _global_self, struct _global_Context* bx){;
-_global_c_free((_global_self)->data,bx);
+void _global_TemporaryStorage_free_allocator(struct _global_TemporaryStorage* _global_self, struct _global_Context* bC){;
+_global_c_free((_global_self)->data,bC);
 ;}
 
-#define _global_char_buffer_toString(bx,by) _runtime_char_buffer_toString(bx)
+#define _global_char_buffer_toString(bC,bD) _runtime_char_buffer_toString(bC)
 
 #define _global_null_terminated '\0'
 
-#define _global_make_String(bz,bB,bC) _global_StringInit(bz,bB)
-struct _global_Array_Array_T _global_empty_array(struct _global_Context* bD){;return _global_Array_Array_TInit(0,0,NULL,NULL);
+#define _global_make_String(bF,bG,bH) _global_StringInit(bF,bG)
+struct _global_Array_Array_T _global_empty_array(struct _global_Context* bJ){;return _global_Array_Array_TInit(0,0,NULL,NULL);
 ;}
-void _global_Range_iteratorByValue(struct _global_Range _global_self, struct _global_Context* bD){;
+void _global_Range_iteratorByValue(struct _global_Range _global_self, struct _global_Context* bJ){;
 _global_RangeIteratorInit(_global_self,0);
 ;}
-static inline void _global_Range_iterator(struct _global_Range* bF,struct _global_Context* bD){
-_global_Range_iteratorByValue(*bF,bD);
-}static inline struct _global_Maybe_uint tmp_globalb(struct _global_Maybe_Maybe_T bG) {
-struct _global_Maybe_uint bF;bF.tag = bG.tag;bF.cases = *(union _global_Maybe_uint_cases*) &(bG.cases);return bF;
+static inline void _global_Range_iterator(struct _global_Range* bK,struct _global_Context* bJ){
+_global_Range_iteratorByValue(*bK,bJ);
+}static inline struct _global_Maybe_uint tmp_globalb(struct _global_Maybe_Maybe_T bL) {
+struct _global_Maybe_uint bK;bK.tag = bL.tag;bK.cases = *(union _global_Maybe_uint_cases*) &(bL.cases);return bK;
 }
-struct _global_Maybe_uint _global_RangeIterator_next(struct _global_RangeIterator* _global_self, struct _global_Context* bD){;
+struct _global_Maybe_uint _global_RangeIterator_next(struct _global_RangeIterator* _global_self, struct _global_Context* bJ){;
 struct _global_Range* _global_range;_global_range = &(((_global_self)->range));;
 ;if((_global_self)->it<(_global_range)->end){;
 unsigned int _global_tmp;_global_tmp = (_global_self)->it;;
 (_global_self)->it = (_global_self)->it+1;;
-return _global_Some_uint(_global_tmp,bD);}
+return _global_Some_uint(_global_tmp,bJ);}
 else{return tmp_globalb(_global_None);};
 ;}
-struct _global_String _global_FileAcess_toStringByValue(struct _global_FileAcess _global_self, struct _global_Context* bD){;
-;struct _global_FileAcess bF =_global_self;
-if(bF.tag==0){return _global_StringInit(1,"r");}else if(bF.tag==1){return _global_StringInit(1,"w");}else if(bF.tag==2){return _global_StringInit(2,"rb");}else if(bF.tag==3){return _global_StringInit(2,"wb");};
+struct _global_String _global_FileAcess_toStringByValue(struct _global_FileAcess _global_self, struct _global_Context* bJ){;
+;struct _global_FileAcess bK =_global_self;
+if(bK.tag==0){return _global_StringInit(1,"r");}else if(bK.tag==1){return _global_StringInit(1,"w");}else if(bK.tag==2){return _global_StringInit(2,"rb");}else if(bK.tag==3){return _global_StringInit(2,"wb");};
 ;}
-static inline struct _global_String _global_FileAcess_toString(struct _global_FileAcess* bG,struct _global_Context* bD){
-return _global_FileAcess_toStringByValue(*bG,bD);
+static inline struct _global_String _global_FileAcess_toString(struct _global_FileAcess* bL,struct _global_Context* bJ){
+return _global_FileAcess_toStringByValue(*bL,bJ);
 }
-#define _global_c_open_file(bD,bF,bG) _runtime_c_open_file(bD,bF)
+#define _global_c_open_file(bJ,bK,bL) _runtime_c_open_file(bJ,bK)
 
-#define _global_c_close_file(bH,bJ) _runtime_c_close_file(bH)
+#define _global_c_close_file(bM,bN) _runtime_c_close_file(bM)
 
-#define _global_c_read_file(bK,bL,bM,bN) _runtime_read_file(bK,bL,bM)
+#define _global_c_read_file(bP,bQ,bR,bS) _runtime_read_file(bP,bQ,bR)
 
-#define _global_c_write_file(bP,bQ,bR,bS) _runtime_write_file(bP,bQ,bR)
-struct _global_String _global_File_read(struct _global_File* _global_self, struct _global_Context* bT){;
-struct _global_FileAcess bV =(_global_self)->acess;if(bV.tag==0){
+#define _global_c_write_file(bT,bV,bW,bX) _runtime_write_file(bT,bV,bW)
+struct _global_String _global_File_read(struct _global_File* _global_self, struct _global_Context* bY){;
+struct _global_FileAcess bZ =(_global_self)->acess;if(bZ.tag==0){
 ;}
-else if(bV.tag==2){
+else if(bZ.tag==2){
 ;}
 else if(1){
-_global_panic(_global_StringInit(40,"Trying to read from file not set to read"),bT);
+_global_panic(_global_StringInit(40,"Trying to read from file not set to read"),bY);
 ;}
 ;
-;return _global_c_read_file((_global_self)->c_file,(_global_self)->filename,bT,bT);
+;return _global_c_read_file((_global_self)->c_file,(_global_self)->filename,bY,bY);
 ;}
-void _global_File_write(struct _global_File* _global_self, struct _global_String _global_s, struct _global_Context* bT){;
+void _global_File_write(struct _global_File* _global_self, struct _global_String _global_s, struct _global_Context* bY){;
 ;
-struct _global_FileAcess bV =(_global_self)->acess;if(bV.tag==1){
+struct _global_FileAcess bZ =(_global_self)->acess;if(bZ.tag==1){
 ;}
-else if(bV.tag==3){
+else if(bZ.tag==3){
 ;}
 else if(1){
-_global_panic(_global_StringInit(40,"Trying to write to file not set to write"),bT);
+_global_panic(_global_StringInit(40,"Trying to write to file not set to write"),bY);
 ;}
 ;
-_global_c_write_file((_global_self)->c_file,_global_s,bT,bT);
+_global_c_write_file((_global_self)->c_file,_global_s,bY,bY);
 ;}
-void _global_File_freeByValue(struct _global_File _global_self, struct _global_Context* bT){;
-_global_c_close_file((_global_self).c_file,bT);
+void _global_File_freeByValue(struct _global_File _global_self, struct _global_Context* bY){;
+_global_c_close_file((_global_self).c_file,bY);
 ;}
-static inline void _global_File_free(struct _global_File* bV,struct _global_Context* bT){
-_global_File_freeByValue(*bV,bT);
-}static inline struct _global_Maybe_File tmp_globalc(struct _global_Maybe_Maybe_T bX) {
-struct _global_Maybe_File bW;bW.tag = bX.tag;bW.cases = *(union _global_Maybe_File_cases*) &(bX.cases);return bW;
+static inline void _global_File_free(struct _global_File* bZ,struct _global_Context* bY){
+_global_File_freeByValue(*bZ,bY);
+}static inline struct _global_Maybe_File tmp_globalc(struct _global_Maybe_Maybe_T db) {
+struct _global_Maybe_File cb;cb.tag = db.tag;cb.cases = *(union _global_Maybe_File_cases*) &(db.cases);return cb;
 }
-struct _global_Maybe_File _global_open(struct _global_String _global_filename, struct _global_FileAcess _global_acess, struct _global_Context* bT){;
+struct _global_Maybe_File _global_open(struct _global_String _global_filename, struct _global_FileAcess _global_acess, struct _global_Context* bY){;
 ;
-;struct FILE* bV =_global_c_open_file(_global_filename,_global_FileAcess_toStringByValue(_global_acess,bT),bT);
-if(bV != NULL){struct FILE* _global_file = bV;
-return _global_Some_File(_global_FileInit(_global_file,_global_acess,_global_filename),bT);}else if(bV == NULL){return tmp_globalc(_global_None);};
+;struct FILE* bZ =_global_c_open_file(_global_filename,_global_FileAcess_toStringByValue(_global_acess,bY),bY);
+if(bZ != NULL){struct FILE* _global_file = bZ;
+return _global_Some_File(_global_FileInit(_global_file,_global_acess,_global_filename),bY);}else if(bZ == NULL){return tmp_globalc(_global_None);};
 ;}
 
-#define _global_set_bit_to(bT,bV,bW,bX) _global_c_set_bit_to(bT,bV,bW)
+#define _global_set_bit_to(bY,bZ,cb,db) _global_c_set_bit_to(bY,bZ,cb)
 
-#define _global_is_bit_set(bY,bZ,cb) _global_c_is_bit_set(bY,bZ)
+#define _global_is_bit_set(fb,gb,hb) _global_c_is_bit_set(fb,gb)
 
-#define _global_bit_and(db,fb,gb) _global_c_bit_and(db,fb)
+#define _global_bit_and(jb,kb,lb) _global_c_bit_and(jb,kb)
 
 #define _global_null_char '\0'
-uint64_t _global_IntType_get_size(struct IntType* _global_self, struct _global_Context* hb){;
+uint64_t _global_IntType_get_size(struct IntType* _global_self, struct _global_Context* mb){;
 ;return (uint64_t)(_global_self)->size;
 ;}
-struct _global_String _global_IntType_toString(struct IntType* _global_self, struct _global_Context* hb){;
-;return ((_global_self)->sign ? _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"i"),_global_uint_toStringByValue(((_global_self)->size*8),hb),hb),_global_StringInit(0,""),hb):(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"u"),_global_uint_toStringByValue(((_global_self)->size*8),hb),hb),_global_StringInit(0,""),hb)));
+struct _global_String _global_IntType_toString(struct IntType* _global_self, struct _global_Context* mb){;
+;return ((_global_self)->sign ? _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"i"),_global_uint_toStringByValue(((_global_self)->size*8),mb),mb),_global_StringInit(0,""),mb):(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"u"),_global_uint_toStringByValue(((_global_self)->size*8),mb),mb),_global_StringInit(0,""),mb)));
 ;}
-static inline struct _global_String _global_IntType_toStringByValue(struct IntType jb,struct _global_Context* hb){
-return _global_IntType_toString(&jb,hb);
-}uint64_t _global_FloatType_get_size(struct FloatType* _global_self, struct _global_Context* hb){;
+static inline struct _global_String _global_IntType_toStringByValue(struct IntType nb,struct _global_Context* mb){
+return _global_IntType_toString(&nb,mb);
+}uint64_t _global_FloatType_get_size(struct FloatType* _global_self, struct _global_Context* mb){;
 ;return (uint64_t)(_global_self)->size;
 ;}
-struct _global_String _global_FloatType_toString(struct FloatType* _global_self, struct _global_Context* hb){;
-;return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"f"),_global_uint_toStringByValue(((_global_self)->size*8),hb),hb),_global_StringInit(0,""),hb);
+struct _global_String _global_FloatType_toString(struct FloatType* _global_self, struct _global_Context* mb){;
+;return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"f"),_global_uint_toStringByValue(((_global_self)->size*8),mb),mb),_global_StringInit(0,""),mb);
 ;}
-static inline struct _global_String _global_FloatType_toStringByValue(struct FloatType jb,struct _global_Context* hb){
-return _global_FloatType_toString(&jb,hb);
-}struct _global_String _global_BoolType_toString(struct BoolType* _global_self, struct _global_Context* hb){;
+static inline struct _global_String _global_FloatType_toStringByValue(struct FloatType nb,struct _global_Context* mb){
+return _global_FloatType_toString(&nb,mb);
+}struct _global_String _global_BoolType_toString(struct BoolType* _global_self, struct _global_Context* mb){;
 ;return _global_StringInit(4,"bool");
 ;}
-static inline struct _global_String _global_BoolType_toStringByValue(struct BoolType jb,struct _global_Context* hb){
-return _global_BoolType_toString(&jb,hb);
-}uint64_t _global_BoolType_get_size(struct BoolType* _global_self, struct _global_Context* hb){;
+static inline struct _global_String _global_BoolType_toStringByValue(struct BoolType nb,struct _global_Context* mb){
+return _global_BoolType_toString(&nb,mb);
+}uint64_t _global_BoolType_get_size(struct BoolType* _global_self, struct _global_Context* mb){;
 ;return (uint64_t)sizeof(_Bool);
 ;}
-struct _global_String _global_StringType_toString(struct StringType* _global_self, struct _global_Context* hb){;
+struct _global_String _global_StringType_toString(struct StringType* _global_self, struct _global_Context* mb){;
 ;return _global_StringInit(6,"string");
 ;}
-static inline struct _global_String _global_StringType_toStringByValue(struct StringType jb,struct _global_Context* hb){
-return _global_StringType_toString(&jb,hb);
-}uint64_t _global_StringType_get_size(struct StringType* _global_self, struct _global_Context* hb){;
+static inline struct _global_String _global_StringType_toStringByValue(struct StringType nb,struct _global_Context* mb){
+return _global_StringType_toString(&nb,mb);
+}uint64_t _global_StringType_get_size(struct StringType* _global_self, struct _global_Context* mb){;
 ;return (uint64_t)sizeof(struct _global_String);
 ;}
-struct _global_String _global_AliasType_toString(struct _global_AliasType* _global_self, struct _global_Context* hb){;
-;return _global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((_global_self)->package),hb),_global_StringInit(1,"."),hb),((_global_self)->name),hb),_global_StringInit(0,""),hb);
+struct _global_String _global_AliasType_toString(struct _global_AliasType* _global_self, struct _global_Context* mb){;
+;return _global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((_global_self)->package),mb),_global_StringInit(1,"."),mb),((_global_self)->name),mb),_global_StringInit(0,""),mb);
 ;}
-static inline struct _global_String _global_AliasType_toStringByValue(struct _global_AliasType jb,struct _global_Context* hb){
-return _global_AliasType_toString(&jb,hb);
-}uint64_t _global_AliasType_get_size(struct _global_AliasType* _global_self, struct _global_Context* hb){;
-;return _global_Type_get_size(&((_global_self)->real_type),hb);
+static inline struct _global_String _global_AliasType_toStringByValue(struct _global_AliasType nb,struct _global_Context* mb){
+return _global_AliasType_toString(&nb,mb);
+}uint64_t _global_AliasType_get_size(struct _global_AliasType* _global_self, struct _global_Context* mb){;
+;return _global_Type_get_size(&((_global_self)->real_type),mb);
 ;}
-struct _global_String _global_PointerType_toString(struct _global_PointerType* _global_self, struct _global_Context* hb){;
-;return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"&"),_global_Type_toStringByValue(((_global_self)->p_type),hb),hb),_global_StringInit(0,""),hb);
+struct _global_String _global_PointerType_toString(struct _global_PointerType* _global_self, struct _global_Context* mb){;
+;return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"&"),_global_Type_toStringByValue(((_global_self)->p_type),mb),mb),_global_StringInit(0,""),mb);
 ;}
-static inline struct _global_String _global_PointerType_toStringByValue(struct _global_PointerType jb,struct _global_Context* hb){
-return _global_PointerType_toString(&jb,hb);
-}uint64_t _global_PointerType_get_size(struct _global_PointerType* _global_self, struct _global_Context* hb){;
+static inline struct _global_String _global_PointerType_toStringByValue(struct _global_PointerType nb,struct _global_Context* mb){
+return _global_PointerType_toString(&nb,mb);
+}uint64_t _global_PointerType_get_size(struct _global_PointerType* _global_self, struct _global_Context* mb){;
 ;return (uint64_t)sizeof(void*);
 ;}
-uint64_t _global_StructType_get_size(struct _global_StructType* _global_self, struct _global_Context* hb){;
+uint64_t _global_StructType_get_size(struct _global_StructType* _global_self, struct _global_Context* mb){;
 ;return (_global_self)->size;
 ;}
-struct _global_String _global_StructType_toString(struct _global_StructType* _global_self, struct _global_Context* hb){;
-;return (_global_String_op_eqByValue((_global_self)->package,_global_StringInit(7,"_global"),hb) ? (_global_self)->name:(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((_global_self)->package),hb),_global_StringInit(1,"."),hb),((_global_self)->name),hb),_global_StringInit(0,""),hb)));
+struct _global_String _global_StructType_toString(struct _global_StructType* _global_self, struct _global_Context* mb){;
+;return (_global_String_op_eqByValue((_global_self)->package,_global_StringInit(7,"_global"),mb) ? (_global_self)->name:(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((_global_self)->package),mb),_global_StringInit(1,"."),mb),((_global_self)->name),mb),_global_StringInit(0,""),mb)));
 ;}
-static inline struct _global_String _global_StructType_toStringByValue(struct _global_StructType jb,struct _global_Context* hb){
-return _global_StructType_toString(&jb,hb);
-}unsigned char _global_EnumType_get_tag(struct _global_EnumType* _global_self, void* _global_ptr, struct _global_Context* hb){;
+static inline struct _global_String _global_StructType_toStringByValue(struct _global_StructType nb,struct _global_Context* mb){
+return _global_StructType_toString(&nb,mb);
+}unsigned char _global_EnumType_get_tag(struct _global_EnumType* _global_self, void* _global_ptr, struct _global_Context* mb){;
 ;
-;return *((unsigned char*)(_global_offsetPtr(_global_ptr,(int64_t)((_global_self)->tag_field).offset,hb)));
+;return *((unsigned char*)(_global_offsetPtr(_global_ptr,(int64_t)((_global_self)->tag_field).offset,mb)));
 ;}
-struct _global_String _global_EnumType_toString(struct _global_EnumType* _global_self, struct _global_Context* hb){;
-;return _global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((_global_self)->package),hb),_global_StringInit(1,"."),hb),((_global_self)->name),hb),_global_StringInit(0,""),hb);
+struct _global_String _global_EnumType_toString(struct _global_EnumType* _global_self, struct _global_Context* mb){;
+;return _global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((_global_self)->package),mb),_global_StringInit(1,"."),mb),((_global_self)->name),mb),_global_StringInit(0,""),mb);
 ;}
-static inline struct _global_String _global_EnumType_toStringByValue(struct _global_EnumType jb,struct _global_Context* hb){
-return _global_EnumType_toString(&jb,hb);
-}uint64_t _global_EnumType_get_size(struct _global_EnumType* _global_self, struct _global_Context* hb){;
+static inline struct _global_String _global_EnumType_toStringByValue(struct _global_EnumType nb,struct _global_Context* mb){
+return _global_EnumType_toString(&nb,mb);
+}uint64_t _global_EnumType_get_size(struct _global_EnumType* _global_self, struct _global_Context* mb){;
 ;return (_global_self)->size;
 ;}
-uint64_t _global_FuncType_get_size(struct _global_FuncType* _global_self, struct _global_Context* hb){;
+uint64_t _global_FuncType_get_size(struct _global_FuncType* _global_self, struct _global_Context* mb){;
 ;return (uint64_t)sizeof(pp___none);
 ;}
-struct _global_String _global_InterfaceType_toString(struct _global_InterfaceType* _global_self, struct _global_Context* hb){;
-;return _global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((_global_self)->package),hb),_global_StringInit(1,"."),hb),((_global_self)->name),hb),_global_StringInit(0,""),hb);
+struct _global_String _global_InterfaceType_toString(struct _global_InterfaceType* _global_self, struct _global_Context* mb){;
+;return _global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((_global_self)->package),mb),_global_StringInit(1,"."),mb),((_global_self)->name),mb),_global_StringInit(0,""),mb);
 ;}
-static inline struct _global_String _global_InterfaceType_toStringByValue(struct _global_InterfaceType jb,struct _global_Context* hb){
-return _global_InterfaceType_toString(&jb,hb);
-}uint64_t _global_InterfaceType_get_size(struct _global_InterfaceType* _global_self, struct _global_Context* hb){;
+static inline struct _global_String _global_InterfaceType_toStringByValue(struct _global_InterfaceType nb,struct _global_Context* mb){
+return _global_InterfaceType_toString(&nb,mb);
+}uint64_t _global_InterfaceType_get_size(struct _global_InterfaceType* _global_self, struct _global_Context* mb){;
 ;return (uint64_t)sizeof(struct bb);
 ;}
-uint64_t _global_ArrayType_get_size(struct _global_ArrayType* _global_self, struct _global_Context* hb){;
-;struct _global_ArraySize jb =*((_global_self)->size);
-if(jb.tag==0){unsigned int _global_length = jb.cases.Static.field0;
-return (uint64_t)_global_length*_global_Type_get_size(&((_global_self)->array_type),hb);}else if(jb.tag==1){return (uint64_t)sizeof(struct _global_Array_none);}else if(jb.tag==2){return (uint64_t)sizeof(struct _global_StaticArray_StaticArray_S_none);};
+uint64_t _global_ArrayType_get_size(struct _global_ArrayType* _global_self, struct _global_Context* mb){;
+;struct _global_ArraySize nb =*((_global_self)->size);
+if(nb.tag==0){unsigned int _global_length = nb.cases.Static.field0;
+return (uint64_t)_global_length*_global_Type_get_size(&((_global_self)->array_type),mb);}else if(nb.tag==1){return (uint64_t)sizeof(struct _global_Array_none);}else if(nb.tag==2){return (uint64_t)sizeof(struct _global_StaticArray_StaticArray_S_none);};
 ;}
-struct _global_String _global_ArrayType_toString(struct _global_ArrayType* _global_self, struct _global_Context* hb){;
-;struct _global_ArraySize jb =*((_global_self)->size);
-if(jb.tag==0){unsigned int _global_length = jb.cases.Static.field0;
-return _global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"["),_global_uint_toStringByValue((_global_length),hb),hb),_global_StringInit(1,"]"),hb),_global_Type_toStringByValue(((_global_self)->array_type),hb),hb),_global_StringInit(0,""),hb);}else if(jb.tag==1){return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(4,"[..]"),_global_Type_toStringByValue(((_global_self)->array_type),hb),hb),_global_StringInit(0,""),hb);}else if(jb.tag==2){return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(2,"[]"),_global_Type_toStringByValue(((_global_self)->array_type),hb),hb),_global_StringInit(0,""),hb);};
+struct _global_String _global_ArrayType_toString(struct _global_ArrayType* _global_self, struct _global_Context* mb){;
+;struct _global_ArraySize nb =*((_global_self)->size);
+if(nb.tag==0){unsigned int _global_length = nb.cases.Static.field0;
+return _global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"["),_global_uint_toStringByValue((_global_length),mb),mb),_global_StringInit(1,"]"),mb),_global_Type_toStringByValue(((_global_self)->array_type),mb),mb),_global_StringInit(0,""),mb);}else if(nb.tag==1){return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(4,"[..]"),_global_Type_toStringByValue(((_global_self)->array_type),mb),mb),_global_StringInit(0,""),mb);}else if(nb.tag==2){return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(2,"[]"),_global_Type_toStringByValue(((_global_self)->array_type),mb),mb),_global_StringInit(0,""),mb);};
 ;}
-static inline struct _global_String _global_ArrayType_toStringByValue(struct _global_ArrayType kb,struct _global_Context* hb){
-return _global_ArrayType_toString(&kb,hb);
-}uint64_t _global_CharType_get_size(struct _global_CharType* _global_self, struct _global_Context* hb){;
+static inline struct _global_String _global_ArrayType_toStringByValue(struct _global_ArrayType pb,struct _global_Context* mb){
+return _global_ArrayType_toString(&pb,mb);
+}uint64_t _global_CharType_get_size(struct _global_CharType* _global_self, struct _global_Context* mb){;
 ;return (uint64_t)sizeof(char);
 ;}
-struct _global_String _global_NoneType_toString(struct NoneType* _global_self, struct _global_Context* hb){;
+struct _global_String _global_NoneType_toString(struct NoneType* _global_self, struct _global_Context* mb){;
 ;return _global_StringInit(4,"none");
 ;}
-static inline struct _global_String _global_NoneType_toStringByValue(struct NoneType jb,struct _global_Context* hb){
-return _global_NoneType_toString(&jb,hb);
-}uint64_t _global_NoneType_get_size(struct NoneType* _global_self, struct _global_Context* hb){;
+static inline struct _global_String _global_NoneType_toStringByValue(struct NoneType nb,struct _global_Context* mb){
+return _global_NoneType_toString(&nb,mb);
+}uint64_t _global_NoneType_get_size(struct NoneType* _global_self, struct _global_Context* mb){;
 ;return (uint64_t)sizeof(char);
 ;}
-void _global_log_string(struct _global_String _global_s, struct _global_Context* hb){;
-_global_c_log(_global_String_toString(&(_global_s),hb),hb);
+void _global_log_string(struct _global_String _global_s, struct _global_Context* mb){;
+_global_c_log(_global_String_toString(&(_global_s),mb),mb);
 ;}
 
 void _globalInitTypes() { 
@@ -1762,8 +1764,9 @@ void _globalInit() {
 ;
 ;
 ;
+;
 _global_temporary_storage = _global_new_TemporaryStorage((uint64_t)10000000,(&_global_context));;
-_global_longterm_storage_allocator = _global_new_TemporaryStorage((uint64_t)100000000,(&_global_context));;
+_global_longterm_storage_allocator = _global_new_TemporaryStorage((uint64_t)1000000000,(&_global_context));;
 _global_malloc = _global_MallocInit();;
 _global_temporary_storage_as_allocator = _global_AllocatorFromStruct(&(_global_temporary_storage),&rTemporaryStorage_VTABLE_FOR_Allocator,_global_TypeFromStruct(_global_TemporaryStorage_get_type(NULL,(&_global_context)),&rStructType_VTABLE_FOR_Type,rStructType_VTABLE_FOR_Type.type, &_global_StructType_toString, &_global_StructType_get_size), &_global_TemporaryStorage_get_occupied, &_global_TemporaryStorage_alloc, &_global_TemporaryStorage_dealloc, &_global_TemporaryStorage_reset_to, &_global_TemporaryStorage_free_allocator);;
 _global_malloc_as_allocator = _global_AllocatorFromStruct(&(_global_malloc),&rMalloc_VTABLE_FOR_Allocator,_global_TypeFromStruct(_global_Malloc_get_type(NULL,(&_global_context)),&rStructType_VTABLE_FOR_Type,rStructType_VTABLE_FOR_Type.type, &_global_StructType_toString, &_global_StructType_get_size), &_global_Malloc_get_occupied, &_global_Malloc_alloc, &_global_Malloc_dealloc, &_global_Malloc_reset_to, &_global_Malloc_free_allocator);;
@@ -3829,175 +3832,104 @@ static inline char* _global_Maybe_unwrap_rchar(char**,struct _global_Context* g)
 char* _global_Maybe_unwrap_rcharByValue(char*,struct _global_Context* g);
 char _global_Array_pop_char(struct _global_Array_char* _global_self, struct _global_Context* g);
 void stringBuilder_StringBuilder_append(struct stringBuilder_StringBuilder* stringBuilder_self, struct _global_String stringBuilder_s, struct _global_Context* g){;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 ;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 _global_Array_reserve_char(&((stringBuilder_self)->chars),((stringBuilder_self)->chars).length+(stringBuilder_s).length,g);
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 struct _global_Range h =_global_RangeInit(0,(stringBuilder_s).length);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 for (unsigned int j = h.start; j < h.end; j++) {
 unsigned int stringBuilder_i;stringBuilder_i = j;
 ;_global_Array_append_char(&((stringBuilder_self)->chars),*(_global_String_op_getByValue(stringBuilder_s,(unsigned int)stringBuilder_i,g)),g);
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 }
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 ;}
 void stringBuilder_StringBuilder_shorten(struct stringBuilder_StringBuilder* stringBuilder_self, unsigned int stringBuilder_num, struct _global_Context* g){;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 ;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 _global_Array_shorten_char(&((stringBuilder_self)->chars),stringBuilder_num,g);
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 ;}
 struct _global_String stringBuilder_StringBuilder_toString(struct stringBuilder_StringBuilder* stringBuilder_self, struct _global_Context* g){;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 _global_Array_append_char(&((stringBuilder_self)->chars),'\0',g);
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 struct _global_String stringBuilder_s;stringBuilder_s = _global_make_String(((stringBuilder_self)->chars).length-1,_global_Maybe_unwrap_rcharByValue(((stringBuilder_self)->chars).data,g),g);;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 _global_Array_pop_char(&((stringBuilder_self)->chars),g);
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
-_global_log_string(stringBuilder_s,g);
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 ;return stringBuilder_s;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 ;}
 static inline struct _global_String stringBuilder_StringBuilder_toStringByValue(struct stringBuilder_StringBuilder h,struct _global_Context* g){
 return stringBuilder_StringBuilder_toString(&h,g);
 }struct stringBuilder_StringBuilder stringBuilder_make_StringBuilder(struct _global_Context* g){;return stringBuilder_StringBuilderInit(_global_Array_charInit(0, 0, NULL, NULL));
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//stringBuilder.top"
 ;}
 struct _global_Allocator* _global_Maybe_default_rAllocatorByValue(struct _global_Allocator* _global_self, struct _global_Allocator* _global_value, struct _global_Context* g){;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;struct _global_Allocator* h =_global_self;
 if(h != NULL){struct _global_Allocator* _global_x = h;
 return _global_x;}else if(h == NULL){return _global_value;};
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
 static inline struct _global_Allocator* _global_Maybe_default_rAllocator(struct _global_Allocator** j,struct _global_Allocator* k,struct _global_Context* g){
 return _global_Maybe_default_rAllocatorByValue(*j,k,g);
 }void _global_memcpy_char(char* _global_target, char* _global_destination, unsigned int _global_length, struct _global_Context* g){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(char),g);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 char* _global_Array_op_get_char(struct _global_Array_char* _global_self, unsigned int _global_index, struct _global_Context* g){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),g);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((char*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 
 static inline char* tmpstringBuilderb(struct _global_Array_char** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* g) {
 char* h =(*_global_self)->data;
 if(h != NULL){char* _global_data = h;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),g);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 char* _global_newData;_global_newData = (char*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(char),g));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_char(_global_newData,_global_data,(*_global_self)->length,g);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,g);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(h == NULL){return (char*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(char),g));}
 }
 void _global_Array_reserve_char(struct _global_Array_char* _global_self, unsigned int _global_newSize, struct _global_Context* g){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(g)->allocator,g);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->data = tmpstringBuilderb(&_global_self,&_global_newSize,&_global_allocator, g);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_char(struct _global_Array_char* _global_self, char _global_value, struct _global_Context* g){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_char(_global_self,1,g);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_char(_global_self,(_global_self)->capacity*2,g);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((char*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_shorten_char(struct _global_Array_char* _global_self, unsigned int _global_num, struct _global_Context* g){;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(((int)(_global_self)->length)-(int)_global_num<(int)0){;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(21,"Shorten out of bounds"),g);
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-_global_num;;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 char* _global_Maybe_unwrap_rcharByValue(char* _global_self, struct _global_Context* g){;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 char* _global_x;;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 char* h =_global_self;if(h != NULL){_global_x = h;
 
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 else if(1){
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 _global_panic(_global_StringInit(38,"Trying to unwrap maybe, which was None"),g);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;return _global_x;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
 static inline char* _global_Maybe_unwrap_rchar(char** j,struct _global_Context* g){
 return _global_Maybe_unwrap_rcharByValue(*j,g);
 }char _global_Array_pop_char(struct _global_Array_char* _global_self, struct _global_Context* g){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->length==0){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(25,"trying to pop empty array"),g);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 char _global_tmp;_global_tmp = *(_global_Array_op_get_char(_global_self,(unsigned int)(_global_self)->length-1,g));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return _global_tmp;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 
 void stringBuilderInitTypes() { 
@@ -4059,104 +3991,60 @@ void stringBuilderInit() {
 };
 struct error_CompilerError* _global_box_error_CompilerError(struct error_CompilerError _global_value, struct _global_Context* d);
 struct error_CompilerError* error_CompilerError_before(struct error_CompilerError* error_self, struct _global_String error_mesg, struct _global_Context* d){;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 struct error_CompilerError* error_e;error_e = _global_box_error_CompilerError(*(error_self),d);;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 (error_e)->mesg = _global_String_op_addByValue(_global_String_op_addByValue((error_self)->mesg,_global_StringInit(3," : "),d),error_mesg,d);;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;return error_e;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;}
 struct _global_String error_CompilerError_toString(struct error_CompilerError* error_self, struct _global_Context* d){;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 struct stringBuilder_StringBuilder error_s_buffer;error_s_buffer = stringBuilder_make_StringBuilder(d);;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-stringBuilder_StringBuilder_append(&(error_s_buffer),_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(25,"Compilation Error\n\nFile '"),((error_self)->filename),d),_global_StringInit(8,"', line "),d),_global_uint_toStringByValue(((error_self)->line),d),d),_global_StringInit(3,"\n\t"),d),d);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
+stringBuilder_StringBuilder_append(&(error_s_buffer),_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(25,"Compilation Error\n\nFile '"),((error_self)->filename),d),_global_StringInit(8,"', line "),d),_global_uint_toStringByValue(((error_self)->line),d),d),_global_StringInit(5,"\n    "),d),d);
 stringBuilder_StringBuilder_append(&(error_s_buffer),(error_self)->mesg,d);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-stringBuilder_StringBuilder_append(&(error_s_buffer),_global_StringInit(4,"\n\n\t"),d);
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
+stringBuilder_StringBuilder_append(&(error_s_buffer),_global_StringInit(3,"\n\n\t"),d);
 struct _global_File error_source_file;;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 struct _global_Maybe_File f =_global_open((error_self)->filename,_global_ReadFile,d);if(f.tag==0){error_source_file = f.cases.Some.field0;
 
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;}
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 else if(1){
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),stringBuilder_StringBuilder_toStringByValue((error_s_buffer),d),d),_global_StringInit(27,"\nCould not load source file"),d);
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;}
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 struct _global_File g = error_source_file;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 struct _global_String error_src;error_src = _global_File_read(&(error_source_file),d);;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 unsigned int error_at;error_at = 1;;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 struct _global_Range h =_global_RangeInit(0,(error_src).length);
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 for (unsigned int j = h.start; j < h.end; j++) {
 unsigned int error_i;error_i = j;
 ;if(error_at==(error_self)->line){;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 _global_Array_append_char(&((error_s_buffer).chars),*(_global_String_op_getByValue(error_src,(unsigned int)error_i,d)),d);
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;};
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 if(*(_global_String_op_getByValue(error_src,(unsigned int)error_i,d))=='\n'){;
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 error_at = error_at+1;;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;};
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 if(error_at>(error_self)->line){;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 break;;
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;};
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 }
 ;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-stringBuilder_StringBuilder_append(&(error_s_buffer),_global_StringInit(2,"\t"),d);
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
+stringBuilder_StringBuilder_append(&(error_s_buffer),_global_StringInit(1,"\t"),d);
 struct _global_Range k =_global_RangeInit(0,(error_self)->column);
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 for (unsigned int l = k.start; l < k.end; l++) {
 unsigned int error_i;error_i = l;
 ;stringBuilder_StringBuilder_append(&(error_s_buffer),_global_StringInit(1," "),d);
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 }
 ;
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 stringBuilder_StringBuilder_append(&(error_s_buffer),_global_StringInit(1,"^"),d);
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;struct _global_String m =stringBuilder_StringBuilder_toString(&(error_s_buffer),d);
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 _global_File_freeByValue(g,d);
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 return m;
  }static inline struct _global_String error_CompilerError_toStringByValue(struct error_CompilerError n,struct _global_Context* d){
 return error_CompilerError_toString(&n,d);
 }struct error_CompilerError* _global_box_error_CompilerError(struct error_CompilerError _global_value, struct _global_Context* d){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct error_CompilerError* _global_pointer;_global_pointer = (struct error_CompilerError*)(_global_Allocator_alloc((d)->allocator,(uint64_t)sizeof(struct error_CompilerError),d));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
 void errorInitTypes() { 
@@ -4223,7 +4111,6 @@ rIntType_VTABLE_FOR_Type.type
 ; }
 void errorInit() { 
 stringBuilderInit();;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
 };
 void _global_memcpy_lexer_Token(struct lexer_Token* _global_target, struct lexer_Token* _global_destination, unsigned int _global_length, struct _global_Context* C);
@@ -4236,861 +4123,442 @@ struct error_CompilerError* error_make_Error_rlexer_Lexer(struct lexer_Lexer* er
 _Bool _global_StaticArray_contains_7_string(struct _global_StaticArray_7_string* _global_self, struct _global_String _global_elem, struct _global_Context* C);
 void _global_Array_append_lexer_Token(struct _global_Array_lexer_Token* _global_self, struct lexer_Token _global_value, struct _global_Context* C);
 struct _global_String lexer_TokenType_toString(struct lexer_TokenType* lexer_self, struct _global_Context* C){;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 struct _global_EnumType* lexer_enum_type;lexer_enum_type = lexer_TokenType_get_type(NULL,C);;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return (*(_global_StaticArray_op_get_StaticArray_S_Case(&((lexer_enum_type)->cases),(unsigned int)(lexer_self)->tag,C))).name;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 static inline struct _global_String lexer_TokenType_toStringByValue(struct lexer_TokenType D,struct _global_Context* C){
 return lexer_TokenType_toString(&D,C);
 }struct _global_String lexer_Token_toString(struct lexer_Token* lexer_self, struct _global_Context* C){;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return _global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),lexer_TokenType_toStringByValue(((lexer_self)->kind),C),C),_global_StringInit(3," : "),C),((lexer_self)->value),C),_global_StringInit(0,""),C);
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 static inline struct _global_String lexer_Token_toStringByValue(struct lexer_Token D,struct _global_Context* C){
 return lexer_Token_toString(&D,C);
 }unsigned int lexer_Tok_length(struct lexer_Tok* lexer_self, struct _global_Context* C){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return (lexer_self)->end-(lexer_self)->start;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 struct _global_String lexer_Tok_slice(struct lexer_Tok* lexer_self, struct _global_String lexer_s, struct _global_Context* C){;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return _global_String_sliceByValue(lexer_s,(lexer_self)->start,(lexer_self)->end,C);
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 void lexer_Tok_clear(struct lexer_Tok* lexer_self, struct _global_Context* C){;
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 (lexer_self)->active = 0;;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 (lexer_self)->end = (lexer_self)->start;;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 void lexer_Tok_include(struct lexer_Tok* lexer_self, unsigned int lexer_i, struct _global_Context* C){;
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 if(!((lexer_self)->active)){;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 (lexer_self)->active = 1;;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 (lexer_self)->start = lexer_i;;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;};
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 (lexer_self)->end = lexer_i+1;;
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 struct _global_String lexer_Lexer_get_filename(struct lexer_Lexer* lexer_self, struct _global_Context* C){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return (lexer_self)->filename;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 unsigned int lexer_Lexer_get_line(struct lexer_Lexer* lexer_self, struct _global_Context* C){;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return (lexer_self)->line;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 char lexer_Lexer_current(struct lexer_Lexer* lexer_self, struct _global_Context* C){;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return *(_global_String_op_getByValue((lexer_self)->src,(unsigned int)(lexer_self)->i,C));
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 char lexer_Lexer_advance(struct lexer_Lexer* lexer_self, struct _global_Context* C){;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 (lexer_self)->i = (lexer_self)->i+1;;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return ((lexer_self)->i<((lexer_self)->src).length ? *(_global_String_op_getByValue((lexer_self)->src,(unsigned int)(lexer_self)->i,C)):('\0'));
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 char lexer_Lexer_next(struct lexer_Lexer* lexer_self, struct _global_Context* C){;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return ((lexer_self)->i+1<((lexer_self)->src).length ? *(_global_String_op_getByValue((lexer_self)->src,(unsigned int)(lexer_self)->i+1,C)):('\0'));
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 struct _global_String lexer_char_array_toString(struct _global_StaticArray_StaticArray_S_char lexer_arr, struct _global_Context* C){;
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 char* lexer_buffer;lexer_buffer = _global_longterm_alloc_char((uint64_t)(lexer_arr).length+1,C);;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 _global_memcpy_char(lexer_buffer,(lexer_arr).data,(lexer_arr).length,C);
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 *(((lexer_buffer + (int64_t)(lexer_arr).length))) = _global_null_terminated;;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return _global_make_String((lexer_arr).length,lexer_buffer,C);
-#line 81 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 struct error_CompilerError* lexer_Lexer_reset_tok(struct lexer_Lexer* lexer_self, struct _global_Context* C){;
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 if(lexer_Tok_length(&((lexer_self)->tok),C)>0){;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 struct lexer_TokenType lexer_kind;struct _global_String lexer_value;struct plexer_TokenTypecstringp D;D = lexer_determine_token(lexer_Tok_slice(&((lexer_self)->tok),(lexer_self)->src,C),C);lexer_kind=D.field0;lexer_value=D.field1;;
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 if((lexer_kind).tag==(lexer_Invalid).tag){;
-#line 86 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 return error_make_Error_rlexer_Lexer(lexer_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(14,"Unknown token "),(lexer_Tok_slice(&((lexer_self)->tok),(lexer_self)->src,C)),C),_global_StringInit(0,""),C),C);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;};
-#line 86 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_Lexer_append_token(lexer_self,lexer_kind,lexer_value,C);
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;};
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_Tok_clear(&((lexer_self)->tok),C);
-#line 91 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return NULL;
-#line 93 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 unsigned int lexer_Lexer_get_column(struct lexer_Lexer* lexer_self, struct _global_Context* C){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return (lexer_self)->column;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 _Bool lexer_is_digit(char lexer_c, struct _global_Context* C){;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return ((int)'0')<=((int)lexer_c)&&((int)lexer_c)<=((int)'9');
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 static inline struct _global_Maybe_plexer_TokenTypecstringp tmplexerc(struct _global_Maybe_Maybe_T H) {
 struct _global_Maybe_plexer_TokenTypecstringp G;G.tag = H.tag;G.cases = *(union _global_Maybe_plexer_TokenTypecstringp_cases*) &(H.cases);return G;
 }
-static inline struct _global_Maybe_plexer_TokenTypecstringp tmplexerd(struct _global_Maybe_Maybe_T K) {
-struct _global_Maybe_plexer_TokenTypecstringp J;J.tag = K.tag;J.cases = *(union _global_Maybe_plexer_TokenTypecstringp_cases*) &(K.cases);return J;
-}
 struct _global_Maybe_plexer_TokenTypecstringp lexer_is_number(struct _global_String lexer_s, struct _global_Context* C){;
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 _Bool lexer_dot;lexer_dot = 0;;
-#line 102 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 struct _global_Range D =_global_RangeInit(0,(lexer_s).length);
-#line 104 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 for (unsigned int F = D.start; F < D.end; F++) {
 unsigned int lexer_i;lexer_i = F;
 ;if(*(_global_String_op_getByValue(lexer_s,(unsigned int)lexer_i,C))=='.'){;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 if(lexer_dot){;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 return tmplexerc(_global_None);
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;};
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_dot = 1;;
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}else if(!(lexer_is_digit(*(_global_String_op_getByValue(lexer_s,(unsigned int)lexer_i,C)),C))){;
-#line 108 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerd(_global_None);
-#line 108 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+return tmplexerc(_global_None);
 ;
-#line 108 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;};
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 }
 ;
-#line 104 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return (lexer_dot ? _global_Some_plexer_TokenTypecstringp(plexer_TokenTypecstringpInit(lexer_Float,lexer_s),C):(_global_Some_plexer_TokenTypecstringp(plexer_TokenTypecstringpInit(lexer_Integer,lexer_s),C)));
-#line 110 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 _Bool lexer_is_identifier(struct _global_String lexer_s, struct _global_Context* C){;
-#line 115 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return 1;
-#line 116 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 struct _global_StaticArray_7_string lexer_keywords;_Bool lexer_is_keyword(struct _global_String lexer_s, struct _global_Context* C){;
-#line 120 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return _global_StaticArray_contains_7_string(&(lexer_keywords),lexer_s,C);
-#line 121 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 struct plexer_TokenTypecstringp lexer_determine_token(struct _global_String lexer_s, struct _global_Context* C){;
-#line 123 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+_global_log_string(lexer_s,C);
 ;struct _global_Maybe_plexer_TokenTypecstringp D =lexer_is_number(lexer_s,C);
 if(D.tag==0){struct plexer_TokenTypecstringp lexer_token = D.cases.Some.field0;
 return lexer_token;}else if(1){return (lexer_is_keyword(lexer_s,C) ? plexer_TokenTypecstringpInit(lexer_Keyword,lexer_s) : ((lexer_is_identifier(lexer_s,C))) ? plexer_TokenTypecstringpInit(lexer_Identifier,lexer_s):(plexer_TokenTypecstringpInit(lexer_Invalid,lexer_s)));};
-#line 124 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct _global_Result_rerror_CompilerError___lexer_Token lexer_lex(struct _global_String lexer_src, struct _global_String lexer_filename, struct _global_Context* C){;
-#line 130 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 130 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 struct _global_Array_lexer_Token lexer_tokens;lexer_tokens = _global_Array_lexer_TokenInit(0, 0, NULL, NULL);;
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 (lexer_tokens).allocator = (C)->longterm_storage;;
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 struct lexer_Lexer lexer_lexer;lexer_lexer = lexer_LexerInit(lexer_TokInit(0,0,0),lexer_src,0,lexer_tokens,lexer_filename,1,0);;
-#line 134 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;return lexer_Lexer_lex(&(lexer_lexer),C);
-#line 144 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
 void lexer_Lexer_append_token(struct lexer_Lexer* lexer_self, struct lexer_TokenType lexer_kind, struct _global_String lexer_value, struct _global_Context* C){;
-#line 146 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 146 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 146 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 unsigned int lexer_column;lexer_column = (lexer_self)->column-((lexer_value).length/2);;
-#line 147 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 if(lexer_column>0){;
-#line 148 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_column = lexer_column-1;;
-#line 149 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;};
-#line 148 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 struct lexer_Token lexer_tok;lexer_tok = lexer_TokenInit(lexer_kind,lexer_value,(lexer_self)->line,lexer_column);;
-#line 151 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 _global_Array_append_lexer_Token(&((lexer_self)->tokens),lexer_tok,C);
-#line 158 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerf(struct _global_Result_rerror_CompilerError_Result_T H) {
+static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerd(struct _global_Result_rerror_CompilerError_Result_T H) {
 struct _global_Result_rerror_CompilerError___lexer_Token G;G.tag = H.tag;G.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(H.cases);return G;
 }
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerg(struct _global_Result_rerror_CompilerError_Result_T L) {
-struct _global_Result_rerror_CompilerError___lexer_Token K;K.tag = L.tag;K.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(L.cases);return K;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerh(struct _global_Result_rerror_CompilerError_Result_T P) {
-struct _global_Result_rerror_CompilerError___lexer_Token N;N.tag = P.tag;N.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(P.cases);return N;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerj(struct _global_Result_rerror_CompilerError_Result_T S) {
-struct _global_Result_rerror_CompilerError___lexer_Token R;R.tag = S.tag;R.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(S.cases);return R;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerk(struct _global_Result_rerror_CompilerError_Result_T W) {
-struct _global_Result_rerror_CompilerError___lexer_Token V;V.tag = W.tag;V.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(W.cases);return V;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerl(struct _global_Result_rerror_CompilerError_Result_T bb) {
-struct _global_Result_rerror_CompilerError___lexer_Token Z;Z.tag = bb.tag;Z.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bb.cases);return Z;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerm(struct _global_Result_rerror_CompilerError_Result_T bf) {
-struct _global_Result_rerror_CompilerError___lexer_Token bd;bd.tag = bf.tag;bd.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bf.cases);return bd;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexern(struct _global_Result_rerror_CompilerError_Result_T bk) {
-struct _global_Result_rerror_CompilerError___lexer_Token bj;bj.tag = bk.tag;bj.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bk.cases);return bj;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerp(struct _global_Result_rerror_CompilerError_Result_T bp) {
-struct _global_Result_rerror_CompilerError___lexer_Token bn;bn.tag = bp.tag;bn.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bp.cases);return bn;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerq(struct _global_Result_rerror_CompilerError_Result_T bs) {
-struct _global_Result_rerror_CompilerError___lexer_Token br;br.tag = bs.tag;br.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bs.cases);return br;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerr(struct _global_Result_rerror_CompilerError_Result_T bw) {
-struct _global_Result_rerror_CompilerError___lexer_Token bv;bv.tag = bw.tag;bv.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bw.cases);return bv;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexers(struct _global_Result_rerror_CompilerError_Result_T bz) {
-struct _global_Result_rerror_CompilerError___lexer_Token by;by.tag = bz.tag;by.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bz.cases);return by;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexert(struct _global_Result_rerror_CompilerError_Result_T bD) {
-struct _global_Result_rerror_CompilerError___lexer_Token bC;bC.tag = bD.tag;bC.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bD.cases);return bC;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerv(struct _global_Result_rerror_CompilerError_Result_T bJ) {
-struct _global_Result_rerror_CompilerError___lexer_Token bH;bH.tag = bJ.tag;bH.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bJ.cases);return bH;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerw(struct _global_Result_rerror_CompilerError_Result_T bM) {
-struct _global_Result_rerror_CompilerError___lexer_Token bL;bL.tag = bM.tag;bL.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bM.cases);return bL;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerx(struct _global_Result_rerror_CompilerError_Result_T bS) {
-struct _global_Result_rerror_CompilerError___lexer_Token bR;bR.tag = bS.tag;bR.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bS.cases);return bR;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexery(struct _global_Result_rerror_CompilerError_Result_T bW) {
-struct _global_Result_rerror_CompilerError___lexer_Token bV;bV.tag = bW.tag;bV.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bW.cases);return bV;
-}
-static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerz(struct _global_Result_Result_E___lexer_Token bY) {
-struct _global_Result_rerror_CompilerError___lexer_Token bX;bX.tag = bY.tag;bX.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bY.cases);return bX;
+static inline struct _global_Result_rerror_CompilerError___lexer_Token tmplexerf(struct _global_Result_Result_E___lexer_Token bl) {
+struct _global_Result_rerror_CompilerError___lexer_Token bk;bk.tag = bl.tag;bk.cases = *(union _global_Result_rerror_CompilerError___lexer_Token_cases*) &(bl.cases);return bk;
 }
 struct _global_Result_rerror_CompilerError___lexer_Token lexer_Lexer_lex(struct lexer_Lexer* lexer_self, struct _global_Context* C){;
-#line 160 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;while((lexer_self)->i<((lexer_self)->src).length){char lexer_t;lexer_t = lexer_Lexer_current(lexer_self,C);;(lexer_self)->column = (lexer_self)->column+1;;char D =lexer_t;if(D=='('){
-#line 166 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 struct error_CompilerError* F =lexer_Lexer_reset_tok(lexer_self,C);if(F != NULL){struct error_CompilerError* lexer__x = F;
 
-#line 167 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerf(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 167 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
 ;
-#line 167 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 167 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 167 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 167 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 167 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,"("),C);
-#line 168 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 166 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(D==')'){
-#line 170 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 struct error_CompilerError* J =lexer_Lexer_reset_tok(lexer_self,C);if(J != NULL){struct error_CompilerError* lexer__x = J;
 
-#line 171 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerg(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 171 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
 ;
-#line 171 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 171 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 171 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 171 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 171 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,")"),C);
-#line 172 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 170 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(D=='='){
-#line 173 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+struct error_CompilerError* K =lexer_Lexer_reset_tok(lexer_self,C);if(K != NULL){struct error_CompilerError* lexer__x = K;
+
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
+;
+;}
+else if(1){
+;}
+;
+lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,"="),C);
+;}
+else if(D==' '){
+struct error_CompilerError* L =lexer_Lexer_reset_tok(lexer_self,C);if(L != NULL){struct error_CompilerError* lexer__x = L;
+
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
+;
+;}
+else if(1){
+;}
+;
+;}
+else if(D==':'){
 struct error_CompilerError* M =lexer_Lexer_reset_tok(lexer_self,C);if(M != NULL){struct error_CompilerError* lexer__x = M;
 
-#line 174 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerh(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 174 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
 ;
-#line 174 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 174 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 174 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 174 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 174 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,"="),C);
-#line 175 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+char N =lexer_Lexer_next(lexer_self,C);if(N=='='){
+lexer_Lexer_advance(lexer_self,C);
+lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(2,":="),C);
 ;}
-#line 173 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(D==' '){
-#line 176 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+else if(1){
+lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,":"),C);
+;}
+;
+;}
+else if(D=='\n'||D=='\r'){
+struct error_CompilerError* P =lexer_Lexer_reset_tok(lexer_self,C);if(P != NULL){struct error_CompilerError* lexer__x = P;
+
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
+;
+;}
+else if(1){
+;}
+;
+struct stringBuilder_StringBuilder lexer_s;lexer_s = stringBuilder_make_StringBuilder(C);;
+((lexer_s).chars).allocator = (C)->longterm_storage;;
+(lexer_self)->line = (lexer_self)->line+1;;
+(lexer_self)->column = 0;;
+;while(lexer_Lexer_next(lexer_self,C)==' '){lexer_Lexer_advance(lexer_self,C);_global_Array_append_char(&((lexer_s).chars),' ',C);(lexer_self)->column = (lexer_self)->column+1;;};
+_global_Array_append_char(&((lexer_s).chars),'\0',C);
+lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,"\n"),C);
+lexer_Lexer_append_token(lexer_self,lexer_Indent,_global_make_String(((lexer_s).chars).length-1,_global_Maybe_unwrap_rcharByValue(((lexer_s).chars).data,C),C),C);
+;}
+else if(D=='+'){
 struct error_CompilerError* Q =lexer_Lexer_reset_tok(lexer_self,C);if(Q != NULL){struct error_CompilerError* lexer__x = Q;
 
-#line 177 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerj(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 177 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
 ;
-#line 177 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 177 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 177 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 177 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 177 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 176 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(D==':'){
-#line 178 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-struct error_CompilerError* T =lexer_Lexer_reset_tok(lexer_self,C);if(T != NULL){struct error_CompilerError* lexer__x = T;
-
-#line 179 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerk(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 179 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 179 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 179 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(1){
-#line 179 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 179 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 179 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-char X =lexer_Lexer_next(lexer_self,C);if(X=='='){
-#line 181 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+char R =lexer_Lexer_next(lexer_self,C);if(R=='+'){
 lexer_Lexer_advance(lexer_self,C);
-#line 182 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(2,":="),C);
-#line 183 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+lexer_Lexer_append_token(lexer_self,lexer_Operator,_global_StringInit(2,"++"),C);
 ;}
-#line 181 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+else if(R=='='){
+lexer_Lexer_advance(lexer_self,C);
+lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(2,"+="),C);
+;}
 else if(1){
-#line 185 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,":"),C);
-#line 186 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+lexer_Lexer_append_token(lexer_self,lexer_Operator,_global_StringInit(1,"+"),C);
 ;}
-#line 185 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 180 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 178 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(D=='\n'){
-#line 188 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+else if(D=='-'){
+struct error_CompilerError* S =lexer_Lexer_reset_tok(lexer_self,C);if(S != NULL){struct error_CompilerError* lexer__x = S;
+
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
+;
+;}
+else if(1){
+;}
+;
+char T =lexer_Lexer_next(lexer_self,C);if(T=='='){
+lexer_Lexer_advance(lexer_self,C);
+lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(2,"-="),C);
+;}
+else if(1){
+lexer_Lexer_append_token(lexer_self,lexer_Operator,_global_StringInit(1,"-"),C);
+;}
+;
+;}
+else if(D=='*'){
+struct error_CompilerError* V =lexer_Lexer_reset_tok(lexer_self,C);if(V != NULL){struct error_CompilerError* lexer__x = V;
+
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
+;
+;}
+else if(1){
+;}
+;
+lexer_Lexer_append_token(lexer_self,lexer_Operator,_global_StringInit(1,"*"),C);
+;}
+else if(D=='<'){
+struct error_CompilerError* W =lexer_Lexer_reset_tok(lexer_self,C);if(W != NULL){struct error_CompilerError* lexer__x = W;
+
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
+;
+;}
+else if(1){
+;}
+;
+lexer_Lexer_append_token(lexer_self,lexer_Operator,_global_StringInit(1,"<"),C);
+;}
+else if(D==','){
+struct error_CompilerError* X =lexer_Lexer_reset_tok(lexer_self,C);if(X != NULL){struct error_CompilerError* lexer__x = X;
+
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
+;
+;}
+else if(1){
+;}
+;
+lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,","),C);
+;}
+else if(D=='"'){
 struct error_CompilerError* Y =lexer_Lexer_reset_tok(lexer_self,C);if(Y != NULL){struct error_CompilerError* lexer__x = Y;
 
-#line 190 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerl(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 190 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
 ;
-#line 190 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 190 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 190 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 190 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 189 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-struct stringBuilder_StringBuilder lexer_s;lexer_s = stringBuilder_make_StringBuilder(C);;
-#line 191 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-((lexer_s).chars).allocator = (C)->longterm_storage;;
-#line 192 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-(lexer_self)->line = (lexer_self)->line+1;;
-#line 194 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-(lexer_self)->column = 0;;
-#line 195 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;while(lexer_Lexer_next(lexer_self,C)==' '){lexer_Lexer_advance(lexer_self,C);_global_Array_append_char(&((lexer_s).chars),' ',C);(lexer_self)->column = (lexer_self)->column+1;;};
-#line 197 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-_global_Array_append_char(&((lexer_s).chars),'\0',C);
-#line 201 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,"\n"),C);
-#line 203 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Indent,_global_make_String(((lexer_s).chars).length-1,_global_Maybe_unwrap_rcharByValue(((lexer_s).chars).data,C),C),C);
-#line 204 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+;while((lexer_self)->i<((lexer_self)->src).length&&!(lexer_Lexer_next(lexer_self,C)=='"')){lexer_Lexer_advance(lexer_self,C);lexer_Tok_include(&((lexer_self)->tok),(lexer_self)->i,C);};
+lexer_Lexer_append_token(lexer_self,lexer_String,lexer_Tok_slice(&((lexer_self)->tok),(lexer_self)->src,C),C);
+lexer_Tok_clear(&((lexer_self)->tok),C);
+lexer_Lexer_advance(lexer_self,C);
 ;}
-#line 188 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(D=='+'){
-#line 206 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+else if(D=='/'){
+struct error_CompilerError* Z =lexer_Lexer_reset_tok(lexer_self,C);if(Z != NULL){struct error_CompilerError* lexer__x = Z;
+
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
+;
+;}
+else if(1){
+;}
+;
+char bb =lexer_Lexer_next(lexer_self,C);if(bb=='/'){
 struct error_CompilerError* bc =lexer_Lexer_reset_tok(lexer_self,C);if(bc != NULL){struct error_CompilerError* lexer__x = bc;
 
-#line 208 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerm(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 208 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
 ;
-#line 208 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 208 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 208 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 208 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 207 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-char bg =lexer_Lexer_next(lexer_self,C);if(bg=='+'){
-#line 210 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_advance(lexer_self,C);
-#line 211 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Operator,_global_StringInit(2,"++"),C);
-#line 212 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 210 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(bg=='='){
-#line 213 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_advance(lexer_self,C);
-#line 214 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(2,"+="),C);
-#line 215 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 213 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(1){
-#line 216 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Operator,_global_StringInit(1,"+"),C);
-#line 217 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 216 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 209 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 206 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(D=='-'){
-#line 219 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-struct error_CompilerError* bh =lexer_Lexer_reset_tok(lexer_self,C);if(bh != NULL){struct error_CompilerError* lexer__x = bh;
-
-#line 221 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexern(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 221 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 221 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 221 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(1){
-#line 221 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 221 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 220 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-char bl =lexer_Lexer_next(lexer_self,C);if(bl=='='){
-#line 223 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_advance(lexer_self,C);
-#line 224 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(2,"-="),C);
-#line 225 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 223 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(1){
-#line 226 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Operator,_global_StringInit(1,"-"),C);
-#line 227 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 226 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 222 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 219 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(D=='*'){
-#line 228 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-struct error_CompilerError* bm =lexer_Lexer_reset_tok(lexer_self,C);if(bm != NULL){struct error_CompilerError* lexer__x = bm;
-
-#line 229 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerp(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 229 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 229 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 229 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(1){
-#line 229 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 229 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 229 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Operator,_global_StringInit(1,"*"),C);
-#line 230 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 228 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(D=='<'){
-#line 232 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-struct error_CompilerError* bq =lexer_Lexer_reset_tok(lexer_self,C);if(bq != NULL){struct error_CompilerError* lexer__x = bq;
-
-#line 233 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerq(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 233 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 233 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 233 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(1){
-#line 233 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 233 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 233 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Operator,_global_StringInit(1,"<"),C);
-#line 234 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 232 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(D==','){
-#line 236 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-struct error_CompilerError* bt =lexer_Lexer_reset_tok(lexer_self,C);if(bt != NULL){struct error_CompilerError* lexer__x = bt;
-
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerr(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(1){
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,","),C);
-#line 238 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 236 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(D=='"'){
-#line 240 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-struct error_CompilerError* bx =lexer_Lexer_reset_tok(lexer_self,C);if(bx != NULL){struct error_CompilerError* lexer__x = bx;
-
-#line 242 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexers(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 242 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 242 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 242 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(1){
-#line 242 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 242 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 241 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;while((lexer_self)->i<((lexer_self)->src).length&&!(lexer_Lexer_next(lexer_self,C)=='"')){lexer_Lexer_advance(lexer_self,C);lexer_Tok_include(&((lexer_self)->tok),(lexer_self)->i,C);};
-#line 243 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_append_token(lexer_self,lexer_String,lexer_Tok_slice(&((lexer_self)->tok),(lexer_self)->src,C),C);
-#line 247 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Tok_clear(&((lexer_self)->tok),C);
-#line 248 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-lexer_Lexer_advance(lexer_self,C);
-#line 249 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 240 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(D=='/'){
-#line 251 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-struct error_CompilerError* bB =lexer_Lexer_reset_tok(lexer_self,C);if(bB != NULL){struct error_CompilerError* lexer__x = bB;
-
-#line 253 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexert(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 253 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 253 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 253 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(1){
-#line 253 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 253 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 252 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-char bF =lexer_Lexer_next(lexer_self,C);if(bF=='/'){
-#line 255 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-struct error_CompilerError* bG =lexer_Lexer_reset_tok(lexer_self,C);if(bG != NULL){struct error_CompilerError* lexer__x = bG;
-
-#line 257 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerv(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 257 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 257 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 257 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(1){
-#line 257 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;}
-#line 257 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;
-#line 256 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;while(!(lexer_Lexer_current(lexer_self,C)=='\n')){lexer_Lexer_advance(lexer_self,C);};
-#line 258 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 255 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(bF=='*'){
-#line 261 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-struct error_CompilerError* bK =lexer_Lexer_reset_tok(lexer_self,C);if(bK != NULL){struct error_CompilerError* lexer__x = bK;
+else if(bb=='*'){
+struct error_CompilerError* bd =lexer_Lexer_reset_tok(lexer_self,C);if(bd != NULL){struct error_CompilerError* lexer__x = bd;
 
-#line 263 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerw(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 263 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
 ;
-#line 263 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 263 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 263 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 263 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 262 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 unsigned int lexer_num;lexer_num = 1;;
-#line 264 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;while(lexer_num>0){char bN =lexer_Lexer_advance(lexer_self,C);if(bN=='*'){
-#line 267 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-char bP =lexer_Lexer_next(lexer_self,C);if(bP=='/'){
-#line 269 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+;while(lexer_num>0){char bf =lexer_Lexer_advance(lexer_self,C);if(bf=='*'){
+char bg =lexer_Lexer_next(lexer_self,C);if(bg=='/'){
 lexer_num = lexer_num-1;;
-#line 270 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_Lexer_advance(lexer_self,C);
-#line 271 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 269 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 273 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 273 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 268 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 267 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(bN=='/'){
-#line 275 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-char bQ =lexer_Lexer_next(lexer_self,C);if(bQ=='*'){
-#line 277 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+else if(bf=='/'){
+char bh =lexer_Lexer_next(lexer_self,C);if(bh=='*'){
 lexer_num = lexer_num+1;;
-#line 278 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_Lexer_advance(lexer_self,C);
-#line 279 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 277 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 281 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 281 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 276 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 275 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-else if(bN=='\0'){
-#line 283 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexerx(_global_Error_rerror_CompilerError_Result_T(error_make_Error_rlexer_Lexer(lexer_self,_global_StringInit(12,"Expecting */"),C),C));
-#line 284 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+else if(bf=='\0'){
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(error_make_Error_rlexer_Lexer(lexer_self,_global_StringInit(12,"Expecting */"),C),C));
 ;
-#line 284 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 283 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 285 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 285 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;};
-#line 265 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 261 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 287 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_Lexer_append_token(lexer_self,lexer_Operator,_global_StringInit(1,"/"),C);
-#line 287 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 287 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 254 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 251 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 289 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_Tok_include(&((lexer_self)->tok),(lexer_self)->i,C);
-#line 289 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 289 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;lexer_Lexer_advance(lexer_self,C);};
-#line 161 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-struct error_CompilerError* bT =lexer_Lexer_reset_tok(lexer_self,C);if(bT != NULL){struct error_CompilerError* lexer__x = bT;
+struct error_CompilerError* bj =lexer_Lexer_reset_tok(lexer_self,C);if(bj != NULL){struct error_CompilerError* lexer__x = bj;
 
-#line 294 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-return tmplexery(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
-#line 294 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
+return tmplexerd(_global_Error_rerror_CompilerError_Result_T(lexer__x,C));
 ;
-#line 294 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 294 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 else if(1){
-#line 294 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;}
-#line 294 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 293 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_Lexer_append_token(lexer_self,lexer_Symbol,_global_StringInit(1,"\n"),C);
-#line 295 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_Lexer_append_token(lexer_self,lexer_Indent,_global_StringInit(0,""),C);
-#line 296 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 struct _global_Array_lexer_Token lexer_ts;lexer_ts = (lexer_self)->tokens;;
-#line 298 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
-;return tmplexerz(_global_Ok_Result_E___lexer_Token((_global_StaticArray_StaticArray_S_lexer_TokenInit(lexer_ts.data, lexer_ts.length)),C));
-#line 300 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;return tmplexerf(_global_Ok_Result_E___lexer_Token((_global_StaticArray_StaticArray_S_lexer_TokenInit(lexer_ts.data, lexer_ts.length)),C));
 ;}
 void _global_memcpy_lexer_Token(struct lexer_Token* _global_target, struct lexer_Token* _global_destination, unsigned int _global_length, struct _global_Context* C){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct lexer_Token),C);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct error_CompilerError* _global_box_longterm_error_CompilerError(struct error_CompilerError _global_value, struct _global_Context* C){;
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct error_CompilerError* _global_pointer;_global_pointer = (struct error_CompilerError*)(_global_Allocator_alloc((C)->longterm_storage,(uint64_t)sizeof(struct error_CompilerError),C));;
-#line 102 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct _global_String* _global_StaticArray_op_get_7_string(struct _global_StaticArray_7_string* _global_self, unsigned int _global_index, struct _global_Context* C){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<7,_global_StringInit(13,"Out of bounds"),C);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 
-static inline struct lexer_Token* tmplexerB(struct _global_Array_lexer_Token** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* C) {
+static inline struct lexer_Token* tmplexerg(struct _global_Array_lexer_Token** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* C) {
 struct lexer_Token* D =(*_global_self)->data;
 if(D != NULL){struct lexer_Token* _global_data = D;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),C);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct lexer_Token* _global_newData;_global_newData = (struct lexer_Token*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct lexer_Token),C));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_lexer_Token(_global_newData,_global_data,(*_global_self)->length,C);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,C);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(D == NULL){return (struct lexer_Token*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct lexer_Token),C));}
 }
 void _global_Array_reserve_lexer_Token(struct _global_Array_lexer_Token* _global_self, unsigned int _global_newSize, struct _global_Context* C){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(C)->allocator,C);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmplexerB(&_global_self,&_global_newSize,&_global_allocator, C);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmplexerg(&_global_self,&_global_newSize,&_global_allocator, C);;
 ;}
 struct _global_Case* _global_StaticArray_op_get_StaticArray_S_Case(struct _global_StaticArray_StaticArray_S_Case* _global_self, unsigned int _global_index, struct _global_Context* C){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),C);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 char* _global_longterm_alloc_char(uint64_t _global_num, struct _global_Context* C){;
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return (char*)(_global_Allocator_alloc((C)->longterm_storage,_global_num*(uint64_t)sizeof(char),C));
-#line 90 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct error_CompilerError* error_make_Error_rlexer_Lexer(struct lexer_Lexer* error_self, struct _global_String error_mesg, struct _global_Context* C){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-struct error_CompilerError* error_err;error_err = _global_box_longterm_error_CompilerError(error_CompilerErrorInit(lexer_Lexer_get_filename(error_self,C),lexer_Lexer_get_line(error_self,C),error_mesg,lexer_Lexer_get_column(error_self,C)),C);;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-_global_panic(error_CompilerError_toString(error_err,C),C);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-;return error_err;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
+;return _global_box_longterm_error_CompilerError(error_CompilerErrorInit(lexer_Lexer_get_filename(error_self,C),lexer_Lexer_get_line(error_self,C),error_mesg,lexer_Lexer_get_column(error_self,C)),C);
 ;}
 _Bool _global_StaticArray_contains_7_string(struct _global_StaticArray_7_string* _global_self, struct _global_String _global_elem, struct _global_Context* C){;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 unsigned int _global_i;_global_i = 0;;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;while(_global_i<7){if(_global_String_op_eq(&(*(_global_StaticArray_op_get_7_string(_global_self,(unsigned int)_global_i,C))),&(_global_elem),C)){;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 return 1;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;};_global_i = _global_i+1;;};
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return 0;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 void _global_Array_append_lexer_Token(struct _global_Array_lexer_Token* _global_self, struct lexer_Token _global_value, struct _global_Context* C){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_lexer_Token(_global_self,1,C);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_lexer_Token(_global_self,(_global_self)->capacity*2,C);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct lexer_Token*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 
 void lexerInitTypes() { 
@@ -5627,40 +5095,25 @@ _global_Result_Result_E___lexer_TokenType.cases.length = 2;
  }
 void lexerInit() { 
 errorInit();;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 lexer_keywords = _global_StaticArray_7_stringInit(_global_StringInit(4,"true"),_global_StringInit(5,"false"),_global_StringInit(2,"if"),_global_StringInit(4,"else"),_global_StringInit(5,"while"),_global_StringInit(3,"def"),_global_StringInit(4,"type"));;
-#line 118 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//lexer.top"
 ;
 };
 unsigned int hashMap_hash_string(struct _global_String hashMap_s_key, unsigned int hashMap_table_size, struct _global_Context* c){;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_h;hashMap_h = 0;;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_o;hashMap_o = 31415;;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_t;hashMap_t = 27183;;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 char* hashMap_key;hashMap_key = _global_String_to_c_stringByValue(hashMap_s_key,c);;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Range d =_global_RangeInit(0,(hashMap_s_key).length);
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int f = d.start; f < d.end; f++) {
 unsigned int hashMap_i;hashMap_i = f;
 ;hashMap_h = (hashMap_o*hashMap_h+(unsigned int)(*(((hashMap_key + (int64_t)hashMap_i)))))%hashMap_table_size;;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 hashMap_o = hashMap_o*hashMap_t%(hashMap_table_size-1);;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return hashMap_h;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 
 void hashMapInitTypes() { 
@@ -5711,620 +5164,359 @@ struct scope_DeclInfo* hashMap_HashMap_op_get_scope_DeclInfo(struct hashMap_Hash
 struct error_CompilerError* error_make_Error_rast_AST(struct ast_AST* error_self, struct _global_String error_mesg, struct _global_Context* m);
 void hashMap_HashMap_insert_scope_DeclInfo(struct hashMap_HashMap_scope_DeclInfo* hashMap_self, struct _global_String hashMap_key, struct scope_DeclInfo hashMap_value, struct _global_Context* m);
 struct scope_DeclInfo scope_make_DeclInfo(struct types_CompilerType scope__type, struct _global_Context* m){;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;return scope_DeclInfoInit(scope__type,0);
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 struct scope_ScopeBlock scope_make_ScopeBlock(struct _global_Context* m){struct hashMap_HashMap_scope_DeclInfo scope_vars;scope_vars = hashMap_make_HashMap_size_scope_DeclInfo(powf(2,3),&(_global_malloc_as_allocator),m);;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;return scope_ScopeBlockInit(scope_vars);
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 void scope_ScopeBlock_free(struct scope_ScopeBlock* scope_self, struct _global_Context* m){;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 hashMap_HashMap_free_scope_DeclInfo(&((scope_self)->vars),m);
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 struct scope_Scope* scope_make_Scope(struct _global_Context* m){struct _global_Array_scope_ScopeBlock scope_blocks;scope_blocks = _global_Array_scope_ScopeBlockInit(0, 0, NULL, NULL);;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 _global_Array_append_scope_ScopeBlock(&(scope_blocks),scope_make_ScopeBlock(m),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;return _global_box_scope_Scope(scope_ScopeInit(scope_blocks),m);
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 void scope_Scope_free(struct scope_Scope* scope_self, struct _global_Context* m){;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 struct _global_Range n =_global_RangeInit(0,((scope_self)->blocks).length);
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int scope_i;scope_i = p;
 ;scope_ScopeBlock_free(&(*(_global_Array_op_get_scope_ScopeBlock(&((scope_self)->blocks),(unsigned int)scope_i,m))),m);
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 }
 ;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 _global_Array_free_scope_ScopeBlock(&((scope_self)->blocks),m);
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 void scope_Scope_push(struct scope_Scope* scope_self, struct _global_Context* m){;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 _global_Array_append_scope_ScopeBlock(&((scope_self)->blocks),scope_make_ScopeBlock(m),m);
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 void scope_Scope_pop(struct scope_Scope* scope_self, struct _global_Context* m){;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 scope_ScopeBlock_free(&(*(_global_Array_op_get_scope_ScopeBlock(&((scope_self)->blocks),(unsigned int)((scope_self)->blocks).length-1,m))),m);
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 _global_Array_pop_scope_ScopeBlock(&((scope_self)->blocks),m);
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 struct scope_DeclInfo* scope_Scope_get_var(struct scope_Scope* scope_self, struct _global_String scope_name, struct _global_Context* m){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 struct _global_Range n =_global_RangeInit(0,((scope_self)->blocks).length);
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int scope_i;scope_i = p;
 ;struct hashMap_HashMap_scope_DeclInfo* scope_vars;scope_vars = &((*(_global_Array_op_get_scope_ScopeBlock(&((scope_self)->blocks),(unsigned int)((scope_self)->blocks).length-1-scope_i,m))).vars);;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 if(hashMap_HashMap_contains_scope_DeclInfo(scope_vars,scope_name,m)){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 return &(*(hashMap_HashMap_op_get_scope_DeclInfo(scope_vars,(struct _global_String)scope_name,m)));
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;};
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 }
 ;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;return NULL;
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* scope_Scope_create_decl(struct scope_Scope* scope_self, struct _global_String scope_name, struct scope_DeclInfo* scope_info, struct ast_AST* scope_node, struct _global_Context* m){;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 _global_assert(((scope_self)->blocks).length>0,_global_StringInit(20,"Missing global scope"),m);
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 struct scope_ScopeBlock* scope_outer_block;scope_outer_block = &(*(_global_Array_op_get_scope_ScopeBlock(&((scope_self)->blocks),(unsigned int)((scope_self)->blocks).length-1,m)));;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 (scope_info)->is_global = ((scope_self)->blocks).length==1;;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;if(hashMap_HashMap_contains_scope_DeclInfo(&((scope_outer_block)->vars),scope_name,m)){;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 return error_make_Error_rast_AST(scope_node,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(4,"Var "),(scope_name),m),_global_StringInit(15," already exists"),m),m);}
 else{hashMap_HashMap_insert_scope_DeclInfo(&((scope_outer_block)->vars),scope_name,*(scope_info),m);
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 return NULL;};
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 void _global_memcpy_hashMap_HashBucket_scope_DeclInfo_(struct hashMap_HashBucket_scope_DeclInfo* _global_target, struct hashMap_HashBucket_scope_DeclInfo* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct hashMap_HashBucket_scope_DeclInfo),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_string(struct _global_String* _global_target, struct _global_String* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct _global_String),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_scope_DeclInfo(struct scope_DeclInfo* _global_target, struct scope_DeclInfo* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct scope_DeclInfo),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct hashMap_HashBucket_scope_DeclInfo* tmpscopeC(struct _global_Array_hashMap_HashBucket_scope_DeclInfo_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct hashMap_HashBucket_scope_DeclInfo* tmpscopeh(struct _global_Array_hashMap_HashBucket_scope_DeclInfo_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct hashMap_HashBucket_scope_DeclInfo* n =(*_global_self)->data;
 if(n != NULL){struct hashMap_HashBucket_scope_DeclInfo* _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct hashMap_HashBucket_scope_DeclInfo* _global_newData;_global_newData = (struct hashMap_HashBucket_scope_DeclInfo*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct hashMap_HashBucket_scope_DeclInfo),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_hashMap_HashBucket_scope_DeclInfo_(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct hashMap_HashBucket_scope_DeclInfo*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct hashMap_HashBucket_scope_DeclInfo),m));}
 }
 void _global_Array_reserve_hashMap_HashBucket_scope_DeclInfo_(struct _global_Array_hashMap_HashBucket_scope_DeclInfo_* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpscopeC(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpscopeh(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 void _global_Array_free_string(struct _global_Array_string* _global_self, struct _global_Context* m){;
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 128 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_String* n =(_global_self)->data;if(n != NULL){struct _global_String* _global_data = n;
 
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_free((void*)_global_data,m);
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 else if(n == NULL){
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 130 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_free_scope_DeclInfo(struct _global_Array_scope_DeclInfo* _global_self, struct _global_Context* m){;
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 128 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct scope_DeclInfo* n =(_global_self)->data;if(n != NULL){struct scope_DeclInfo* _global_data = n;
 
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_free((void*)_global_data,m);
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 else if(n == NULL){
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 130 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_memcpy_scope_ScopeBlock(struct scope_ScopeBlock* _global_target, struct scope_ScopeBlock* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct scope_ScopeBlock),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct _global_String* tmpscopeD(struct _global_Array_string** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct _global_String* tmpscopej(struct _global_Array_string** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct _global_String* n =(*_global_self)->data;
 if(n != NULL){struct _global_String* _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_String* _global_newData;_global_newData = (struct _global_String*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_String),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_string(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct _global_String*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_String),m));}
 }
 void _global_Array_reserve_string(struct _global_Array_string* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpscopeD(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpscopej(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 
-static inline struct scope_DeclInfo* tmpscopeF(struct _global_Array_scope_DeclInfo** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct scope_DeclInfo* tmpscopek(struct _global_Array_scope_DeclInfo** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct scope_DeclInfo* n =(*_global_self)->data;
 if(n != NULL){struct scope_DeclInfo* _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct scope_DeclInfo* _global_newData;_global_newData = (struct scope_DeclInfo*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct scope_DeclInfo),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_scope_DeclInfo(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct scope_DeclInfo*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct scope_DeclInfo),m));}
 }
 void _global_Array_reserve_scope_DeclInfo(struct _global_Array_scope_DeclInfo* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpscopeF(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpscopek(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 struct hashMap_HashBucket_scope_DeclInfo hashMap_make_HashBucket_scope_DeclInfo(struct _global_Allocator* hashMap_allocator, struct _global_Context* m){;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string hashMap_keys;hashMap_keys = _global_Array_stringInit(0, 0, NULL, NULL);;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_scope_DeclInfo hashMap_values;hashMap_values = _global_Array_scope_DeclInfoInit(0, 0, NULL, NULL);;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_keys).allocator = hashMap_allocator;;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_values).allocator = hashMap_allocator;;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return hashMap_HashBucket_scope_DeclInfoInit(hashMap_keys,hashMap_values);
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 void _global_Array_append_hashMap_HashBucket_scope_DeclInfo_(struct _global_Array_hashMap_HashBucket_scope_DeclInfo_* _global_self, struct hashMap_HashBucket_scope_DeclInfo _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_hashMap_HashBucket_scope_DeclInfo_(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_hashMap_HashBucket_scope_DeclInfo_(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct hashMap_HashBucket_scope_DeclInfo*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void hashMap_HashBucket_free_scope_DeclInfo(struct hashMap_HashBucket_scope_DeclInfo* hashMap_self, struct _global_Context* m){;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_free_string(&((hashMap_self)->keys),m);
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_free_scope_DeclInfo(&((hashMap_self)->values),m);
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct hashMap_HashBucket_scope_DeclInfo* _global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 
-static inline struct scope_ScopeBlock* tmpscopeG(struct _global_Array_scope_ScopeBlock** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct scope_ScopeBlock* tmpscopel(struct _global_Array_scope_ScopeBlock** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct scope_ScopeBlock* n =(*_global_self)->data;
 if(n != NULL){struct scope_ScopeBlock* _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct scope_ScopeBlock* _global_newData;_global_newData = (struct scope_ScopeBlock*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct scope_ScopeBlock),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_scope_ScopeBlock(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct scope_ScopeBlock*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct scope_ScopeBlock),m));}
 }
 void _global_Array_reserve_scope_ScopeBlock(struct _global_Array_scope_ScopeBlock* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpscopeG(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpscopel(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 struct _global_String* _global_Array_op_get_string(struct _global_Array_string* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct _global_String*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct scope_DeclInfo* _global_Array_op_get_scope_DeclInfo(struct _global_Array_scope_DeclInfo* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct scope_DeclInfo*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_string(struct _global_Array_string* _global_self, struct _global_String _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_string(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_string(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct _global_String*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_scope_DeclInfo(struct _global_Array_scope_DeclInfo* _global_self, struct scope_DeclInfo _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_scope_DeclInfo(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_scope_DeclInfo(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct scope_DeclInfo*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct hashMap_HashMap_scope_DeclInfo hashMap_make_HashMap_size_scope_DeclInfo(unsigned int hashMap_size, struct _global_Allocator* hashMap_allocator, struct _global_Context* m){;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_hashMap_HashBucket_scope_DeclInfo_ hashMap_buckets;hashMap_buckets = _global_Array_hashMap_HashBucket_scope_DeclInfo_Init(0, 0, NULL, NULL);;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_buckets).allocator = hashMap_allocator;;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Range n =_global_RangeInit(0,hashMap_size);
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int hashMap_i;hashMap_i = p;
 ;_global_Array_append_hashMap_HashBucket_scope_DeclInfo_(&(hashMap_buckets),hashMap_make_HashBucket_scope_DeclInfo(hashMap_allocator,m),m);
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return hashMap_HashMap_scope_DeclInfoInit(_global_StaticArray_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_Init(hashMap_buckets.data, hashMap_buckets.length),0);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 void hashMap_HashMap_free_scope_DeclInfo(struct hashMap_HashMap_scope_DeclInfo* hashMap_self, struct _global_Context* m){;
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_ n =(hashMap_self)->buckets;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int p = 0;p < n.length; p++) {
 struct hashMap_HashBucket_scope_DeclInfo hashMap_bucket;hashMap_bucket = *_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&n, p, m);
 ;unsigned int hashMap_i;hashMap_i = p;
 hashMap_HashBucket_free_scope_DeclInfo(&(hashMap_bucket),m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 void _global_Array_append_scope_ScopeBlock(struct _global_Array_scope_ScopeBlock* _global_self, struct scope_ScopeBlock _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_scope_ScopeBlock(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_scope_ScopeBlock(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct scope_ScopeBlock*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct scope_Scope* _global_box_scope_Scope(struct scope_Scope _global_value, struct _global_Context* m){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct scope_Scope* _global_pointer;_global_pointer = (struct scope_Scope*)(_global_Allocator_alloc((m)->allocator,(uint64_t)sizeof(struct scope_Scope),m));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct scope_ScopeBlock* _global_Array_op_get_scope_ScopeBlock(struct _global_Array_scope_ScopeBlock* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct scope_ScopeBlock*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_free_scope_ScopeBlock(struct _global_Array_scope_ScopeBlock* _global_self, struct _global_Context* m){;
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 128 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct scope_ScopeBlock* n =(_global_self)->data;if(n != NULL){struct scope_ScopeBlock* _global_data = n;
 
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_free((void*)_global_data,m);
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 else if(n == NULL){
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 130 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct scope_ScopeBlock _global_Array_pop_scope_ScopeBlock(struct _global_Array_scope_ScopeBlock* _global_self, struct _global_Context* m){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->length==0){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(25,"trying to pop empty array"),m);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct scope_ScopeBlock _global_tmp;_global_tmp = *(_global_Array_op_get_scope_ScopeBlock(_global_self,(unsigned int)(_global_self)->length-1,m));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return _global_tmp;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 _Bool hashMap_HashMap_contains_scope_DeclInfo(struct hashMap_HashMap_scope_DeclInfo* hashMap_self, struct _global_String hashMap_key, struct _global_Context* m){;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,m);;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_scope_DeclInfo* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,m)));;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string n =(hashMap_bucket)->keys;
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int p = 0;p < n.length; p++) {
 struct _global_String hashMap_b_key;hashMap_b_key = *_global_Array_op_get_string(&n, p, m);
 ;unsigned int hashMap_i;hashMap_i = p;
 if(_global_String_op_eqByValue(hashMap_b_key,hashMap_key,m)){;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 return 1;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return 0;
-#line 81 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct scope_DeclInfo* hashMap_HashMap_op_get_scope_DeclInfo(struct hashMap_HashMap_scope_DeclInfo* hashMap_self, struct _global_String hashMap_key, struct _global_Context* m){;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,m);;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_scope_DeclInfo* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,m)));;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string n =(hashMap_bucket)->keys;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int p = 0;p < n.length; p++) {
 struct _global_String hashMap_b_key;hashMap_b_key = *_global_Array_op_get_string(&n, p, m);
 ;unsigned int hashMap_i;hashMap_i = p;
 if(_global_String_op_eqByValue(hashMap_b_key,hashMap_key,m)){;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 return &(*(_global_Array_op_get_scope_DeclInfo(&((hashMap_bucket)->values),(unsigned int)hashMap_i,m)));
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(3,"No "),(hashMap_key),m),_global_StringInit(12," in hash map"),m),m);
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return (struct scope_DeclInfo*)0;
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct error_CompilerError* error_make_Error_rast_AST(struct ast_AST* error_self, struct _global_String error_mesg, struct _global_Context* m){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-struct error_CompilerError* error_err;error_err = _global_box_longterm_error_CompilerError(error_CompilerErrorInit(ast_AST_get_filename(error_self,m),ast_AST_get_line(error_self,m),error_mesg,ast_AST_get_column(error_self,m)),m);;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-_global_panic(error_CompilerError_toString(error_err,m),m);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-;return error_err;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
+;return _global_box_longterm_error_CompilerError(error_CompilerErrorInit(ast_AST_get_filename(error_self,m),ast_AST_get_line(error_self,m),error_mesg,ast_AST_get_column(error_self,m)),m);
 ;}
 void hashMap_HashMap_insert_scope_DeclInfo(struct hashMap_HashMap_scope_DeclInfo* hashMap_self, struct _global_String hashMap_key, struct scope_DeclInfo hashMap_value, struct _global_Context* m){;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 if((hashMap_self)->length>((hashMap_self)->buckets).length/3*4){;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_assert(((hashMap_self)->buckets).length>0,_global_StringInit(24,"Resizing empty hash map!"),m);
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Allocator* hashMap_hash_map_allocator;hashMap_hash_map_allocator = _global_Maybe_default_rAllocatorByValue(((*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&((hashMap_self)->buckets),(unsigned int)0,m))).keys).allocator,(m)->allocator,m);;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashMap_scope_DeclInfo hashMap_new_hash;hashMap_new_hash = hashMap_make_HashMap_size_scope_DeclInfo(((hashMap_self)->buckets).length*2,hashMap_hash_map_allocator,m);;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_ n =(hashMap_self)->buckets;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int p = 0;p < n.length; p++) {
 struct hashMap_HashBucket_scope_DeclInfo hashMap_per_bucket;hashMap_per_bucket = *_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&n, p, m);
 ;unsigned int hashMap_i;hashMap_i = p;
 struct _global_Range q =_global_RangeInit(0,((hashMap_per_bucket).keys).length);
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int r = q.start; r < q.end; r++) {
 unsigned int hashMap_c;hashMap_c = r;
 ;hashMap_HashMap_insert_scope_DeclInfo(&(hashMap_new_hash),*(_global_Array_op_get_string(&((hashMap_per_bucket).keys),(unsigned int)hashMap_c,m)),*(_global_Array_op_get_scope_DeclInfo(&((hashMap_per_bucket).values),(unsigned int)hashMap_c,m)),m);
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 hashMap_HashMap_free_scope_DeclInfo(hashMap_self,m);
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 *(hashMap_self) = hashMap_new_hash;;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,m);;
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_scope_DeclInfo* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,m)));;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_append_string(&((hashMap_bucket)->keys),hashMap_key,m);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_append_scope_DeclInfo(&((hashMap_bucket)->values),hashMap_value,m);
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_self)->length = (hashMap_self)->length+1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 
 void scopeInitTypes() { 
@@ -7339,7 +6531,6 @@ rStructType_VTABLE_FOR_Type.type
 ; }
 void scopeInit() { 
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
 };
 struct error_CompilerError* error_make_Error_error_Thrower(struct error_Thrower error_self, struct _global_String error_mesg, struct _global_Context* D);
@@ -7348,7 +6539,6 @@ struct types_FuncPtr* _global_box_types_FuncPtr(struct types_FuncPtr _global_val
 struct types_StructInfo* _global_box_types_StructInfo(struct types_StructInfo _global_value, struct _global_Context* D);
 struct error_CompilerError* error_make_Error_rparser_Parser(struct parser_Parser* error_self, struct _global_String error_mesg, struct _global_Context* D);
 struct _global_String types_CompilerType_toStringByValue(struct types_CompilerType types_self, struct _global_Context* D){;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;struct types_CompilerType F =types_self;
 if(F.tag==0){return _global_StringInit(4,"none");}else if(F.tag==1){return _global_StringInit(6,"string");}else if(F.tag==2){return _global_StringInit(4,"bool");}else if(F.tag==3){_Bool types_unsigned = F.cases.Int.field0;
 unsigned int types_size = F.cases.Int.field1;
@@ -7356,37 +6546,24 @@ return types_int_to_string(types_unsigned,types_size,D);}else if(F.tag==4){unsig
 return types_float_to_string(types_size,D);}else if(F.tag==5){struct types_StructInfo* types_info = F.cases.Struct.field0;
 return types_StructInfo_toString(types_info,D);}else if(F.tag==6){struct types_FuncPtr* types_info = F.cases.Func.field0;
 return types_FuncPtr_toString(types_info,D);};
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;}
 static inline struct _global_String types_CompilerType_toString(struct types_CompilerType* G,struct _global_Context* D){
 return types_CompilerType_toStringByValue(*G,D);
 }struct error_CompilerError* types_CompilerType_expect_equalsByValue(struct types_CompilerType types_self, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
-;return NULL;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;return (types_CompilerType_equalsByValue(types_self,types_other,D) ? NULL:(error_make_Error_error_Thrower(types_thrower,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(10,"Expecting "),types_CompilerType_toStringByValue((types_self),D),D),_global_StringInit(6,", not "),D),types_CompilerType_toStringByValue((types_other),D),D),_global_StringInit(0,""),D),D)));
 ;}
 static inline struct error_CompilerError* types_CompilerType_expect_equals(struct types_CompilerType* F,struct types_CompilerType G,struct error_Thrower H,struct _global_Context* D){
 return types_CompilerType_expect_equalsByValue(*F,G,H,D);
 }_Bool types_CompilerType_equalsByValue(struct types_CompilerType types_self, struct types_CompilerType types_other, struct _global_Context* D){;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 types_self = types_CompilerType_to_real_typeByValue(types_self,D);;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 types_other = types_CompilerType_to_real_typeByValue(types_other,D);;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 if((types_self).tag!=(types_other).tag){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 return 0;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;};
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;struct ptypes_CompilerTypectypes_CompilerTypep F =ptypes_CompilerTypectypes_CompilerTypepInit(types_self,types_other);
 if((F.field0.tag==3&&F.field1.tag==3)){_Bool types_unsigned1 = F.field0.cases.Int.field0;
 unsigned int types_size1 = F.field0.cases.Int.field1;
@@ -7399,16 +6576,12 @@ struct types_StructInfo* types_info2 = F.field1.cases.Struct.field0;
 return types_StructInfo_op_eq(types_info1,types_info2,D);}else if((F.field0.tag==6&&F.field1.tag==6)){struct types_FuncPtr* types_info1 = F.field0.cases.Func.field0;
 struct types_FuncPtr* types_info2 = F.field1.cases.Func.field0;
 return types_FuncPtr_op_eq(types_info1,types_info2,D);}else if(1){return 1;};
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;}
 static inline _Bool types_CompilerType_equals(struct types_CompilerType* G,struct types_CompilerType H,struct _global_Context* D){
 return types_CompilerType_equalsByValue(*G,H,D);
 }struct error_CompilerError* types_CompilerType_duck_typeByValue(struct types_CompilerType types_self, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;struct types_CompilerType F =types_self;
 if(F.tag==0||F.tag==1||F.tag==2){return types_CompilerType_expect_equalsByValue(types_self,types_other,types_thrower,D);}else if(F.tag==3){_Bool types_unsigned = F.cases.Int.field0;
 unsigned int types_size = F.cases.Int.field1;
@@ -7416,226 +6589,143 @@ return types_int_duck_type(types_unsigned,types_size,types_other,types_thrower,D
 return types_float_duck_type(types_size,types_other,types_thrower,D);}else if(F.tag==5){struct types_StructInfo* types_info = F.cases.Struct.field0;
 return types_StructInfo_duck_type(types_info,types_other,types_thrower,D);}else if(F.tag==6){struct types_FuncPtr* types_info = F.cases.Func.field0;
 return types_FuncPtr_duck_type(types_info,types_other,types_thrower,D);};
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;}
 static inline struct error_CompilerError* types_CompilerType_duck_type(struct types_CompilerType* G,struct types_CompilerType H,struct error_Thrower J,struct _global_Context* D){
 return types_CompilerType_duck_typeByValue(*G,H,J,D);
 }struct types_CompilerType types_CompilerType_to_real_typeByValue(struct types_CompilerType types_self, struct _global_Context* D){;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;struct types_CompilerType F =types_self;
 if(1){return types_self;};
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;}
 static inline struct types_CompilerType types_CompilerType_to_real_type(struct types_CompilerType* G,struct _global_Context* D){
 return types_CompilerType_to_real_typeByValue(*G,D);
 }_Bool types_CompilerType_is_typeByValue(struct types_CompilerType types_self, struct types_CompilerType types_other, struct _global_Context* D){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;return (types_CompilerType_to_real_typeByValue(types_self,D)).tag==(types_CompilerType_to_real_typeByValue(types_other,D)).tag;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;}
 static inline _Bool types_CompilerType_is_type(struct types_CompilerType* F,struct types_CompilerType G,struct _global_Context* D){
 return types_CompilerType_is_typeByValue(*F,G,D);
 }struct types_CompilerType types_func_type;struct types_CompilerType types_struct_type;struct _global_String types_float_to_string(unsigned int types_size, struct _global_Context* D){;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/float.top"
 ;return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"f"),_global_uint_toStringByValue((types_size),D),D),_global_StringInit(0,""),D);
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* types_float_duck_type(unsigned int types_size, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/float.top"
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/float.top"
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/float.top"
-;return NULL;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;struct types_CompilerType F =types_CompilerType_to_real_typeByValue(types_other,D);
+if(F.tag==4){unsigned int types_size2 = F.cases.Float.field0;
+return NULL;}else if(F.tag==3){_Bool types_unsigned = F.cases.Int.field0;
+unsigned int types_size2 = F.cases.Int.field1;
+return NULL;}else if(1){return error_make_Error_error_Thrower(types_thrower,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(10,"Expecting "),(types_float_to_string(types_size,D)),D),_global_StringInit(5," not "),D),types_CompilerType_toStringByValue((types_other),D),D),_global_StringInit(0,""),D),D);};
 ;}
 struct types_CompilerType types_make_Float(struct _global_Context* D){;return types_Float(32,D);
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/float.top"
 ;}
 struct _global_String types_int_to_string(_Bool types_unsigned, unsigned int types_size, struct _global_Context* D){;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 struct _global_String types_prefix;types_prefix = (types_unsigned ? _global_StringInit(1,"u"):(_global_StringInit(1,"i")));;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;return _global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(types_prefix),D),_global_StringInit(0,""),D),_global_uint_toStringByValue((types_size),D),D),_global_StringInit(0,""),D);
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* types_int_duck_type(_Bool types_unsigned, unsigned int types_size, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;struct types_CompilerType F =types_CompilerType_to_real_typeByValue(types_other,D);
 if(F.tag==3){_Bool types_unsigned2 = F.cases.Int.field0;
 unsigned int types_size2 = F.cases.Int.field1;
 return (types_unsigned&&!(types_unsigned2) ? error_make_Error_error_Thrower(types_thrower,_global_StringInit(42,"Cannot convert from signed to unsigned int"),D) : (types_size2>types_size) ? error_make_Error_error_Thrower(types_thrower,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(36,"Loosing information by casting from "),types_CompilerType_toStringByValue((types_other),D),D),_global_StringInit(2,", "),D),(types_int_to_string(types_unsigned,types_size,D)),D),_global_StringInit(0,""),D),D):(NULL));}else if(1){return error_make_Error_error_Thrower(types_thrower,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(10,"Expecting "),(types_int_to_string(types_unsigned,types_size,D)),D),_global_StringInit(6,", not "),D),types_CompilerType_toStringByValue((types_other),D),D),_global_StringInit(0,""),D),D);};
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;}
 struct types_CompilerType types_make_Int(struct _global_Context* D){;return types_Int(0,32,D);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;}
 struct _global_String types_FuncPtr_toString(struct types_FuncPtr* types_self, struct _global_Context* D){;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 struct stringBuilder_StringBuilder types_s;types_s = stringBuilder_make_StringBuilder(D);;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 stringBuilder_StringBuilder_append(&(types_s),_global_StringInit(4,"def("),D);
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 struct _global_StaticArray_StaticArray_S_types_CompilerType F =(types_self)->args;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 for (unsigned int G = 0;G < F.length; G++) {
 struct types_CompilerType types_arg;types_arg = *_global_StaticArray_op_get_StaticArray_S_types_CompilerType(&F, G, D);
 ;unsigned int types_i;types_i = G;
 stringBuilder_StringBuilder_append(&(types_s),types_CompilerType_toStringByValue(types_arg,D),D);
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 if(types_i<((types_self)->args).length-1){;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 stringBuilder_StringBuilder_append(&(types_s),_global_StringInit(1,","),D);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;};
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 }
 ;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 stringBuilder_StringBuilder_append(&(types_s),_global_StringInit(1,")"),D);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;return stringBuilder_StringBuilder_toString(&(types_s),D);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;}
 static inline struct _global_String types_FuncPtr_toStringByValue(struct types_FuncPtr H,struct _global_Context* D){
 return types_FuncPtr_toString(&H,D);
 }struct error_CompilerError* types_FuncPtr_duck_type(struct types_FuncPtr* types_self, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;return NULL;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 _Bool types_FuncPtr_op_eq(struct types_FuncPtr* types_self, struct types_FuncPtr* types_other, struct _global_Context* D){;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;return 1;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;}
 unsigned int types_FuncPtr_calc_size(struct types_FuncPtr* types_self, struct _global_Context* D){;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;return 8;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;}
 struct types_FuncPtr* types_make_FuncPtr(struct _global_Context* D){;return _global_box_types_FuncPtr(types_FuncPtrInit(_global_StaticArray_StaticArray_S_types_CompilerTypeInit(NULL, 0),types_Void,0),D);
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;}
 struct _global_String types_StructInfo_toString(struct types_StructInfo* types_self, struct _global_Context* D){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;return (types_self)->name;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;}
 static inline struct _global_String types_StructInfo_toStringByValue(struct types_StructInfo F,struct _global_Context* D){
 return types_StructInfo_toString(&F,D);
 }_Bool types_StructInfo_equals(struct types_StructInfo* types_self, struct types_CompilerType types_other, struct _global_Context* D){;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;struct types_CompilerType F =types_CompilerType_to_real_typeByValue(types_other,D);
 if(F.tag==5){struct types_StructInfo* types_o = F.cases.Struct.field0;
 return _global_String_op_eqByValue((types_o)->name,(types_self)->name,D);}else if(1){return 0;};
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;}
 struct error_CompilerError* types_StructInfo_duck_type(struct types_StructInfo* types_self, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
-;return NULL;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;return (types_StructInfo_equals(types_self,types_other,D) ? NULL:(error_make_Error_error_Thrower(types_thrower,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(10,"Expecting "),types_StructInfo_toString((types_self),D),D),_global_StringInit(5," not "),D),types_CompilerType_toStringByValue((types_other),D),D),_global_StringInit(0,""),D),D)));
 ;}
 _Bool types_StructInfo_op_eq(struct types_StructInfo* types_self, struct types_StructInfo* types_other, struct _global_Context* D){;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;return _global_String_op_eqByValue((types_self)->name,(types_other)->name,D);
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct types_StructInfo* types_make_StructInfo(struct _global_String types_name, struct hashMap_HashMap_types_CompilerType types_fields, struct _global_Context* D){;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;return _global_box_types_StructInfo(types_StructInfoInit(types_name,types_fields),D);
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;}
-static inline struct _global_Result_Result_E_types_CompilerType tmptypesK(struct _global_Result_rerror_CompilerError_Result_T K) {
+static inline struct _global_Result_Result_E_types_CompilerType tmptypesp(struct _global_Result_rerror_CompilerError_Result_T K) {
 struct _global_Result_Result_E_types_CompilerType J;J.tag = K.tag;J.cases = *(union _global_Result_Result_E_types_CompilerType_cases*) &(K.cases);return J;
 }
-static inline struct _global_Result_rerror_CompilerError_types_CompilerType tmptypesH(struct _global_Result_Result_E_types_CompilerType G) {
+static inline struct _global_Result_rerror_CompilerError_types_CompilerType tmptypesm(struct _global_Result_Result_E_types_CompilerType G) {
 struct _global_Result_rerror_CompilerError_types_CompilerType F;F.tag = G.tag;F.cases = *(union _global_Result_rerror_CompilerError_types_CompilerType_cases*) &(G.cases);return F;
 }
 
-static inline struct _global_Result_Result_E_types_CompilerType tmptypesJ(struct parser_Parser** types_self, struct _global_Context* D) {
+static inline struct _global_Result_Result_E_types_CompilerType tmptypesn(struct parser_Parser** types_self, struct _global_Context* D) {
 struct _global_String H =(parser_Parser_current(*types_self,D)).value;
-if(_global_String_op_eqByValue(H,_global_StringInit(3,"int"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Int(0,32,D),D);}else if(_global_String_op_eqByValue(H,_global_StringInit(5,"float"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Float(32,D),D);}else if(_global_String_op_eqByValue(H,_global_StringInit(4,"none"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Void,D);}else if(1){return tmptypesK(_global_Error_rerror_CompilerError_Result_T(error_make_Error_rparser_Parser(*types_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(14,"Unknown type: "),((parser_Parser_current(*types_self,D)).value),D),_global_StringInit(0,""),D),D),D));}
+if(_global_String_op_eqByValue(H,_global_StringInit(3,"int"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Int(0,32,D),D);}else if(_global_String_op_eqByValue(H,_global_StringInit(5,"float"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Float(32,D),D);}else if(_global_String_op_eqByValue(H,_global_StringInit(4,"none"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Void,D);}else if(1){return tmptypesp(_global_Error_rerror_CompilerError_Result_T(error_make_Error_rparser_Parser(*types_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(14,"Unknown type: "),((parser_Parser_current(*types_self,D)).value),D),_global_StringInit(0,""),D),D),D));}
 }
 struct _global_Result_rerror_CompilerError_types_CompilerType types_parse_type(struct parser_Parser* types_self, struct _global_Context* D){;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/parseType.top"
-;return tmptypesH(tmptypesJ(&types_self, D));
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;return tmptypesm(tmptypesn(&types_self, D));
 ;}
 struct error_CompilerError* error_make_Error_error_Thrower(struct error_Thrower error_self, struct _global_String error_mesg, struct _global_Context* D){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-struct error_CompilerError* error_err;error_err = _global_box_longterm_error_CompilerError(error_CompilerErrorInit(error_Thrower_get_filename(&(error_self),D),error_Thrower_get_line(&(error_self),D),error_mesg,error_Thrower_get_column(&(error_self),D)),D);;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-_global_panic(error_CompilerError_toString(error_err,D),D);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-;return error_err;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
+;return _global_box_longterm_error_CompilerError(error_CompilerErrorInit(error_Thrower_get_filename(&(error_self),D),error_Thrower_get_line(&(error_self),D),error_mesg,error_Thrower_get_column(&(error_self),D)),D);
 ;}
 struct types_CompilerType* _global_StaticArray_op_get_StaticArray_S_types_CompilerType(struct _global_StaticArray_StaticArray_S_types_CompilerType* _global_self, unsigned int _global_index, struct _global_Context* D){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),D);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 struct types_FuncPtr* _global_box_types_FuncPtr(struct types_FuncPtr _global_value, struct _global_Context* D){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct types_FuncPtr* _global_pointer;_global_pointer = (struct types_FuncPtr*)(_global_Allocator_alloc((D)->allocator,(uint64_t)sizeof(struct types_FuncPtr),D));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct types_StructInfo* _global_box_types_StructInfo(struct types_StructInfo _global_value, struct _global_Context* D){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct types_StructInfo* _global_pointer;_global_pointer = (struct types_StructInfo*)(_global_Allocator_alloc((D)->allocator,(uint64_t)sizeof(struct types_StructInfo),D));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct error_CompilerError* error_make_Error_rparser_Parser(struct parser_Parser* error_self, struct _global_String error_mesg, struct _global_Context* D){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-struct error_CompilerError* error_err;error_err = _global_box_longterm_error_CompilerError(error_CompilerErrorInit(parser_Parser_get_filename(error_self,D),parser_Parser_get_line(error_self,D),error_mesg,parser_Parser_get_column(error_self,D)),D);;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-_global_panic(error_CompilerError_toString(error_err,D),D);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-;return error_err;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
+;return _global_box_longterm_error_CompilerError(error_CompilerErrorInit(parser_Parser_get_filename(error_self,D),parser_Parser_get_line(error_self,D),error_mesg,parser_Parser_get_column(error_self,D)),D);
 ;}
 
 void typesInitTypes() { 
@@ -8047,17 +7137,11 @@ _global_Result_Result_E_types_CompilerTypeType.cases.length = 2;
  }
 void typesInit() { 
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 hashMapInit();;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 scopeInit();;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 types_func_type = types_Func((struct types_FuncPtr*)0,(&_global_context));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 types_struct_type = types_Struct((struct types_StructInfo*)0,(&_global_context));;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
 };
 void _global_memcpy_rast_AST(struct ast_AST** _global_target, struct ast_AST** _global_destination, unsigned int _global_length, struct _global_Context* l);
@@ -8065,125 +7149,75 @@ void _global_Array_reserve_rast_AST(struct _global_Array_rast_AST* _global_self,
 void _global_Array_append_rast_AST(struct _global_Array_rast_AST* _global_self, struct ast_AST* _global_value, struct _global_Context* l);
 struct ast_AST** _global_Array_op_get_rast_AST(struct _global_Array_rast_AST* _global_self, unsigned int _global_index, struct _global_Context* l);
 struct _global_String ast_Payload_toString(struct ast_Payload* ast_self, struct _global_Context* l){;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 struct _global_EnumType* ast_payload_type;ast_payload_type = ast_Payload_get_type(NULL,l);;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;return (*(_global_StaticArray_op_get_StaticArray_S_Case(&((ast_payload_type)->cases),(unsigned int)(ast_self)->tag,l))).name;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;}
 static inline struct _global_String ast_Payload_toStringByValue(struct ast_Payload m,struct _global_Context* l){
 return ast_Payload_toString(&m,l);
 }struct _global_String ast_AST_get_filename(struct ast_AST* ast_self, struct _global_Context* l){;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;return (ast_self)->_filename;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;}
 unsigned int ast_AST_get_line(struct ast_AST* ast_self, struct _global_Context* l){;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;return (ast_self)->_line;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;}
 unsigned int ast_AST_get_column(struct ast_AST* ast_self, struct _global_Context* l){;
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;return (ast_self)->_column;
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;}
 void ast_AST_add(struct ast_AST* ast_self, struct ast_AST* ast_node, struct _global_Context* l){;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 (ast_node)->owner = ast_self;;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 _global_Array_append_rast_AST(&((ast_self)->nodes),ast_node,l);
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;}
 struct ast_AST** ast_AST_op_get(struct ast_AST* ast_self, unsigned int ast_index, struct _global_Context* l){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;return &(*(_global_Array_op_get_rast_AST(&((ast_self)->nodes),(unsigned int)ast_index,l)));
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;}
 unsigned int ast_AST_length(struct ast_AST* ast_self, struct _global_Context* l){;
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;return ((ast_self)->nodes).length;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;}
 struct types_CompilerType ast_op_type(struct ast_AST* ast_node, struct _global_Context* l){;
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 _global_assert(((ast_node)->payload).tag==((ast_Operator(ast_Add,l))).tag,_global_StringInit(33,"Passing incorrect node to op_type"),l);
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;return (*(_global_Array_op_get_rast_AST(&((ast_node)->nodes),(unsigned int)0,l)))->_type;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;}
 void _global_memcpy_rast_AST(struct ast_AST** _global_target, struct ast_AST** _global_destination, unsigned int _global_length, struct _global_Context* l){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct ast_AST*),l);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct ast_AST** tmpastL(struct _global_Array_rast_AST** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* l) {
+static inline struct ast_AST** tmpastq(struct _global_Array_rast_AST** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* l) {
 struct ast_AST** m =(*_global_self)->data;
 if(m != NULL){struct ast_AST** _global_data = m;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),l);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct ast_AST** _global_newData;_global_newData = (struct ast_AST**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct ast_AST*),l));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_rast_AST(_global_newData,_global_data,(*_global_self)->length,l);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,l);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(m == NULL){return (struct ast_AST**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct ast_AST*),l));}
 }
 void _global_Array_reserve_rast_AST(struct _global_Array_rast_AST* _global_self, unsigned int _global_newSize, struct _global_Context* l){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(l)->allocator,l);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpastL(&_global_self,&_global_newSize,&_global_allocator, l);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpastq(&_global_self,&_global_newSize,&_global_allocator, l);;
 ;}
 void _global_Array_append_rast_AST(struct _global_Array_rast_AST* _global_self, struct ast_AST* _global_value, struct _global_Context* l){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_rast_AST(_global_self,1,l);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_rast_AST(_global_self,(_global_self)->capacity*2,l);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct ast_AST**)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct ast_AST** _global_Array_op_get_rast_AST(struct _global_Array_rast_AST* _global_self, unsigned int _global_index, struct _global_Context* l){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),l);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct ast_AST**)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 
 void astInitTypes() { 
@@ -8191,212 +7225,122 @@ void astInitTypes() {
  }
 void astInit() { 
 typesInit();;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;
 };
 struct _global_Field* _global_StaticArray_op_get_StaticArray_S_Field(struct _global_StaticArray_StaticArray_S_Field* _global_self, unsigned int _global_index, struct _global_Context* c);
 struct _global_CaseArg* _global_StaticArray_op_get_StaticArray_S_CaseArg(struct _global_StaticArray_StaticArray_S_CaseArg* _global_self, unsigned int _global_index, struct _global_Context* c);
 
-static inline struct puintcrnonep tmpprintM(struct _global_Type* print_kind,void** print_ptr,struct _global_String* print_tab,struct stringBuilder_StringBuilder** print_s,struct _global_ArrayType** print_array_type,struct _global_Type* print_elem_type,uint64_t* print_elem_size,unsigned int* print_length,void** print_data, struct _global_Context* c) {
+static inline struct puintcrnonep tmpprintr(struct _global_Type* print_kind,void** print_ptr,struct _global_String* print_tab,struct stringBuilder_StringBuilder** print_s,struct _global_ArrayType** print_array_type,struct _global_Type* print_elem_type,uint64_t* print_elem_size,unsigned int* print_length,void** print_data, struct _global_Context* c) {
 struct _global_ArraySize j =*((*print_array_type)->size);
 if(j.tag==2){struct _global_StaticArray_StaticArray_S_none* print_arr;print_arr = (struct _global_StaticArray_StaticArray_S_none*)*print_ptr;;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 return puintcrnonepInit((print_arr)->length,(print_arr)->data);}else if(j.tag==1){struct _global_Array_none* print_arr;print_arr = (struct _global_Array_none*)*print_ptr;;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 return puintcrnonepInit((print_arr)->length,(void*)(print_arr)->data);}else if(j.tag==0){unsigned int print_length = j.cases.Static.field0;
 return puintcrnonepInit(print_length,*print_ptr);}
 }
 void print_type_to_string(struct _global_Type print_kind, void* print_ptr, struct _global_String print_tab, struct stringBuilder_StringBuilder* print_s, struct _global_Context* c){;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 struct _global_Type d =print_kind;if(d.vtable->type.data == _global_StructType_get_type(NULL,c)){struct _global_StructType* print_struct_type = (struct _global_StructType*)d.data;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((print_struct_type)->package),c),_global_StringInit(1,"."),c),((print_struct_type)->name),c),_global_StringInit(0,""),c),c);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_StringInit(2,"{\n"),c);
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 struct _global_StaticArray_StaticArray_S_Field f =(print_struct_type)->fields;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 for (unsigned int g = 0;g < f.length; g++) {
 struct _global_Field print_field;print_field = *_global_StaticArray_op_get_StaticArray_S_Field(&f, g, c);
 ;unsigned int print_i;print_i = g;
 if(_global_String_op_eqByValue((print_struct_type)->name,_global_StringInit(3,"AST"),c)&&_global_String_op_eqByValue((print_field).name,_global_StringInit(5,"owner"),c)){;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
  continue;;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;};
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
-stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(print_tab),c),_global_StringInit(2,"\t"),c),((print_field).name),c),_global_StringInit(3," : "),c),c);
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
-print_type_to_string((print_field).field_type,(_global_offsetPtr(print_ptr,(int64_t)(print_field).offset,c)),_global_String_op_addByValue(print_tab,_global_StringInit(2,"\t"),c),print_s,c);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
+stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(print_tab),c),_global_StringInit(1,"\t"),c),((print_field).name),c),_global_StringInit(3," : "),c),c);
+print_type_to_string((print_field).field_type,(_global_offsetPtr(print_ptr,(int64_t)(print_field).offset,c)),_global_String_op_addByValue(print_tab,_global_StringInit(1,"\t"),c),print_s,c);
 stringBuilder_StringBuilder_append(print_s,_global_StringInit(1,"\n"),c);
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 }
 ;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,print_tab,c);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_StringInit(1,"}"),c);
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 else if(d.vtable->type.data == _global_IntType_get_type(NULL,c)){struct IntType* print_int_type = (struct IntType*)d.data;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 if((print_int_type)->sign){;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),_global_int_toString(((int*)print_ptr),c),c),_global_StringInit(0,""),c),c);
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
 else{stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),_global_uint_toString(((unsigned int*)print_ptr),c),c),_global_StringInit(0,""),c),c);
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;};
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 else if(d.vtable->type.data == _global_FloatType_get_type(NULL,c)){struct FloatType* print_float_type = (struct FloatType*)d.data;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 if((print_float_type)->size==4){;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),_global_Float_toString(((float*)print_ptr),c),c),_global_StringInit(0,""),c),c);
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
 else{stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),_global_Float_toString(((double*)print_ptr),c),c),_global_StringInit(0,""),c),c);
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;};
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 else if(d.vtable->type.data == _global_StringType_get_type(NULL,c)){struct StringType* print_string_type = (struct StringType*)d.data;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"'"),_global_String_toString(((struct _global_String*)print_ptr),c),c),_global_StringInit(1,"'"),c),c);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 else if(d.vtable->type.data == _global_AliasType_get_type(NULL,c)){struct _global_AliasType* print_alias_type = (struct _global_AliasType*)d.data;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 print_type_to_string((print_alias_type)->real_type,print_ptr,print_tab,print_s,c);
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 else if(d.vtable->type.data == _global_ArrayType_get_type(NULL,c)){struct _global_ArrayType* print_array_type = (struct _global_ArrayType*)d.data;
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 struct _global_Type print_elem_type;print_elem_type = (print_array_type)->array_type;;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 uint64_t print_elem_size;print_elem_size = _global_Type_get_size(&(print_elem_type),c);;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
-unsigned int print_length;void* print_data;struct puintcrnonep h;h = tmpprintM(&print_kind,&print_ptr,&print_tab,&print_s,&print_array_type,&print_elem_type,&print_elem_size,&print_length,&print_data, c);print_length=h.field0;print_data=h.field1;;
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
+unsigned int print_length;void* print_data;struct puintcrnonep h;h = tmpprintr(&print_kind,&print_ptr,&print_tab,&print_s,&print_array_type,&print_elem_type,&print_elem_size,&print_length,&print_data, c);print_length=h.field0;print_data=h.field1;;
 if(print_length==0){;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_StringInit(2,"[]"),c);
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
 else{stringBuilder_StringBuilder_append(print_s,_global_StringInit(2,"[\n"),c);
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 struct _global_Range k =_global_RangeInit(0,print_length);
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 for (unsigned int l = k.start; l < k.end; l++) {
 unsigned int print_i;print_i = l;
-;stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(print_tab),c),_global_StringInit(2,"\t"),c),c);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
-print_type_to_string(print_elem_type,(_global_offsetPtr(print_data,(int64_t)(uint64_t)print_i*print_elem_size,c)),_global_String_op_addByValue(print_tab,_global_StringInit(2,"\t"),c),print_s,c);
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
+;stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(print_tab),c),_global_StringInit(1,"\t"),c),c);
+print_type_to_string(print_elem_type,(_global_offsetPtr(print_data,(int64_t)(uint64_t)print_i*print_elem_size,c)),_global_String_op_addByValue(print_tab,_global_StringInit(1,"\t"),c),print_s,c);
 stringBuilder_StringBuilder_append(print_s,_global_StringInit(1,"\n"),c);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 }
 ;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(print_tab),c),_global_StringInit(1,"]"),c),c);
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;};
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 else if(d.vtable->type.data == _global_PointerType_get_type(NULL,c)){struct _global_PointerType* print_p_type = (struct _global_PointerType*)d.data;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 print_ptr = *(((void**)print_ptr));;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 print_type_to_string((print_p_type)->p_type,print_ptr,print_tab,print_s,c);
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 else if(d.vtable->type.data == _global_BoolType_get_type(NULL,c)){struct BoolType* print_bool_type = (struct BoolType*)d.data;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_Bool_toString(((_Bool*)print_ptr),c),c);
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 else if(d.vtable->type.data == _global_EnumType_get_type(NULL,c)){struct _global_EnumType* print_enum_type = (struct _global_EnumType*)d.data;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 unsigned char print_tag;print_tag = _global_EnumType_get_tag(print_enum_type,print_ptr,c);;
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((*(_global_StaticArray_op_get_StaticArray_S_Case(&((print_enum_type)->cases),(unsigned int)print_tag,c))).name),c),_global_StringInit(1,"("),c),c);
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 struct _global_StaticArray_StaticArray_S_CaseArg m =(*(_global_StaticArray_op_get_StaticArray_S_Case(&((print_enum_type)->cases),(unsigned int)print_tag,c))).args;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 for (unsigned int n = 0;n < m.length; n++) {
 struct _global_CaseArg print_arg;print_arg = *_global_StaticArray_op_get_StaticArray_S_CaseArg(&m, n, c);
 ;unsigned int print_i;print_i = n;
 print_type_to_string((print_arg).arg_type,(_global_offsetPtr(print_ptr,(int64_t)(print_arg).offset,c)),print_tab,print_s,c);
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_StringInit(1,","),c);
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 }
 ;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_StringInit(1,")"),c);
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 else if(d.vtable->type.data == _global_InterfaceType_get_type(NULL,c)){struct _global_InterfaceType* print_interface_type = (struct _global_InterfaceType*)d.data;
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 if(_global_String_op_eqByValue((print_interface_type)->name,_global_StringInit(12,"CompilerType"),c)){;
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 struct types_CompilerType* print_ptr_to_interface;print_ptr_to_interface = (struct types_CompilerType*)print_ptr;;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,types_CompilerType_toString(print_ptr_to_interface,c),c);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
 else{stringBuilder_StringBuilder_append(print_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(17,"Unsupported type "),_global_InterfaceType_toString((print_interface_type),c),c),_global_StringInit(0,""),c),c);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;};
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 else if(1){
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 stringBuilder_StringBuilder_append(print_s,_global_StringInit(11,"Unsupported"),c);
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
 struct _global_Field* _global_StaticArray_op_get_StaticArray_S_Field(struct _global_StaticArray_StaticArray_S_Field* _global_self, unsigned int _global_index, struct _global_Context* c){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),c);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 struct _global_CaseArg* _global_StaticArray_op_get_StaticArray_S_CaseArg(struct _global_StaticArray_StaticArray_S_CaseArg* _global_self, unsigned int _global_index, struct _global_Context* c){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),c);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 
 void printInitTypes() { 
@@ -8404,7 +7348,6 @@ void printInitTypes() {
  }
 void printInit() { 
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;
 };
 void _global_memcpy_operatorParser_OpDesc(struct operatorParser_OpDesc* _global_target, struct operatorParser_OpDesc* _global_destination, unsigned int _global_length, struct _global_Context* k);
@@ -8427,408 +7370,231 @@ void _global_Array_append_operatorParser_OpDesc(struct _global_Array_operatorPar
 void _global_Array_append_____operatorParser_OpDesc(struct _global_Array_____operatorParser_OpDesc* _global_self, struct _global_Array_operatorParser_OpDesc _global_value, struct _global_Context* k);
 struct _global_Array_operatorParser_OpDesc _global_Array_pop_____operatorParser_OpDesc(struct _global_Array_____operatorParser_OpDesc* _global_self, struct _global_Context* k);
 _Bool operatorParser_is_unary(struct parser_Parser* operatorParser_self, struct _global_Context* k){;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 struct lexer_Token operatorParser_token;operatorParser_token = parser_Parser_behind(operatorParser_self,k);;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 struct _global_StaticArray_11_string operatorParser_unary_symbols;operatorParser_unary_symbols = _global_StaticArray_11_stringInit(_global_StringInit(1,"("),_global_StringInit(1,")"),_global_StringInit(2,":="),_global_StringInit(1,":"),_global_StringInit(1,"\n"),_global_StringInit(1,","),_global_StringInit(2,"+="),_global_StringInit(2,"-="),_global_StringInit(2,"*="),_global_StringInit(2,"/="),_global_StringInit(2,"%="));;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 struct _global_StaticArray_4_u8 operatorParser_unary_kinds;operatorParser_unary_kinds = _global_StaticArray_4_u8Init((lexer_Operator).tag,(lexer_Indent).tag,(lexer_Invalid).tag,(lexer_Keyword).tag);;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;struct lexer_TokenType l =(operatorParser_token).kind;
 if(l.tag==5){return _global_StaticArray_contains_11_string(&(operatorParser_unary_symbols),(operatorParser_token).value,k);}else if(1){return _global_StaticArray_contains_4_u8(&(operatorParser_unary_kinds),((operatorParser_token).kind).tag,k);};
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;}
 struct error_CompilerError* operatorParser_OpDesc_add_to(struct operatorParser_OpDesc* operatorParser_self, struct parser_Parser* operatorParser_p, struct _global_Context* k){;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 unsigned int operatorParser_takes;operatorParser_takes = ((operatorParser_self)->unary ? 1:(2));;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 unsigned int operatorParser_active_index;operatorParser_active_index = *(_global_Array_op_get_uint(&((operatorParser_p)->active_index),(unsigned int)((operatorParser_p)->active_index).length-1,k));;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;if(((((operatorParser_p)->current_node)->nodes).length-operatorParser_active_index)<operatorParser_takes){;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 return error_make_Error_rparser_Parser(operatorParser_p,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(31,"Not enough values for operator "),(print_obj_toString_ast_OperatorKind((operatorParser_self)->kind,k)),k),_global_StringInit(0,""),k),k);}
 else{struct ast_AST* operatorParser_op;operatorParser_op = ast_make_AST_rparser_Parser(operatorParser_p,ast_Operator((operatorParser_self)->kind,k),k);;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 if((operatorParser_self)->unary){;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ast_AST_add(operatorParser_op,_global_Array_pop_rast_AST(&(((operatorParser_p)->current_node)->nodes),k),k);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;}
 else{struct ast_AST* operatorParser_b;operatorParser_b = _global_Array_pop_rast_AST(&(((operatorParser_p)->current_node)->nodes),k);;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 struct ast_AST* operatorParser_a;operatorParser_a = _global_Array_pop_rast_AST(&(((operatorParser_p)->current_node)->nodes),k);;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ast_AST_add(operatorParser_op,operatorParser_a,k);
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ast_AST_add(operatorParser_op,operatorParser_b,k);
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;};
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ast_AST_add((operatorParser_p)->current_node,operatorParser_op,k);
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 return NULL;};
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;}
 struct operatorParser_OpStack operatorParser_make_OpStack(struct _global_Context* k){;return operatorParser_OpStackInit(_global_Array_____operatorParser_OpDescInit(0, 0, NULL, NULL));
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;}
 struct error_CompilerError* operatorParser_OpStack_push_op(struct operatorParser_OpStack* operatorParser_self, struct parser_Parser* operatorParser_p, struct operatorParser_OpDesc operatorParser_desc, struct _global_Context* k){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 struct _global_Array_operatorParser_OpDesc* operatorParser_ops;operatorParser_ops = &(*(_global_Array_op_get_____operatorParser_OpDesc(&((operatorParser_self)->scopes),(unsigned int)((operatorParser_self)->scopes).length-1,k)));;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;while((operatorParser_ops)->length>0){struct operatorParser_OpDesc operatorParser_current;operatorParser_current = *(_global_Array_op_get_operatorParser_OpDesc((struct _global_Array_operatorParser_OpDesc*)operatorParser_ops,(unsigned int)(operatorParser_ops)->length-1,k));;_Bool operatorParser_same;operatorParser_same = (operatorParser_current).precedence==(operatorParser_desc).precedence&&(operatorParser_current).left_a;;_Bool operatorParser_greater;operatorParser_greater = (operatorParser_current).precedence>(operatorParser_desc).precedence;;if(operatorParser_greater||operatorParser_same){;
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 struct error_CompilerError* l =operatorParser_OpDesc_add_to(&(operatorParser_current),operatorParser_p,k);if(l != NULL){struct error_CompilerError* operatorParser__x = l;
 
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 return operatorParser__x;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;}
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 else if(1){
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;}
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 _global_Array_pop_operatorParser_OpDesc(operatorParser_ops,k);
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;}
 else{break;;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;};};
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 _global_Array_append_operatorParser_OpDesc(operatorParser_ops,operatorParser_desc,k);
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;return NULL;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* operatorParser_parse_operator(struct parser_Parser* operatorParser_self, struct _global_String operatorParser_kind, struct _global_Context* k){;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;struct _global_String l =operatorParser_kind;
 if(_global_String_op_eqByValue(l,_global_StringInit(1,"+"),NULL)){return operatorParser_OpStack_push_op(&((operatorParser_self)->op_stack),operatorParser_self,operatorParser_OpDescInit(0,10,ast_Add,1),k);}else if(_global_String_op_eqByValue(l,_global_StringInit(1,"-"),NULL)){return operatorParser_OpStack_push_op(&((operatorParser_self)->op_stack),operatorParser_self,operatorParser_OpDescInit(0,10,ast_Sub,1),k);}else if(_global_String_op_eqByValue(l,_global_StringInit(1,"*"),NULL)){return operatorParser_OpStack_push_op(&((operatorParser_self)->op_stack),operatorParser_self,operatorParser_OpDescInit(0,20,ast_Mul,1),k);}else if(_global_String_op_eqByValue(l,_global_StringInit(1,"<"),NULL)){return operatorParser_OpStack_push_op(&((operatorParser_self)->op_stack),operatorParser_self,operatorParser_OpDescInit(0,5,ast_LT,1),k);}else if(_global_String_op_eqByValue(l,_global_StringInit(1,"/"),NULL)){return operatorParser_OpStack_push_op(&((operatorParser_self)->op_stack),operatorParser_self,operatorParser_OpDescInit(0,20,ast_Div,1),k);}else if(1){return error_make_Error_rparser_Parser(operatorParser_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(17,"Unknown operator "),(operatorParser_kind),k),_global_StringInit(0,""),k),k);};
-#line 70 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;}
 void operatorParser_OpStack_push(struct operatorParser_OpStack* operatorParser_self, struct parser_Parser* operatorParser_p, struct _global_Context* k){;
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 _global_Array_append_____operatorParser_OpDesc(&((operatorParser_self)->scopes),_global_Array_operatorParser_OpDescInit(0, 0, NULL, NULL),k);
-#line 114 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;}
 struct error_CompilerError* operatorParser_OpStack_pop(struct operatorParser_OpStack* operatorParser_self, struct parser_Parser* operatorParser_p, struct _global_Context* k){;
-#line 116 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
-#line 116 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 struct _global_Array_operatorParser_OpDesc operatorParser_op_left;operatorParser_op_left = _global_Array_pop_____operatorParser_OpDesc(&((operatorParser_self)->scopes),k);;
-#line 117 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 struct _global_Range l =_global_RangeInit(0,(operatorParser_op_left).length);
-#line 119 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 for (unsigned int m = l.start; m < l.end; m++) {
 unsigned int operatorParser_i;operatorParser_i = m;
 ;struct error_CompilerError* n =operatorParser_OpDesc_add_to(&(*(_global_Array_op_get_operatorParser_OpDesc(&(operatorParser_op_left),(unsigned int)(operatorParser_op_left).length-operatorParser_i-1,k))),operatorParser_p,k);if(n != NULL){struct error_CompilerError* operatorParser__x = n;
 
-#line 121 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 return operatorParser__x;
-#line 121 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
-#line 121 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;}
-#line 121 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 else if(1){
-#line 121 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;}
-#line 121 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
-#line 120 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 }
 ;
-#line 119 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;return NULL;
-#line 122 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 void _global_memcpy_operatorParser_OpDesc(struct operatorParser_OpDesc* _global_target, struct operatorParser_OpDesc* _global_destination, unsigned int _global_length, struct _global_Context* k){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct operatorParser_OpDesc),k);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_____operatorParser_OpDesc(struct _global_Array_operatorParser_OpDesc* _global_target, struct _global_Array_operatorParser_OpDesc* _global_destination, unsigned int _global_length, struct _global_Context* k){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct _global_Array_operatorParser_OpDesc),k);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct _global_String* _global_StaticArray_op_get_11_string(struct _global_StaticArray_11_string* _global_self, unsigned int _global_index, struct _global_Context* k){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<11,_global_StringInit(13,"Out of bounds"),k);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 unsigned char* _global_StaticArray_op_get_4_u8(struct _global_StaticArray_4_u8* _global_self, unsigned int _global_index, struct _global_Context* k){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<4,_global_StringInit(13,"Out of bounds"),k);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 struct ast_AST* _global_box_longterm_ast_AST(struct ast_AST _global_value, struct _global_Context* k){;
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct ast_AST* _global_pointer;_global_pointer = (struct ast_AST*)(_global_Allocator_alloc((k)->longterm_storage,(uint64_t)sizeof(struct ast_AST),k));;
-#line 102 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct operatorParser_OpDesc* tmpoperatorParserN(struct _global_Array_operatorParser_OpDesc** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* k) {
+static inline struct operatorParser_OpDesc* tmpoperatorParsers(struct _global_Array_operatorParser_OpDesc** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* k) {
 struct operatorParser_OpDesc* l =(*_global_self)->data;
 if(l != NULL){struct operatorParser_OpDesc* _global_data = l;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),k);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct operatorParser_OpDesc* _global_newData;_global_newData = (struct operatorParser_OpDesc*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct operatorParser_OpDesc),k));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_operatorParser_OpDesc(_global_newData,_global_data,(*_global_self)->length,k);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,k);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(l == NULL){return (struct operatorParser_OpDesc*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct operatorParser_OpDesc),k));}
 }
 void _global_Array_reserve_operatorParser_OpDesc(struct _global_Array_operatorParser_OpDesc* _global_self, unsigned int _global_newSize, struct _global_Context* k){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(k)->allocator,k);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpoperatorParserN(&_global_self,&_global_newSize,&_global_allocator, k);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpoperatorParsers(&_global_self,&_global_newSize,&_global_allocator, k);;
 ;}
 
-static inline struct _global_Array_operatorParser_OpDesc* tmpoperatorParserP(struct _global_Array_____operatorParser_OpDesc** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* k) {
+static inline struct _global_Array_operatorParser_OpDesc* tmpoperatorParsert(struct _global_Array_____operatorParser_OpDesc** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* k) {
 struct _global_Array_operatorParser_OpDesc* l =(*_global_self)->data;
 if(l != NULL){struct _global_Array_operatorParser_OpDesc* _global_data = l;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),k);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Array_operatorParser_OpDesc* _global_newData;_global_newData = (struct _global_Array_operatorParser_OpDesc*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Array_operatorParser_OpDesc),k));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_____operatorParser_OpDesc(_global_newData,_global_data,(*_global_self)->length,k);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,k);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(l == NULL){return (struct _global_Array_operatorParser_OpDesc*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Array_operatorParser_OpDesc),k));}
 }
 void _global_Array_reserve_____operatorParser_OpDesc(struct _global_Array_____operatorParser_OpDesc* _global_self, unsigned int _global_newSize, struct _global_Context* k){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(k)->allocator,k);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpoperatorParserP(&_global_self,&_global_newSize,&_global_allocator, k);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpoperatorParsert(&_global_self,&_global_newSize,&_global_allocator, k);;
 ;}
 _Bool _global_StaticArray_contains_11_string(struct _global_StaticArray_11_string* _global_self, struct _global_String _global_elem, struct _global_Context* k){;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 unsigned int _global_i;_global_i = 0;;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;while(_global_i<11){if(_global_String_op_eq(&(*(_global_StaticArray_op_get_11_string(_global_self,(unsigned int)_global_i,k))),&(_global_elem),k)){;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 return 1;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;};_global_i = _global_i+1;;};
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return 0;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 _Bool _global_StaticArray_contains_4_u8(struct _global_StaticArray_4_u8* _global_self, unsigned char _global_elem, struct _global_Context* k){;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 unsigned int _global_i;_global_i = 0;;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;while(_global_i<4){if(*(&(*(_global_StaticArray_op_get_4_u8(_global_self,(unsigned int)_global_i,k))))==*(&(_global_elem))){;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 return 1;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;};_global_i = _global_i+1;;};
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return 0;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 unsigned int* _global_Array_op_get_uint(struct _global_Array_uint* _global_self, unsigned int _global_index, struct _global_Context* k){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),k);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((unsigned int*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct _global_String print_obj_toString_ast_OperatorKind(struct ast_OperatorKind print_t, struct _global_Context* k){;
-#line 91 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 struct stringBuilder_StringBuilder print_s;print_s = stringBuilder_make_StringBuilder(k);;
-#line 92 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 print_type_to_string(_global_TypeFromStruct(ast_OperatorKind_get_type(NULL,k),&rEnumType_VTABLE_FOR_Type,rEnumType_VTABLE_FOR_Type.type, &_global_EnumType_toString, &_global_EnumType_get_size),(void*)&(print_t),_global_StringInit(0,""),&(print_s),k);
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;return stringBuilder_StringBuilder_toString(&(print_s),k);
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
 struct ast_AST* ast_make_AST_rparser_Parser(struct parser_Parser* ast_t, struct ast_Payload ast_payload, struct _global_Context* k){;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 struct _global_Array_rast_AST ast_nodes;ast_nodes = _global_Array_rast_ASTInit(0, 0, NULL, NULL);;
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 (ast_nodes).allocator = (k)->longterm_storage;;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;return _global_box_longterm_ast_AST(ast_ASTInit(ast_payload,ast_nodes,types_Void,NULL,parser_Parser_get_filename(ast_t,k),parser_Parser_get_line(ast_t,k),parser_Parser_get_column(ast_t,k)),k);
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;}
 struct ast_AST* _global_Array_pop_rast_AST(struct _global_Array_rast_AST* _global_self, struct _global_Context* k){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->length==0){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(25,"trying to pop empty array"),k);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct ast_AST* _global_tmp;_global_tmp = *(_global_Array_op_get_rast_AST(_global_self,(unsigned int)(_global_self)->length-1,k));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return _global_tmp;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct _global_Array_operatorParser_OpDesc* _global_Array_op_get_____operatorParser_OpDesc(struct _global_Array_____operatorParser_OpDesc* _global_self, unsigned int _global_index, struct _global_Context* k){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),k);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct _global_Array_operatorParser_OpDesc*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct operatorParser_OpDesc* _global_Array_op_get_operatorParser_OpDesc(struct _global_Array_operatorParser_OpDesc* _global_self, unsigned int _global_index, struct _global_Context* k){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),k);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct operatorParser_OpDesc*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct operatorParser_OpDesc _global_Array_pop_operatorParser_OpDesc(struct _global_Array_operatorParser_OpDesc* _global_self, struct _global_Context* k){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->length==0){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(25,"trying to pop empty array"),k);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct operatorParser_OpDesc _global_tmp;_global_tmp = *(_global_Array_op_get_operatorParser_OpDesc(_global_self,(unsigned int)(_global_self)->length-1,k));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return _global_tmp;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_operatorParser_OpDesc(struct _global_Array_operatorParser_OpDesc* _global_self, struct operatorParser_OpDesc _global_value, struct _global_Context* k){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_operatorParser_OpDesc(_global_self,1,k);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_operatorParser_OpDesc(_global_self,(_global_self)->capacity*2,k);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct operatorParser_OpDesc*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_____operatorParser_OpDesc(struct _global_Array_____operatorParser_OpDesc* _global_self, struct _global_Array_operatorParser_OpDesc _global_value, struct _global_Context* k){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_____operatorParser_OpDesc(_global_self,1,k);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_____operatorParser_OpDesc(_global_self,(_global_self)->capacity*2,k);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct _global_Array_operatorParser_OpDesc*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct _global_Array_operatorParser_OpDesc _global_Array_pop_____operatorParser_OpDesc(struct _global_Array_____operatorParser_OpDesc* _global_self, struct _global_Context* k){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->length==0){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(25,"trying to pop empty array"),k);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Array_operatorParser_OpDesc _global_tmp;_global_tmp = *(_global_Array_op_get_____operatorParser_OpDesc(_global_self,(unsigned int)(_global_self)->length-1,k));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return _global_tmp;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 
 void operatorParserInitTypes() { 
@@ -8862,58 +7628,36 @@ rIntType_VTABLE_FOR_Type.type
 ; }
 void operatorParserInit() { 
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 printInit();;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/operatorParser.top"
 ;
 };
 struct error_CompilerError* basicTypes_parse_int_literal(struct parser_Parser* basicTypes_self, struct _global_String basicTypes_token, struct _global_Context* f){;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 ;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 struct ast_AST* basicTypes_int_literal;basicTypes_int_literal = ast_make_AST_rparser_Parser(basicTypes_self,ast_Int(basicTypes_token,f),f);;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 (basicTypes_int_literal)->_type = types_make_Int(f);;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 ast_AST_add((basicTypes_self)->current_node,basicTypes_int_literal,f);
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 ;return NULL;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* basicTypes_parse_float_literal(struct parser_Parser* basicTypes_self, struct _global_String basicTypes_token, struct _global_Context* f){;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 ;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 struct ast_AST* basicTypes_float_literal;basicTypes_float_literal = ast_make_AST_rparser_Parser(basicTypes_self,ast_Float(basicTypes_token,f),f);;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 (basicTypes_float_literal)->_type = types_make_Float(f);;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 ast_AST_add((basicTypes_self)->current_node,basicTypes_float_literal,f);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 ;return NULL;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 
-static inline _Bool tmpbasicTypesQ(struct parser_Parser** basicTypes_self,struct _global_String* basicTypes_token,_Bool* basicTypes_as_bool, struct _global_Context* f) {
+static inline _Bool tmpbasicTypesv(struct parser_Parser** basicTypes_self,struct _global_String* basicTypes_token,_Bool* basicTypes_as_bool, struct _global_Context* f) {
 struct _global_String g =*basicTypes_token;
 if(_global_String_op_eqByValue(g,_global_StringInit(4,"true"),NULL)){return 1;}else if(1){return 0;}
 }
 struct error_CompilerError* basicTypes_parse_bool_literal(struct parser_Parser* basicTypes_self, struct _global_String basicTypes_token, struct _global_Context* f){;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
-_Bool basicTypes_as_bool;basicTypes_as_bool = tmpbasicTypesQ(&basicTypes_self,&basicTypes_token,&basicTypes_as_bool, f);;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
+_Bool basicTypes_as_bool;basicTypes_as_bool = tmpbasicTypesv(&basicTypes_self,&basicTypes_token,&basicTypes_as_bool, f);;
 struct ast_AST* basicTypes_bool_literal;basicTypes_bool_literal = ast_make_AST_rparser_Parser(basicTypes_self,ast_Bool(basicTypes_as_bool,f),f);;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 (basicTypes_bool_literal)->_type = types_Bool;;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 ast_AST_add((basicTypes_self)->current_node,basicTypes_bool_literal,f);
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 ;return NULL;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 
 void basicTypesInitTypes() { 
@@ -8921,234 +7665,130 @@ void basicTypesInitTypes() {
  }
 void basicTypesInit() { 
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 ;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/basicTypes.top"
 ;
 };
 struct ast_ReadInfo* _global_box_ast_ReadInfo(struct ast_ReadInfo _global_value, struct _global_Context* j);
 struct ast_AST* ast_make_AST_rast_AST(struct ast_AST* ast_t, struct ast_Payload ast_payload, struct _global_Context* j);
 struct ast_AST* _global_box_ast_AST(struct ast_AST _global_value, struct _global_Context* j);
 struct error_CompilerError* varParser_parse_identifier(struct parser_Parser* varParser_self, struct _global_String varParser_name, struct _global_Context* j){;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct ast_AST* varParser_id;varParser_id = ast_make_AST_rparser_Parser(varParser_self,ast_Identifier(_global_box_ast_ReadInfo(ast_ReadInfoInit(1,varParser_name),j),j),j);;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ast_AST_add((varParser_self)->current_node,varParser_id,j);
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;return NULL;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* varParser_parse_create_assign(struct parser_Parser* varParser_self, struct _global_Context* j){;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct ast_AST* varParser_v;struct error_CompilerError* varParser_err;;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct _global_Result_rerror_CompilerError_rast_AST k =parser_Parser_pop_last(varParser_self,j);if(k.tag==0){varParser_v = k.cases.Ok.field0;
 
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 else if(k.tag==1){varParser_err = k.cases.Error.field0;
 
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 return varParser_err;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct ast_AST* varParser_node;varParser_node = ast_make_AST_rparser_Parser(varParser_self,ast_CreateAssign,j);;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct ast_AST* varParser_create;varParser_create = ast_make_AST_rparser_Parser(varParser_self,ast_Create,j);;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ast_AST_add(varParser_create,varParser_v,j);
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ast_AST_add(varParser_node,varParser_create,j);
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct ast_AST* varParser_assign;varParser_assign = ast_make_AST_rparser_Parser(varParser_self,ast_Assign,j);;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 parser_Parser_push_current_node(varParser_self,varParser_node,j);
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 parser_Parser_push_current_node(varParser_self,varParser_assign,j);
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct error_CompilerError* l =parser_Parser_eval_till_end(varParser_self,j);if(l != NULL){struct error_CompilerError* varParser__x = l;
 
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 return varParser__x;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 else if(1){
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct error_CompilerError* m =parser_Parser_pop_current_node(varParser_self,j);if(m != NULL){struct error_CompilerError* varParser__x = m;
 
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 return varParser__x;
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 else if(1){
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct error_CompilerError* n =parser_Parser_pop_current_node(varParser_self,j);if(n != NULL){struct error_CompilerError* varParser__x = n;
 
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 return varParser__x;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 else if(1){
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;return NULL;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* varParser_parse_assign(struct parser_Parser* varParser_self, struct _global_Context* j){;
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 if((((varParser_self)->current_node)->nodes).length==0){;
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 return error_make_Error_rparser_Parser(varParser_self,_global_StringInit(17,"Unexpected assign"),j);
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;};
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct ast_AST* varParser_v;varParser_v = _global_Array_pop_rast_AST(&(((varParser_self)->current_node)->nodes),j);;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct ast_AST* varParser_assign;varParser_assign = ast_make_AST_rparser_Parser(varParser_self,ast_Assign,j);;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ast_AST_add(varParser_assign,varParser_v,j);
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 parser_Parser_push_current_node(varParser_self,varParser_assign,j);
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 parser_Parser_set_active_index(varParser_self,1,j);
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct error_CompilerError* k =parser_Parser_eval_till_end(varParser_self,j);if(k != NULL){struct error_CompilerError* varParser__x = k;
 
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 return varParser__x;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 else if(1){
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct error_CompilerError* l =parser_Parser_pop_current_node(varParser_self,j);if(l != NULL){struct error_CompilerError* varParser__x = l;
 
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 return varParser__x;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 else if(1){
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;return NULL;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* varParser_parse_op_assign(struct parser_Parser* varParser_self, struct ast_OperatorKind varParser_op, struct _global_Context* j){;
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct error_CompilerError* k =varParser_parse_assign(varParser_self,j);if(k != NULL){struct error_CompilerError* varParser__x = k;
 
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 return varParser__x;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 else if(1){
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct ast_AST* varParser_assign;varParser_assign = *(ast_AST_op_get((varParser_self)->current_node,(unsigned int)ast_AST_length((varParser_self)->current_node,j)-1,j));;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct ast_AST* varParser_add;varParser_add = ast_make_AST_rast_AST(varParser_assign,ast_Operator(varParser_op,j),j);;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 struct ast_AST* varParser_value;varParser_value = *(ast_AST_op_get(varParser_assign,(unsigned int)1,j));;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ast_AST_add(varParser_add,_global_box_ast_AST(*(*(ast_AST_op_get(varParser_assign,(unsigned int)0,j))),j),j);
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ast_AST_add(varParser_add,varParser_value,j);
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 (varParser_add)->owner = varParser_assign;;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 *(ast_AST_op_get(varParser_assign,(unsigned int)1,j)) = varParser_add;;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;return NULL;
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* varParser_parse_add_assign(struct parser_Parser* varParser_self, struct _global_Context* j){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;return varParser_parse_op_assign(varParser_self,ast_Add,j);
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
 struct error_CompilerError* varParser_parse_sub_assign(struct parser_Parser* varParser_self, struct _global_Context* j){;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;return varParser_parse_op_assign(varParser_self,ast_Sub,j);
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/varParser.top"
 ;}
 struct ast_ReadInfo* _global_box_ast_ReadInfo(struct ast_ReadInfo _global_value, struct _global_Context* j){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct ast_ReadInfo* _global_pointer;_global_pointer = (struct ast_ReadInfo*)(_global_Allocator_alloc((j)->allocator,(uint64_t)sizeof(struct ast_ReadInfo),j));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct ast_AST* ast_make_AST_rast_AST(struct ast_AST* ast_t, struct ast_Payload ast_payload, struct _global_Context* j){;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 struct _global_Array_rast_AST ast_nodes;ast_nodes = _global_Array_rast_ASTInit(0, 0, NULL, NULL);;
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 (ast_nodes).allocator = (j)->longterm_storage;;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;return _global_box_longterm_ast_AST(ast_ASTInit(ast_payload,ast_nodes,types_Void,NULL,ast_AST_get_filename(ast_t,j),ast_AST_get_line(ast_t,j),ast_AST_get_column(ast_t,j)),j);
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//ast.top"
 ;}
 struct ast_AST* _global_box_ast_AST(struct ast_AST _global_value, struct _global_Context* j){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct ast_AST* _global_pointer;_global_pointer = (struct ast_AST*)(_global_Allocator_alloc((j)->allocator,(uint64_t)sizeof(struct ast_AST),j));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
 void varParserInitTypes() { 
@@ -9227,26 +7867,16 @@ void varParserInit() {
 ;
 };
 struct error_CompilerError* tuple_parse_tuple(struct parser_Parser* tuple_self, struct _global_Context* c){;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/tuple.top"
 (tuple_self)->num_paren = (tuple_self)->num_paren+1;;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/tuple.top"
 struct error_CompilerError* d =parser_Parser_eval_till_end(tuple_self,c);if(d != NULL){struct error_CompilerError* tuple__x = d;
 
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/tuple.top"
 return tuple__x;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/tuple.top"
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/tuple.top"
 ;}
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/tuple.top"
 else if(1){
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/tuple.top"
 ;}
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/tuple.top"
 ;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/tuple.top"
 ;return NULL;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 
 void tupleInitTypes() { 
@@ -9256,90 +7886,50 @@ void tupleInit() {
 ;
 };
 struct error_CompilerError* funcCall_parse_funcCall(struct parser_Parser* funcCall_self, struct _global_Context* c){;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 struct ast_AST* funcCall_func_call;funcCall_func_call = ast_make_AST_rparser_Parser(funcCall_self,ast_FuncCall,c);;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 struct ast_AST* funcCall_calling;struct error_CompilerError* funcCall_e;;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 struct _global_Result_rerror_CompilerError_rast_AST d =parser_Parser_pop(funcCall_self,_global_StringInit(24,"Unexpected function call"),c);if(d.tag==0){funcCall_calling = d.cases.Ok.field0;
 
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;}
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 else if(d.tag==1){funcCall_e = d.cases.Error.field0;
 
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 return funcCall_e;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;}
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ast_AST_add(funcCall_func_call,funcCall_calling,c);
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 parser_Parser_push_current_node(funcCall_self,funcCall_func_call,c);
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 unsigned int funcCall_num_paren;funcCall_num_paren = parser_Parser_push_paren(funcCall_self,c);;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;while((funcCall_self)->num_paren>funcCall_num_paren){struct _global_String f =(parser_Parser_next(funcCall_self,c)).value;if(_global_String_op_eqByValue(f,_global_StringInit(1,","),NULL)){
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 struct error_CompilerError* g =parser_Parser_comma(funcCall_self,c);if(g != NULL){struct error_CompilerError* funcCall__x = g;
 
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 return funcCall__x;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;}
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 else if(1){
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;}
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;}
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 else if(1){
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 struct error_CompilerError* h =parser_Parser_eval(funcCall_self,c);if(h != NULL){struct error_CompilerError* funcCall__x = h;
 
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 return funcCall__x;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;}
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 else if(1){
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;}
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;}
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;};
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 struct error_CompilerError* j =parser_Parser_pop_current_node(funcCall_self,c);if(j != NULL){struct error_CompilerError* funcCall__x = j;
 
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 return funcCall__x;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;}
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 else if(1){
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;}
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcCall.top"
 ;return NULL;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 
 void funcCallInitTypes() { 
@@ -9354,211 +7944,114 @@ static inline struct ast_AST* _global_Maybe_unwrap_rast_AST(struct ast_AST**,str
 
 struct ast_AST* _global_Maybe_unwrap_rast_ASTByValue(struct ast_AST*,struct _global_Context* f);
 struct error_CompilerError* ifStatement_if_body(struct parser_Parser* ifStatement_self, struct _global_Context* f){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 struct ast_AST* ifStatement_cond;ifStatement_cond = ast_make_AST_rparser_Parser(ifStatement_self,ast_Condition,f);;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 parser_Parser_push_current_node(ifStatement_self,ifStatement_cond,f);
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 _Bool ifStatement_in_block;ifStatement_in_block = 0;;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;while(!(parser_Parser_is_end(ifStatement_self,f))){struct lexer_Token ifStatement_token;ifStatement_token = parser_Parser_next(ifStatement_self,f);;if(_global_String_op_eqByValue((ifStatement_token).value,_global_StringInit(1,":"),f)&&!(ifStatement_in_block)){;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 struct error_CompilerError* g =parser_Parser_pop_current_node(ifStatement_self,f);if(g != NULL){struct error_CompilerError* ifStatement__x = g;
 
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 return ifStatement__x;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 else if(1){
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 struct ast_AST* ifStatement_block;ifStatement_block = ast_make_AST_rparser_Parser(ifStatement_self,ast_Block,f);;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ifStatement_in_block = 1;;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 parser_Parser_push_current_node(ifStatement_self,ifStatement_block,f);
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
 else{struct error_CompilerError* h =parser_Parser_eval(ifStatement_self,f);if(h != NULL){struct error_CompilerError* ifStatement__x = h;
 
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 return ifStatement__x;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 else if(1){
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;};};
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 if(!(ifStatement_in_block)){;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 return error_make_Error_rparser_Parser(ifStatement_self,_global_StringInit(11,"Expecting :"),f);
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;};
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 struct error_CompilerError* j =parser_Parser_pop_current_node(ifStatement_self,f);if(j != NULL){struct error_CompilerError* ifStatement__x = j;
 
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 return ifStatement__x;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 else if(1){
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;return NULL;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* ifStatement_if_expr(struct parser_Parser* ifStatement_self, struct _global_Context* f){;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 struct ast_AST* ifStatement_toplevel;ifStatement_toplevel = ast_make_AST_rparser_Parser(ifStatement_self,ast_If,f);;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 parser_Parser_push_current_node(ifStatement_self,ifStatement_toplevel,f);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 struct error_CompilerError* g =ifStatement_if_body(ifStatement_self,f);if(g != NULL){struct error_CompilerError* ifStatement__x = g;
 
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 return ifStatement__x;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 else if(1){
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 struct error_CompilerError* h =parser_Parser_pop_current_node(ifStatement_self,f);if(h != NULL){struct error_CompilerError* ifStatement__x = h;
 
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 return ifStatement__x;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 else if(1){
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;return NULL;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* ifStatement_else_expr(struct parser_Parser* ifStatement_self, struct _global_Context* f){;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 parser_Parser_expect_next_token(ifStatement_self,_global_StringInit(1,":"),_global_StringInit(11,"Expecting :"),f);
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 _Bool ifStatement_is_if_condition;ifStatement_is_if_condition = 0;;
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 if((((ifStatement_self)->current_node)->nodes).length>0){;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 struct ast_AST* ifStatement_node;ifStatement_node = *(_global_Array_op_get_rast_AST(&(((ifStatement_self)->current_node)->nodes),(unsigned int)(((ifStatement_self)->current_node)->nodes).length-1,f));;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 if(((ifStatement_node)->payload).tag==(ast_If).tag){;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 _global_assert(((ifStatement_node)->nodes).length>=2,_global_StringInit(17,"If block is empty"),f);
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 struct ast_AST* ifStatement_if_condition;ifStatement_if_condition = *(_global_Array_op_get_rast_AST(&((ifStatement_node)->nodes),(unsigned int)((ifStatement_node)->nodes).length-2,f));;
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ifStatement_is_if_condition = ((ifStatement_if_condition)->payload).tag==(ast_Condition).tag;;
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;};
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;};
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 if(!(ifStatement_is_if_condition)){;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 return error_make_Error_rparser_Parser(ifStatement_self,_global_StringInit(15,"Unexpected else"),f);
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;};
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 (ifStatement_self)->current_node = *(_global_Array_op_get_rast_AST(&(((ifStatement_self)->current_node)->nodes),(unsigned int)(((ifStatement_self)->current_node)->nodes).length-1,f));;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ast_AST_add((ifStatement_self)->current_node,ast_make_AST_rparser_Parser(ifStatement_self,ast_Else,f),f);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 struct ast_AST* ifStatement_block;ifStatement_block = ast_make_AST_rparser_Parser(ifStatement_self,ast_Block,f);;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 parser_Parser_push_current_node(ifStatement_self,ifStatement_block,f);
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;while(!(parser_Parser_is_end(ifStatement_self,f))){parser_Parser_next(ifStatement_self,f);struct error_CompilerError* g =parser_Parser_eval(ifStatement_self,f);if(g != NULL){struct error_CompilerError* ifStatement__x = g;
 
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 return ifStatement__x;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 else if(1){
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;};
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 struct error_CompilerError* h =parser_Parser_pop_current_node(ifStatement_self,f);if(h != NULL){struct error_CompilerError* ifStatement__x = h;
 
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 return ifStatement__x;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 else if(1){
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;}
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 (ifStatement_self)->current_node = _global_Maybe_unwrap_rast_ASTByValue(((ifStatement_self)->current_node)->owner,f);;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;return NULL;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct ast_AST* _global_Maybe_unwrap_rast_ASTByValue(struct ast_AST* _global_self, struct _global_Context* f){;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 struct ast_AST* _global_x;;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 struct ast_AST* g =_global_self;if(g != NULL){_global_x = g;
 
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 else if(1){
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 _global_panic(_global_StringInit(38,"Trying to unwrap maybe, which was None"),f);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;return _global_x;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
 static inline struct ast_AST* _global_Maybe_unwrap_rast_AST(struct ast_AST** h,struct _global_Context* f){
 return _global_Maybe_unwrap_rast_ASTByValue(*h,f);
@@ -9568,99 +8061,55 @@ void ifStatementInitTypes() {
  }
 void ifStatementInit() { 
 ;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/ifStatement.top"
 ;
 };
 struct error_CompilerError* whileStatement_while_expr(struct parser_Parser* whileStatement_self, struct _global_Context* c){;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 struct ast_AST* whileStatement_toplevel;whileStatement_toplevel = ast_make_AST_rparser_Parser(whileStatement_self,ast_While,c);;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 parser_Parser_push_current_node(whileStatement_self,whileStatement_toplevel,c);
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 struct ast_AST* whileStatement_cond;whileStatement_cond = ast_make_AST_rparser_Parser(whileStatement_self,ast_Condition,c);;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 parser_Parser_push_current_node(whileStatement_self,whileStatement_cond,c);
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 _Bool whileStatement_in_condition;whileStatement_in_condition = 1;;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;while(!(parser_Parser_is_end(whileStatement_self,c))){struct lexer_Token whileStatement_tok;whileStatement_tok = parser_Parser_next(whileStatement_self,c);;struct _global_String d =(whileStatement_tok).value;if(_global_String_op_eqByValue(d,_global_StringInit(1,":"),NULL)){
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 whileStatement_in_condition = 0;;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 struct error_CompilerError* f =parser_Parser_pop_current_node(whileStatement_self,c);if(f != NULL){struct error_CompilerError* whileStatement__x = f;
 
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 return whileStatement__x;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;}
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 else if(1){
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;}
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 struct ast_AST* whileStatement_block;whileStatement_block = ast_make_AST_rparser_Parser(whileStatement_self,ast_Block,c);;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 parser_Parser_push_current_node(whileStatement_self,whileStatement_block,c);
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;}
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 else if(1){
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 struct error_CompilerError* g =parser_Parser_eval(whileStatement_self,c);if(g != NULL){struct error_CompilerError* whileStatement__x = g;
 
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 return whileStatement__x;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;}
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 else if(1){
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;}
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;}
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;};
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 struct error_CompilerError* h =parser_Parser_pop_current_node(whileStatement_self,c);if(h != NULL){struct error_CompilerError* whileStatement__x = h;
 
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 return whileStatement__x;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;}
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 else if(1){
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;}
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 struct error_CompilerError* j =parser_Parser_pop_current_node(whileStatement_self,c);if(j != NULL){struct error_CompilerError* whileStatement__x = j;
 
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 return whileStatement__x;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;}
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 else if(1){
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;}
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;return (whileStatement_in_condition ? error_make_Error_rparser_Parser(whileStatement_self,_global_StringInit(12,"Expecting do"),c):(NULL));
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/whileStatement.top"
 ;}
 
 void whileStatementInitTypes() { 
@@ -9674,264 +8123,146 @@ void _global_Array_reserve_types_CompilerType(struct _global_Array_types_Compile
 struct ast_FuncInfo* _global_box_ast_FuncInfo(struct ast_FuncInfo _global_value, struct _global_Context* c);
 void _global_Array_append_types_CompilerType(struct _global_Array_types_CompilerType* _global_self, struct types_CompilerType _global_value, struct _global_Context* c);
 struct error_CompilerError* funcParser_parse_funcDef(struct parser_Parser* funcParser_self, struct _global_Context* c){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct error_CompilerError* d =parser_Parser_expect_next_tag(funcParser_self,lexer_Identifier,_global_StringInit(20,"Expecting identifier"),c);if(d != NULL){struct error_CompilerError* funcParser__x = d;
 
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 return funcParser__x;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 else if(1){
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct _global_String funcParser_name;funcParser_name = (parser_Parser_current(funcParser_self,c)).value;;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct types_FuncPtr* funcParser_func_type;funcParser_func_type = types_make_FuncPtr(c);;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct ast_FuncInfo* funcParser_func_info;funcParser_func_info = _global_box_ast_FuncInfo(ast_FuncInfoInit(funcParser_name,funcParser_func_type),c);;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct ast_AST* funcParser_func_def;funcParser_func_def = ast_make_AST_rparser_Parser(funcParser_self,ast_FuncDef(funcParser_func_info,c),c);;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 parser_Parser_push_current_node(funcParser_self,funcParser_func_def,c);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct ast_AST* funcParser_args;funcParser_args = ast_make_AST_rparser_Parser(funcParser_self,ast_Tuple,c);;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 parser_Parser_push_current_node(funcParser_self,funcParser_args,c);
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct _global_Array_types_CompilerType funcParser_func_args;funcParser_func_args = _global_Array_types_CompilerTypeInit(0, 0, NULL, NULL);;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct error_CompilerError* f =parser_Parser_expect_next_token(funcParser_self,_global_StringInit(1,"("),_global_StringInit(11,"Expecting ("),c);if(f != NULL){struct error_CompilerError* funcParser__x = f;
 
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 return funcParser__x;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 else if(1){
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;while(_global_String_op_neByValue((parser_Parser_next(funcParser_self,c)).value,_global_StringInit(1,")"),c)){struct error_CompilerError* g =parser_Parser_expect_tag(funcParser_self,lexer_Identifier,_global_StringInit(20,"Expecting identifier"),c);if(g != NULL){struct error_CompilerError* funcParser__x = g;
 
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 return funcParser__x;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 else if(1){
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;struct _global_String funcParser_arg_name;funcParser_arg_name = (parser_Parser_current(funcParser_self,c)).value;;parser_Parser_next(funcParser_self,c);struct types_CompilerType funcParser_arg_type;struct error_CompilerError* funcParser_e;;struct _global_Result_rerror_CompilerError_types_CompilerType h =types_parse_type(funcParser_self,c);if(h.tag==0){funcParser_arg_type = h.cases.Ok.field0;
 
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 else if(h.tag==1){funcParser_e = h.cases.Error.field0;
 
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 return funcParser_e;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;_global_Array_append_types_CompilerType(&(funcParser_func_args),funcParser_arg_type,c);ast_AST_add((funcParser_self)->current_node,ast_make_AST_rparser_Parser(funcParser_self,ast_FuncArg(funcParser_arg_name,funcParser_arg_type,c),c),c);if(_global_String_op_eqByValue((parser_Parser_peek(funcParser_self,c)).value,_global_StringInit(1,","),c)){;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 parser_Parser_next(funcParser_self,c);
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;};};
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct error_CompilerError* j =parser_Parser_pop_current_node(funcParser_self,c);if(j != NULL){struct error_CompilerError* funcParser__x = j;
 
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 return funcParser__x;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 else if(1){
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct types_CompilerType funcParser_ret;funcParser_ret = types_Void;;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 if(_global_String_op_neByValue((parser_Parser_next(funcParser_self,c)).value,_global_StringInit(1,":"),c)){;
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct _global_Result_rerror_CompilerError_types_CompilerType k =types_parse_type(funcParser_self,c);if(k.tag==0){struct types_CompilerType funcParser_x = k.cases.Ok.field0;
 
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 funcParser_ret = funcParser_x;;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 else if(k.tag==1){struct error_CompilerError* funcParser_e = k.cases.Error.field0;
 
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 return funcParser_e;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;};
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct error_CompilerError* l =parser_Parser_expect_next_token(funcParser_self,_global_StringInit(1,":"),_global_StringInit(44,"Expecting : to terminate function definition"),c);if(l != NULL){struct error_CompilerError* funcParser__x = l;
 
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 return funcParser__x;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 else if(1){
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 (funcParser_func_type)->return_type = funcParser_ret;;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 (funcParser_func_type)->args = _global_StaticArray_StaticArray_S_types_CompilerTypeInit(funcParser_func_args.data, funcParser_func_args.length);;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct ast_AST* funcParser_block;funcParser_block = ast_make_AST_rparser_Parser(funcParser_self,ast_Block,c);;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 parser_Parser_push_current_node(funcParser_self,funcParser_block,c);
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;while(!(parser_Parser_is_end(funcParser_self,c))){parser_Parser_next(funcParser_self,c);struct error_CompilerError* m =parser_Parser_eval(funcParser_self,c);if(m != NULL){struct error_CompilerError* funcParser__x = m;
 
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 return funcParser__x;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 else if(1){
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;};
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct error_CompilerError* n =parser_Parser_pop_current_node(funcParser_self,c);if(n != NULL){struct error_CompilerError* funcParser__x = n;
 
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 return funcParser__x;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 else if(1){
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 struct error_CompilerError* p =parser_Parser_pop_current_node(funcParser_self,c);if(p != NULL){struct error_CompilerError* funcParser__x = p;
 
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 return funcParser__x;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 else if(1){
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;}
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/funcParser.top"
 ;return NULL;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 void _global_memcpy_types_CompilerType(struct types_CompilerType* _global_target, struct types_CompilerType* _global_destination, unsigned int _global_length, struct _global_Context* c){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct types_CompilerType),c);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct types_CompilerType* tmpfuncParserR(struct _global_Array_types_CompilerType** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* c) {
+static inline struct types_CompilerType* tmpfuncParserw(struct _global_Array_types_CompilerType** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* c) {
 struct types_CompilerType* d =(*_global_self)->data;
 if(d != NULL){struct types_CompilerType* _global_data = d;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),c);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct types_CompilerType* _global_newData;_global_newData = (struct types_CompilerType*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct types_CompilerType),c));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_types_CompilerType(_global_newData,_global_data,(*_global_self)->length,c);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,c);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(d == NULL){return (struct types_CompilerType*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct types_CompilerType),c));}
 }
 void _global_Array_reserve_types_CompilerType(struct _global_Array_types_CompilerType* _global_self, unsigned int _global_newSize, struct _global_Context* c){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(c)->allocator,c);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpfuncParserR(&_global_self,&_global_newSize,&_global_allocator, c);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpfuncParserw(&_global_self,&_global_newSize,&_global_allocator, c);;
 ;}
 struct ast_FuncInfo* _global_box_ast_FuncInfo(struct ast_FuncInfo _global_value, struct _global_Context* c){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct ast_FuncInfo* _global_pointer;_global_pointer = (struct ast_FuncInfo*)(_global_Allocator_alloc((c)->allocator,(uint64_t)sizeof(struct ast_FuncInfo),c));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_Array_append_types_CompilerType(struct _global_Array_types_CompilerType* _global_self, struct types_CompilerType _global_value, struct _global_Context* c){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_types_CompilerType(_global_self,1,c);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_types_CompilerType(_global_self,(_global_self)->capacity*2,c);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct types_CompilerType*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 
 void funcParserInitTypes() { 
@@ -9941,15 +8272,10 @@ void funcParserInit() {
 ;
 };
 struct error_CompilerError* stringParser_parse_string(struct parser_Parser* stringParser_self, struct _global_Context* c){;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/stringParser.top"
 struct ast_AST* stringParser_s_ast;stringParser_s_ast = ast_make_AST_rparser_Parser(stringParser_self,ast_String((parser_Parser_current(stringParser_self,c)).value,c),c);;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/stringParser.top"
 (stringParser_s_ast)->_type = types_String;;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/stringParser.top"
 ast_AST_add((stringParser_self)->current_node,stringParser_s_ast,c);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/stringParser.top"
 ;return NULL;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 
 void stringParserInitTypes() { 
@@ -9975,409 +8301,238 @@ struct _global_StaticArray_StaticArray_S_string hashMap_HashMap_keys_types_Compi
 struct types_CompilerType* hashMap_HashMap_op_get_types_CompilerType(struct hashMap_HashMap_types_CompilerType* hashMap_self, struct _global_String hashMap_key, struct _global_Context* c);
 struct _global_String* _global_StaticArray_op_get_StaticArray_S_string(struct _global_StaticArray_StaticArray_S_string* _global_self, unsigned int _global_index, struct _global_Context* c);
 struct error_CompilerError* structParser_parse_struct(struct parser_Parser* structParser_self, struct _global_Context* c){;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 parser_Parser_expect_next_tag(structParser_self,lexer_Identifier,_global_StringInit(28,"Name has to be an identifier"),c);
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 struct _global_String structParser_name;structParser_name = (parser_Parser_current(structParser_self,c)).value;;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 parser_Parser_expect_next_token(structParser_self,_global_StringInit(1,":"),_global_StringInit(11,"Expecting :"),c);
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 struct hashMap_HashMap_types_CompilerType structParser_hash_map;structParser_hash_map = hashMap_make_HashMap_types_CompilerType(c);;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;while(!(parser_Parser_is_end(structParser_self,c))){struct lexer_TokenType d =(parser_Parser_next(structParser_self,c)).kind;if(d.tag==5){
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 if(_global_String_op_eqByValue((parser_Parser_current(structParser_self,c)).value,_global_StringInit(1,"\n"),c)){;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 struct error_CompilerError* f =parser_Parser_eval(structParser_self,c);if(f != NULL){struct error_CompilerError* structParser__x = f;
 
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 return structParser__x;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;}
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 else if(1){
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;}
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;}
 else{return error_make_Error_rparser_Parser(structParser_self,_global_StringInit(16,"Unexpected token"),c);
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;};
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;}
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 else if(d.tag==6){
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 struct error_CompilerError* g =parser_Parser_eval(structParser_self,c);if(g != NULL){struct error_CompilerError* structParser__x = g;
 
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 return structParser__x;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;}
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 else if(1){
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;}
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;}
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 else if(d.tag==2){
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 struct _global_String structParser_field_name;structParser_field_name = (parser_Parser_current(structParser_self,c)).value;;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 parser_Parser_next(structParser_self,c);
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 struct types_CompilerType structParser_typ;struct error_CompilerError* structParser_e;;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 struct _global_Result_rerror_CompilerError_types_CompilerType h =types_parse_type(structParser_self,c);if(h.tag==0){structParser_typ = h.cases.Ok.field0;
 
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;}
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 else if(h.tag==1){structParser_e = h.cases.Error.field0;
 
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 return structParser_e;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;}
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 if(hashMap_HashMap_contains_types_CompilerType(&(structParser_hash_map),structParser_field_name,c)){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 return error_make_Error_rparser_Parser(structParser_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(structParser_field_name),c),_global_StringInit(24," already field in struct"),c),c);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;};
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 hashMap_HashMap_insert_types_CompilerType(&(structParser_hash_map),structParser_field_name,structParser_typ,c);
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;}
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 else if(1){
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 return error_make_Error_rparser_Parser(structParser_self,_global_StringInit(16,"Unexpected token"),c);
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;}
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;};
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 struct _global_StaticArray_StaticArray_S_string j =hashMap_HashMap_keys_types_CompilerType(&(structParser_hash_map),c);
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 for (unsigned int k = 0;k < j.length; k++) {
 struct _global_String structParser_key;structParser_key = *_global_StaticArray_op_get_StaticArray_S_string(&j, k, c);
 ;unsigned int structParser_i;structParser_i = k;
 _global_log_string(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(structParser_key),c),_global_StringInit(3," : "),c),types_CompilerType_toStringByValue((*(hashMap_HashMap_op_get_types_CompilerType(&(structParser_hash_map),(struct _global_String)structParser_key,c))),c),c),_global_StringInit(0,""),c),c);
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 }
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/structParser.top"
 ;return NULL;
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 void _global_memcpy_hashMap_HashBucket_types_CompilerType_(struct hashMap_HashBucket_types_CompilerType* _global_target, struct hashMap_HashBucket_types_CompilerType* _global_destination, unsigned int _global_length, struct _global_Context* c){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct hashMap_HashBucket_types_CompilerType),c);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct hashMap_HashBucket_types_CompilerType* tmpstructParserS(struct _global_Array_hashMap_HashBucket_types_CompilerType_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* c) {
+static inline struct hashMap_HashBucket_types_CompilerType* tmpstructParserx(struct _global_Array_hashMap_HashBucket_types_CompilerType_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* c) {
 struct hashMap_HashBucket_types_CompilerType* d =(*_global_self)->data;
 if(d != NULL){struct hashMap_HashBucket_types_CompilerType* _global_data = d;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),c);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct hashMap_HashBucket_types_CompilerType* _global_newData;_global_newData = (struct hashMap_HashBucket_types_CompilerType*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct hashMap_HashBucket_types_CompilerType),c));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_hashMap_HashBucket_types_CompilerType_(_global_newData,_global_data,(*_global_self)->length,c);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,c);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(d == NULL){return (struct hashMap_HashBucket_types_CompilerType*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct hashMap_HashBucket_types_CompilerType),c));}
 }
 void _global_Array_reserve_hashMap_HashBucket_types_CompilerType_(struct _global_Array_hashMap_HashBucket_types_CompilerType_* _global_self, unsigned int _global_newSize, struct _global_Context* c){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(c)->allocator,c);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpstructParserS(&_global_self,&_global_newSize,&_global_allocator, c);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpstructParserx(&_global_self,&_global_newSize,&_global_allocator, c);;
 ;}
 void _global_Array_free_types_CompilerType(struct _global_Array_types_CompilerType* _global_self, struct _global_Context* c){;
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(c)->allocator,c);;
-#line 128 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct types_CompilerType* d =(_global_self)->data;if(d != NULL){struct types_CompilerType* _global_data = d;
 
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_free((void*)_global_data,c);
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 else if(d == NULL){
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 130 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct hashMap_HashBucket_types_CompilerType hashMap_make_HashBucket_types_CompilerType(struct _global_Allocator* hashMap_allocator, struct _global_Context* c){;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string hashMap_keys;hashMap_keys = _global_Array_stringInit(0, 0, NULL, NULL);;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_types_CompilerType hashMap_values;hashMap_values = _global_Array_types_CompilerTypeInit(0, 0, NULL, NULL);;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_keys).allocator = hashMap_allocator;;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_values).allocator = hashMap_allocator;;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return hashMap_HashBucket_types_CompilerTypeInit(hashMap_keys,hashMap_values);
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 void _global_Array_append_hashMap_HashBucket_types_CompilerType_(struct _global_Array_hashMap_HashBucket_types_CompilerType_* _global_self, struct hashMap_HashBucket_types_CompilerType _global_value, struct _global_Context* c){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_hashMap_HashBucket_types_CompilerType_(_global_self,1,c);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_hashMap_HashBucket_types_CompilerType_(_global_self,(_global_self)->capacity*2,c);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct hashMap_HashBucket_types_CompilerType*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void hashMap_HashBucket_free_types_CompilerType(struct hashMap_HashBucket_types_CompilerType* hashMap_self, struct _global_Context* c){;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_free_string(&((hashMap_self)->keys),c);
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_free_types_CompilerType(&((hashMap_self)->values),c);
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct hashMap_HashMap_types_CompilerType hashMap_make_HashMap_size_types_CompilerType(unsigned int hashMap_size, struct _global_Allocator* hashMap_allocator, struct _global_Context* c){;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_hashMap_HashBucket_types_CompilerType_ hashMap_buckets;hashMap_buckets = _global_Array_hashMap_HashBucket_types_CompilerType_Init(0, 0, NULL, NULL);;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_buckets).allocator = hashMap_allocator;;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Range d =_global_RangeInit(0,hashMap_size);
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int f = d.start; f < d.end; f++) {
 unsigned int hashMap_i;hashMap_i = f;
 ;_global_Array_append_hashMap_HashBucket_types_CompilerType_(&(hashMap_buckets),hashMap_make_HashBucket_types_CompilerType(hashMap_allocator,c),c);
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return hashMap_HashMap_types_CompilerTypeInit(_global_StaticArray_StaticArray_S_hashMap_HashBucket_types_CompilerType_Init(hashMap_buckets.data, hashMap_buckets.length),0);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct hashMap_HashBucket_types_CompilerType* _global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_types_CompilerType_(struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_types_CompilerType_* _global_self, unsigned int _global_index, struct _global_Context* c){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),c);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 struct types_CompilerType* _global_Array_op_get_types_CompilerType(struct _global_Array_types_CompilerType* _global_self, unsigned int _global_index, struct _global_Context* c){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),c);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct types_CompilerType*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void hashMap_HashMap_free_types_CompilerType(struct hashMap_HashMap_types_CompilerType* hashMap_self, struct _global_Context* c){;
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_types_CompilerType_ d =(hashMap_self)->buckets;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int f = 0;f < d.length; f++) {
 struct hashMap_HashBucket_types_CompilerType hashMap_bucket;hashMap_bucket = *_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_types_CompilerType_(&d, f, c);
 ;unsigned int hashMap_i;hashMap_i = f;
 hashMap_HashBucket_free_types_CompilerType(&(hashMap_bucket),c);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct hashMap_HashMap_types_CompilerType hashMap_make_HashMap_types_CompilerType(struct _global_Context* c){;return hashMap_make_HashMap_size_types_CompilerType(powf(2,3),(c)->allocator,c);
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 _Bool hashMap_HashMap_contains_types_CompilerType(struct hashMap_HashMap_types_CompilerType* hashMap_self, struct _global_String hashMap_key, struct _global_Context* c){;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,c);;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_types_CompilerType* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_types_CompilerType_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,c)));;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string d =(hashMap_bucket)->keys;
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int f = 0;f < d.length; f++) {
 struct _global_String hashMap_b_key;hashMap_b_key = *_global_Array_op_get_string(&d, f, c);
 ;unsigned int hashMap_i;hashMap_i = f;
 if(_global_String_op_eqByValue(hashMap_b_key,hashMap_key,c)){;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 return 1;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return 0;
-#line 81 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 void hashMap_HashMap_insert_types_CompilerType(struct hashMap_HashMap_types_CompilerType* hashMap_self, struct _global_String hashMap_key, struct types_CompilerType hashMap_value, struct _global_Context* c){;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 if((hashMap_self)->length>((hashMap_self)->buckets).length/3*4){;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_assert(((hashMap_self)->buckets).length>0,_global_StringInit(24,"Resizing empty hash map!"),c);
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Allocator* hashMap_hash_map_allocator;hashMap_hash_map_allocator = _global_Maybe_default_rAllocatorByValue(((*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_types_CompilerType_(&((hashMap_self)->buckets),(unsigned int)0,c))).keys).allocator,(c)->allocator,c);;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashMap_types_CompilerType hashMap_new_hash;hashMap_new_hash = hashMap_make_HashMap_size_types_CompilerType(((hashMap_self)->buckets).length*2,hashMap_hash_map_allocator,c);;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_types_CompilerType_ d =(hashMap_self)->buckets;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int f = 0;f < d.length; f++) {
 struct hashMap_HashBucket_types_CompilerType hashMap_per_bucket;hashMap_per_bucket = *_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_types_CompilerType_(&d, f, c);
 ;unsigned int hashMap_i;hashMap_i = f;
 struct _global_Range g =_global_RangeInit(0,((hashMap_per_bucket).keys).length);
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int h = g.start; h < g.end; h++) {
 unsigned int hashMap_c;hashMap_c = h;
 ;hashMap_HashMap_insert_types_CompilerType(&(hashMap_new_hash),*(_global_Array_op_get_string(&((hashMap_per_bucket).keys),(unsigned int)hashMap_c,c)),*(_global_Array_op_get_types_CompilerType(&((hashMap_per_bucket).values),(unsigned int)hashMap_c,c)),c);
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 hashMap_HashMap_free_types_CompilerType(hashMap_self,c);
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 *(hashMap_self) = hashMap_new_hash;;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,c);;
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_types_CompilerType* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_types_CompilerType_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,c)));;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_append_string(&((hashMap_bucket)->keys),hashMap_key,c);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_append_types_CompilerType(&((hashMap_bucket)->values),hashMap_value,c);
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_self)->length = (hashMap_self)->length+1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct _global_StaticArray_StaticArray_S_string hashMap_HashMap_keys_types_CompilerType(struct hashMap_HashMap_types_CompilerType* hashMap_self, struct _global_Context* c){;
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string hashMap_arr;hashMap_arr = _global_Array_stringInit(0, 0, NULL, NULL);;
-#line 88 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_types_CompilerType_ d =(hashMap_self)->buckets;
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int f = 0;f < d.length; f++) {
 struct hashMap_HashBucket_types_CompilerType hashMap_bucket;hashMap_bucket = *_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_types_CompilerType_(&d, f, c);
 ;unsigned int hashMap_i;hashMap_i = f;
 struct _global_Array_string g =(hashMap_bucket).keys;
-#line 90 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int h = 0;h < g.length; h++) {
 struct _global_String hashMap_key;hashMap_key = *_global_Array_op_get_string(&g, h, c);
 ;_global_Array_append_string(&(hashMap_arr),hashMap_key,c);
-#line 91 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 90 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return _global_StaticArray_StaticArray_S_stringInit(hashMap_arr.data, hashMap_arr.length);
-#line 92 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct types_CompilerType* hashMap_HashMap_op_get_types_CompilerType(struct hashMap_HashMap_types_CompilerType* hashMap_self, struct _global_String hashMap_key, struct _global_Context* c){;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,c);;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_types_CompilerType* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_types_CompilerType_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,c)));;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string d =(hashMap_bucket)->keys;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int f = 0;f < d.length; f++) {
 struct _global_String hashMap_b_key;hashMap_b_key = *_global_Array_op_get_string(&d, f, c);
 ;unsigned int hashMap_i;hashMap_i = f;
 if(_global_String_op_eqByValue(hashMap_b_key,hashMap_key,c)){;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 return &(*(_global_Array_op_get_types_CompilerType(&((hashMap_bucket)->values),(unsigned int)hashMap_i,c)));
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(3,"No "),(hashMap_key),c),_global_StringInit(12," in hash map"),c),c);
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return (struct types_CompilerType*)0;
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct _global_String* _global_StaticArray_op_get_StaticArray_S_string(struct _global_StaticArray_StaticArray_S_string* _global_self, unsigned int _global_index, struct _global_Context* c){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),c);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 
 void structParserInitTypes() { 
@@ -10427,458 +8582,263 @@ struct lexer_Token* _global_StaticArray_op_get_StaticArray_S_lexer_Token(struct 
 void _global_Array_append_uint(struct _global_Array_uint* _global_self, unsigned int _global_value, struct _global_Context* G);
 unsigned int _global_Array_pop_uint(struct _global_Array_uint* _global_self, struct _global_Context* G);
 struct _global_Result_rerror_CompilerError_rast_AST parser_parse(struct _global_StaticArray_StaticArray_S_lexer_Token parser_tokens, struct _global_String parser_filename, struct _global_Context* G){;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 struct parser_Parser parser_p;parser_p = parser_ParserInit(parser_tokens,parser_filename,(struct ast_AST*)0,0,operatorParser_make_OpStack(G),_global_Array_uintInit(0, 0, NULL, NULL),0,0,_global_Array_uintInit(0, 0, NULL, NULL),_global_Array_uintInit(0, 0, NULL, NULL));;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 (parser_p).current_node = ast_make_AST_rparser_Parser(&(parser_p),ast_Root,G);;
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return parser_Parser_parse(&(parser_p),G);
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 struct _global_String parser_Parser_get_filename(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return (parser_self)->filename;
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 unsigned int parser_Parser_get_line(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return (parser_Parser_current(parser_self,G)).line;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 unsigned int parser_Parser_get_column(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return (parser_Parser_current(parser_self,G)).column;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 unsigned int parser_Parser_get_active_index(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return *(_global_Array_op_get_uint(&((parser_self)->active_index),(unsigned int)((parser_self)->active_index).length-1,G));
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 void parser_Parser_set_active_index(struct parser_Parser* parser_self, unsigned int parser_val, struct _global_Context* G){;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 *(_global_Array_op_get_uint(&((parser_self)->active_index),(unsigned int)((parser_self)->active_index).length-1,G)) = parser_val;;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 struct lexer_Token parser_Parser_peek(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;if((parser_self)->iter+1<((parser_self)->tokens).length){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 return *(_global_StaticArray_op_get_StaticArray_S_lexer_Token(&((parser_self)->tokens),(unsigned int)(parser_self)->iter+1,G));}
 else{struct lexer_Token parser_be;parser_be = parser_Parser_behind(parser_self,G);;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 return lexer_TokenInit(lexer_Invalid,_global_StringInit(0,""),(parser_be).line,(parser_be).column);};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 struct lexer_Token parser_Parser_current(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return *(_global_StaticArray_op_get_StaticArray_S_lexer_Token(&((parser_self)->tokens),(unsigned int)(parser_self)->iter,G));
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct lexer_Token parser_Parser_behind(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return ((parser_self)->iter<1 ? lexer_TokenInit(lexer_Invalid,_global_StringInit(0,""),0,0):(*(_global_StaticArray_op_get_StaticArray_S_lexer_Token(&((parser_self)->tokens),(unsigned int)(parser_self)->iter-1,G))));
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 struct lexer_Token parser_Parser_next(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 struct lexer_Token parser_t;parser_t = parser_Parser_peek(parser_self,G);;
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 (parser_self)->iter = (parser_self)->iter+1;;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return parser_t;
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 struct error_CompilerError* parser_Parser_eval_till_end(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 unsigned int parser_indent;parser_indent = (parser_self)->num_indent;;
-#line 88 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 unsigned int parser_paren;parser_paren = (parser_self)->num_paren;;
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;while(!(parser_Parser_is_end(parser_self,G))){parser_Parser_next(parser_self,G);struct error_CompilerError* H =parser_Parser_eval(parser_self,G);if(H != NULL){struct error_CompilerError* parser__x = H;
 
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 return parser__x;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 else if(1){
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;};
-#line 91 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return NULL;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* parser_Parser_comma(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 struct error_CompilerError* H =operatorParser_OpStack_pop(&((parser_self)->op_stack),parser_self,G);if(H != NULL){struct error_CompilerError* parser__x = H;
 
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 return parser__x;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 else if(1){
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 operatorParser_OpStack_push(&((parser_self)->op_stack),parser_self,G);
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 *(_global_Array_op_get_uint(&((parser_self)->active_index),(unsigned int)((parser_self)->active_index).length-1,G)) = ast_AST_length((parser_self)->current_node,G);;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return NULL;
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
-static inline struct _global_Result_rerror_CompilerError_rast_AST tmpparserT(struct _global_Result_rerror_CompilerError_Result_T J) {
+static inline struct _global_Result_rerror_CompilerError_rast_AST tmpparsery(struct _global_Result_rerror_CompilerError_Result_T J) {
 struct _global_Result_rerror_CompilerError_rast_AST H;H.tag = J.tag;H.cases = *(union _global_Result_rerror_CompilerError_rast_AST_cases*) &(J.cases);return H;
 }
-static inline struct _global_Result_rerror_CompilerError_rast_AST tmpparserV(struct _global_Result_Result_E_rast_AST L) {
+static inline struct _global_Result_rerror_CompilerError_rast_AST tmpparserz(struct _global_Result_Result_E_rast_AST L) {
 struct _global_Result_rerror_CompilerError_rast_AST K;K.tag = L.tag;K.cases = *(union _global_Result_rerror_CompilerError_rast_AST_cases*) &(L.cases);return K;
 }
 struct _global_Result_rerror_CompilerError_rast_AST parser_Parser_pop_last(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 if((((parser_self)->current_node)->nodes).length==0){;
-#line 104 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-return tmpparserT(_global_Error_rerror_CompilerError_Result_T(error_make_Error_rparser_Parser(parser_self,_global_StringInit(10,"Unexpected"),G),G));
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
+return tmpparsery(_global_Error_rerror_CompilerError_Result_T(error_make_Error_rparser_Parser(parser_self,_global_StringInit(10,"Unexpected"),G),G));
 ;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;};
-#line 104 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-;return tmpparserV(_global_Ok_Result_E_rast_AST(_global_Array_pop_rast_AST(&(((parser_self)->current_node)->nodes),G),G));
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;return tmpparserz(_global_Ok_Result_E_rast_AST(_global_Array_pop_rast_AST(&(((parser_self)->current_node)->nodes),G),G));
 ;}
 struct error_CompilerError* parser_Parser_eval(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 109 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return parser_Parser_eval_not_func_call(parser_self,0,G);
-#line 110 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 
-static inline struct error_CompilerError* tmpparserX(struct parser_Parser* *parser_self,_Bool *parser_ignore_func_call,struct lexer_Token *parser_token,struct error_CompilerError* *parser_value, struct _global_Context* G) {
+static inline struct error_CompilerError* tmpparserF(struct parser_Parser* *parser_self,_Bool *parser_ignore_func_call,struct lexer_Token *parser_token,struct error_CompilerError* *parser_value, struct _global_Context* G) {
+if((*parser_self)->num_paren>0){;
+(*parser_self)->num_paren = (*parser_self)->num_paren-1;;
+return NULL;}
+else{return error_make_Error_rparser_Parser(*parser_self,_global_StringInit(12,"Unexpected )"),G);}
+}
+
+static inline struct error_CompilerError* tmpparserC(struct parser_Parser* *parser_self,_Bool *parser_ignore_func_call,struct lexer_Token *parser_token,struct error_CompilerError* *parser_value, struct _global_Context* G) {
 struct _global_String J =(*parser_token).value;
 if(_global_String_op_eqByValue(J,_global_StringInit(4,"true"),NULL)||_global_String_op_eqByValue(J,_global_StringInit(5,"false"),NULL)){return basicTypes_parse_bool_literal(*parser_self,(*parser_token).value,G);}else if(_global_String_op_eqByValue(J,_global_StringInit(2,"if"),NULL)){return ifStatement_if_expr(*parser_self,G);}else if(_global_String_op_eqByValue(J,_global_StringInit(4,"else"),NULL)){return ifStatement_else_expr(*parser_self,G);}else if(_global_String_op_eqByValue(J,_global_StringInit(5,"while"),NULL)){return whileStatement_while_expr(*parser_self,G);}else if(_global_String_op_eqByValue(J,_global_StringInit(3,"def"),NULL)){return funcParser_parse_funcDef(*parser_self,G);}else if(_global_String_op_eqByValue(J,_global_StringInit(4,"type"),NULL)){return structParser_parse_struct(*parser_self,G);}else if(1){return error_make_Error_rparser_Parser(*parser_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((*parser_token).value),G),_global_StringInit(19," token, not handled"),G),G);}
 }
 
-static inline struct error_CompilerError* tmpparserY(struct parser_Parser* *parser_self,_Bool *parser_ignore_func_call,struct lexer_Token *parser_token,struct error_CompilerError* *parser_value, struct _global_Context* G) {
+static inline struct error_CompilerError* tmpparserD(struct parser_Parser* *parser_self,_Bool *parser_ignore_func_call,struct lexer_Token *parser_token,struct error_CompilerError* *parser_value, struct _global_Context* G) {
 struct _global_String K =(*parser_token).value;
-if(_global_String_op_eqByValue(K,_global_StringInit(1,"("),NULL)){return (operatorParser_is_unary(*parser_self,G) ? tuple_parse_tuple(*parser_self,G):(funcCall_parse_funcCall(*parser_self,G)));}else if(_global_String_op_eqByValue(K,_global_StringInit(2,":="),NULL)){return varParser_parse_create_assign(*parser_self,G);}else if(_global_String_op_eqByValue(K,_global_StringInit(1,"="),NULL)){return varParser_parse_assign(*parser_self,G);}else if(_global_String_op_eqByValue(K,_global_StringInit(2,"+="),NULL)){return varParser_parse_add_assign(*parser_self,G);}else if(_global_String_op_eqByValue(K,_global_StringInit(2,"-="),NULL)){return varParser_parse_sub_assign(*parser_self,G);}else if(_global_String_op_eqByValue(K,_global_StringInit(1,","),NULL)){return error_make_Error_rparser_Parser(*parser_self,_global_StringInit(12,"Unexpected ,"),G);}else if(_global_String_op_eqByValue(K,_global_StringInit(1,"\n"),NULL)){return NULL;}else if(_global_String_op_eqByValue(K,_global_StringInit(1,")"),NULL)){(*parser_self)->num_paren = (*parser_self)->num_paren-1;;
-#line 156 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-return NULL;}else if(1){return error_make_Error_rparser_Parser(*parser_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((*parser_token).value),G),_global_StringInit(19," token, not handled"),G),G);}
+if(_global_String_op_eqByValue(K,_global_StringInit(1,"("),NULL)){return (operatorParser_is_unary(*parser_self,G) ? tuple_parse_tuple(*parser_self,G):(funcCall_parse_funcCall(*parser_self,G)));}else if(_global_String_op_eqByValue(K,_global_StringInit(2,":="),NULL)){return varParser_parse_create_assign(*parser_self,G);}else if(_global_String_op_eqByValue(K,_global_StringInit(1,"="),NULL)){return varParser_parse_assign(*parser_self,G);}else if(_global_String_op_eqByValue(K,_global_StringInit(2,"+="),NULL)){return varParser_parse_add_assign(*parser_self,G);}else if(_global_String_op_eqByValue(K,_global_StringInit(2,"-="),NULL)){return varParser_parse_sub_assign(*parser_self,G);}else if(_global_String_op_eqByValue(K,_global_StringInit(1,","),NULL)){return error_make_Error_rparser_Parser(*parser_self,_global_StringInit(12,"Unexpected ,"),G);}else if(_global_String_op_eqByValue(K,_global_StringInit(1,"\n"),NULL)){return NULL;}else if(_global_String_op_eqByValue(K,_global_StringInit(1,")"),NULL)){return tmpparserF(parser_self,parser_ignore_func_call,parser_token,parser_value, G);}else if(1){return error_make_Error_rparser_Parser(*parser_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),((*parser_token).value),G),_global_StringInit(19," token, not handled"),G),G);}
 }
 
-static inline struct error_CompilerError* tmpparserW(struct parser_Parser** parser_self,_Bool* parser_ignore_func_call,struct lexer_Token* parser_token,struct error_CompilerError** parser_value, struct _global_Context* G) {
+static inline struct error_CompilerError* tmpparserB(struct parser_Parser** parser_self,_Bool* parser_ignore_func_call,struct lexer_Token* parser_token,struct error_CompilerError** parser_value, struct _global_Context* G) {
 struct lexer_TokenType H =(*parser_token).kind;
 if(H.tag==3){return operatorParser_parse_operator(*parser_self,(*parser_token).value,G);}else if(H.tag==0){return basicTypes_parse_int_literal(*parser_self,(*parser_token).value,G);}else if(H.tag==1){return basicTypes_parse_float_literal(*parser_self,(*parser_token).value,G);}else if(H.tag==2){return varParser_parse_identifier(*parser_self,(*parser_token).value,G);}else if(H.tag==6){if(_global_String_op_eqByValue((parser_Parser_peek(*parser_self,G)).value,_global_StringInit(1,"\n"),G)){;
-#line 124 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 parser_Parser_next(*parser_self,G);
-#line 125 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 else{(*parser_self)->num_indent = ((*parser_token).value).length;;
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;};
-#line 124 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-return NULL;}else if(H.tag==7){return tmpparserX(parser_self,parser_ignore_func_call,parser_token,parser_value, G);}else if(H.tag==5){return tmpparserY(parser_self,parser_ignore_func_call,parser_token,parser_value, G);}else if(H.tag==8){return stringParser_parse_string(*parser_self,G);}else if(1){return error_make_Error_rparser_Parser(*parser_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),lexer_TokenType_toStringByValue(((*parser_token).kind),G),G),_global_StringInit(19," token, not handled"),G),G);}
+return NULL;}else if(H.tag==7){return tmpparserC(parser_self,parser_ignore_func_call,parser_token,parser_value, G);}else if(H.tag==5){return tmpparserD(parser_self,parser_ignore_func_call,parser_token,parser_value, G);}else if(H.tag==8){return stringParser_parse_string(*parser_self,G);}else if(1){return error_make_Error_rparser_Parser(*parser_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),lexer_TokenType_toStringByValue(((*parser_token).kind),G),G),_global_StringInit(19," token, not handled"),G),G);}
 }
 struct error_CompilerError* parser_Parser_eval_not_func_call(struct parser_Parser* parser_self, _Bool parser_ignore_func_call, struct _global_Context* G){;
-#line 112 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 112 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 struct lexer_Token parser_token;parser_token = parser_Parser_current(parser_self,G);;
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 _global_Array_append_uint(&((parser_self)->paren_stack),(parser_self)->num_paren,G);
-#line 115 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 _global_Array_append_uint(&((parser_self)->indent_stack),(parser_self)->num_indent,G);
-#line 116 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-struct error_CompilerError* parser_value;parser_value = tmpparserW(&parser_self,&parser_ignore_func_call,&parser_token,&parser_value, G);;
-#line 118 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
+struct error_CompilerError* parser_value;parser_value = tmpparserB(&parser_self,&parser_ignore_func_call,&parser_token,&parser_value, G);;
 _global_Array_pop_uint(&((parser_self)->paren_stack),G);
-#line 167 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 _global_Array_pop_uint(&((parser_self)->indent_stack),G);
-#line 168 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return parser_value;
-#line 170 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 void parser_Parser_push_current_node(struct parser_Parser* parser_self, struct ast_AST* parser_node, struct _global_Context* G){;
-#line 172 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 172 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ast_AST_add((parser_self)->current_node,parser_node,G);
-#line 173 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 (parser_self)->current_node = parser_node;;
-#line 174 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 operatorParser_OpStack_push(&((parser_self)->op_stack),parser_self,G);
-#line 176 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 _global_Array_append_uint(&((parser_self)->active_index),0,G);
-#line 177 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 struct error_CompilerError* parser_Parser_pop_current_node(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 179 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 struct ast_AST* parser_owner;;
-#line 180 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 struct ast_AST* H =((parser_self)->current_node)->owner;if(H != NULL){parser_owner = H;
 
-#line 180 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 180 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 else if(1){
-#line 180 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 _global_panic(_global_StringInit(52,"Tried to pop current node which didn't have an owner"),G);
-#line 181 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 181 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 180 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 struct error_CompilerError* J =operatorParser_OpStack_pop(&((parser_self)->op_stack),parser_self,G);if(J != NULL){struct error_CompilerError* parser__x = J;
 
-#line 183 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 return parser__x;
-#line 183 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 183 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 183 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 else if(1){
-#line 183 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 183 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 183 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 _global_Array_pop_uint(&((parser_self)->active_index),G);
-#line 184 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 (parser_self)->current_node = parser_owner;;
-#line 185 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return NULL;
-#line 187 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
-static inline struct _global_Result_rerror_CompilerError_rast_AST tmpparserZ(struct _global_Result_rerror_CompilerError_Result_T J) {
-struct _global_Result_rerror_CompilerError_rast_AST H;H.tag = J.tag;H.cases = *(union _global_Result_rerror_CompilerError_rast_AST_cases*) &(J.cases);return H;
-}
-static inline struct _global_Result_rerror_CompilerError_rast_AST tmpparserbb(struct _global_Result_Result_E_rast_AST L) {
-struct _global_Result_rerror_CompilerError_rast_AST K;K.tag = L.tag;K.cases = *(union _global_Result_rerror_CompilerError_rast_AST_cases*) &(L.cases);return K;
-}
 struct _global_Result_rerror_CompilerError_rast_AST parser_Parser_pop(struct parser_Parser* parser_self, struct _global_String parser_mesg, struct _global_Context* G){;
-#line 189 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 189 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 if((((parser_self)->current_node)->nodes).length==0){;
-#line 190 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-return tmpparserZ(_global_Error_rerror_CompilerError_Result_T(error_make_Error_rparser_Parser(parser_self,parser_mesg,G),G));
-#line 191 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
+return tmpparsery(_global_Error_rerror_CompilerError_Result_T(error_make_Error_rparser_Parser(parser_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(5,"pop: "),(parser_mesg),G),_global_StringInit(0,""),G),G),G));
 ;
-#line 191 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;};
-#line 190 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-;return tmpparserbb(_global_Ok_Result_E_rast_AST(_global_Array_pop_rast_AST(&(((parser_self)->current_node)->nodes),G),G));
-#line 193 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;return tmpparserz(_global_Ok_Result_E_rast_AST(_global_Array_pop_rast_AST(&(((parser_self)->current_node)->nodes),G),G));
 ;}
 unsigned int parser_Parser_push_paren(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 195 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 (parser_self)->num_paren = (parser_self)->num_paren+1;;
-#line 196 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return (parser_self)->num_paren-1;
-#line 197 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 struct error_CompilerError* parser_Parser_expect_tag(struct parser_Parser* parser_self, struct lexer_TokenType parser_typ, struct _global_String parser_mesg, struct _global_Context* G){;
-#line 199 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 199 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 199 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-;return (((parser_Parser_current(parser_self,G)).kind).tag!=(parser_typ).tag ? error_make_Error_rparser_Parser(parser_self,parser_mesg,G):(NULL));
-#line 200 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
+;return (((parser_Parser_current(parser_self,G)).kind).tag!=(parser_typ).tag ? error_make_Error_rparser_Parser(parser_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(12,"Expect tag: "),(parser_mesg),G),_global_StringInit(0,""),G),G):(NULL));
 ;}
 struct error_CompilerError* parser_Parser_expect_next_tag(struct parser_Parser* parser_self, struct lexer_TokenType parser_typ, struct _global_String parser_mesg, struct _global_Context* G){;
-#line 205 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 205 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 205 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 parser_Parser_next(parser_self,G);
-#line 206 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return parser_Parser_expect_tag(parser_self,parser_typ,parser_mesg,G);
-#line 207 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 struct error_CompilerError* parser_Parser_expect_token(struct parser_Parser* parser_self, struct _global_String parser_tok, struct _global_String parser_mesg, struct _global_Context* G){;
-#line 209 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 209 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 209 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-;return (_global_String_op_neByValue((parser_Parser_current(parser_self,G)).value,parser_tok,G) ? error_make_Error_rparser_Parser(parser_self,parser_mesg,G):(NULL));
-#line 210 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
+;return (_global_String_op_neByValue((parser_Parser_current(parser_self,G)).value,parser_tok,G) ? error_make_Error_rparser_Parser(parser_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(14,"Expect token: "),(parser_mesg),G),_global_StringInit(0,""),G),G):(NULL));
 ;}
 struct error_CompilerError* parser_Parser_expect_next_token(struct parser_Parser* parser_self, struct _global_String parser_tok, struct _global_String parser_mesg, struct _global_Context* G){;
-#line 215 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 215 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 215 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 parser_Parser_next(parser_self,G);
-#line 216 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;return parser_Parser_expect_token(parser_self,parser_tok,parser_mesg,G);
-#line 217 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
 _Bool parser_Parser_is_end(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 219 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 unsigned int parser_num_indent;parser_num_indent = *(_global_Array_op_get_uint(&((parser_self)->indent_stack),(unsigned int)((parser_self)->indent_stack).length-1,G));;
-#line 220 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 unsigned int parser_num_paren;parser_num_paren = *(_global_Array_op_get_uint(&((parser_self)->paren_stack),(unsigned int)((parser_self)->paren_stack).length-1,G));;
-#line 221 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 if(parser_num_paren>(parser_self)->num_paren){;
-#line 223 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 return 1;
-#line 223 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 223 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;};
-#line 223 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;struct lexer_TokenType H =(parser_Parser_current(parser_self,G)).kind;
 if(H.tag==6){return (parser_self)->num_indent<=parser_num_indent;}else if(1){return 0;};
-#line 224 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-static inline struct _global_Result_rerror_CompilerError_rast_AST tmpparserbc(struct _global_Result_rerror_CompilerError_Result_T K) {
-struct _global_Result_rerror_CompilerError_rast_AST J;J.tag = K.tag;J.cases = *(union _global_Result_rerror_CompilerError_rast_AST_cases*) &(K.cases);return J;
-}
-static inline struct _global_Result_rerror_CompilerError_rast_AST tmpparserbd(struct _global_Result_rerror_CompilerError_Result_T N) {
-struct _global_Result_rerror_CompilerError_rast_AST M;M.tag = N.tag;M.cases = *(union _global_Result_rerror_CompilerError_rast_AST_cases*) &(N.cases);return M;
-}
-static inline struct _global_Result_rerror_CompilerError_rast_AST tmpparserbf(struct _global_Result_Result_E_rast_AST Q) {
-struct _global_Result_rerror_CompilerError_rast_AST P;P.tag = Q.tag;P.cases = *(union _global_Result_rerror_CompilerError_rast_AST_cases*) &(Q.cases);return P;
-}
 struct _global_Result_rerror_CompilerError_rast_AST parser_Parser_parse(struct parser_Parser* parser_self, struct _global_Context* G){;
-#line 228 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 operatorParser_OpStack_push(&((parser_self)->op_stack),parser_self,G);
-#line 229 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;while((parser_self)->iter<((parser_self)->tokens).length){struct error_CompilerError* H =parser_Parser_eval(parser_self,G);if(H != NULL){struct error_CompilerError* parser__x = H;
 
-#line 232 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-return tmpparserbc(_global_Error_rerror_CompilerError_Result_T(parser__x,G));
-#line 232 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
+return tmpparsery(_global_Error_rerror_CompilerError_Result_T(parser__x,G));
 ;
-#line 232 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 232 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 else if(1){
-#line 232 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 232 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;parser_Parser_next(parser_self,G);};
-#line 231 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 (parser_self)->iter = ((parser_self)->tokens).length-1;;
-#line 235 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-struct error_CompilerError* L =operatorParser_OpStack_pop(&((parser_self)->op_stack),parser_self,G);if(L != NULL){struct error_CompilerError* parser__x = L;
+struct error_CompilerError* J =operatorParser_OpStack_pop(&((parser_self)->op_stack),parser_self,G);if(J != NULL){struct error_CompilerError* parser__x = J;
 
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-return tmpparserbd(_global_Error_rerror_CompilerError_Result_T(parser__x,G));
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
+return tmpparsery(_global_Error_rerror_CompilerError_Result_T(parser__x,G));
 ;
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 else if(1){
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;}
-#line 237 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 236 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
-;return tmpparserbf(_global_Ok_Result_E_rast_AST((parser_self)->current_node,G));
-#line 238 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;return tmpparserz(_global_Ok_Result_E_rast_AST((parser_self)->current_node,G));
 ;}
 void _global_memcpy_uint(unsigned int* _global_target, unsigned int* _global_destination, unsigned int _global_length, struct _global_Context* G){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(unsigned int),G);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline unsigned int* tmpparserbg(struct _global_Array_uint** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* G) {
+static inline unsigned int* tmpparserG(struct _global_Array_uint** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* G) {
 unsigned int* H =(*_global_self)->data;
 if(H != NULL){unsigned int* _global_data = H;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),G);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int* _global_newData;_global_newData = (unsigned int*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(unsigned int),G));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_uint(_global_newData,_global_data,(*_global_self)->length,G);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,G);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(H == NULL){return (unsigned int*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(unsigned int),G));}
 }
 void _global_Array_reserve_uint(struct _global_Array_uint* _global_self, unsigned int _global_newSize, struct _global_Context* G){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(G)->allocator,G);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpparserbg(&_global_self,&_global_newSize,&_global_allocator, G);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpparserG(&_global_self,&_global_newSize,&_global_allocator, G);;
 ;}
 struct lexer_Token* _global_StaticArray_op_get_StaticArray_S_lexer_Token(struct _global_StaticArray_StaticArray_S_lexer_Token* _global_self, unsigned int _global_index, struct _global_Context* G){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),G);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 void _global_Array_append_uint(struct _global_Array_uint* _global_self, unsigned int _global_value, struct _global_Context* G){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_uint(_global_self,1,G);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_uint(_global_self,(_global_self)->capacity*2,G);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((unsigned int*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 unsigned int _global_Array_pop_uint(struct _global_Array_uint* _global_self, struct _global_Context* G){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->length==0){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(25,"trying to pop empty array"),G);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_tmp;_global_tmp = *(_global_Array_op_get_uint(_global_self,(unsigned int)(_global_self)->length-1,G));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return _global_tmp;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 
 void parserInitTypes() { 
@@ -10945,132 +8905,74 @@ _global_Result_Result_E_rast_ASTType.cases.length = 2;
  }
 void parserInit() { 
 astInit();;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 operatorParserInit();;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 basicTypesInit();;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 varParserInit();;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 tupleInit();;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 funcCallInit();;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ifStatementInit();;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 whileStatementInit();;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 funcParserInit();;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 stringParserInit();;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 structParserInit();;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/parser/parser.top"
 ;
 };
 unsigned char* _global_StaticArray_op_get_1_u8(struct _global_StaticArray_1_u8* _global_self, unsigned int _global_index, struct _global_Context* c);
 _Bool _global_StaticArray_contains_1_u8(struct _global_StaticArray_1_u8* _global_self, unsigned char _global_elem, struct _global_Context* c);
 struct error_Thrower_VTABLE rast_AST_VTABLE_FOR_error_Thrower;struct error_CompilerError* operatorValidation_validate(struct validator_State* operatorValidation_state, struct ast_OperatorKind operatorValidation_kind, struct ast_AST* operatorValidation_node, struct _global_Context* c){;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 struct error_CompilerError* d =validator_State_validate_nodes(operatorValidation_state,_global_StaticArray_StaticArray_S_rast_ASTInit((operatorValidation_node)->nodes.data, (operatorValidation_node)->nodes.length),c);if(d != NULL){struct error_CompilerError* operatorValidation__x = d;
 
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 return operatorValidation__x;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;}
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 else if(1){
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;}
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 struct types_CompilerType operatorValidation_op_t;operatorValidation_op_t = (*(_global_Array_op_get_rast_AST(&((operatorValidation_node)->nodes),(unsigned int)0,c)))->_type;;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 struct _global_Range f =_global_RangeInit(1,((operatorValidation_node)->nodes).length);
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 for (unsigned int g = f.start; g < f.end; g++) {
 unsigned int operatorValidation_i;operatorValidation_i = g;
 ;struct types_CompilerType operatorValidation__type;operatorValidation__type = (*(_global_Array_op_get_rast_AST(&((operatorValidation_node)->nodes),(unsigned int)operatorValidation_i,c)))->_type;;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 struct error_CompilerError* h =types_CompilerType_duck_typeByValue(operatorValidation_op_t,operatorValidation__type,error_ThrowerFromStruct(operatorValidation_node,&rast_AST_VTABLE_FOR_error_Thrower,_global_TypeFromStruct(ast_AST_get_type(NULL,c),&rStructType_VTABLE_FOR_Type,rStructType_VTABLE_FOR_Type.type, &_global_StructType_toString, &_global_StructType_get_size), &ast_AST_get_filename, &ast_AST_get_line, &ast_AST_get_column),c);if(h != NULL){struct error_CompilerError* operatorValidation__x = h;
 
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 return operatorValidation__x;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;}
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 else if(1){
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;}
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 }
 ;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 struct _global_StaticArray_1_u8 operatorValidation_comparison;operatorValidation_comparison = _global_StaticArray_1_u8Init((ast_LT).tag);;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 (operatorValidation_node)->_type = (_global_StaticArray_contains_1_u8(&(operatorValidation_comparison),(operatorValidation_kind).tag,c) ? types_Bool:(operatorValidation_op_t));;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;return NULL;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 unsigned char* _global_StaticArray_op_get_1_u8(struct _global_StaticArray_1_u8* _global_self, unsigned int _global_index, struct _global_Context* c){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<1,_global_StringInit(13,"Out of bounds"),c);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 _Bool _global_StaticArray_contains_1_u8(struct _global_StaticArray_1_u8* _global_self, unsigned char _global_elem, struct _global_Context* c){;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 unsigned int _global_i;_global_i = 0;;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;while(_global_i<1){if(*(&(*(_global_StaticArray_op_get_1_u8(_global_self,(unsigned int)_global_i,c))))==*(&(_global_elem))){;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 return 1;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;};_global_i = _global_i+1;;};
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return 0;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 
 void operatorValidationInitTypes() { 
@@ -11143,102 +9045,57 @@ rPointerType_VTABLE_FOR_Type.type
 ; }
 void operatorValidationInit() { 
 ;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/operatorValidation.top"
 ;
 };
 struct error_CompilerError* varValidation_validate_read(struct validator_State* varValidation_state, struct ast_ReadInfo* varValidation_read_info, struct ast_AST* varValidation_node, struct _global_Context* d){;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct scope_DeclInfo* varValidation_desc_info;;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct scope_DeclInfo* f =scope_Scope_get_var((varValidation_state)->scope,(varValidation_read_info)->name,d);if(f != NULL){varValidation_desc_info = f;
 
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 else if(1){
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 return error_make_Error_rast_AST(varValidation_node,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(19,"No variable called "),((varValidation_read_info)->name),d),_global_StringInit(0,""),d),d);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 (varValidation_node)->_type = (varValidation_desc_info)->_type;;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 (varValidation_read_info)->is_global = (varValidation_desc_info)->is_global;;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;return NULL;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* varValidation_validate_create_assign(struct validator_State* varValidation_state, struct ast_AST* varValidation_node, struct _global_Context* d){;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct ast_AST* varValidation_create;struct ast_AST* varValidation_assign;struct prast_ASTcrast_ASTp f;f = prast_ASTcrast_ASTpInit(*(_global_Array_op_get_rast_AST(&((varValidation_node)->nodes),(unsigned int)0,d)),*(_global_Array_op_get_rast_AST(&((varValidation_node)->nodes),(unsigned int)1,d)));varValidation_create=f.field0;varValidation_assign=f.field1;;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct error_CompilerError* g =validator_State_validate_nodes(varValidation_state,_global_StaticArray_StaticArray_S_rast_ASTInit((varValidation_assign)->nodes.data, (varValidation_assign)->nodes.length),d);if(g != NULL){struct error_CompilerError* varValidation__x = g;
 
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 return varValidation__x;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 else if(1){
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct types_CompilerType varValidation_typ;varValidation_typ = (*(_global_Array_op_get_rast_AST(&((varValidation_assign)->nodes),(unsigned int)0,d)))->_type;;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct ast_AST* varValidation_v;varValidation_v = *(_global_Array_op_get_rast_AST(&((varValidation_create)->nodes),(unsigned int)0,d));;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 (varValidation_v)->_type = varValidation_typ;;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct ast_ReadInfo* varValidation_read_info;;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct ast_Payload h =(varValidation_v)->payload;if(h.tag==5){varValidation_read_info = h.cases.Identifier.field0;
 
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 else if(1){
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 _global_panic(_global_StringInit(37,"Expecting identifier in create assign"),d);
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct scope_DeclInfo varValidation_decl_info;varValidation_decl_info = scope_make_DeclInfo(varValidation_typ,d);;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 struct error_CompilerError* j =scope_Scope_create_decl((varValidation_state)->scope,(varValidation_read_info)->name,&(varValidation_decl_info),varValidation_create,d);if(j != NULL){struct error_CompilerError* varValidation__x = j;
 
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 return varValidation__x;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 else if(1){
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;}
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 (varValidation_read_info)->is_global = (varValidation_decl_info).is_global;;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/varValidation.top"
 ;return NULL;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 
 void varValidationInitTypes() { 
@@ -11253,230 +9110,128 @@ static inline struct types_CompilerType _global_Maybe_default_types_CompilerType
 
 struct types_CompilerType _global_Maybe_default_types_CompilerTypeByValue(struct _global_Maybe_types_CompilerType,struct types_CompilerType,struct _global_Context* f);
 struct error_CompilerError* funcValidator_add_func_to_scope(struct validator_State* funcValidator_state, struct ast_AST* funcValidator_node, struct ast_FuncInfo* funcValidator_func_info, struct _global_Context* f){;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct types_FuncPtr* funcValidator_func_type;funcValidator_func_type = (funcValidator_func_info)->_type;;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct scope_DeclInfo funcValidator_decl_info;funcValidator_decl_info = scope_DeclInfoInit(types_Func(funcValidator_func_type,f),1);;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct error_CompilerError* g =scope_Scope_create_decl((funcValidator_state)->scope,(funcValidator_func_info)->name,&(funcValidator_decl_info),funcValidator_node,f);if(g != NULL){struct error_CompilerError* funcValidator__x = g;
 
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 return funcValidator__x;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 else if(1){
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;return NULL;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* funcValidator_validate(struct validator_State* funcValidator_state, struct ast_AST* funcValidator_node, struct ast_FuncInfo* funcValidator_func_info, struct _global_Context* f){;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 scope_Scope_push((funcValidator_state)->scope,f);
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct scope_Scope* g = (funcValidator_state)->scope;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct types_FuncPtr* funcValidator_func_type;funcValidator_func_type = (funcValidator_func_info)->_type;;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct ast_AST* funcValidator_args;funcValidator_args = *(ast_AST_op_get(funcValidator_node,(unsigned int)0,f));;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct _global_Array_rast_AST h =(funcValidator_args)->nodes;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 for (unsigned int j = 0;j < h.length; j++) {
 struct ast_AST* funcValidator_arg;funcValidator_arg = *_global_Array_op_get_rast_AST(&h, j, f);
 ;unsigned int funcValidator_i;funcValidator_i = j;
 struct _global_String funcValidator_name;struct types_CompilerType funcValidator__type;;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct ast_Payload k =(funcValidator_arg)->payload;if(k.tag==17){funcValidator_name = k.cases.FuncArg.field0;
 funcValidator__type = k.cases.FuncArg.field1;
 
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 else if(1){
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 _global_panic(_global_StringInit(41,"Expecting args in func not something else"),f);
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct scope_DeclInfo funcValidator_var_decl_info;funcValidator_var_decl_info = scope_DeclInfoInit(funcValidator__type,1);;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct error_CompilerError* l =scope_Scope_create_decl((funcValidator_state)->scope,funcValidator_name,&(funcValidator_var_decl_info),funcValidator_arg,f);if(l != NULL){struct error_CompilerError* funcValidator__x = l;
 
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 scope_Scope_pop(g,f);
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 return funcValidator__x;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 else if(1){
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 }
 ;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct error_CompilerError* m =validator_State_validate(funcValidator_state,*(ast_AST_op_get(funcValidator_node,(unsigned int)1,f)),f);if(m != NULL){struct error_CompilerError* funcValidator__x = m;
 
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 scope_Scope_pop(g,f);
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 return funcValidator__x;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 else if(1){
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct ast_AST* funcValidator_block;funcValidator_block = *(ast_AST_op_get(funcValidator_node,(unsigned int)1,f));;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct types_CompilerType funcValidator_should_be;funcValidator_should_be = (funcValidator_func_type)->return_type;;
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct types_CompilerType funcValidator_real_ret;funcValidator_real_ret = _global_Maybe_default_types_CompilerTypeByValue((ifValidation_block_returns_value(funcValidator_block,f)),types_Void,f);;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct error_CompilerError* n =types_CompilerType_duck_typeByValue(funcValidator_should_be,funcValidator_real_ret,error_ThrowerFromStruct(funcValidator_block,&rast_AST_VTABLE_FOR_error_Thrower,rast_AST_VTABLE_FOR_error_Thrower.type, &ast_AST_get_filename, &ast_AST_get_line, &ast_AST_get_column),f);if(n != NULL){struct error_CompilerError* funcValidator_e = n;
 
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 scope_Scope_pop(g,f);
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 return error_CompilerError_before(funcValidator_e,_global_StringInit(22,"Function return type: "),f);
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 else if(1){
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;struct error_CompilerError* p =NULL;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 scope_Scope_pop(g,f);
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 return p;
  }struct error_CompilerError* funcValidator_validate_call(struct validator_State* funcValidator_state, struct ast_AST* funcValidator_node, struct _global_Context* f){;
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct error_CompilerError* g =validator_State_validate_nodes(funcValidator_state,_global_StaticArray_StaticArray_S_rast_ASTInit((funcValidator_node)->nodes.data, (funcValidator_node)->nodes.length),f);if(g != NULL){struct error_CompilerError* funcValidator__x = g;
 
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 return funcValidator__x;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 else if(1){
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct ast_AST* funcValidator_func;funcValidator_func = *(ast_AST_op_get(funcValidator_node,(unsigned int)0,f));;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct types_FuncPtr* funcValidator_func_type;;
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct types_CompilerType h =types_CompilerType_to_real_typeByValue((funcValidator_func)->_type,f);if(h.tag==6){funcValidator_func_type = h.cases.Func.field0;
 
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 else if(1){
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 return error_make_Error_rast_AST(funcValidator_func,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(12,"Cannot call "),types_CompilerType_toStringByValue(((funcValidator_func)->_type),f),f),_global_StringInit(0,""),f),f);
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 unsigned int funcValidator_num_args;funcValidator_num_args = ast_AST_length(funcValidator_node,f)-1;;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 if(((funcValidator_func_type)->args).length<funcValidator_num_args){;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 return error_make_Error_rast_AST(funcValidator_node,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(15,"Function takes "),_global_uint_toStringByValue((funcValidator_num_args-((funcValidator_func_type)->args).length),f),f),_global_StringInit(15," less arguments"),f),f);
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}else if(((funcValidator_func_type)->args).length>funcValidator_num_args){;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 return error_make_Error_rast_AST(funcValidator_node,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(17,"Function expects "),_global_uint_toStringByValue((((funcValidator_func_type)->args).length-funcValidator_num_args),f),f),_global_StringInit(15," more arguments"),f),f);
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;};
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct _global_Range j =_global_RangeInit(1,ast_AST_length(funcValidator_node,f));
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 for (unsigned int k = j.start; k < j.end; k++) {
 unsigned int funcValidator_i;funcValidator_i = k;
 ;struct types_CompilerType funcValidator_should_be;funcValidator_should_be = *(_global_StaticArray_op_get_StaticArray_S_types_CompilerType(&((funcValidator_func_type)->args),(unsigned int)funcValidator_i-1,f));;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct types_CompilerType funcValidator_actually;funcValidator_actually = (*(ast_AST_op_get(funcValidator_node,(unsigned int)funcValidator_i,f)))->_type;;
-#line 70 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 struct error_CompilerError* l =types_CompilerType_duck_typeByValue(funcValidator_should_be,funcValidator_actually,error_ThrowerFromStruct(*(ast_AST_op_get(funcValidator_node,(unsigned int)funcValidator_i,f)),&rast_AST_VTABLE_FOR_error_Thrower,rast_AST_VTABLE_FOR_error_Thrower.type, &ast_AST_get_filename, &ast_AST_get_line, &ast_AST_get_column),f);if(l != NULL){struct error_CompilerError* funcValidator__x = l;
 
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 return funcValidator__x;
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 else if(1){
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;}
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 }
 ;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 (funcValidator_node)->_type = (funcValidator_func_type)->return_type;;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;return NULL;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct types_CompilerType _global_Maybe_default_types_CompilerTypeByValue(struct _global_Maybe_types_CompilerType _global_self, struct types_CompilerType _global_value, struct _global_Context* f){;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;struct _global_Maybe_types_CompilerType g =_global_self;
 if(g.tag==0){struct types_CompilerType _global_x = g.cases.Some.field0;
 return _global_x;}else if(g.tag==1){return _global_value;};
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
 static inline struct types_CompilerType _global_Maybe_default_types_CompilerType(struct _global_Maybe_types_CompilerType* h,struct types_CompilerType j,struct _global_Context* f){
 return _global_Maybe_default_types_CompilerTypeByValue(*h,j,f);
@@ -11524,19 +9279,13 @@ _global_Maybe_types_CompilerTypeType.cases.length = 2;
  }
 void funcValidatorInit() { 
 ;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/funcValidator.top"
 ;
 };
 struct error_CompilerError* tupleValidator_validate_tuple(struct validator_State* tupleValidator_state, struct ast_AST* tupleValidator_node, struct _global_Context* c){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/tupleValidator.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/tupleValidator.top"
 validator_State_validate_nodes(tupleValidator_state,_global_StaticArray_StaticArray_S_rast_ASTInit((tupleValidator_node)->nodes.data, (tupleValidator_node)->nodes.length),c);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/tupleValidator.top"
 (tupleValidator_node)->_type = (*(_global_Array_op_get_rast_AST(&((tupleValidator_node)->nodes),(unsigned int)0,c)))->_type;;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/tupleValidator.top"
 ;return NULL;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 
 void tupleValidatorInitTypes() { 
@@ -11548,263 +9297,153 @@ void tupleValidatorInit() {
 struct ast_AST** _global_StaticArray_op_get_StaticArray_S_rast_AST(struct _global_StaticArray_StaticArray_S_rast_AST* _global_self, unsigned int _global_index, struct _global_Context* l);
 struct _global_StaticArray_1_types_CompilerType* _global_box__1_types_CompilerType(struct _global_StaticArray_1_types_CompilerType _global_value, struct _global_Context* l);
 struct error_CompilerError* validator_State_validate(struct validator_State* validator_state, struct ast_AST* validator_syntax_tree, struct _global_Context* l){;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;struct ast_Payload m =(validator_syntax_tree)->payload;
 if(m.tag==4){struct ast_OperatorKind validator_kind = m.cases.Operator.field0;
 return operatorValidation_validate(validator_state,validator_kind,validator_syntax_tree,l);}else if(m.tag==5){struct ast_ReadInfo* validator_read_info = m.cases.Identifier.field0;
 return varValidation_validate_read(validator_state,validator_read_info,validator_syntax_tree,l);}else if(m.tag==7){return varValidation_validate_create_assign(validator_state,validator_syntax_tree,l);}else if(m.tag==10){return ifValidation_validate_if(validator_state,validator_syntax_tree,l);}else if(m.tag==12){return ifValidation_validate_condition(validator_state,validator_syntax_tree,l);}else if(m.tag==15){struct ast_FuncInfo* validator_info = m.cases.FuncDef.field0;
 return funcValidator_validate(validator_state,validator_syntax_tree,validator_info,l);}else if(m.tag==6){return funcValidator_validate_call(validator_state,validator_syntax_tree,l);}else if(m.tag==16){return tupleValidator_validate_tuple(validator_state,validator_syntax_tree,l);}else if(1){return validator_State_validate_nodes(validator_state,_global_StaticArray_StaticArray_S_rast_ASTInit((validator_syntax_tree)->nodes.data, (validator_syntax_tree)->nodes.length),l);};
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
 struct error_CompilerError* validator_State_validate_nodes(struct validator_State* validator_self, struct _global_StaticArray_StaticArray_S_rast_AST validator_nodes, struct _global_Context* l){;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct _global_StaticArray_StaticArray_S_rast_AST m =validator_nodes;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 for (unsigned int n = 0;n < m.length; n++) {
 struct ast_AST* validator_node;validator_node = *_global_StaticArray_op_get_StaticArray_S_rast_AST(&m, n, l);
 ;unsigned int validator_i;validator_i = n;
 struct error_CompilerError* p =validator_State_validate(validator_self,validator_node,l);if(p != NULL){struct error_CompilerError* validator__x = p;
 
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 return validator__x;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 else if(1){
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 }
 ;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;return NULL;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
-struct _global_StaticArray_StaticArray_S_types_CompilerType tmpvalidatorbh(struct _global_StaticArray_1_types_CompilerType* m) {
+struct _global_StaticArray_StaticArray_S_types_CompilerType tmpvalidatorH(struct _global_StaticArray_1_types_CompilerType* m) {
 return _global_StaticArray_StaticArray_S_types_CompilerTypeInit(m->data, 1);};
 struct error_CompilerError* validator_register_log_func(struct validator_State* validator_state, struct _global_String validator_name, struct types_CompilerType validator_typ, struct ast_AST* validator_syntax_tree, struct _global_Context* l){;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct types_FuncPtr* validator_log_func_type;validator_log_func_type = types_make_FuncPtr(l);;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
-(validator_log_func_type)->args = tmpvalidatorbh(_global_box__1_types_CompilerType(_global_StaticArray_1_types_CompilerTypeInit(validator_typ),l));;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
+(validator_log_func_type)->args = tmpvalidatorH(_global_box__1_types_CompilerType(_global_StaticArray_1_types_CompilerTypeInit(validator_typ),l));;
 (validator_log_func_type)->external = 1;;
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct scope_DeclInfo validator_decl_info;validator_decl_info = scope_make_DeclInfo(types_Func(validator_log_func_type,l),l);;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;return scope_Scope_create_decl((validator_state)->scope,validator_name,&(validator_decl_info),validator_syntax_tree,l);
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
 struct error_CompilerError* validator_validate(struct ast_AST* validator_syntax_tree, struct _global_Context* l){;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct validator_State validator_state;validator_state = validator_StateInit(scope_make_Scope(l));;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct error_CompilerError* m =validator_register_log_func(&(validator_state),_global_StringInit(9,"log_float"),types_make_Float(l),validator_syntax_tree,l);if(m != NULL){struct error_CompilerError* validator__x = m;
 
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 return validator__x;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 else if(1){
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct error_CompilerError* n =validator_register_log_func(&(validator_state),_global_StringInit(7,"log_int"),types_make_Int(l),validator_syntax_tree,l);if(n != NULL){struct error_CompilerError* validator__x = n;
 
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 return validator__x;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 else if(1){
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct error_CompilerError* p =validator_register_log_func(&(validator_state),_global_StringInit(3,"log"),types_String,validator_syntax_tree,l);if(p != NULL){struct error_CompilerError* validator__x = p;
 
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 return validator__x;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 else if(1){
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct error_CompilerError* q =validator_State_create_decl(&(validator_state),validator_syntax_tree,l);if(q != NULL){struct error_CompilerError* validator__x = q;
 
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 return validator__x;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 else if(1){
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct error_CompilerError* r =validator_State_validate(&(validator_state),validator_syntax_tree,l);if(r != NULL){struct error_CompilerError* validator__x = r;
 
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 return validator__x;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 else if(1){
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct error_CompilerError* s =validator_check_useless(validator_syntax_tree,l);if(s != NULL){struct error_CompilerError* validator__x = s;
 
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 return validator__x;
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 else if(1){
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;return validator_check_other(validator_syntax_tree,l);
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
 struct error_CompilerError* validator_useless(struct ast_AST* validator_i, struct _global_String validator_mesg, struct _global_Context* l){;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;return error_make_Error_rast_AST(validator_i,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(8,"Useless "),(validator_mesg),l),_global_StringInit(0,""),l),l);
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
 struct error_CompilerError* validator_check_useless(struct ast_AST* validator_i, struct _global_Context* l){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;struct ast_Payload m =(validator_i)->payload;
 if(m.tag==5&&1){return validator_useless(validator_i,_global_StringInit(4,"read"),l);}else if(m.tag==1){return validator_useless(validator_i,_global_StringInit(11,"int literal"),l);}else if(m.tag==2){return validator_useless(validator_i,_global_StringInit(13,"float literal"),l);}else if(m.tag==3){return validator_useless(validator_i,_global_StringInit(12,"bool literal"),l);}else if(m.tag==4){struct ast_OperatorKind validator_kind = m.cases.Operator.field0;
 return validator_useless(validator_i,_global_StringInit(8,"operator"),l);}else if(m.tag==0){struct _global_Array_rast_AST n =(validator_i)->nodes;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 for (unsigned int p = 0;p < n.length; p++) {
 struct ast_AST* validator_node;validator_node = *_global_Array_op_get_rast_AST(&n, p, l);
 ;struct error_CompilerError* q =validator_check_useless(validator_node,l);if(q != NULL){struct error_CompilerError* validator__x = q;
 
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 return validator__x;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 else if(1){
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 }
 ;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 return NULL;}else if(1){return NULL;};
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
 struct error_CompilerError* validator_State_create_decl(struct validator_State* validator_self, struct ast_AST* validator_node, struct _global_Context* l){;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct _global_Array_rast_AST m =(validator_node)->nodes;
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 for (unsigned int n = 0;n < m.length; n++) {
 struct ast_AST* validator_n;validator_n = *_global_Array_op_get_rast_AST(&m, n, l);
 ;unsigned int validator_i;validator_i = n;
 struct ast_Payload p =(validator_n)->payload;if(p.tag==15){struct ast_FuncInfo* validator_info = p.cases.FuncDef.field0;
 
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 struct error_CompilerError* q =funcValidator_add_func_to_scope(validator_self,validator_node,validator_info,l);if(q != NULL){struct error_CompilerError* validator__x = q;
 
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 return validator__x;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 else if(1){
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 else if(1){
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;}
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 }
 ;
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;return NULL;
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* validator_check_other(struct ast_AST* validator_node, struct _global_Context* l){;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;return NULL;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct ast_AST** _global_StaticArray_op_get_StaticArray_S_rast_AST(struct _global_StaticArray_StaticArray_S_rast_AST* _global_self, unsigned int _global_index, struct _global_Context* l){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),l);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 struct _global_StaticArray_1_types_CompilerType* _global_box__1_types_CompilerType(struct _global_StaticArray_1_types_CompilerType _global_value, struct _global_Context* l){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct _global_StaticArray_1_types_CompilerType* _global_pointer;_global_pointer = (struct _global_StaticArray_1_types_CompilerType*)(_global_Allocator_alloc((l)->allocator,(uint64_t)sizeof(struct _global_StaticArray_1_types_CompilerType),l));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
 void validatorInitTypes() { 
@@ -11825,87 +9464,51 @@ rEnumType_VTABLE_FOR_Type.type
 ; }
 void validatorInit() { 
 ;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 operatorValidationInit();;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 varValidationInit();;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 funcValidatorInit();;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 tupleValidatorInit();;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/validator.top"
 ;
 };
-static inline struct _global_Maybe_types_CompilerType tmpifValidationbj(struct _global_Maybe_Maybe_T h) {
+static inline struct _global_Maybe_types_CompilerType tmpifValidationJ(struct _global_Maybe_Maybe_T h) {
 struct _global_Maybe_types_CompilerType g;g.tag = h.tag;g.cases = *(union _global_Maybe_types_CompilerType_cases*) &(h.cases);return g;
 }
 struct _global_Maybe_types_CompilerType ifValidation_block_returns_value(struct ast_AST* ifValidation_node, struct _global_Context* f){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 _global_assert(((ifValidation_node)->payload).tag==(ast_Block).tag,_global_StringInit(15,"Expecting block"),f);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
-;return (ast_AST_length(ifValidation_node,f)>0&&!(types_CompilerType_is_typeByValue(types_Void,(*(ast_AST_op_get(ifValidation_node,(unsigned int)ast_AST_length(ifValidation_node,f)-1,f)))->_type,f)) ? _global_Some_types_CompilerType((*(_global_Array_op_get_rast_AST(&((ifValidation_node)->nodes),(unsigned int)ast_AST_length(ifValidation_node,f)-1,f)))->_type,f):(tmpifValidationbj(_global_None)));
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
+;return (ast_AST_length(ifValidation_node,f)>0&&!(types_CompilerType_is_typeByValue(types_Void,(*(ast_AST_op_get(ifValidation_node,(unsigned int)ast_AST_length(ifValidation_node,f)-1,f)))->_type,f)) ? _global_Some_types_CompilerType((*(_global_Array_op_get_rast_AST(&((ifValidation_node)->nodes),(unsigned int)ast_AST_length(ifValidation_node,f)-1,f)))->_type,f):(tmpifValidationJ(_global_None)));
 ;}
 struct error_CompilerError* ifValidation_validate_if(struct validator_State* ifValidation_state, struct ast_AST* ifValidation_node, struct _global_Context* f){;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 struct error_CompilerError* g =validator_State_validate_nodes(ifValidation_state,_global_StaticArray_StaticArray_S_rast_ASTInit((ifValidation_node)->nodes.data, (ifValidation_node)->nodes.length),f);if(g != NULL){struct error_CompilerError* ifValidation__x = g;
 
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 return ifValidation__x;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;}
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 else if(1){
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;}
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 unsigned int ifValidation_i;ifValidation_i = 1;;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;while(ifValidation_i<ast_AST_length(ifValidation_node,f)){struct _global_Maybe_types_CompilerType h =ifValidation_block_returns_value(*(ast_AST_op_get(ifValidation_node,(unsigned int)ifValidation_i,f)),f);if(h.tag==0){struct types_CompilerType ifValidation_ret = h.cases.Some.field0;
 
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 (ifValidation_node)->_type = ifValidation_ret;;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;}
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 else if(1){
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;ifValidation_i = ifValidation_i+2;;};
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;return NULL;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* ifValidation_validate_condition(struct validator_State* ifValidation_state, struct ast_AST* ifValidation_node, struct _global_Context* f){;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 struct error_CompilerError* g =validator_State_validate_nodes(ifValidation_state,_global_StaticArray_StaticArray_S_rast_ASTInit((ifValidation_node)->nodes.data, (ifValidation_node)->nodes.length),f);if(g != NULL){struct error_CompilerError* ifValidation__x = g;
 
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 return ifValidation__x;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;}
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 else if(1){
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;}
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 struct ast_AST* ifValidation_condition;ifValidation_condition = *(_global_Array_op_get_rast_AST(&((ifValidation_node)->nodes),(unsigned int)0,f));;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;return (!(types_CompilerType_is_typeByValue(types_Bool,(ifValidation_condition)->_type,f)) ? error_make_Error_rast_AST(ifValidation_condition,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(34,"Expecting boolean expression, not "),types_CompilerType_toStringByValue(((ifValidation_condition)->_type),f),f),_global_StringInit(0,""),f),f):(NULL));
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;}
 
 void ifValidationInitTypes() { 
@@ -11913,9 +9516,7 @@ void ifValidationInitTypes() {
  }
 void ifValidationInit() { 
 ;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 validatorInit();;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/ifValidation.top"
 ;
 };
 void _global_memcpy_hashMap_HashBucket_uint_(struct hashMap_HashBucket_uint* _global_target, struct hashMap_HashBucket_uint* _global_destination, unsigned int _global_length, struct _global_Context* W);
@@ -11959,1498 +9560,848 @@ void _global_Array_append_mir_Function(struct _global_Array_mir_Function* _globa
 void hashMap_HashMap_insert_uint(struct hashMap_HashMap_uint* hashMap_self, struct _global_String hashMap_key, unsigned int hashMap_value, struct _global_Context* W);
 struct _global_Array_mir_Function* _global_box_____mir_Function(struct _global_Array_mir_Function _global_value, struct _global_Context* W);
 unsigned int mir_calc_size(struct types_CompilerType mir_self, struct _global_Context* W){;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/mir.top"
 ;struct types_CompilerType X =mir_self;
 if(X.tag==0){return sizeof(void);}else if(X.tag==2){return sizeof(_Bool);}else if(X.tag==1){return sizeof(struct _global_String);}else if(X.tag==4){unsigned int mir_size = X.cases.Float.field0;
 return mir_size/4;}else if(X.tag==3){_Bool mir_unsigned = X.cases.Int.field0;
 unsigned int mir_size = X.cases.Int.field1;
 return mir_size/4;}else if(X.tag==5){struct types_StructInfo* mir_info = X.cases.Struct.field0;
 _global_panic(_global_StringInit(16,"Not handled yet!"),W);
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/mir.top"
 return 0;}else if(X.tag==6){struct types_FuncPtr* mir_info = X.cases.Func.field0;
 return sizeof(pp___none);};
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/mir.top"
 ;}
 
 #define mir_atoi(W,X) atoi(W)
 
 #define mir_atof(Y,Z) atof(Y)
 struct _global_String mir_CFG_toString(struct mir_CFG* mir_self, struct _global_Context* bb){;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(4,"CFG "),_global_uint_toStringByValue(((mir_self)->return_to),bb),bb),_global_StringInit(0,""),bb);
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 static inline struct _global_String mir_CFG_toStringByValue(struct mir_CFG bc,struct _global_Context* bb){
 return mir_CFG_toString(&bc,bb);
 }struct mir_FuncScope* mir_Converter_push_scope(struct mir_Converter* mir_self, struct _global_Context* bb){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 struct _global_Array_mir_OpCode* mir_op_codes;mir_op_codes = _global_box_____mir_OpCode(_global_Array_mir_OpCodeInit(0, 0, NULL, NULL),bb);;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 struct _global_Array_rmir_Block* mir_all_blocks;mir_all_blocks = _global_box_____rmir_Block(_global_Array_rmir_BlockInit(0, 0, NULL, NULL),bb);;
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 struct _global_Array_mir_CFG mir_cfgs;mir_cfgs = _global_Array_mir_CFGInit(0, 0, NULL, NULL);;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 struct mir_Block* mir_block;mir_block = _global_box_mir_Block(mir_BlockInit(0,mir_op_codes),bb);;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 struct mir_FuncScope* mir_scope;mir_scope = _global_box_mir_FuncScope(mir_FuncScopeInit(0,mir_cfgs,mir_block,0,mir_all_blocks,hashMap_make_HashMap_uint(bb),0),bb);;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 _global_Array_append_rmir_FuncScope(&((mir_self)->scopes),mir_scope,bb);
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 mir_FuncScope_push_cfg(mir_scope,mir_CFGInit(0,mir_block),bb);
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;return mir_scope;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 struct mir_FuncScope* mir_Converter_pop_scope(struct mir_Converter* mir_self, struct _global_Context* bb){;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;return _global_Array_pop_rmir_FuncScope(&((mir_self)->scopes),bb);
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 struct mir_FuncScope* mir_Converter_get_scope(struct mir_Converter* mir_self, struct _global_Context* bb){;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;return *(_global_Array_op_get_rmir_FuncScope(&((mir_self)->scopes),(unsigned int)((mir_self)->scopes).length-1,bb));
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 unsigned int mir_FuncScope_push_block(struct mir_FuncScope* mir_self, struct _global_Context* bb){;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 (mir_self)->block_counter = (mir_self)->block_counter+1;;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;return (mir_self)->block_counter;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 void mir_FuncScope_append(struct mir_FuncScope* mir_self, struct mir_OpCode mir_code, struct _global_Context* bb){;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 _global_Array_append_mir_OpCode(((mir_self)->block)->code,mir_code,bb);
-#line 70 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 void mir_FuncScope_pop_block(struct mir_FuncScope* mir_self, struct _global_Context* bb){;
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 (mir_self)->block_counter = (mir_self)->block_counter-1;;
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 void mir_FuncScope_push_cfg(struct mir_FuncScope* mir_scope, struct mir_CFG mir_cfg, struct _global_Context* bb){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 _global_Array_append_mir_CFG(&((mir_scope)->cfgs),mir_cfg,bb);
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 struct mir_Block* mir_block;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 struct mir_Block* bc =(mir_cfg).block;if(bc != NULL){mir_block = bc;
 
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 else if(1){
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 return ;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 (mir_scope)->block = mir_block;;
-#line 81 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 _global_Array_append_rmir_Block((mir_scope)->all_blocks,mir_block,bb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 void mir_FuncScope_add_block(struct mir_FuncScope* mir_scope, struct mir_Block* mir_block, struct _global_Context* bb){;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 (mir_scope)->block = mir_block;;
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 _global_Array_append_rmir_Block((mir_scope)->all_blocks,mir_block,bb);
-#line 86 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 void mir_FuncScope_pop_cfg(struct mir_FuncScope* mir_scope, struct _global_Context* bb){;
-#line 88 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 _global_Array_pop_mir_CFG(&((mir_scope)->cfgs),bb);
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 struct mir_CFG* mir_FuncScope_current_cfg(struct mir_FuncScope* mir_scope, struct _global_Context* bb){;
-#line 91 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;return &(*(_global_Array_op_get_mir_CFG(&((mir_scope)->cfgs),(unsigned int)((mir_scope)->cfgs).length-1,bb)));
-#line 92 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 struct mir_OpCode mir_unsupported(struct _global_String mir_mesg, struct _global_Context* bb){;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 _global_panic(mir_mesg,bb);
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;return mir_Add_i32;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 _Bool mir_is_block(struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;return ((mir_node)->payload).tag==(ast_Block).tag;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 struct ast_AST* mir_get_rhs_of_assign(struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;return (((mir_node)->nodes).length==1 ? *(_global_Array_op_get_rast_AST(&((mir_node)->nodes),(unsigned int)0,bb)):(*(_global_Array_op_get_rast_AST(&((mir_node)->nodes),(unsigned int)1,bb))));
-#line 102 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 struct ast_AST* mir_get_lhs_of_assign(struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;if(((mir_node)->nodes).length==1){;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 struct ast_AST* mir_owner;;
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 struct ast_AST* bc =(mir_node)->owner;if(bc != NULL){mir_owner = bc;
 
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 else if(1){
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 _global_panic(_global_StringInit(20,"Assign missing owner"),bb);
-#line 108 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
-#line 108 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 struct ast_AST* mir_create;mir_create = *(_global_Array_op_get_rast_AST(&((mir_owner)->nodes),(unsigned int)0,bb));;
-#line 110 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 return *(_global_Array_op_get_rast_AST(&((mir_create)->nodes),(unsigned int)0,bb));}
 else{return *(_global_Array_op_get_rast_AST(&((mir_node)->nodes),(unsigned int)0,bb));};
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 unsigned int mir_Converter_get_id_of_var(struct mir_Converter* mir_self, struct _global_String mir_name, struct _global_Context* bb){;
-#line 115 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 115 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 int mir_i;mir_i = (int)((mir_self)->scopes).length-1;;
-#line 116 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;while(mir_i>=(int)0){struct mir_FuncScope* mir_scope;mir_scope = *(_global_Array_op_get_rmir_FuncScope(&((mir_self)->scopes),(unsigned int)(unsigned int)mir_i,bb));;if(hashMap_HashMap_contains_uint(&((mir_scope)->vars),mir_name,bb)){;
-#line 119 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 return *(hashMap_HashMap_op_get_uint(&((mir_scope)->vars),(struct _global_String)mir_name,bb));
-#line 119 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 119 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;};mir_i = mir_i-(int)1;;};
-#line 117 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 _global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(40,"Could not find variable convert to mir: "),(mir_name),bb),_global_StringInit(0,""),bb),bb);
-#line 122 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;return 0;
-#line 123 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 void mir_Converter_convert_nodes(struct mir_Converter* mir_self, struct _global_StaticArray_StaticArray_S_rast_AST mir_nodes, struct _global_Context* bb){;
-#line 125 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 125 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 struct _global_StaticArray_StaticArray_S_rast_AST bc =mir_nodes;
-#line 126 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 for (unsigned int bd = 0;bd < bc.length; bd++) {
 struct ast_AST* mir_n;mir_n = *_global_StaticArray_op_get_StaticArray_S_rast_AST(&bc, bd, bb);
 ;unsigned int mir_i;mir_i = bd;
 mir_Converter_convert_node(mir_self,mir_n,bb);
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 }
 ;
-#line 126 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;}
 void mir_convert_if(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 unsigned int mir_id;mir_id = mir_FuncScope_push_block(mir_self,bb);;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 if(!(types_CompilerType_is_typeByValue((mir_node)->_type,types_Void,bb))){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct _global_String mir_name;mir_name = _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(10,"if_result_"),_global_uint_toStringByValue((mir_id),bb),bb),_global_StringInit(0,""),bb);;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_append(mir_self,mir_Create(_global_box_mir_ReadInfo(mir_ReadInfoInit(1,(mir_node)->_type,mir_add_global_var(mir_converter,mir_name,bb),mir_name),bb),bb),bb);
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;};
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_push_cfg(mir_self,mir_CFGInit(mir_id,NULL),bb);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_Converter_convert_nodes(mir_converter,_global_StaticArray_StaticArray_S_rast_ASTInit((mir_node)->nodes.data, (mir_node)->nodes.length),bb);
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct _global_Array_mir_OpCode* mir_codes;mir_codes = _global_box_____mir_OpCode(_global_Array_mir_OpCodeInit(0, 0, NULL, NULL),bb);;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_pop_cfg(mir_self,bb);
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct mir_CFG* mir_cfg;mir_cfg = mir_FuncScope_current_cfg(mir_self,bb);;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 unsigned int mir_to;mir_to = (mir_cfg)->return_to;;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_pop_cfg(mir_self,bb);
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_add_block(mir_self,_global_box_mir_Block(mir_BlockInit(mir_to,mir_codes),bb),bb);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 if(!(types_CompilerType_is_typeByValue((mir_node)->_type,types_Void,bb))){;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct _global_String mir_name;mir_name = _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(10,"if_result_"),_global_uint_toStringByValue((mir_to),bb),bb),_global_StringInit(0,""),bb);;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_append(mir_self,mir_Read(_global_box_mir_ReadInfo(mir_ReadInfoInit(1,(mir_node)->_type,*(hashMap_HashMap_op_get_uint(&((mir_self)->vars),(struct _global_String)mir_name,bb)),mir_name),bb),bb),bb);
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;};
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;}
 void mir_convert_while(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 unsigned int mir_check;mir_check = mir_FuncScope_push_block(mir_self,bb);;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_append(mir_self,mir_Jump(mir_check,bb),bb);
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_push_cfg(mir_self,mir_CFGInit(mir_check,_global_box_mir_Block(mir_BlockInit(mir_check,_global_box_____mir_OpCode(_global_Array_mir_OpCodeInit(0, 0, NULL, NULL),bb)),bb)),bb);
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_push_cfg(mir_self,mir_CFGInit(mir_FuncScope_push_block(mir_self,bb),NULL),bb);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct _global_Array_rast_AST bc =(mir_node)->nodes;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 for (unsigned int bd = 0;bd < bc.length; bd++) {
 struct ast_AST* mir_n;mir_n = *_global_Array_op_get_rast_AST(&bc, bd, bb);
 ;unsigned int mir_i;mir_i = bd;
 mir_Converter_convert_node(mir_converter,mir_n,bb);
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 }
 ;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct mir_CFG* mir_cfg;mir_cfg = mir_FuncScope_current_cfg(mir_self,bb);;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 unsigned int mir_to;mir_to = (mir_cfg)->return_to;;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_pop_cfg(mir_self,bb);
-#line 70 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_pop_cfg(mir_self,bb);
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct mir_CFG* mir_check_cfg;mir_check_cfg = mir_FuncScope_current_cfg(mir_self,bb);;
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_append(mir_self,mir_Jump((mir_check_cfg)->return_to,bb),bb);
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_pop_cfg(mir_self,bb);
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_add_block(mir_self,_global_box_mir_Block(mir_BlockInit(mir_to,_global_box_____mir_OpCode(_global_Array_mir_OpCodeInit(0, 0, NULL, NULL),bb)),bb),bb);
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;}
 void mir_convert_else(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct mir_CFG* mir_cfg;mir_cfg = mir_FuncScope_current_cfg(mir_self,bb);;
-#line 81 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 unsigned int mir_to;mir_to = (mir_cfg)->return_to;;
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 unsigned int mir_end_if;mir_end_if = (*(_global_Array_op_get_mir_CFG(&((mir_self)->cfgs),(unsigned int)((mir_self)->cfgs).length-2,bb))).return_to;;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct _global_Array_mir_OpCode* mir_codes;mir_codes = _global_box_____mir_OpCode(_global_Array_mir_OpCodeInit(0, 0, NULL, NULL),bb);;
-#line 86 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_pop_cfg(mir_self,bb);
-#line 88 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_push_cfg(mir_self,mir_CFGInit(mir_end_if,_global_box_mir_Block(mir_BlockInit(mir_to,mir_codes),bb)),bb);
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;}
 void mir_convert_condition(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 unsigned int mir_to;mir_to = mir_FuncScope_push_block(mir_self,bb);;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct ast_AST* mir_owner;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct ast_AST* bc =(mir_node)->owner;if(bc != NULL){mir_owner = bc;
 
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;}
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 else if(1){
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 _global_panic(_global_StringInit(22,"Condition has no owner"),bb);
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;}
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 unsigned int mir_return_to;mir_return_to = (((mir_owner)->nodes).length==2 ? (*(_global_Array_op_get_mir_CFG(&((mir_self)->cfgs),(unsigned int)((mir_self)->cfgs).length-1,bb))).return_to:(mir_FuncScope_push_block(mir_self,bb)));;
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct _global_Array_mir_OpCode* mir_codes;mir_codes = _global_box_____mir_OpCode(_global_Array_mir_OpCodeInit(0, 0, NULL, NULL),bb);;
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_append(mir_self,mir_CondJump(mir_to,mir_return_to,bb),bb);
-#line 109 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_push_cfg(mir_self,mir_CFGInit(mir_return_to,_global_box_mir_Block(mir_BlockInit(mir_to,mir_codes),bb)),bb);
-#line 111 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;}
 void mir_convert_block(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 116 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;
-#line 116 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 117 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 if(((_global_Maybe_unwrap_rast_ASTByValue((mir_node)->owner,bb))->payload).tag==(ast_If).tag){;
-#line 119 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct mir_CFG mir_cfg;mir_cfg = *(_global_Array_op_get_mir_CFG(&((mir_self)->cfgs),(unsigned int)((mir_self)->cfgs).length-2,bb));;
-#line 120 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 struct _global_Maybe_types_CompilerType bc =ifValidation_block_returns_value(mir_node,bb);if(bc.tag==0){struct types_CompilerType mir_ret_typ = bc.cases.Some.field0;
 
-#line 122 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 struct _global_String mir_name;mir_name = _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(10,"if_result_"),_global_uint_toStringByValue(((mir_cfg).return_to),bb),bb),_global_StringInit(0,""),bb);;
-#line 123 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 mir_FuncScope_append(mir_self,mir_Assign(_global_box_mir_ReadInfo(mir_ReadInfoInit(1,mir_ret_typ,*(hashMap_HashMap_op_get_uint(&((mir_self)->vars),(struct _global_String)mir_name,bb)),mir_name),bb),bb),bb);
-#line 124 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;}
-#line 122 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 else if(1){
-#line 122 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
-#line 122 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;
-#line 122 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 mir_FuncScope_append(mir_self,mir_Jump((mir_cfg).return_to,bb),bb);
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;};
-#line 119 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/controlFlowToMIR.top"
 ;}
 void mir_convert_func_call(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct types_CompilerType mir_func_ptr;mir_func_ptr = (*(_global_Array_op_get_rast_AST(&((mir_node)->nodes),(unsigned int)0,bb)))->_type;;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct types_CompilerType bc =mir_func_ptr;if(bc.tag==6){struct types_FuncPtr* mir_func = bc.cases.Func.field0;
 
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 mir_FuncScope_append(mir_self,mir_FuncCall(mir_func,bb),bb);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;}
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 else if(1){
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 _global_log_types_CompilerType(mir_func_ptr,bb);
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 _global_panic(_global_StringInit(46,"Expecting func pointer as argument to function"),bb);
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;}
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;}
 void mir_register_func_def(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct ast_FuncInfo* mir_info, struct _global_Context* bb){;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 mir_add_global_var(mir_converter,(mir_info)->name,bb);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;}
 void mir_convert_func_def(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct ast_FuncInfo* mir_info, struct _global_Context* bb){;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 unsigned int mir_id;mir_id = mir_Converter_get_id_of_var(mir_converter,(mir_info)->name,bb);;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 mir_self = mir_Converter_push_scope(mir_converter,bb);;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct ast_AST* mir_args;mir_args = *(_global_Array_op_get_rast_AST(&((mir_node)->nodes),(unsigned int)0,bb));;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 (mir_self)->num_args = ast_AST_length(mir_args,bb);;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct _global_Range bc =_global_RangeInit(0,ast_AST_length(mir_args,bb));
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 for (unsigned int bd = bc.start; bd < bc.end; bd++) {
 unsigned int mir_i;mir_i = bd;
 ;mir_Converter_convert_node(mir_converter,*(ast_AST_op_get(mir_args,(unsigned int)ast_AST_length(mir_args,bb)-mir_i-1,bb)),bb);
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 }
 ;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct ast_AST* mir_body;mir_body = *(_global_Array_op_get_rast_AST(&((mir_node)->nodes),(unsigned int)1,bb));;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 mir_Converter_convert_nodes(mir_converter,_global_StaticArray_StaticArray_S_rast_ASTInit((mir_body)->nodes.data, (mir_body)->nodes.length),bb);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct _global_Array_rmir_Block* mir_all_blocks;mir_all_blocks = (mir_Converter_pop_scope(mir_converter,bb))->all_blocks;;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 _global_Array_append_mir_OpCode((*(_global_Array_op_get_rmir_Block((struct _global_Array_rmir_Block*)mir_all_blocks,(unsigned int)(mir_all_blocks)->length-1,bb)))->code,mir_FuncReturn(((mir_info)->_type)->return_type,bb),bb);
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct _global_Array_rmir_Block mir_deref_all_blocks;mir_deref_all_blocks = *(mir_all_blocks);;
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct mir_Function mir_func;mir_func = mir_FunctionInit((mir_info)->name,(mir_info)->_type,_global_StaticArray_StaticArray_S_rmir_BlockInit(mir_deref_all_blocks.data, mir_deref_all_blocks.length),mir_id);;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 _global_Array_append_mir_Function((mir_converter)->functions,mir_func,bb);
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;}
 void mir_convert_func_arg(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_String mir_name, struct types_CompilerType mir_typ, struct _global_Context* bb){;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 unsigned int mir_id;mir_id = mir_add_local_var(mir_converter,mir_name,bb);;
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 struct mir_ReadInfo* mir_info;mir_info = _global_box_mir_ReadInfo(mir_ReadInfoInit(0,mir_typ,mir_id,mir_name),bb);;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 (mir_self)->num_args = (mir_self)->num_args-1;;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 mir_FuncScope_append(mir_self,mir_FuncArg((mir_self)->num_args,mir_info,bb),bb);
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 mir_FuncScope_append(mir_self,mir_Assign(mir_info,bb),bb);
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/funcToMIR.top"
 ;}
 
-static inline struct mir_OpCode tmpmirbk(struct mir_Converter** mir_converter,struct ast_AST** mir_node,struct ast_OperatorKind* mir_op_kind,struct mir_FuncScope** mir_self,struct types_CompilerType* mir_node_type,_Bool* mir_is_int,_Bool* mir_is_float, struct _global_Context* bb) {
+static inline struct mir_OpCode tmpmirK(struct mir_Converter** mir_converter,struct ast_AST** mir_node,struct ast_OperatorKind* mir_op_kind,struct mir_FuncScope** mir_self,struct types_CompilerType* mir_node_type,_Bool* mir_is_int,_Bool* mir_is_float, struct _global_Context* bb) {
 struct ast_OperatorKind bc =*mir_op_kind;
 if(bc.tag==0){return (*mir_is_int ? mir_Add_i32 : (*mir_is_float) ? mir_Add_f32:(mir_unsupported(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(17,"Unsupported type "),types_CompilerType_toStringByValue(((*mir_node)->_type),bb),bb),_global_StringInit(0,""),bb),bb)));}else if(bc.tag==1){return (*mir_is_int ? mir_Mul_i32 : (*mir_is_float) ? mir_Mul_f32:(mir_unsupported(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(17,"Unsupported type "),types_CompilerType_toStringByValue(((*mir_node)->_type),bb),bb),_global_StringInit(0,""),bb),bb)));}else if(bc.tag==2){return (*mir_is_int ? mir_Div_i32 : (*mir_is_float) ? mir_Div_f32:(mir_unsupported(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(17,"Unsupported type "),types_CompilerType_toStringByValue(((*mir_node)->_type),bb),bb),_global_StringInit(0,""),bb),bb)));}else if(bc.tag==3){return (*mir_is_int ? mir_LT_i32 : (*mir_is_float) ? mir_LT_f32:(mir_unsupported(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(17,"Unsupported type "),types_CompilerType_toStringByValue(((*mir_node)->_type),bb),bb),_global_StringInit(0,""),bb),bb)));}else if(bc.tag==4){return (*mir_is_int ? mir_Sub_i32 : (*mir_is_float) ? mir_Sub_f32:(mir_unsupported(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(17,"Unsupported type "),types_CompilerType_toStringByValue(((*mir_node)->_type),bb),bb),_global_StringInit(0,""),bb),bb)));}
 }
 void mir_convert_operator(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct ast_OperatorKind mir_op_kind, struct _global_Context* bb){;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/operatorsToMIR.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/operatorsToMIR.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/operatorsToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/operatorsToMIR.top"
 struct types_CompilerType mir_node_type;mir_node_type = ast_op_type(mir_node,bb);;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/operatorsToMIR.top"
 _Bool mir_is_int;mir_is_int = types_CompilerType_is_typeByValue(mir_node_type,types_Int(0,0,bb),bb);;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/operatorsToMIR.top"
 _Bool mir_is_float;mir_is_float = types_CompilerType_is_typeByValue(mir_node_type,types_Float(0,bb),bb);;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/operatorsToMIR.top"
-mir_FuncScope_append(mir_self,tmpmirbk(&mir_converter,&mir_node,&mir_op_kind,&mir_self,&mir_node_type,&mir_is_int,&mir_is_float, bb),bb);
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/operatorsToMIR.top"
+mir_FuncScope_append(mir_self,tmpmirK(&mir_converter,&mir_node,&mir_op_kind,&mir_self,&mir_node_type,&mir_is_int,&mir_is_float, bb),bb);
 ;}
 unsigned int mir_add_global_var(struct mir_Converter* mir_converter, struct _global_String mir_name, struct _global_Context* bb){;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 (mir_converter)->global_var_counter = (mir_converter)->global_var_counter+1;;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 unsigned int mir_id;mir_id = (mir_converter)->global_var_counter-1;;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 hashMap_HashMap_insert_uint(&((mir_self)->vars),mir_name,mir_id,bb);
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;return mir_id;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;}
 unsigned int mir_add_local_var(struct mir_Converter* mir_converter, struct _global_String mir_name, struct _global_Context* bb){;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 (mir_self)->var_counter = (mir_self)->var_counter+1;;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 unsigned int mir_id;mir_id = (mir_self)->var_counter-1;;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 hashMap_HashMap_insert_uint(&((mir_self)->vars),mir_name,mir_id,bb);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;return mir_id;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;}
 unsigned int mir_add_var(struct mir_Converter* mir_converter, _Bool mir_is_global, struct _global_String mir_name, struct _global_Context* bb){;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;return (mir_is_global ? mir_add_global_var(mir_converter,mir_name,bb):(mir_add_local_var(mir_converter,mir_name,bb)));
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;}
 void mir_convert_create(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 struct ast_AST* mir_ident;mir_ident = *(_global_Array_op_get_rast_AST(&((mir_node)->nodes),(unsigned int)0,bb));;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 struct ast_ReadInfo* mir_read_info;;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 struct ast_Payload bc =(mir_ident)->payload;if(bc.tag==5){mir_read_info = bc.cases.Identifier.field0;
 
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;}
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 else if(1){
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 _global_panic(_global_StringInit(41,"Only single variable create are supported"),bb);
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;}
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 unsigned int mir_id;mir_id = mir_add_var(mir_converter,(mir_read_info)->is_global,(mir_read_info)->name,bb);;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 mir_FuncScope_append(mir_self,mir_Create(_global_box_mir_ReadInfo(mir_ReadInfoInit((mir_read_info)->is_global,(mir_ident)->_type,mir_id,(mir_read_info)->name),bb),bb),bb);
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;}
 void mir_convert_assign(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 struct ast_AST* mir_ident;mir_ident = mir_get_lhs_of_assign(mir_node,bb);;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 struct ast_ReadInfo* mir_read_info;;
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 struct ast_Payload bc =(mir_ident)->payload;if(bc.tag==5){mir_read_info = bc.cases.Identifier.field0;
 
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;}
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 else if(1){
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 _global_panic(_global_StringInit(41,"Only single variable create are supported"),bb);
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;}
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 mir_FuncScope_append(mir_self,mir_Assign(_global_box_mir_ReadInfo(mir_ReadInfoInit((mir_read_info)->is_global,(mir_ident)->_type,*(hashMap_HashMap_op_get_uint(&((mir_self)->vars),(struct _global_String)(mir_read_info)->name,bb)),(mir_read_info)->name),bb),bb),bb);
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;}
 void mir_convert_identifier(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct ast_ReadInfo* mir_read_info, struct _global_Context* bb){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 mir_FuncScope_append(mir_self,mir_Read(_global_box_mir_ReadInfo(mir_ReadInfoInit((mir_read_info)->is_global,(mir_node)->_type,mir_Converter_get_id_of_var(mir_converter,(mir_read_info)->name,bb),(mir_read_info)->name),bb),bb),bb);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/varsToMIR.top"
 ;}
 void mir_convert_string(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_String mir_str, struct _global_Context* bb){;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/stringToMIR.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/stringToMIR.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/stringToMIR.top"
 unsigned int mir_string_id;mir_string_id = (mir_converter)->string_literal_counter;;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/stringToMIR.top"
 (mir_converter)->string_literal_counter = (mir_converter)->string_literal_counter+1;;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/stringToMIR.top"
 mir_FuncScope_append(*(_global_Array_op_get_rmir_FuncScope(&((mir_converter)->scopes),(unsigned int)0,bb)),mir_StringDecl(mir_string_id,mir_str,bb),bb);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/stringToMIR.top"
 mir_FuncScope_append(mir_Converter_get_scope(mir_converter,bb),mir_StringRef(mir_string_id,bb),bb);
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/stringToMIR.top"
 ;}
 void mir_Converter_create_decls(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 struct _global_Array_rast_AST bc =(mir_node)->nodes;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 for (unsigned int bd = 0;bd < bc.length; bd++) {
 struct ast_AST* mir_n;mir_n = *_global_Array_op_get_rast_AST(&bc, bd, bb);
 ;unsigned int mir_i;mir_i = bd;
 struct ast_Payload bf =(mir_n)->payload;if(bf.tag==15){struct ast_FuncInfo* mir_info = bf.cases.FuncDef.field0;
 
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_register_func_def(mir_converter,mir_node,mir_info,bb);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(1){
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 }
 ;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
 void mir_Converter_convert_node(struct mir_Converter* mir_converter, struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 struct mir_FuncScope* mir_self;mir_self = mir_Converter_get_scope(mir_converter,bb);;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 unsigned int mir_previous_num_vars;mir_previous_num_vars = (mir_self)->var_counter;;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 struct ast_Payload bc =(mir_node)->payload;if(bc.tag==8){
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bc.tag==10){
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_if(mir_converter,mir_node,bb);
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bc.tag==14){
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_while(mir_converter,mir_node,bb);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 return ;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bc.tag==9){
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_Converter_convert_node(mir_converter,mir_get_rhs_of_assign(mir_node,bb),bb);
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bc.tag==15){struct ast_FuncInfo* mir_info = bc.cases.FuncDef.field0;
 
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_func_def(mir_converter,mir_node,mir_info,bb);
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 return ;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(1){
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_Converter_convert_nodes(mir_converter,_global_StaticArray_StaticArray_S_rast_ASTInit((mir_node)->nodes.data, (mir_node)->nodes.length),bb);
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 if(mir_is_block(mir_node,bb)){;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 (mir_self)->var_counter = mir_previous_num_vars;;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;};
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 struct ast_Payload bd =(mir_node)->payload;if(bd.tag==5){struct ast_ReadInfo* mir_read_info = bd.cases.Identifier.field0;
 
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_identifier(mir_converter,mir_node,mir_read_info,bb);
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==15){struct ast_FuncInfo* mir_info = bd.cases.FuncDef.field0;
 
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==16){
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==7){
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==11){
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_block(mir_converter,mir_node,bb);
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==10){
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==14){
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==12){
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_condition(mir_converter,mir_node,bb);
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==13){
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_else(mir_converter,mir_node,bb);
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==9){
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_assign(mir_converter,mir_node,bb);
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==18){struct _global_String mir_str = bd.cases.String.field0;
 
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_string(mir_converter,mir_node,mir_str,bb);
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==8){
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_create(mir_converter,mir_node,bb);
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==17){struct _global_String mir_name = bd.cases.FuncArg.field0;
 struct types_CompilerType mir_typ = bd.cases.FuncArg.field1;
 
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_func_arg(mir_converter,mir_node,mir_name,mir_typ,bb);
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==6){
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_func_call(mir_converter,mir_node,bb);
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==4){struct ast_OperatorKind mir_op_kind = bd.cases.Operator.field0;
 
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_convert_operator(mir_converter,mir_node,mir_op_kind,bb);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==3){_Bool mir_is_true = bd.cases.Bool.field0;
 
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_FuncScope_append(mir_self,mir_Store_bool(mir_is_true,bb),bb);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==1){struct _global_String mir_s = bd.cases.Int.field0;
 
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_FuncScope_append(mir_self,mir_Store_i32((int32_t)mir_atoi(_global_String_to_c_stringByValue(mir_s,bb),bb),bb),bb);
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==2){struct _global_String mir_s = bd.cases.Float.field0;
 
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_FuncScope_append(mir_self,mir_Store_f32((float)mir_atof(_global_String_to_c_stringByValue(mir_s,bb),bb),bb),bb);
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 else if(bd.tag==0){
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
 struct mir_Program mir_convert(struct ast_AST* mir_node, struct _global_Context* bb){;
-#line 70 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 struct _global_Array_mir_Function* mir_functions;mir_functions = _global_box_____mir_Function(_global_Array_mir_FunctionInit(0, 0, NULL, NULL),bb);;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 struct mir_Converter mir_converter;mir_converter = mir_ConverterInit(0,0,_global_Array_rmir_FuncScopeInit(0, 0, NULL, NULL),mir_functions);;
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 struct mir_FuncScope* mir_global_scope;mir_global_scope = mir_Converter_push_scope(&(mir_converter),bb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_add_global_var(&(mir_converter),_global_StringInit(7,"log_int"),bb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_add_global_var(&(mir_converter),_global_StringInit(9,"log_float"),bb);
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_add_global_var(&(mir_converter),_global_StringInit(3,"log"),bb);
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_add_global_var(&(mir_converter),_global_StringInit(4,"main"),bb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_Converter_create_decls(&(mir_converter),mir_node,bb);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 mir_Converter_convert_node(&(mir_converter),mir_node,bb);
-#line 88 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 struct _global_Array_rmir_Block* mir_main_all_blocks;mir_main_all_blocks = (*(_global_Array_op_get_rmir_FuncScope(&((mir_converter).scopes),(unsigned int)0,bb)))->all_blocks;;
-#line 90 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 _global_Array_append_mir_OpCode((*(_global_Array_op_get_rmir_Block((struct _global_Array_rmir_Block*)mir_main_all_blocks,(unsigned int)(mir_main_all_blocks)->length-1,bb)))->code,mir_FuncReturn(types_Void,bb),bb);
-#line 91 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 struct _global_Array_rmir_Block mir_deref_all_blocks;mir_deref_all_blocks = *(mir_main_all_blocks);;
-#line 93 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 struct mir_Function mir_main;mir_main = mir_FunctionInit(_global_StringInit(4,"main"),types_make_FuncPtr(bb),_global_StaticArray_StaticArray_S_rmir_BlockInit(mir_deref_all_blocks.data, mir_deref_all_blocks.length),mir_Converter_get_id_of_var(&(mir_converter),_global_StringInit(4,"main"),bb));;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 _global_Array_append_mir_Function(mir_functions,mir_main,bb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 struct _global_Array_mir_Function mir_deref_functions;mir_deref_functions = *(mir_functions);;
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;return mir_ProgramInit(_global_StaticArray_StaticArray_S_mir_FunctionInit(mir_deref_functions.data, mir_deref_functions.length));
-#line 104 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/astToMIR.top"
 ;}
 void _global_memcpy_hashMap_HashBucket_uint_(struct hashMap_HashBucket_uint* _global_target, struct hashMap_HashBucket_uint* _global_destination, unsigned int _global_length, struct _global_Context* bb){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct hashMap_HashBucket_uint),bb);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct hashMap_HashBucket_uint* tmpmirbl(struct _global_Array_hashMap_HashBucket_uint_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
+static inline struct hashMap_HashBucket_uint* tmpmirL(struct _global_Array_hashMap_HashBucket_uint_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
 struct hashMap_HashBucket_uint* bc =(*_global_self)->data;
 if(bc != NULL){struct hashMap_HashBucket_uint* _global_data = bc;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),bb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct hashMap_HashBucket_uint* _global_newData;_global_newData = (struct hashMap_HashBucket_uint*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct hashMap_HashBucket_uint),bb));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_hashMap_HashBucket_uint_(_global_newData,_global_data,(*_global_self)->length,bb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,bb);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(bc == NULL){return (struct hashMap_HashBucket_uint*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct hashMap_HashBucket_uint),bb));}
 }
 void _global_Array_reserve_hashMap_HashBucket_uint_(struct _global_Array_hashMap_HashBucket_uint_* _global_self, unsigned int _global_newSize, struct _global_Context* bb){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(bb)->allocator,bb);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpmirbl(&_global_self,&_global_newSize,&_global_allocator, bb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpmirL(&_global_self,&_global_newSize,&_global_allocator, bb);;
 ;}
 void _global_Array_free_uint(struct _global_Array_uint* _global_self, struct _global_Context* bb){;
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(bb)->allocator,bb);;
-#line 128 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int* bc =(_global_self)->data;if(bc != NULL){unsigned int* _global_data = bc;
 
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_free((void*)_global_data,bb);
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 else if(bc == NULL){
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 130 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct hashMap_HashBucket_uint hashMap_make_HashBucket_uint(struct _global_Allocator* hashMap_allocator, struct _global_Context* bb){;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string hashMap_keys;hashMap_keys = _global_Array_stringInit(0, 0, NULL, NULL);;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_uint hashMap_values;hashMap_values = _global_Array_uintInit(0, 0, NULL, NULL);;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_keys).allocator = hashMap_allocator;;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_values).allocator = hashMap_allocator;;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return hashMap_HashBucket_uintInit(hashMap_keys,hashMap_values);
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 void _global_Array_append_hashMap_HashBucket_uint_(struct _global_Array_hashMap_HashBucket_uint_* _global_self, struct hashMap_HashBucket_uint _global_value, struct _global_Context* bb){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_hashMap_HashBucket_uint_(_global_self,1,bb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_hashMap_HashBucket_uint_(_global_self,(_global_self)->capacity*2,bb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct hashMap_HashBucket_uint*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_memcpy_rmir_FuncScope(struct mir_FuncScope** _global_target, struct mir_FuncScope** _global_destination, unsigned int _global_length, struct _global_Context* bb){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct mir_FuncScope*),bb);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_mir_OpCode(struct mir_OpCode* _global_target, struct mir_OpCode* _global_destination, unsigned int _global_length, struct _global_Context* bb){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct mir_OpCode),bb);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_mir_CFG(struct mir_CFG* _global_target, struct mir_CFG* _global_destination, unsigned int _global_length, struct _global_Context* bb){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct mir_CFG),bb);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_rmir_Block(struct mir_Block** _global_target, struct mir_Block** _global_destination, unsigned int _global_length, struct _global_Context* bb){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct mir_Block*),bb);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_mir_Function(struct mir_Function* _global_target, struct mir_Function* _global_destination, unsigned int _global_length, struct _global_Context* bb){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct mir_Function),bb);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void hashMap_HashBucket_free_uint(struct hashMap_HashBucket_uint* hashMap_self, struct _global_Context* bb){;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_free_string(&((hashMap_self)->keys),bb);
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_free_uint(&((hashMap_self)->values),bb);
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct hashMap_HashMap_uint hashMap_make_HashMap_size_uint(unsigned int hashMap_size, struct _global_Allocator* hashMap_allocator, struct _global_Context* bb){;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_hashMap_HashBucket_uint_ hashMap_buckets;hashMap_buckets = _global_Array_hashMap_HashBucket_uint_Init(0, 0, NULL, NULL);;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_buckets).allocator = hashMap_allocator;;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Range bc =_global_RangeInit(0,hashMap_size);
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int bd = bc.start; bd < bc.end; bd++) {
 unsigned int hashMap_i;hashMap_i = bd;
 ;_global_Array_append_hashMap_HashBucket_uint_(&(hashMap_buckets),hashMap_make_HashBucket_uint(hashMap_allocator,bb),bb);
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return hashMap_HashMap_uintInit(_global_StaticArray_StaticArray_S_hashMap_HashBucket_uint_Init(hashMap_buckets.data, hashMap_buckets.length),0);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 
-static inline struct mir_FuncScope** tmpmirbm(struct _global_Array_rmir_FuncScope** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
+static inline struct mir_FuncScope** tmpmirM(struct _global_Array_rmir_FuncScope** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
 struct mir_FuncScope** bc =(*_global_self)->data;
 if(bc != NULL){struct mir_FuncScope** _global_data = bc;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),bb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct mir_FuncScope** _global_newData;_global_newData = (struct mir_FuncScope**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_FuncScope*),bb));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_rmir_FuncScope(_global_newData,_global_data,(*_global_self)->length,bb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,bb);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(bc == NULL){return (struct mir_FuncScope**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_FuncScope*),bb));}
 }
 void _global_Array_reserve_rmir_FuncScope(struct _global_Array_rmir_FuncScope* _global_self, unsigned int _global_newSize, struct _global_Context* bb){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(bb)->allocator,bb);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpmirbm(&_global_self,&_global_newSize,&_global_allocator, bb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpmirM(&_global_self,&_global_newSize,&_global_allocator, bb);;
 ;}
 
-static inline struct mir_OpCode* tmpmirbn(struct _global_Array_mir_OpCode** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
+static inline struct mir_OpCode* tmpmirN(struct _global_Array_mir_OpCode** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
 struct mir_OpCode* bc =(*_global_self)->data;
 if(bc != NULL){struct mir_OpCode* _global_data = bc;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),bb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct mir_OpCode* _global_newData;_global_newData = (struct mir_OpCode*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_OpCode),bb));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_mir_OpCode(_global_newData,_global_data,(*_global_self)->length,bb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,bb);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(bc == NULL){return (struct mir_OpCode*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_OpCode),bb));}
 }
 void _global_Array_reserve_mir_OpCode(struct _global_Array_mir_OpCode* _global_self, unsigned int _global_newSize, struct _global_Context* bb){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(bb)->allocator,bb);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpmirbn(&_global_self,&_global_newSize,&_global_allocator, bb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpmirN(&_global_self,&_global_newSize,&_global_allocator, bb);;
 ;}
 
-static inline struct mir_CFG* tmpmirbp(struct _global_Array_mir_CFG** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
+static inline struct mir_CFG* tmpmirP(struct _global_Array_mir_CFG** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
 struct mir_CFG* bc =(*_global_self)->data;
 if(bc != NULL){struct mir_CFG* _global_data = bc;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),bb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct mir_CFG* _global_newData;_global_newData = (struct mir_CFG*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_CFG),bb));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_mir_CFG(_global_newData,_global_data,(*_global_self)->length,bb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,bb);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(bc == NULL){return (struct mir_CFG*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_CFG),bb));}
 }
 void _global_Array_reserve_mir_CFG(struct _global_Array_mir_CFG* _global_self, unsigned int _global_newSize, struct _global_Context* bb){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(bb)->allocator,bb);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpmirbp(&_global_self,&_global_newSize,&_global_allocator, bb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpmirP(&_global_self,&_global_newSize,&_global_allocator, bb);;
 ;}
 
-static inline struct mir_Block** tmpmirbq(struct _global_Array_rmir_Block** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
+static inline struct mir_Block** tmpmirQ(struct _global_Array_rmir_Block** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
 struct mir_Block** bc =(*_global_self)->data;
 if(bc != NULL){struct mir_Block** _global_data = bc;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),bb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct mir_Block** _global_newData;_global_newData = (struct mir_Block**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_Block*),bb));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_rmir_Block(_global_newData,_global_data,(*_global_self)->length,bb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,bb);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(bc == NULL){return (struct mir_Block**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_Block*),bb));}
 }
 void _global_Array_reserve_rmir_Block(struct _global_Array_rmir_Block* _global_self, unsigned int _global_newSize, struct _global_Context* bb){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(bb)->allocator,bb);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpmirbq(&_global_self,&_global_newSize,&_global_allocator, bb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpmirQ(&_global_self,&_global_newSize,&_global_allocator, bb);;
 ;}
 struct hashMap_HashBucket_uint* _global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_uint_(struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_uint_* _global_self, unsigned int _global_index, struct _global_Context* bb){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),bb);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 
-static inline struct mir_Function* tmpmirbr(struct _global_Array_mir_Function** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
+static inline struct mir_Function* tmpmirR(struct _global_Array_mir_Function** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bb) {
 struct mir_Function* bc =(*_global_self)->data;
 if(bc != NULL){struct mir_Function* _global_data = bc;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),bb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct mir_Function* _global_newData;_global_newData = (struct mir_Function*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_Function),bb));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_mir_Function(_global_newData,_global_data,(*_global_self)->length,bb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,bb);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(bc == NULL){return (struct mir_Function*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_Function),bb));}
 }
 void _global_Array_reserve_mir_Function(struct _global_Array_mir_Function* _global_self, unsigned int _global_newSize, struct _global_Context* bb){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(bb)->allocator,bb);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpmirbr(&_global_self,&_global_newSize,&_global_allocator, bb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpmirR(&_global_self,&_global_newSize,&_global_allocator, bb);;
 ;}
 void hashMap_HashMap_free_uint(struct hashMap_HashMap_uint* hashMap_self, struct _global_Context* bb){;
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_uint_ bc =(hashMap_self)->buckets;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int bd = 0;bd < bc.length; bd++) {
 struct hashMap_HashBucket_uint hashMap_bucket;hashMap_bucket = *_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_uint_(&bc, bd, bb);
 ;unsigned int hashMap_i;hashMap_i = bd;
 hashMap_HashBucket_free_uint(&(hashMap_bucket),bb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct _global_Array_mir_OpCode* _global_box_____mir_OpCode(struct _global_Array_mir_OpCode _global_value, struct _global_Context* bb){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct _global_Array_mir_OpCode* _global_pointer;_global_pointer = (struct _global_Array_mir_OpCode*)(_global_Allocator_alloc((bb)->allocator,(uint64_t)sizeof(struct _global_Array_mir_OpCode),bb));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct _global_Array_rmir_Block* _global_box_____rmir_Block(struct _global_Array_rmir_Block _global_value, struct _global_Context* bb){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct _global_Array_rmir_Block* _global_pointer;_global_pointer = (struct _global_Array_rmir_Block*)(_global_Allocator_alloc((bb)->allocator,(uint64_t)sizeof(struct _global_Array_rmir_Block),bb));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct mir_Block* _global_box_mir_Block(struct mir_Block _global_value, struct _global_Context* bb){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct mir_Block* _global_pointer;_global_pointer = (struct mir_Block*)(_global_Allocator_alloc((bb)->allocator,(uint64_t)sizeof(struct mir_Block),bb));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct hashMap_HashMap_uint hashMap_make_HashMap_uint(struct _global_Context* bb){;return hashMap_make_HashMap_size_uint(powf(2,3),(bb)->allocator,bb);
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct mir_FuncScope* _global_box_mir_FuncScope(struct mir_FuncScope _global_value, struct _global_Context* bb){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct mir_FuncScope* _global_pointer;_global_pointer = (struct mir_FuncScope*)(_global_Allocator_alloc((bb)->allocator,(uint64_t)sizeof(struct mir_FuncScope),bb));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_Array_append_rmir_FuncScope(struct _global_Array_rmir_FuncScope* _global_self, struct mir_FuncScope* _global_value, struct _global_Context* bb){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_rmir_FuncScope(_global_self,1,bb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_rmir_FuncScope(_global_self,(_global_self)->capacity*2,bb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct mir_FuncScope**)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct mir_FuncScope* _global_Array_pop_rmir_FuncScope(struct _global_Array_rmir_FuncScope* _global_self, struct _global_Context* bb){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->length==0){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(25,"trying to pop empty array"),bb);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct mir_FuncScope* _global_tmp;_global_tmp = *(_global_Array_op_get_rmir_FuncScope(_global_self,(unsigned int)(_global_self)->length-1,bb));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return _global_tmp;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct mir_FuncScope** _global_Array_op_get_rmir_FuncScope(struct _global_Array_rmir_FuncScope* _global_self, unsigned int _global_index, struct _global_Context* bb){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),bb);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct mir_FuncScope**)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_mir_OpCode(struct _global_Array_mir_OpCode* _global_self, struct mir_OpCode _global_value, struct _global_Context* bb){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_mir_OpCode(_global_self,1,bb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_mir_OpCode(_global_self,(_global_self)->capacity*2,bb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct mir_OpCode*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_mir_CFG(struct _global_Array_mir_CFG* _global_self, struct mir_CFG _global_value, struct _global_Context* bb){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_mir_CFG(_global_self,1,bb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_mir_CFG(_global_self,(_global_self)->capacity*2,bb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct mir_CFG*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_rmir_Block(struct _global_Array_rmir_Block* _global_self, struct mir_Block* _global_value, struct _global_Context* bb){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_rmir_Block(_global_self,1,bb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_rmir_Block(_global_self,(_global_self)->capacity*2,bb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct mir_Block**)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct mir_CFG _global_Array_pop_mir_CFG(struct _global_Array_mir_CFG* _global_self, struct _global_Context* bb){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->length==0){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(25,"trying to pop empty array"),bb);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct mir_CFG _global_tmp;_global_tmp = *(_global_Array_op_get_mir_CFG(_global_self,(unsigned int)(_global_self)->length-1,bb));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return _global_tmp;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct mir_CFG* _global_Array_op_get_mir_CFG(struct _global_Array_mir_CFG* _global_self, unsigned int _global_index, struct _global_Context* bb){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),bb);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct mir_CFG*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 _Bool hashMap_HashMap_contains_uint(struct hashMap_HashMap_uint* hashMap_self, struct _global_String hashMap_key, struct _global_Context* bb){;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,bb);;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_uint* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_uint_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,bb)));;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string bc =(hashMap_bucket)->keys;
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int bd = 0;bd < bc.length; bd++) {
 struct _global_String hashMap_b_key;hashMap_b_key = *_global_Array_op_get_string(&bc, bd, bb);
 ;unsigned int hashMap_i;hashMap_i = bd;
 if(_global_String_op_eqByValue(hashMap_b_key,hashMap_key,bb)){;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 return 1;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return 0;
-#line 81 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 unsigned int* hashMap_HashMap_op_get_uint(struct hashMap_HashMap_uint* hashMap_self, struct _global_String hashMap_key, struct _global_Context* bb){;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,bb);;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_uint* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_uint_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,bb)));;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string bc =(hashMap_bucket)->keys;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int bd = 0;bd < bc.length; bd++) {
 struct _global_String hashMap_b_key;hashMap_b_key = *_global_Array_op_get_string(&bc, bd, bb);
 ;unsigned int hashMap_i;hashMap_i = bd;
 if(_global_String_op_eqByValue(hashMap_b_key,hashMap_key,bb)){;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 return &(*(_global_Array_op_get_uint(&((hashMap_bucket)->values),(unsigned int)hashMap_i,bb)));
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(3,"No "),(hashMap_key),bb),_global_StringInit(12," in hash map"),bb),bb);
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return (unsigned int*)0;
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct mir_ReadInfo* _global_box_mir_ReadInfo(struct mir_ReadInfo _global_value, struct _global_Context* bb){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct mir_ReadInfo* _global_pointer;_global_pointer = (struct mir_ReadInfo*)(_global_Allocator_alloc((bb)->allocator,(uint64_t)sizeof(struct mir_ReadInfo),bb));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_log_types_CompilerType(struct types_CompilerType _global_s, struct _global_Context* bb){;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/logger.top"
 _global_c_log(types_CompilerType_toString(&(_global_s),bb),bb);
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/logger.top"
 ;}
 struct mir_Block** _global_Array_op_get_rmir_Block(struct _global_Array_rmir_Block* _global_self, unsigned int _global_index, struct _global_Context* bb){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),bb);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct mir_Block**)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_mir_Function(struct _global_Array_mir_Function* _global_self, struct mir_Function _global_value, struct _global_Context* bb){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_mir_Function(_global_self,1,bb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_mir_Function(_global_self,(_global_self)->capacity*2,bb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct mir_Function*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void hashMap_HashMap_insert_uint(struct hashMap_HashMap_uint* hashMap_self, struct _global_String hashMap_key, unsigned int hashMap_value, struct _global_Context* bb){;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 if((hashMap_self)->length>((hashMap_self)->buckets).length/3*4){;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_assert(((hashMap_self)->buckets).length>0,_global_StringInit(24,"Resizing empty hash map!"),bb);
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Allocator* hashMap_hash_map_allocator;hashMap_hash_map_allocator = _global_Maybe_default_rAllocatorByValue(((*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_uint_(&((hashMap_self)->buckets),(unsigned int)0,bb))).keys).allocator,(bb)->allocator,bb);;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashMap_uint hashMap_new_hash;hashMap_new_hash = hashMap_make_HashMap_size_uint(((hashMap_self)->buckets).length*2,hashMap_hash_map_allocator,bb);;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_uint_ bc =(hashMap_self)->buckets;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int bd = 0;bd < bc.length; bd++) {
 struct hashMap_HashBucket_uint hashMap_per_bucket;hashMap_per_bucket = *_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_uint_(&bc, bd, bb);
 ;unsigned int hashMap_i;hashMap_i = bd;
 struct _global_Range bf =_global_RangeInit(0,((hashMap_per_bucket).keys).length);
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int bg = bf.start; bg < bf.end; bg++) {
 unsigned int hashMap_c;hashMap_c = bg;
 ;hashMap_HashMap_insert_uint(&(hashMap_new_hash),*(_global_Array_op_get_string(&((hashMap_per_bucket).keys),(unsigned int)hashMap_c,bb)),*(_global_Array_op_get_uint(&((hashMap_per_bucket).values),(unsigned int)hashMap_c,bb)),bb);
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 hashMap_HashMap_free_uint(hashMap_self,bb);
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 *(hashMap_self) = hashMap_new_hash;;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,bb);;
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_uint* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_uint_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,bb)));;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_append_string(&((hashMap_bucket)->keys),hashMap_key,bb);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_append_uint(&((hashMap_bucket)->values),hashMap_value,bb);
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_self)->length = (hashMap_self)->length+1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct _global_Array_mir_Function* _global_box_____mir_Function(struct _global_Array_mir_Function _global_value, struct _global_Context* bb){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct _global_Array_mir_Function* _global_pointer;_global_pointer = (struct _global_Array_mir_Function*)(_global_Allocator_alloc((bb)->allocator,(uint64_t)sizeof(struct _global_Array_mir_Function),bb));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
 void mirInitTypes() { 
@@ -14503,15 +11454,10 @@ rStructType_VTABLE_FOR_Type.type
 ; }
 void mirInit() { 
 ;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ifValidationInit();;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/mir/converter.top"
 ;
 };
 
@@ -14590,1207 +11536,691 @@ void insertByID_insert_at_index_____Maybe_rmir_Block_(struct _global_Array_Maybe
 printerpreter_Interpreterp___none* _global_StaticArray_op_get_3_printerpreter_Interpreterp___none(struct _global_StaticArray_3_printerpreter_Interpreterp___none* _global_self, unsigned int _global_index, struct _global_Context* m);
 void _global_Array_append_Maybe_rnone_(struct _global_Array_Maybe_rnone_* _global_self, void* _global_value, struct _global_Context* m);
 void* interpreter_pop_dynamic(struct interpreter_Interpreter* interpreter_self, uint64_t interpreter_size, struct _global_Context* m){;
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ((interpreter_self)->stack).occupied = ((interpreter_self)->stack).occupied-interpreter_size;;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return _global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied,m);
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void* interpreter_push_dynamic(struct interpreter_Interpreter* interpreter_self, uint64_t interpreter_size, struct _global_Context* m){;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return _global_TemporaryStorage_alloc(&((interpreter_self)->stack),interpreter_size,m);
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void interpreter_log_float(struct interpreter_Interpreter* interpreter_state, struct _global_Context* m){;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_log_impl_float(interpreter_state,m);
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void interpreter_log_int(struct interpreter_Interpreter* interpreter_state, struct _global_Context* m){;
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_log_impl_int(interpreter_state,m);
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void interpreter_log_string(struct interpreter_Interpreter* interpreter_state, struct _global_Context* m){;
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_log_impl_string(interpreter_state,m);
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 struct mir_Block* interpreter_Interpreter_exec_block(struct interpreter_Interpreter* interpreter_self, struct mir_Block* interpreter_block, struct _global_TemporaryStorage* interpreter_local_var_stack, struct _global_Array_rnone* interpreter_local_args, struct _global_Context* m){;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_Array_mir_OpCode n =*((interpreter_block)->code);
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 for (unsigned int p = 0;p < n.length; p++) {
 struct mir_OpCode interpreter_inst;interpreter_inst = *_global_Array_op_get_mir_OpCode(&n, p, m);
 ;unsigned int interpreter_i;interpreter_i = p;
 struct mir_OpCode q =interpreter_inst;if(q.tag==16){unsigned int interpreter_id = q.cases.FuncArg.field0;
 struct mir_ReadInfo* interpreter_read_info = q.cases.FuncArg.field1;
 
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 unsigned int interpreter_size;interpreter_size = mir_calc_size((interpreter_read_info)->_type,m);;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 void* interpreter_ptr_to_var;interpreter_ptr_to_var = _global_TemporaryStorage_alloc(interpreter_local_var_stack,(uint64_t)interpreter_size,m);;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_Array_append_rnone(interpreter_local_args,interpreter_ptr_to_var,m);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==13){struct mir_ReadInfo* interpreter_read_info = q.cases.Create.field0;
 
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 unsigned int interpreter_size;interpreter_size = mir_calc_size((interpreter_read_info)->_type,m);;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 void* interpreter_ptr_to_var;interpreter_ptr_to_var = _global_TemporaryStorage_alloc(interpreter_local_var_stack,(uint64_t)interpreter_size,m);;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 if((interpreter_read_info)->is_global){;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 insertByID_insert_at_index_rnone(&((interpreter_self)->var_ptr),(interpreter_read_info)->id,interpreter_ptr_to_var,m);
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 else{_global_Array_append_rnone(interpreter_local_args,interpreter_ptr_to_var,m);
-#line 70 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_assert(((interpreter_local_args)->length-1)==(interpreter_read_info)->id,_global_StringInit(21,"Incorrect id assigned"),m);
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;};
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==19){unsigned int interpreter_a = q.cases.CondJump.field0;
 unsigned int interpreter_b = q.cases.CondJump.field1;
 
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _Bool interpreter_cond;interpreter_cond = interpreter_pop_stack_bool(interpreter_self,m);;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 return *(_global_Array_op_get_Maybe_rmir_Block_(&(*(_global_Array_op_get_____Maybe_rmir_Block_(&((interpreter_self)->blocks),(unsigned int)((interpreter_self)->blocks).length-1,m))),(unsigned int)(interpreter_cond ? interpreter_a:(interpreter_b)),m));
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==20){unsigned int interpreter_a = q.cases.Jump.field0;
 
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 return *(_global_Array_op_get_Maybe_rmir_Block_(&(*(_global_Array_op_get_____Maybe_rmir_Block_(&((interpreter_self)->blocks),(unsigned int)((interpreter_self)->blocks).length-1,m))),(unsigned int)interpreter_a,m));
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==22){unsigned int interpreter_id = q.cases.StringDecl.field0;
 struct _global_String interpreter_str = q.cases.StringDecl.field1;
 
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 insertByID_insert_at_index_string(&((interpreter_self)->string_literals),interpreter_id,interpreter_str,m);
-#line 81 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==21){unsigned int interpreter_id = q.cases.StringRef.field0;
 
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_string(interpreter_self,_global_Maybe_unwrap_stringByValue(*(_global_Array_op_get_Maybe_string_(&((interpreter_self)->string_literals),(unsigned int)interpreter_id,m)),m),m);
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==15){struct mir_ReadInfo* interpreter_read_info = q.cases.Assign.field0;
 
-#line 86 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 void* interpreter_ptr_to_var;interpreter_ptr_to_var = ((interpreter_read_info)->is_global ? _global_Maybe_expect_rnoneByValue(*(_global_Array_op_get_Maybe_rnone_(&((interpreter_self)->var_ptr),(unsigned int)(interpreter_read_info)->id,m)),_global_StringInit(32,"Could not assign global variable"),m):(*(_global_Array_op_get_rnone((struct _global_Array_rnone*)interpreter_local_args,(unsigned int)(interpreter_read_info)->id,m))));;
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 unsigned int interpreter_size;interpreter_size = mir_calc_size((interpreter_read_info)->_type,m);;
-#line 91 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 void* interpreter_set_to;interpreter_set_to = interpreter_pop_dynamic(interpreter_self,(uint64_t)interpreter_size,m);;
-#line 92 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_memcpy_none(interpreter_ptr_to_var,interpreter_set_to,interpreter_size,m);
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 if(interpreter_i>0){;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct mir_OpCode r =*(_global_Array_op_get_mir_OpCode((struct _global_Array_mir_OpCode*)(interpreter_block)->code,(unsigned int)interpreter_i-1,m));if(r.tag==16){unsigned int interpreter_id = r.cases.FuncArg.field0;
 struct mir_ReadInfo* interpreter_name = r.cases.FuncArg.field1;
 
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 if(interpreter_id==0){;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_pop_stack_rmir_Function(interpreter_self,m);
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;};
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(1){
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;};
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 86 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==14){struct mir_ReadInfo* interpreter_read_info = q.cases.Read.field0;
 
-#line 102 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 void* interpreter_ptr_to_var;interpreter_ptr_to_var = ((interpreter_read_info)->is_global ? _global_Maybe_expect_rnoneByValue(*(_global_Array_op_get_Maybe_rnone_(&((interpreter_self)->var_ptr),(unsigned int)(interpreter_read_info)->id,m)),_global_StringInit(30,"Could not read global variable"),m):(*(_global_Array_op_get_rnone((struct _global_Array_rnone*)interpreter_local_args,(unsigned int)(interpreter_read_info)->id,m))));;
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 unsigned int interpreter_size;interpreter_size = mir_calc_size((interpreter_read_info)->_type,m);;
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 void* interpreter_ptr;interpreter_ptr = interpreter_push_dynamic(interpreter_self,(uint64_t)interpreter_size,m);;
-#line 108 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_memcpy_none(interpreter_ptr,interpreter_ptr_to_var,interpreter_size,m);
-#line 109 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 102 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==4){
-#line 111 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_bool(interpreter_self,(interpreter_pop_under_int(interpreter_self,m))<(interpreter_pop_2_stack_int(interpreter_self,m)),m);
-#line 111 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 111 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==0){
-#line 112 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_int(interpreter_self,(interpreter_pop_stack_int(interpreter_self,m))+interpreter_pop_stack_int(interpreter_self,m),m);
-#line 112 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 112 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==1){
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_int(interpreter_self,(interpreter_pop_under_int(interpreter_self,m))-interpreter_pop_2_stack_int(interpreter_self,m),m);
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==2){
-#line 114 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_int(interpreter_self,(interpreter_pop_stack_int(interpreter_self,m))*interpreter_pop_stack_int(interpreter_self,m),m);
-#line 114 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 114 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==3){
-#line 115 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_int(interpreter_self,(interpreter_pop_under_int(interpreter_self,m))/interpreter_pop_2_stack_int(interpreter_self,m),m);
-#line 115 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 115 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==17){struct types_FuncPtr* interpreter_func_ptr_type = q.cases.FuncCall.field0;
 
-#line 117 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 unsigned int interpreter_size_of_args;interpreter_size_of_args = sizeof(pp___none);;
-#line 118 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_StaticArray_StaticArray_S_types_CompilerType s =(interpreter_func_ptr_type)->args;
-#line 120 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 for (unsigned int t = 0;t < s.length; t++) {
 struct types_CompilerType interpreter_arg;interpreter_arg = *_global_StaticArray_op_get_StaticArray_S_types_CompilerType(&s, t, m);
 ;interpreter_size_of_args = interpreter_size_of_args+mir_calc_size(interpreter_arg,m);;
-#line 121 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 }
 ;
-#line 120 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 if((interpreter_func_ptr_type)->external){;
-#line 123 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 printerpreter_Interpreterp___none interpreter_func_ptr;interpreter_func_ptr = *((printerpreter_Interpreterp___none*)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied-(uint64_t)interpreter_size_of_args,m)));;
-#line 124 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_func_ptr(interpreter_self,m);
-#line 125 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 else{struct mir_Function* interpreter_func_ptr;interpreter_func_ptr = *((struct mir_Function**)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied-(uint64_t)interpreter_size_of_args,m)));;
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_Interpreter_exec_function(interpreter_self,interpreter_func_ptr,m);
-#line 129 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;};
-#line 123 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 117 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==18){struct types_CompilerType interpreter_typ = q.cases.FuncReturn.field0;
 
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 return NULL;
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==5){
-#line 133 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_float(interpreter_self,(interpreter_pop_stack_float(interpreter_self,m))+interpreter_pop_stack_float(interpreter_self,m),m);
-#line 133 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 133 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==6){
-#line 134 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_float(interpreter_self,(interpreter_pop_under_float(interpreter_self,m))-interpreter_pop_2_stack_float(interpreter_self,m),m);
-#line 134 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 134 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==7){
-#line 135 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_float(interpreter_self,(interpreter_pop_stack_float(interpreter_self,m))*interpreter_pop_stack_float(interpreter_self,m),m);
-#line 135 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 135 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==8){
-#line 136 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_float(interpreter_self,(interpreter_pop_under_float(interpreter_self,m))/interpreter_pop_2_stack_float(interpreter_self,m),m);
-#line 136 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 136 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==9){
-#line 137 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_bool(interpreter_self,(interpreter_pop_under_float(interpreter_self,m))<interpreter_pop_2_stack_float(interpreter_self,m),m);
-#line 137 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 137 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==10){int32_t interpreter_num = q.cases.Store_i32.field0;
 
-#line 139 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_int(interpreter_self,(int)interpreter_num,m);
-#line 139 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 139 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==11){float interpreter_num = q.cases.Store_f32.field0;
 
-#line 140 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_float(interpreter_self,interpreter_num,m);
-#line 140 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 140 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(q.tag==12){_Bool interpreter_b = q.cases.Store_bool.field0;
 
-#line 141 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_push_stack_bool(interpreter_self,interpreter_b,m);
-#line 141 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 141 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 }
 ;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return NULL;
-#line 143 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 void interpreter_Interpreter_exec_function(struct interpreter_Interpreter* interpreter_self, struct mir_Function* interpreter_func, struct _global_Context* m){;
-#line 147 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 147 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_TemporaryStorage* n = &((interpreter_self)->var_stack);
-#line 148 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 uint64_t p = _global_TemporaryStorage_get_occupied(&((interpreter_self)->var_stack),m);
-#line 148 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 148 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_Array_rnone interpreter_local_args;interpreter_local_args = _global_Array_rnoneInit(0, 0, NULL, NULL);;
-#line 150 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct mir_Block* interpreter_block;interpreter_block = *(_global_StaticArray_op_get_StaticArray_S_rmir_Block(&((interpreter_func)->all_blocks),(unsigned int)0,m));;
-#line 152 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_Array_append_____Maybe_rmir_Block_(&((interpreter_self)->blocks),_global_Maybe_unwrap_____Maybe_rmir_Block_ByValue(*(_global_Array_op_get_Maybe_____Maybe_rmir_Block__(&((interpreter_self)->all_blocks),(unsigned int)(interpreter_func)->id,m)),m),m);
-#line 154 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;while(1){struct mir_Block* q =interpreter_Interpreter_exec_block(interpreter_self,interpreter_block,&((interpreter_self)->var_stack),&(interpreter_local_args),m);if(q != NULL){struct mir_Block* interpreter_next_block = q;
 
-#line 157 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 interpreter_block = interpreter_next_block;;
-#line 158 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 157 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 else if(1){
-#line 157 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 break;;
-#line 160 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
-#line 157 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;};
-#line 156 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_Array_pop_____Maybe_rmir_Block_(&((interpreter_self)->blocks),m);
-#line 162 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_TemporaryStorage_reset_to(n,p,m);
-#line 148 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void interpreter_Interpreter_set_functions(struct interpreter_Interpreter* interpreter_self, struct mir_Program* interpreter_ir, struct _global_Context* m){;
-#line 164 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 164 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_Range n =_global_RangeInit(0,((interpreter_ir)->functions).length);
-#line 165 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int interpreter_i;interpreter_i = p;
 ;struct mir_Function* interpreter_func;interpreter_func = &(*(_global_StaticArray_op_get_StaticArray_S_mir_Function(&((interpreter_ir)->functions),(unsigned int)interpreter_i,m)));;
-#line 166 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct mir_Function** interpreter_func_ptr;interpreter_func_ptr = (struct mir_Function**)(_global_TemporaryStorage_alloc(&((interpreter_self)->stack),(uint64_t)sizeof(struct mir_Function*),m));;
-#line 168 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 *(interpreter_func_ptr) = interpreter_func;;
-#line 169 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 insertByID_insert_at_index_rnone(&((interpreter_self)->var_ptr),(interpreter_func)->id,(void*)interpreter_func_ptr,m);
-#line 171 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_Array_Maybe_rmir_Block_ interpreter_blocks;interpreter_blocks = _global_Array_Maybe_rmir_Block_Init(0, 0, NULL, NULL);;
-#line 173 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_StaticArray_StaticArray_S_rmir_Block q =(interpreter_func)->all_blocks;
-#line 174 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 for (unsigned int r = 0;r < q.length; r++) {
 struct mir_Block* interpreter_block;interpreter_block = *_global_StaticArray_op_get_StaticArray_S_rmir_Block(&q, r, m);
 ;insertByID_insert_at_index_rmir_Block(&(interpreter_blocks),(interpreter_block)->id,interpreter_block,m);
-#line 175 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 }
 ;
-#line 174 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 insertByID_insert_at_index_____Maybe_rmir_Block_(&((interpreter_self)->all_blocks),(interpreter_func)->id,interpreter_blocks,m);
-#line 177 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 }
 ;
-#line 165 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void interpreter_exec(struct mir_Program interpreter_ir, struct _global_Context* m){;
-#line 179 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_Array_Maybe_____Maybe_rmir_Block__ interpreter_all_blocks;interpreter_all_blocks = _global_Array_Maybe_____Maybe_rmir_Block__Init(0, 0, NULL, NULL);;
-#line 180 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct interpreter_Interpreter interpreter_i;interpreter_i = interpreter_InterpreterInit(_global_Array_Maybe_string_Init(0, 0, NULL, NULL),_global_Array_Maybe_rnone_Init(0, 0, NULL, NULL),_global_new_TemporaryStorage((uint64_t)10000,m),_global_new_TemporaryStorage((uint64_t)100000,m),_global_Array_____Maybe_rmir_Block_Init(0, 0, NULL, NULL),interpreter_all_blocks);;
-#line 182 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_StaticArray_3_printerpreter_Interpreterp___none interpreter_ptr_to_func;interpreter_ptr_to_func = _global_StaticArray_3_printerpreter_Interpreterp___noneInit(interpreter_log_int,interpreter_log_float,interpreter_log_string);;
-#line 191 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_Range n =_global_RangeInit(0,3);
-#line 193 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int interpreter_c;interpreter_c = p;
 ;_global_Array_append_Maybe_rnone_(&((interpreter_i).var_ptr),(void*)(&(*(_global_StaticArray_op_get_3_printerpreter_Interpreterp___none(&(interpreter_ptr_to_func),(unsigned int)interpreter_c,m)))),m);
-#line 194 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 }
 ;
-#line 193 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_TemporaryStorage* q = &((interpreter_i).stack);
-#line 196 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;
-#line 196 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_TemporaryStorage* r = &((interpreter_i).var_stack);
-#line 197 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;
-#line 197 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_Interpreter_set_functions(&(interpreter_i),&(interpreter_ir),m);
-#line 199 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_Interpreter_exec_function(&(interpreter_i),*(((struct mir_Function**)*(_global_Array_op_get_Maybe_rnone_(&((interpreter_i).var_ptr),(unsigned int)3,m)))),m);
-#line 200 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_TemporaryStorage_free_allocator(q,m);
-#line 196 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_TemporaryStorage_free_allocator(r,m);
-#line 197 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void _global_memcpy_Maybe_string_(struct _global_Maybe_string* _global_target, struct _global_Maybe_string* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct _global_Maybe_string),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_Maybe_rmir_Block_(struct mir_Block** _global_target, struct mir_Block** _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct mir_Block*),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_Maybe_____Maybe_rmir_Block__(struct _global_Maybe_____Maybe_rmir_Block_* _global_target, struct _global_Maybe_____Maybe_rmir_Block_* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct _global_Maybe_____Maybe_rmir_Block_),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_rnone(void** _global_target, void** _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(void*),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct _global_Maybe_string* tmpinterpreterbs(struct _global_Array_Maybe_string_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct _global_Maybe_string* tmpinterpreterS(struct _global_Array_Maybe_string_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct _global_Maybe_string* n =(*_global_self)->data;
 if(n != NULL){struct _global_Maybe_string* _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Maybe_string* _global_newData;_global_newData = (struct _global_Maybe_string*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Maybe_string),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_Maybe_string_(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct _global_Maybe_string*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Maybe_string),m));}
 }
 void _global_Array_reserve_Maybe_string_(struct _global_Array_Maybe_string_* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpinterpreterbs(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpinterpreterS(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 void _global_memcpy_____Maybe_rmir_Block_(struct _global_Array_Maybe_rmir_Block_* _global_target, struct _global_Array_Maybe_rmir_Block_* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct _global_Array_Maybe_rmir_Block_),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct mir_Block** tmpinterpreterbt(struct _global_Array_Maybe_rmir_Block_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct mir_Block** tmpinterpreterT(struct _global_Array_Maybe_rmir_Block_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct mir_Block** n =(*_global_self)->data;
 if(n != NULL){struct mir_Block** _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct mir_Block** _global_newData;_global_newData = (struct mir_Block**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_Block*),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_Maybe_rmir_Block_(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct mir_Block**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct mir_Block*),m));}
 }
 void _global_Array_reserve_Maybe_rmir_Block_(struct _global_Array_Maybe_rmir_Block_* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpinterpreterbt(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpinterpreterT(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 
-static inline struct _global_Maybe_____Maybe_rmir_Block_* tmpinterpreterbv(struct _global_Array_Maybe_____Maybe_rmir_Block__** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct _global_Maybe_____Maybe_rmir_Block_* tmpinterpreterV(struct _global_Array_Maybe_____Maybe_rmir_Block__** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct _global_Maybe_____Maybe_rmir_Block_* n =(*_global_self)->data;
 if(n != NULL){struct _global_Maybe_____Maybe_rmir_Block_* _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Maybe_____Maybe_rmir_Block_* _global_newData;_global_newData = (struct _global_Maybe_____Maybe_rmir_Block_*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Maybe_____Maybe_rmir_Block_),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_Maybe_____Maybe_rmir_Block__(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct _global_Maybe_____Maybe_rmir_Block_*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Maybe_____Maybe_rmir_Block_),m));}
 }
 void _global_Array_reserve_Maybe_____Maybe_rmir_Block__(struct _global_Array_Maybe_____Maybe_rmir_Block__* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpinterpreterbv(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpinterpreterV(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 void _global_memcpy_Maybe_rnone_(void** _global_target, void** _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(void*),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_log_float(float _global_s, struct _global_Context* m){;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/logger.top"
 _global_c_log(_global_Float_toString(&(_global_s),m),m);
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/logger.top"
 ;}
 pp___none interpreter_pop_stack_pp___none(struct interpreter_Interpreter* interpreter_self, struct _global_Context* m){;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_assert(((interpreter_self)->stack).occupied>=(uint64_t)sizeof(pp___none),_global_StringInit(18,"Popped empty stack"),m);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ((interpreter_self)->stack).occupied = ((interpreter_self)->stack).occupied-(uint64_t)sizeof(pp___none);;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return *((pp___none*)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied,m)));
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void _global_log_int(int _global_s, struct _global_Context* m){;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/logger.top"
 _global_c_log(_global_int_toString(&(_global_s),m),m);
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/logger.top"
 ;}
 struct _global_String interpreter_pop_stack_string(struct interpreter_Interpreter* interpreter_self, struct _global_Context* m){;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_assert(((interpreter_self)->stack).occupied>=(uint64_t)sizeof(struct _global_String),_global_StringInit(18,"Popped empty stack"),m);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ((interpreter_self)->stack).occupied = ((interpreter_self)->stack).occupied-(uint64_t)sizeof(struct _global_String);;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return *((struct _global_String*)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied,m)));
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 
-static inline void** tmpinterpreterbw(struct _global_Array_rnone** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline void** tmpinterpreterW(struct _global_Array_rnone** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 void** n =(*_global_self)->data;
 if(n != NULL){void** _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 void** _global_newData;_global_newData = (void**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(void*),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_rnone(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (void**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(void*),m));}
 }
 void _global_Array_reserve_rnone(struct _global_Array_rnone* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpinterpreterbw(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpinterpreterW(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 void _global_Array_append_Maybe_string_(struct _global_Array_Maybe_string_* _global_self, struct _global_Maybe_string _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_Maybe_string_(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_Maybe_string_(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct _global_Maybe_string*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 
-static inline struct _global_Array_Maybe_rmir_Block_* tmpinterpreterbx(struct _global_Array_____Maybe_rmir_Block_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct _global_Array_Maybe_rmir_Block_* tmpinterpreterX(struct _global_Array_____Maybe_rmir_Block_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct _global_Array_Maybe_rmir_Block_* n =(*_global_self)->data;
 if(n != NULL){struct _global_Array_Maybe_rmir_Block_* _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Array_Maybe_rmir_Block_* _global_newData;_global_newData = (struct _global_Array_Maybe_rmir_Block_*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Array_Maybe_rmir_Block_),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_____Maybe_rmir_Block_(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct _global_Array_Maybe_rmir_Block_*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Array_Maybe_rmir_Block_),m));}
 }
 void _global_Array_reserve_____Maybe_rmir_Block_(struct _global_Array_____Maybe_rmir_Block_* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpinterpreterbx(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpinterpreterX(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 void _global_Array_append_Maybe_rmir_Block_(struct _global_Array_Maybe_rmir_Block_* _global_self, struct mir_Block* _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_Maybe_rmir_Block_(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_Maybe_rmir_Block_(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct mir_Block**)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_Maybe_____Maybe_rmir_Block__(struct _global_Array_Maybe_____Maybe_rmir_Block__* _global_self, struct _global_Maybe_____Maybe_rmir_Block_ _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_Maybe_____Maybe_rmir_Block__(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_Maybe_____Maybe_rmir_Block__(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct _global_Maybe_____Maybe_rmir_Block_*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 
-static inline void** tmpinterpreterby(struct _global_Array_Maybe_rnone_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline void** tmpinterpreterY(struct _global_Array_Maybe_rnone_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 void** n =(*_global_self)->data;
 if(n != NULL){void** _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 void** _global_newData;_global_newData = (void**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(void*),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_Maybe_rnone_(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (void**)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(void*),m));}
 }
 void _global_Array_reserve_Maybe_rnone_(struct _global_Array_Maybe_rnone_* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpinterpreterby(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpinterpreterY(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 void interpreter_log_impl_float(struct interpreter_Interpreter* interpreter_state, struct _global_Context* m){;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_Allocator* n = (m)->allocator;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 uint64_t p = _global_Allocator_get_occupied((m)->allocator,m);
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_log_float(interpreter_pop_stack_float(interpreter_state,m),m);
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_pop_stack_pp___none(interpreter_state,m);
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_Allocator_reset_to(n,p,m);
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void interpreter_log_impl_int(struct interpreter_Interpreter* interpreter_state, struct _global_Context* m){;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_Allocator* n = (m)->allocator;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 uint64_t p = _global_Allocator_get_occupied((m)->allocator,m);
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_log_int(interpreter_pop_stack_int(interpreter_state,m),m);
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_pop_stack_pp___none(interpreter_state,m);
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_Allocator_reset_to(n,p,m);
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void interpreter_log_impl_string(struct interpreter_Interpreter* interpreter_state, struct _global_Context* m){;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_Allocator* n = (m)->allocator;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 uint64_t p = _global_Allocator_get_occupied((m)->allocator,m);
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_log_string(interpreter_pop_stack_string(interpreter_state,m),m);
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 interpreter_pop_stack_pp___none(interpreter_state,m);
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_Allocator_reset_to(n,p,m);
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void _global_Array_append_rnone(struct _global_Array_rnone* _global_self, void* _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_rnone(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_rnone(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((void**)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void insertByID_insert_at_index_rnone(struct _global_Array_Maybe_rnone_* insertByID_arr, unsigned int insertByID_id, void* insertByID_data, struct _global_Context* m){;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 if(insertByID_id>=(insertByID_arr)->length){;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 struct _global_Range n =_global_RangeInit(0,(insertByID_id-(insertByID_arr)->length+1));
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int insertByID_c;insertByID_c = p;
 ;_global_Array_append_Maybe_rnone_(insertByID_arr,NULL,m);
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 }
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;};
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 *(_global_Array_op_get_Maybe_rnone_((struct _global_Array_Maybe_rnone_*)insertByID_arr,(unsigned int)insertByID_id,m)) = insertByID_data;;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;}
 _Bool interpreter_pop_stack_bool(struct interpreter_Interpreter* interpreter_self, struct _global_Context* m){;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_assert(((interpreter_self)->stack).occupied>=(uint64_t)sizeof(_Bool),_global_StringInit(18,"Popped empty stack"),m);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ((interpreter_self)->stack).occupied = ((interpreter_self)->stack).occupied-(uint64_t)sizeof(_Bool);;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return *((_Bool*)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied,m)));
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 struct _global_Array_Maybe_rmir_Block_* _global_Array_op_get_____Maybe_rmir_Block_(struct _global_Array_____Maybe_rmir_Block_* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct _global_Array_Maybe_rmir_Block_*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct mir_Block** _global_Array_op_get_Maybe_rmir_Block_(struct _global_Array_Maybe_rmir_Block_* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct mir_Block**)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-static inline struct _global_Maybe_string tmpinterpreterbz(struct _global_Maybe_Maybe_T r) {
+static inline struct _global_Maybe_string tmpinterpreterZ(struct _global_Maybe_Maybe_T r) {
 struct _global_Maybe_string q;q.tag = r.tag;q.cases = *(union _global_Maybe_string_cases*) &(r.cases);return q;
 }
 void insertByID_insert_at_index_string(struct _global_Array_Maybe_string_* insertByID_arr, unsigned int insertByID_id, struct _global_String insertByID_data, struct _global_Context* m){;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 if(insertByID_id>=(insertByID_arr)->length){;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 struct _global_Range n =_global_RangeInit(0,(insertByID_id-(insertByID_arr)->length+1));
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int insertByID_c;insertByID_c = p;
-;_global_Array_append_Maybe_string_(insertByID_arr,tmpinterpreterbz(_global_None),m);
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
+;_global_Array_append_Maybe_string_(insertByID_arr,tmpinterpreterZ(_global_None),m);
 }
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;};
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 *(_global_Array_op_get_Maybe_string_((struct _global_Array_Maybe_string_*)insertByID_arr,(unsigned int)insertByID_id,m)) = _global_Some_string(insertByID_data,m);;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;}
 struct _global_Maybe_string* _global_Array_op_get_Maybe_string_(struct _global_Array_Maybe_string_* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct _global_Maybe_string*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct _global_String _global_Maybe_unwrap_stringByValue(struct _global_Maybe_string _global_self, struct _global_Context* m){;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 struct _global_String _global_x;;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 struct _global_Maybe_string n =_global_self;if(n.tag==0){_global_x = n.cases.Some.field0;
 
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 else if(1){
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 _global_panic(_global_StringInit(38,"Trying to unwrap maybe, which was None"),m);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;return _global_x;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
 static inline struct _global_String _global_Maybe_unwrap_string(struct _global_Maybe_string* p,struct _global_Context* m){
 return _global_Maybe_unwrap_stringByValue(*p,m);
 }void interpreter_push_stack_string(struct interpreter_Interpreter* interpreter_self, struct _global_String interpreter_value, struct _global_Context* m){;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 struct _global_String* interpreter_ptr;interpreter_ptr = (struct _global_String*)(_global_TemporaryStorage_alloc(&((interpreter_self)->stack),(uint64_t)sizeof(struct _global_String),m));;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 *(interpreter_ptr) = interpreter_value;;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void** _global_Array_op_get_Maybe_rnone_(struct _global_Array_Maybe_rnone_* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((void**)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void* _global_Maybe_expect_rnoneByValue(void* _global_self, struct _global_String _global_mesg, struct _global_Context* m){;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 void* _global_x;;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 void* n =_global_self;if(n != NULL){_global_x = n;
 
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 else if(1){
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 _global_panic(_global_mesg,m);
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;return _global_x;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
 static inline void* _global_Maybe_expect_rnone(void** p,struct _global_String q,struct _global_Context* m){
 return _global_Maybe_expect_rnoneByValue(*p,q,m);
 }void** _global_Array_op_get_rnone(struct _global_Array_rnone* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((void**)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_memcpy_none(void* _global_target, void* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy(_global_target,_global_destination,(uint64_t)_global_length*sizeof(void),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct mir_OpCode* _global_Array_op_get_mir_OpCode(struct _global_Array_mir_OpCode* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct mir_OpCode*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct mir_Function* interpreter_pop_stack_rmir_Function(struct interpreter_Interpreter* interpreter_self, struct _global_Context* m){;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_assert(((interpreter_self)->stack).occupied>=(uint64_t)sizeof(struct mir_Function*),_global_StringInit(18,"Popped empty stack"),m);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ((interpreter_self)->stack).occupied = ((interpreter_self)->stack).occupied-(uint64_t)sizeof(struct mir_Function*);;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return *((struct mir_Function**)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied,m)));
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 int interpreter_pop_under_int(struct interpreter_Interpreter* interpreter_self, struct _global_Context* m){;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return *((int*)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied-(uint64_t)2*sizeof(int),m)));
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 int interpreter_pop_2_stack_int(struct interpreter_Interpreter* interpreter_self, struct _global_Context* m){;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_assert(((interpreter_self)->stack).occupied>=(uint64_t)2*sizeof(int),_global_StringInit(18,"Popped empty stack"),m);
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 int* interpreter_ptr;interpreter_ptr = (int*)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied-(uint64_t)sizeof(int),m));;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ((interpreter_self)->stack).occupied = ((interpreter_self)->stack).occupied-(uint64_t)2*sizeof(int);;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return *(interpreter_ptr);
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void interpreter_push_stack_bool(struct interpreter_Interpreter* interpreter_self, _Bool interpreter_value, struct _global_Context* m){;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _Bool* interpreter_ptr;interpreter_ptr = (_Bool*)(_global_TemporaryStorage_alloc(&((interpreter_self)->stack),(uint64_t)sizeof(_Bool),m));;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 *(interpreter_ptr) = interpreter_value;;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 int interpreter_pop_stack_int(struct interpreter_Interpreter* interpreter_self, struct _global_Context* m){;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_assert(((interpreter_self)->stack).occupied>=(uint64_t)sizeof(int),_global_StringInit(18,"Popped empty stack"),m);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ((interpreter_self)->stack).occupied = ((interpreter_self)->stack).occupied-(uint64_t)sizeof(int);;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return *((int*)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied,m)));
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void interpreter_push_stack_int(struct interpreter_Interpreter* interpreter_self, int interpreter_value, struct _global_Context* m){;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 int* interpreter_ptr;interpreter_ptr = (int*)(_global_TemporaryStorage_alloc(&((interpreter_self)->stack),(uint64_t)sizeof(int),m));;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 *(interpreter_ptr) = interpreter_value;;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 float interpreter_pop_stack_float(struct interpreter_Interpreter* interpreter_self, struct _global_Context* m){;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_assert(((interpreter_self)->stack).occupied>=(uint64_t)sizeof(float),_global_StringInit(18,"Popped empty stack"),m);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ((interpreter_self)->stack).occupied = ((interpreter_self)->stack).occupied-(uint64_t)sizeof(float);;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return *((float*)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied,m)));
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 void interpreter_push_stack_float(struct interpreter_Interpreter* interpreter_self, float interpreter_value, struct _global_Context* m){;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 float* interpreter_ptr;interpreter_ptr = (float*)(_global_TemporaryStorage_alloc(&((interpreter_self)->stack),(uint64_t)sizeof(float),m));;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 *(interpreter_ptr) = interpreter_value;;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 float interpreter_pop_under_float(struct interpreter_Interpreter* interpreter_self, struct _global_Context* m){;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return *((float*)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied-(uint64_t)2*sizeof(float),m)));
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 float interpreter_pop_2_stack_float(struct interpreter_Interpreter* interpreter_self, struct _global_Context* m){;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 _global_assert(((interpreter_self)->stack).occupied>=(uint64_t)2*sizeof(float),_global_StringInit(18,"Popped empty stack"),m);
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 float* interpreter_ptr;interpreter_ptr = (float*)(_global_offsetPtr(((interpreter_self)->stack).data,(int64_t)((interpreter_self)->stack).occupied-(uint64_t)sizeof(float),m));;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ((interpreter_self)->stack).occupied = ((interpreter_self)->stack).occupied-(uint64_t)2*sizeof(float);;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;return *(interpreter_ptr);
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;}
 struct mir_Block** _global_StaticArray_op_get_StaticArray_S_rmir_Block(struct _global_StaticArray_StaticArray_S_rmir_Block* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 struct _global_Maybe_____Maybe_rmir_Block_* _global_Array_op_get_Maybe_____Maybe_rmir_Block__(struct _global_Array_Maybe_____Maybe_rmir_Block__* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct _global_Maybe_____Maybe_rmir_Block_*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct _global_Array_Maybe_rmir_Block_ _global_Maybe_unwrap_____Maybe_rmir_Block_ByValue(struct _global_Maybe_____Maybe_rmir_Block_ _global_self, struct _global_Context* m){;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 struct _global_Array_Maybe_rmir_Block_ _global_x;;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 struct _global_Maybe_____Maybe_rmir_Block_ n =_global_self;if(n.tag==0){_global_x = n.cases.Some.field0;
 
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 else if(1){
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 _global_panic(_global_StringInit(38,"Trying to unwrap maybe, which was None"),m);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;return _global_x;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
 static inline struct _global_Array_Maybe_rmir_Block_ _global_Maybe_unwrap_____Maybe_rmir_Block_(struct _global_Maybe_____Maybe_rmir_Block_* p,struct _global_Context* m){
 return _global_Maybe_unwrap_____Maybe_rmir_Block_ByValue(*p,m);
 }void _global_Array_append_____Maybe_rmir_Block_(struct _global_Array_____Maybe_rmir_Block_* _global_self, struct _global_Array_Maybe_rmir_Block_ _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_____Maybe_rmir_Block_(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_____Maybe_rmir_Block_(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct _global_Array_Maybe_rmir_Block_*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct _global_Array_Maybe_rmir_Block_ _global_Array_pop_____Maybe_rmir_Block_(struct _global_Array_____Maybe_rmir_Block_* _global_self, struct _global_Context* m){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->length==0){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(25,"trying to pop empty array"),m);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Array_Maybe_rmir_Block_ _global_tmp;_global_tmp = *(_global_Array_op_get_____Maybe_rmir_Block_(_global_self,(unsigned int)(_global_self)->length-1,m));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return _global_tmp;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct mir_Function* _global_StaticArray_op_get_StaticArray_S_mir_Function(struct _global_StaticArray_StaticArray_S_mir_Function* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 void insertByID_insert_at_index_rmir_Block(struct _global_Array_Maybe_rmir_Block_* insertByID_arr, unsigned int insertByID_id, struct mir_Block* insertByID_data, struct _global_Context* m){;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 if(insertByID_id>=(insertByID_arr)->length){;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 struct _global_Range n =_global_RangeInit(0,(insertByID_id-(insertByID_arr)->length+1));
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int insertByID_c;insertByID_c = p;
 ;_global_Array_append_Maybe_rmir_Block_(insertByID_arr,NULL,m);
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 }
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;};
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 *(_global_Array_op_get_Maybe_rmir_Block_((struct _global_Array_Maybe_rmir_Block_*)insertByID_arr,(unsigned int)insertByID_id,m)) = insertByID_data;;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;}
-static inline struct _global_Maybe_____Maybe_rmir_Block_ tmpinterpreterbB(struct _global_Maybe_Maybe_T r) {
+static inline struct _global_Maybe_____Maybe_rmir_Block_ tmpinterpreterbb(struct _global_Maybe_Maybe_T r) {
 struct _global_Maybe_____Maybe_rmir_Block_ q;q.tag = r.tag;q.cases = *(union _global_Maybe_____Maybe_rmir_Block__cases*) &(r.cases);return q;
 }
 void insertByID_insert_at_index_____Maybe_rmir_Block_(struct _global_Array_Maybe_____Maybe_rmir_Block__* insertByID_arr, unsigned int insertByID_id, struct _global_Array_Maybe_rmir_Block_ insertByID_data, struct _global_Context* m){;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 if(insertByID_id>=(insertByID_arr)->length){;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 struct _global_Range n =_global_RangeInit(0,(insertByID_id-(insertByID_arr)->length+1));
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int insertByID_c;insertByID_c = p;
-;_global_Array_append_Maybe_____Maybe_rmir_Block__(insertByID_arr,tmpinterpreterbB(_global_None),m);
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
+;_global_Array_append_Maybe_____Maybe_rmir_Block__(insertByID_arr,tmpinterpreterbb(_global_None),m);
 }
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;};
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 *(_global_Array_op_get_Maybe_____Maybe_rmir_Block__((struct _global_Array_Maybe_____Maybe_rmir_Block__*)insertByID_arr,(unsigned int)insertByID_id,m)) = _global_Some_____Maybe_rmir_Block_(insertByID_data,m);;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;}
 printerpreter_Interpreterp___none* _global_StaticArray_op_get_3_printerpreter_Interpreterp___none(struct _global_StaticArray_3_printerpreter_Interpreterp___none* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<3,_global_StringInit(13,"Out of bounds"),m);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 void _global_Array_append_Maybe_rnone_(struct _global_Array_Maybe_rnone_* _global_self, void* _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_Maybe_rnone_(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_Maybe_rnone_(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((void**)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 
 void interpreterInitTypes() { 
@@ -16130,9 +12560,7 @@ rNoneType_VTABLE_FOR_Type.type
 ; }
 void interpreterInit() { 
 insertByIDInit();;
-#line 145 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
-#line 145 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//interpreter.top"
 ;
 };
 void _global_memcpy_Maybe_llvm_LLVMBasicBlockRef_(struct _global_Maybe_llvm_LLVMBasicBlockRef* _global_target, struct _global_Maybe_llvm_LLVMBasicBlockRef* _global_destination, unsigned int _global_length, struct _global_Context* G);
@@ -16169,9 +12597,7 @@ struct _global_String print_obj_toString_mir_OpCode(struct mir_OpCode print_t, s
 
 #define llvm__llvmModuleCreateWithName(G,H) LLVMModuleCreateWithName(G)
 LLVMModuleRef llvm_llvmModuleCreateWithName(struct _global_String llvm_name, struct _global_Context* J){;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmModuleCreateWithName(_global_String_to_c_stringByValue(llvm_name,J),J);
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm_llvmInt1Type(J) LLVMInt1Type()
@@ -16186,20 +12612,14 @@ LLVMModuleRef llvm_llvmModuleCreateWithName(struct _global_String llvm_name, str
 
 #define llvm__llvmFunctionType(P,Q,R,S,T) LLVMFunctionType(P,Q,R,S)
 LLVMTypeRef llvm_llvmFunctionType(LLVMTypeRef llvm_return_type, struct _global_StaticArray_StaticArray_S_llvm_LLVMTypeRef llvm_args, struct _global_Context* V){;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmFunctionType(llvm_return_type,(llvm_args).data,(llvm_args).length,0,V);
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm__llvmAppendBasicBlock(V,W,X) LLVMAppendBasicBlock(V,W)
 LLVMBasicBlockRef llvm_llvmAppendBasicBlock(LLVMValueRef llvm_sum, struct _global_String llvm_name, struct _global_Context* Y){;
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmAppendBasicBlock(llvm_sum,_global_String_to_c_stringByValue(llvm_name,Y),Y);
-#line 43 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm_llvmCreateBuilder(Y) LLVMCreateBuilder()
@@ -16208,108 +12628,68 @@ LLVMBasicBlockRef llvm_llvmAppendBasicBlock(LLVMValueRef llvm_sum, struct _globa
 
 #define llvm__llvmBuildAdd(bd,bf,bg,bh,bj) LLVMBuildAdd(bd,bf,bg,bh)
 LLVMValueRef llvm_llvmBuildAdd(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_a, LLVMValueRef llvm_b, struct _global_String llvm_name, struct _global_Context* bk){;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildAdd(llvm_builder,llvm_a,llvm_b,_global_String_to_c_stringByValue(llvm_name,bk),bk);
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm__llvmBuildSub(bk,bl,bm,bn,bp) LLVMBuildSub(bk,bl,bm,bn)
 LLVMValueRef llvm_llvmBuildSub(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_a, LLVMValueRef llvm_b, struct _global_String llvm_name, struct _global_Context* bq){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildSub(llvm_builder,llvm_a,llvm_b,_global_String_to_c_stringByValue(llvm_name,bq),bq);
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm__llvmBuildMul(bq,br,bs,bt,bv) LLVMBuildMul(bq,br,bs,bt)
 LLVMValueRef llvm_llvmBuildMul(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_a, LLVMValueRef llvm_b, struct _global_String llvm_name, struct _global_Context* bw){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildMul(llvm_builder,llvm_a,llvm_b,_global_String_to_c_stringByValue(llvm_name,bw),bw);
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm__llvmBuildDiv(bw,bx,by,bz,bB) LLVMBuildSDiv(bw,bx,by,bz)
 LLVMValueRef llvm_llvmBuildDiv(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_a, LLVMValueRef llvm_b, struct _global_String llvm_name, struct _global_Context* bC){;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildDiv(llvm_builder,llvm_a,llvm_b,_global_String_to_c_stringByValue(llvm_name,bC),bC);
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm__llvmBuildFAdd(bC,bD,bF,bG,bH) LLVMBuildFAdd(bC,bD,bF,bG)
 LLVMValueRef llvm_llvmBuildFAdd(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_a, LLVMValueRef llvm_b, struct _global_String llvm_name, struct _global_Context* bJ){;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildFAdd(llvm_builder,llvm_a,llvm_b,_global_String_to_c_stringByValue(llvm_name,bJ),bJ);
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm_llvmGetParam(bJ,bK,bL) LLVMGetParam(bJ,bK)
 
 #define llvm__llvmBuildFSub(bM,bN,bP,bQ,bR) LLVMBuildFSub(bM,bN,bP,bQ)
 LLVMValueRef llvm_llvmBuildFSub(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_a, LLVMValueRef llvm_b, struct _global_String llvm_name, struct _global_Context* bS){;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildFSub(llvm_builder,llvm_a,llvm_b,_global_String_to_c_stringByValue(llvm_name,bS),bS);
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm__llvmBuildFMul(bS,bT,bV,bW,bX) LLVMBuildFMul(bS,bT,bV,bW)
 LLVMValueRef llvm_llvmBuildFMul(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_a, LLVMValueRef llvm_b, struct _global_String llvm_name, struct _global_Context* bY){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildFMul(llvm_builder,llvm_a,llvm_b,_global_String_to_c_stringByValue(llvm_name,bY),bY);
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm__llvmBuildFDiv(bY,bZ,cb,db,fb) LLVMBuildFDiv(bY,bZ,cb,db)
 LLVMValueRef llvm_llvmBuildFDiv(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_a, LLVMValueRef llvm_b, struct _global_String llvm_name, struct _global_Context* gb){;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildFDiv(llvm_builder,llvm_a,llvm_b,_global_String_to_c_stringByValue(llvm_name,gb),gb);
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm_llvmConstInt(gb,hb,jb,kb) LLVMConstInt(gb,hb,jb)
@@ -16326,13 +12706,9 @@ LLVMValueRef llvm_llvmBuildFDiv(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_a
 
 #define llvm__llvmAddFunction(Fb,Gb,Hb,Jb) LLVMAddFunction(Fb,Gb,Hb)
 LLVMValueRef llvm_llvmAddFunction(LLVMModuleRef llvm_mod, struct _global_String llvm_name, LLVMTypeRef llvm_ret, struct _global_Context* Kb){;
-#line 93 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 93 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 93 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmAddFunction(llvm_mod,_global_String_to_c_stringByValue(llvm_name,Kb),llvm_ret,Kb);
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm_llvmVerifyModule(Kb,Lb,Mb,Nb) LLVMVerifyModule(Kb,Lb,Mb)
@@ -16343,58 +12719,38 @@ LLVMValueRef llvm_llvmAddFunction(LLVMModuleRef llvm_mod, struct _global_String 
 
 #define llvm__llvmAddGlobal(Rb,Sb,Tb,Vb) LLVMAddGlobal(Rb,Sb,Tb)
 LLVMValueRef llvm_llvmAddGlobal(LLVMModuleRef llvm_mod, LLVMTypeRef llvm_typ, struct _global_String llvm_s, struct _global_Context* Wb){;
-#line 102 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 102 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 102 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmAddGlobal(llvm_mod,llvm_typ,_global_String_to_c_stringByValue(llvm_s,Wb),Wb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm_llvmBuildStore(Wb,Xb,Yb,Zb) LLVMBuildStore(Wb,Xb,Yb)
 
 #define llvm__llvmBuildLoad(bbb,bbc,bbd,bbf) LLVMBuildLoad(bbb,bbc,bbd)
 LLVMValueRef llvm_llvmBuildLoad(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_ptr, struct _global_String llvm_name, struct _global_Context* bbg){;
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildLoad(llvm_builder,llvm_ptr,_global_String_to_c_stringByValue(llvm_name,bbg),bbg);
-#line 108 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm_llvmSetInitializer(bbg,bbh,bbj) LLVMSetInitializer(bbg,bbh)
 
 #define llvm__llvmBuildICmp(bbk,bbl,bbm,bbn,bbp,bbq) LLVMBuildICmp(bbk,bbl,bbm,bbn,bbp)
 LLVMValueRef llvm_llvmBuildICmp(LLVMBuilderRef llvm_a, LLVMIntPredicate llvm_b, LLVMValueRef llvm_c, LLVMValueRef llvm_d, struct _global_String llvm_e, struct _global_Context* bbr){;
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildICmp(llvm_a,llvm_b,llvm_c,llvm_d,_global_String_to_c_stringByValue(llvm_e,bbr),bbr);
-#line 114 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm__llvmBuildFCmp(bbr,bbs,bbt,bbv,bbw,bbx) LLVMBuildFCmp(bbr,bbs,bbt,bbv,bbw)
 LLVMValueRef llvm_llvmBuildFCmp(LLVMBuilderRef llvm_a, LLVMRealPredicate llvm_b, LLVMValueRef llvm_c, LLVMValueRef llvm_d, struct _global_String llvm_e, struct _global_Context* bby){;
-#line 117 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 117 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 117 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 117 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 117 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildFCmp(llvm_a,llvm_b,llvm_c,llvm_d,_global_String_to_c_stringByValue(llvm_e,bby),bby);
-#line 118 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm_llvmIntSLT LLVMIntSLT
@@ -16403,26 +12759,17 @@ LLVMValueRef llvm_llvmBuildFCmp(LLVMBuilderRef llvm_a, LLVMRealPredicate llvm_b,
 
 #define llvm__llvmBuildAlloca(bby,bbz,bbB,bbC) LLVMBuildAlloca(bby,bbz,bbB)
 LLVMValueRef llvm_llvmBuildAlloca(LLVMBuilderRef llvm_builder, LLVMTypeRef llvm_typ, struct _global_String llvm_e, struct _global_Context* bbD){;
-#line 124 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 124 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 124 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildAlloca(llvm_builder,llvm_typ,_global_String_to_c_stringByValue(llvm_e,bbD),bbD);
-#line 125 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm__llvmBuildCall(bbD,bbF,bbG,bbH,bbJ,bbK) LLVMBuildCall(bbD,bbF,bbG,bbH,bbJ)
 LLVMValueRef llvm_llvmBuildCall(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_f, struct _global_StaticArray_StaticArray_S_llvm_LLVMValueRef llvm_args, struct _global_String llvm_name, struct _global_Context* bbL){;
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmBuildCall(llvm_builder,llvm_f,(llvm_args).data,(llvm_args).length,_global_String_to_c_stringByValue(llvm_name,bbL),bbL);
-#line 133 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm_llvmGetDefaultTargetTriple(bbL) LLVMGetDefaultTargetTriple()
@@ -16431,36 +12778,22 @@ LLVMValueRef llvm_llvmBuildCall(LLVMBuilderRef llvm_builder, LLVMValueRef llvm_f
 
 #define llvm__llvmTargetMachineEmitToFile(bbR,bbS,bbT,bbV,bbW,bbX) LLVMTargetMachineEmitToFile(bbR,bbS,bbT,bbV,bbW)
 _Bool llvm_llvmTargetMachineEmitToFile(LLVMTargetMachineRef llvm_t, LLVMModuleRef llvm_m, struct _global_String llvm_file, LLVMCodeGenFileType llvm_typ, char** llvm_err, struct _global_Context* bbY){;
-#line 139 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 139 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 139 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 139 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 139 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmTargetMachineEmitToFile(llvm_t,llvm_m,_global_String_to_c_stringByValue(llvm_file,bbY),llvm_typ,llvm_err,bbY);
-#line 140 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm__llvmCreateTargetMachine(bbY,bbZ,bcb,bdb,bfb,bgb,bhb,bjb) LLVMCreateTargetMachine(bbY,bbZ,bcb,bdb,bfb,bgb,bhb)
 LLVMTargetMachineRef llvm_llvmCreateTargetMachine(LLVMTargetRef llvm_t, char* llvm_triple, struct _global_String llvm_cpu, struct _global_String llvm_features, LLVMCodeGenOptLevel llvm_opt, LLVMRelocMode llvm_reloc, LLVMCodeModel llvm_m, struct _global_Context* bkb){;
-#line 145 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 145 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 145 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 145 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 145 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 145 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 145 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;return llvm__llvmCreateTargetMachine(llvm_t,llvm_triple,_global_String_to_c_stringByValue(llvm_cpu,bkb),_global_String_to_c_stringByValue(llvm_features,bkb),llvm_opt,llvm_reloc,llvm_m,bkb);
-#line 146 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;}
 
 #define llvm_llvmObjectFile LLVMObjectFile
@@ -16479,820 +12812,473 @@ LLVMTargetMachineRef llvm_llvmCreateTargetMachine(LLVMTargetRef llvm_t, char* ll
 
 #define llvm_llvmCodeModelDefault LLVMCodeModelDefault
 LLVMTypeRef llvm_llvm_type_for(struct types_CompilerType llvm_typ, struct _global_Context* bnb){;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 ;struct types_CompilerType bpb =llvm_typ;
 if(bpb.tag==3){_Bool llvm_unsigned = bpb.cases.Int.field0;
 unsigned int llvm_size = bpb.cases.Int.field1;
 return llvm_llvmInt32Type(bnb);}else if(bpb.tag==4){unsigned int llvm_size = bpb.cases.Float.field0;
 return llvm_llvmFloatType(bnb);}else if(bpb.tag==2){return llvm_llvmInt1Type(bnb);}else if(bpb.tag==6){struct types_FuncPtr* llvm_x = bpb.cases.Func.field0;
 struct _global_Array_llvm_LLVMTypeRef llvm_args;llvm_args = _global_Array_llvm_LLVMTypeRefInit(0, 0, NULL, NULL);;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 struct _global_StaticArray_StaticArray_S_types_CompilerType bqb =(llvm_x)->args;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 for (unsigned int brb = 0;brb < bqb.length; brb++) {
 struct types_CompilerType llvm_arg;llvm_arg = *_global_StaticArray_op_get_StaticArray_S_types_CompilerType(&bqb, brb, bnb);
 ;unsigned int llvm_i;llvm_i = brb;
 _global_Array_append_llvm_LLVMTypeRef(&(llvm_args),llvm_llvm_type_for(llvm_arg,bnb),bnb);
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 }
 ;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 return llvm_llvmFunctionType((llvm_llvm_type_for((llvm_x)->return_type,bnb)),_global_StaticArray_StaticArray_S_llvm_LLVMTypeRefInit(llvm_args.data, llvm_args.length),bnb);}else if(bpb.tag==0){return llvm_llvmVoidType(bnb);}else if(1){struct _global_EnumType* llvm_enum_typ;llvm_enum_typ = types_CompilerType_get_type(NULL,bnb);;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 _global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(14,"Unknown type: "),((*(_global_StaticArray_op_get_StaticArray_S_Case(&((llvm_enum_typ)->cases),(unsigned int)(llvm_typ).tag,bnb))).name),bnb),_global_StringInit(0,""),bnb),bnb);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 return (LLVMTypeRef)0;};
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 ;}
 LLVMValueRef llvm_llvm_initial_value_for(struct types_CompilerType llvm_typ, struct _global_Context* bnb){;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 ;struct types_CompilerType bpb =llvm_typ;
 if(bpb.tag==2){return llvm_llvmConstInt(llvm_llvmInt1Type(bnb),(int64_t)0,0,bnb);}else if(bpb.tag==3){_Bool llvm_unsigned = bpb.cases.Int.field0;
 unsigned int llvm_size = bpb.cases.Int.field1;
 return llvm_llvmConstInt(llvm_llvmInt32Type(bnb),(int64_t)0,1,bnb);}else if(bpb.tag==4){unsigned int llvm_size = bpb.cases.Float.field0;
 return llvm_llvmConstReal(llvm_llvmFloatType(bnb),(double)0,bnb);}else if(1){struct _global_EnumType* llvm_enum_typ;llvm_enum_typ = types_CompilerType_get_type(NULL,bnb);;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 _global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(14,"Unknown type: "),((*(_global_StaticArray_op_get_StaticArray_S_Case(&((llvm_enum_typ)->cases),(unsigned int)(llvm_typ).tag,bnb))).name),bnb),_global_StringInit(0,""),bnb),bnb);
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 return (LLVMValueRef)0;};
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/toLLVMType.top"
 ;}
 struct _global_String llvm_next_tmp(unsigned int* llvm_t, struct _global_Context* bnb){;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_String llvm_s;llvm_s = _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(4,"tmp."),_global_uint_toString((llvm_t),bnb),bnb),_global_StringInit(0,""),bnb);;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 *(llvm_t) = *(llvm_t)+1;;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;return llvm_s;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
 void llvm_op(LLVMBuilderRef* llvm_builder, struct _global_Array_llvm_LLVMValueRef* llvm_stack, unsigned int* llvm_tmp, pllvm_LLVMBuilderRefc_llvm_LLVMValueRefc_llvm_LLVMValueRefc_stringp___llvm_LLVMValueRef llvm_func, struct _global_Context* bnb){;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_b;llvm_b = _global_Array_pop_llvm_LLVMValueRef(llvm_stack,bnb);;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_a;llvm_a = _global_Array_pop_llvm_LLVMValueRef(llvm_stack,bnb);;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Array_append_llvm_LLVMValueRef(llvm_stack,llvm_func(*(llvm_builder),llvm_a,llvm_b,llvm_next_tmp(llvm_tmp,bnb),bnb),bnb);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-struct _global_StaticArray_StaticArray_S_llvm_LLVMTypeRef tmpllvmbC(struct _global_StaticArray_1_llvm_LLVMTypeRef* brb) {
+struct _global_StaticArray_StaticArray_S_llvm_LLVMTypeRef tmpllvmbc(struct _global_StaticArray_1_llvm_LLVMTypeRef* brb) {
 return _global_StaticArray_StaticArray_S_llvm_LLVMTypeRefInit(brb->data, 1);};
 void llvm_convert_to_LLVMModule(struct mir_Program* llvm_program, struct _global_Context* bnb){;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_Allocator* bpb = (bnb)->allocator;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 uint64_t bqb = _global_Allocator_get_occupied((bnb)->allocator,bnb);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_llvmInitializeNativeTarget(bnb);
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_llvmInitializeNativeAsmParser(bnb);
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_llvmInitializeNativeAsmPrinter(bnb);
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMModuleRef llvm_mod;llvm_mod = llvm_llvmModuleCreateWithName(_global_StringInit(9,"my_module"),bnb);;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMBuilderRef llvm_builder;llvm_builder = llvm_llvmCreateBuilder(bnb);;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_Array_llvm_LLVMValueRef llvm_stack;llvm_stack = _global_Array_llvm_LLVMValueRefInit(0, 0, NULL, NULL);;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_Array_Maybe_llvm_LLVMValueRef_ llvm_global_vars;llvm_global_vars = _global_Array_Maybe_llvm_LLVMValueRef_Init(0, 0, NULL, NULL);;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
-LLVMTypeRef llvm_log_int_type;llvm_log_int_type = llvm_llvmFunctionType(llvm_llvmVoidType(bnb),tmpllvmbC(_global_box__1_llvm_LLVMTypeRef(_global_StaticArray_1_llvm_LLVMTypeRefInit(llvm_llvmInt32Type(bnb)),bnb)),bnb);;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
+LLVMTypeRef llvm_log_int_type;llvm_log_int_type = llvm_llvmFunctionType(llvm_llvmVoidType(bnb),tmpllvmbc(_global_box__1_llvm_LLVMTypeRef(_global_StaticArray_1_llvm_LLVMTypeRefInit(llvm_llvmInt32Type(bnb)),bnb)),bnb);;
 LLVMValueRef llvm_log_int_func;llvm_log_int_func = llvm_llvmAddFunction(llvm_mod,_global_StringInit(9,"c_log_int"),llvm_log_int_type,bnb);;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Array_append_Maybe_llvm_LLVMValueRef_(&(llvm_global_vars),_global_Some_llvm_LLVMValueRef(llvm_log_int_func,bnb),bnb);
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
-LLVMTypeRef llvm_log_float_type;llvm_log_float_type = llvm_llvmFunctionType(llvm_llvmVoidType(bnb),tmpllvmbC(_global_box__1_llvm_LLVMTypeRef(_global_StaticArray_1_llvm_LLVMTypeRefInit(llvm_llvmFloatType(bnb)),bnb)),bnb);;
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
+LLVMTypeRef llvm_log_float_type;llvm_log_float_type = llvm_llvmFunctionType(llvm_llvmVoidType(bnb),tmpllvmbc(_global_box__1_llvm_LLVMTypeRef(_global_StaticArray_1_llvm_LLVMTypeRefInit(llvm_llvmFloatType(bnb)),bnb)),bnb);;
 LLVMValueRef llvm_log_float_func;llvm_log_float_func = llvm_llvmAddFunction(llvm_mod,_global_StringInit(11,"c_log_float"),llvm_log_float_type,bnb);;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Array_append_Maybe_llvm_LLVMValueRef_(&(llvm_global_vars),_global_Some_llvm_LLVMValueRef(llvm_log_float_func,bnb),bnb);
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_StaticArray_StaticArray_S_mir_Function bsb =(llvm_program)->functions;
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 for (unsigned int btb = 0;btb < bsb.length; btb++) {
 struct mir_Function llvm_mir_func;llvm_mir_func = *_global_StaticArray_op_get_StaticArray_S_mir_Function(&bsb, btb, bnb);
 ;unsigned int llvm_i;llvm_i = btb;
 LLVMTypeRef llvm_ret_type;llvm_ret_type = llvm_llvm_type_for(types_Func((llvm_mir_func)._type,bnb),bnb);;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_llvm_func;llvm_llvm_func = llvm_llvmAddFunction(llvm_mod,(llvm_mir_func).name,llvm_ret_type,bnb);;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 unsigned int llvm_tmp;llvm_tmp = 0;;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_ llvm_blocks;llvm_blocks = _global_Array_Maybe_llvm_LLVMBasicBlockRef_Init(0, 0, NULL, NULL);;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_Array_Maybe_llvm_LLVMValueRef_ llvm_local_vars;llvm_local_vars = _global_Array_Maybe_llvm_LLVMValueRef_Init(0, 0, NULL, NULL);;
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 insertByID_insert_at_index_llvm_LLVMValueRef(&(llvm_global_vars),(llvm_mir_func).id,llvm_llvm_func,bnb);
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_StaticArray_StaticArray_S_rmir_Block bvb =(llvm_mir_func).all_blocks;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 for (unsigned int bwb = 0;bwb < bvb.length; bwb++) {
 struct mir_Block* llvm_mir_block;llvm_mir_block = *_global_StaticArray_op_get_StaticArray_S_rmir_Block(&bvb, bwb, bnb);
 ;struct _global_String llvm_name;llvm_name = (llvm_i==0 ? _global_StringInit(5,"entry"):(_global_uint_toStringByValue((llvm_mir_block)->id,bnb)));;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMBasicBlockRef llvm_block;llvm_block = llvm_llvmAppendBasicBlock(llvm_llvm_func,llvm_name,bnb);;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 insertByID_insert_at_index_llvm_LLVMBasicBlockRef(&(llvm_blocks),(llvm_mir_block)->id,llvm_block,bnb);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 }
 ;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_StaticArray_StaticArray_S_rmir_Block bxb =(llvm_mir_func).all_blocks;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 for (unsigned int byb = 0;byb < bxb.length; byb++) {
 struct mir_Block* llvm_mir_block;llvm_mir_block = *_global_StaticArray_op_get_StaticArray_S_rmir_Block(&bxb, byb, bnb);
 ;LLVMBasicBlockRef llvm_block;llvm_block = _global_Maybe_expect_llvm_LLVMBasicBlockRefByValue(*(_global_Array_op_get_Maybe_llvm_LLVMBasicBlockRef_(&(llvm_blocks),(unsigned int)(llvm_mir_block)->id,bnb)),_global_StringInit(24,"Could not get llvm block"),bnb);;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_llvmPositionBuilderAtEnd(llvm_builder,llvm_block,bnb);
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_Array_mir_OpCode bzb =*((llvm_mir_block)->code);
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 for (unsigned int bBb = 0;bBb < bzb.length; bBb++) {
 struct mir_OpCode llvm_inst;llvm_inst = *_global_Array_op_get_mir_OpCode(&bzb, bBb, bnb);
 ;struct mir_OpCode bCb =llvm_inst;if(bCb.tag==0){
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_op(&(llvm_builder),&(llvm_stack),&(llvm_tmp),llvm_llvmBuildAdd,bnb);
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 73 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==5){
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_op(&(llvm_builder),&(llvm_stack),&(llvm_tmp),llvm_llvmBuildFAdd,bnb);
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==1){
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_op(&(llvm_builder),&(llvm_stack),&(llvm_tmp),llvm_llvmBuildSub,bnb);
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==6){
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_op(&(llvm_builder),&(llvm_stack),&(llvm_tmp),llvm_llvmBuildFSub,bnb);
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==2){
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_op(&(llvm_builder),&(llvm_stack),&(llvm_tmp),llvm_llvmBuildMul,bnb);
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==7){
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_op(&(llvm_builder),&(llvm_stack),&(llvm_tmp),llvm_llvmBuildFMul,bnb);
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==3){
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_op(&(llvm_builder),&(llvm_stack),&(llvm_tmp),llvm_llvmBuildFDiv,bnb);
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==8){
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_op(&(llvm_builder),&(llvm_stack),&(llvm_tmp),llvm_llvmBuildDiv,bnb);
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==4){
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_b;llvm_b = _global_Array_pop_llvm_LLVMValueRef(&(llvm_stack),bnb);;
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_a;llvm_a = _global_Array_pop_llvm_LLVMValueRef(&(llvm_stack),bnb);;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Array_append_llvm_LLVMValueRef(&(llvm_stack),llvm_llvmBuildICmp(llvm_builder,llvm_llvmIntSLT,llvm_a,llvm_b,llvm_next_tmp(&(llvm_tmp),bnb),bnb),bnb);
-#line 86 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==9){
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_b;llvm_b = _global_Array_pop_llvm_LLVMValueRef(&(llvm_stack),bnb);;
-#line 88 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_a;llvm_a = _global_Array_pop_llvm_LLVMValueRef(&(llvm_stack),bnb);;
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Array_append_llvm_LLVMValueRef(&(llvm_stack),llvm_llvmBuildFCmp(llvm_builder,llvm_llvmRealOLT,llvm_a,llvm_b,llvm_next_tmp(&(llvm_tmp),bnb),bnb),bnb);
-#line 91 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==12){_Bool llvm_b = bCb.cases.Store_bool.field0;
 
-#line 93 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Array_append_llvm_LLVMValueRef(&(llvm_stack),llvm_llvmConstInt(llvm_llvmInt1Type(bnb),(int64_t)llvm_b,0,bnb),bnb);
-#line 93 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 93 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==10){int32_t llvm_integer = bCb.cases.Store_i32.field0;
 
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Array_append_llvm_LLVMValueRef(&(llvm_stack),llvm_llvmConstInt(llvm_llvmInt32Type(bnb),(int64_t)llvm_integer,1,bnb),bnb);
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==11){float llvm_f = bCb.cases.Store_f32.field0;
 
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Array_append_llvm_LLVMValueRef(&(llvm_stack),llvm_llvmConstReal(llvm_llvmFloatType(bnb),(double)llvm_f,bnb),bnb);
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==18){struct types_CompilerType llvm_typ = bCb.cases.FuncReturn.field0;
 
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 if(types_CompilerType_is_typeByValue(llvm_typ,types_Void,bnb)){;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_llvmBuildRetVoid(llvm_builder,bnb);
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
 else{llvm_llvmBuildRet(llvm_builder,_global_Array_pop_llvm_LLVMValueRef(&(llvm_stack),bnb),bnb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;};
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==20){unsigned int llvm_a = bCb.cases.Jump.field0;
 
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_llvmBuildBr(llvm_builder,_global_Maybe_expect_llvm_LLVMBasicBlockRefByValue(*(_global_Array_op_get_Maybe_llvm_LLVMBasicBlockRef_(&(llvm_blocks),(unsigned int)llvm_a,bnb)),_global_StringInit(20,"Could not find block"),bnb),bnb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==19){unsigned int llvm_a = bCb.cases.CondJump.field0;
 unsigned int llvm_b = bCb.cases.CondJump.field1;
 
-#line 104 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_cond;llvm_cond = _global_Array_pop_llvm_LLVMValueRef(&(llvm_stack),bnb);;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMBasicBlockRef llvm_block_a;llvm_block_a = _global_Maybe_expect_llvm_LLVMBasicBlockRefByValue(*(_global_Array_op_get_Maybe_llvm_LLVMBasicBlockRef_(&(llvm_blocks),(unsigned int)llvm_a,bnb)),_global_StringInit(20,"Could not find block"),bnb);;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMBasicBlockRef llvm_block_b;llvm_block_b = _global_Maybe_expect_llvm_LLVMBasicBlockRefByValue(*(_global_Array_op_get_Maybe_llvm_LLVMBasicBlockRef_(&(llvm_blocks),(unsigned int)llvm_b,bnb)),_global_StringInit(20,"Could not find block"),bnb);;
-#line 107 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_llvmBuildCondBr(llvm_builder,llvm_cond,llvm_block_a,llvm_block_b,bnb);
-#line 108 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 104 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==14){struct mir_ReadInfo* llvm_info = bCb.cases.Read.field0;
 
-#line 111 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 if((llvm_info)->is_global){;
-#line 112 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_v;llvm_v = _global_Maybe_unwrap_llvm_LLVMValueRefByValue(*(_global_Array_op_get_Maybe_llvm_LLVMValueRef_(&(llvm_global_vars),(unsigned int)(llvm_info)->id,bnb)),bnb);;
-#line 113 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 if(types_CompilerType_is_typeByValue((llvm_info)->_type,types_func_type,bnb)){;
-#line 115 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Array_append_llvm_LLVMValueRef(&(llvm_stack),llvm_v,bnb);
-#line 116 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
 else{_global_Array_append_llvm_LLVMValueRef(&(llvm_stack),llvm_llvmBuildLoad(llvm_builder,llvm_v,llvm_next_tmp(&(llvm_tmp),bnb),bnb),bnb);
-#line 118 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;};
-#line 115 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
 else{_global_Array_append_llvm_LLVMValueRef(&(llvm_stack),llvm_llvmBuildLoad(llvm_builder,_global_Maybe_unwrap_llvm_LLVMValueRefByValue(*(_global_Array_op_get_Maybe_llvm_LLVMValueRef_(&(llvm_local_vars),(unsigned int)(llvm_info)->id,bnb)),bnb),llvm_next_tmp(&(llvm_tmp),bnb),bnb),bnb);
-#line 120 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;};
-#line 112 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 111 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==13){struct mir_ReadInfo* llvm_info = bCb.cases.Create.field0;
 
-#line 122 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_assert((llvm_info)->is_global,_global_StringInit(30,"Can't handle local create yet!"),bnb);
-#line 123 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_llvm_var;llvm_llvm_var = llvm_llvmAddGlobal(llvm_mod,(llvm_llvm_type_for((llvm_info)->_type,bnb)),(llvm_info)->name,bnb);;
-#line 125 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 insertByID_insert_at_index_llvm_LLVMValueRef(&(llvm_global_vars),(llvm_info)->id,llvm_llvm_var,bnb);
-#line 126 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_llvmSetInitializer(llvm_llvm_var,llvm_llvm_initial_value_for((llvm_info)->_type,bnb),bnb);
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 122 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==16){unsigned int llvm_id = bCb.cases.FuncArg.field0;
 struct mir_ReadInfo* llvm_info = bCb.cases.FuncArg.field1;
 
-#line 129 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_arg;llvm_arg = llvm_llvmGetParam(llvm_llvm_func,llvm_id,bnb);;
-#line 130 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_llvm_var;llvm_llvm_var = llvm_llvmBuildAlloca(llvm_builder,(llvm_llvm_type_for((llvm_info)->_type,bnb)),llvm_next_tmp(&(llvm_tmp),bnb),bnb);;
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 insertByID_insert_at_index_llvm_LLVMValueRef(&(llvm_local_vars),(llvm_info)->id,llvm_llvm_var,bnb);
-#line 133 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Array_append_llvm_LLVMValueRef(&(llvm_stack),llvm_arg,bnb);
-#line 135 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 129 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==15){struct mir_ReadInfo* llvm_info = bCb.cases.Assign.field0;
 
-#line 137 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_v;llvm_v = ((llvm_info)->is_global ? _global_Maybe_unwrap_llvm_LLVMValueRefByValue(*(_global_Array_op_get_Maybe_llvm_LLVMValueRef_(&(llvm_global_vars),(unsigned int)(llvm_info)->id,bnb)),bnb):(_global_Maybe_unwrap_llvm_LLVMValueRefByValue(*(_global_Array_op_get_Maybe_llvm_LLVMValueRef_(&(llvm_local_vars),(unsigned int)(llvm_info)->id,bnb)),bnb)));;
-#line 138 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_llvmBuildStore(llvm_builder,_global_Array_pop_llvm_LLVMValueRef(&(llvm_stack),bnb),llvm_v,bnb);
-#line 142 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 137 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(bCb.tag==17){struct types_FuncPtr* llvm_fptr_type = bCb.cases.FuncCall.field0;
 
-#line 144 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 unsigned int llvm_arg_count;llvm_arg_count = ((llvm_fptr_type)->args).length;;
-#line 145 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMValueRef llvm_func;llvm_func = *(_global_Array_op_get_llvm_LLVMValueRef(&(llvm_stack),(unsigned int)(llvm_stack).length-llvm_arg_count-1,bnb));;
-#line 147 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_Array_llvm_LLVMValueRef llvm_args;llvm_args = _global_Array_llvm_LLVMValueRefInit(0, 0, NULL, NULL);;
-#line 148 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_Range bDb =_global_RangeInit(0,llvm_arg_count);
-#line 150 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 for (unsigned int bFb = bDb.start; bFb < bDb.end; bFb++) {
 unsigned int llvm_c;llvm_c = bFb;
 ;_global_Array_append_llvm_LLVMValueRef(&(llvm_args),*(_global_Array_op_get_llvm_LLVMValueRef(&(llvm_stack),(unsigned int)(llvm_stack).length-llvm_arg_count+llvm_c,bnb)),bnb);
-#line 151 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 }
 ;
-#line 150 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Array_shorten_llvm_LLVMValueRef(&(llvm_stack),llvm_arg_count+1,bnb);
-#line 153 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 if(types_CompilerType_is_typeByValue((llvm_fptr_type)->return_type,types_Void,bnb)){;
-#line 155 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_llvmBuildCall(llvm_builder,llvm_func,_global_StaticArray_StaticArray_S_llvm_LLVMValueRefInit(llvm_args.data, llvm_args.length),_global_StringInit(0,""),bnb);
-#line 156 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
 else{_global_Array_append_llvm_LLVMValueRef(&(llvm_stack),llvm_llvmBuildCall(llvm_builder,llvm_func,_global_StaticArray_StaticArray_S_llvm_LLVMValueRefInit(llvm_args.data, llvm_args.length),llvm_next_tmp(&(llvm_tmp),bnb),bnb),bnb);
-#line 158 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;};
-#line 155 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 144 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 else if(1){
-#line 160 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_panic(print_obj_toString_mir_OpCode(llvm_inst,bnb),bnb);
-#line 160 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
-#line 160 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 }
 ;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 }
 ;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 }
 ;
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 char* llvm_error;llvm_error = NULL;;
-#line 162 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 if(llvm_llvmVerifyModule(llvm_mod,llvm_llvmAbortProcessAction,&(llvm_error),bnb)){;
-#line 164 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(12,"LLVM ERROR: "),(_global_char_buffer_toString(_global_Maybe_unwrap_rcharByValue(llvm_error,bnb),bnb)),bnb),_global_StringInit(0,""),bnb),bnb);
-#line 165 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;};
-#line 164 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 llvm_llvmDisposeMessage(llvm_error,bnb);
-#line 167 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 char* llvm_target_triple;llvm_target_triple = llvm_llvmGetDefaultTargetTriple(bnb);;
-#line 169 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMTargetRef llvm_target;;
-#line 170 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 if(llvm_llvmGetTargetFromTriple(llvm_target_triple,&(llvm_target),&(llvm_error),bnb)){;
-#line 172 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(35,"LLVM GET TARGET FROM TRIPLE ERROR: "),(_global_char_buffer_toString(_global_Maybe_unwrap_rcharByValue(llvm_error,bnb),bnb)),bnb),_global_StringInit(0,""),bnb),bnb);
-#line 173 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;};
-#line 172 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_String llvm_cpu;llvm_cpu = _global_StringInit(7,"generic");;
-#line 175 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 struct _global_String llvm_features;llvm_features = _global_StringInit(0,"");;
-#line 176 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 LLVMTargetMachineRef llvm_target_machine;llvm_target_machine = llvm_llvmCreateTargetMachine(llvm_target,llvm_target_triple,llvm_cpu,llvm_features,llvm_llvmCodeGenLevelNone,llvm_llvmRelocDefault,llvm_llvmCodeModelDefault,bnb);;
-#line 178 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 if(llvm_llvmTargetMachineEmitToFile(llvm_target_machine,llvm_mod,_global_StringInit(11,"test/main.o"),llvm_llvmObjectFile,&(llvm_error),bnb)){;
-#line 180 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(11,"LLVM EMIT: "),(_global_char_buffer_toString(_global_Maybe_unwrap_rcharByValue(llvm_error,bnb),bnb)),bnb),_global_StringInit(0,""),bnb),bnb);
-#line 181 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;};
-#line 180 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 _global_Allocator_reset_to(bpb,bqb,bnb);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;}
 void _global_memcpy_Maybe_llvm_LLVMBasicBlockRef_(struct _global_Maybe_llvm_LLVMBasicBlockRef* _global_target, struct _global_Maybe_llvm_LLVMBasicBlockRef* _global_destination, unsigned int _global_length, struct _global_Context* bnb){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct _global_Maybe_llvm_LLVMBasicBlockRef),bnb);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_llvm_LLVMTypeRef(LLVMTypeRef* _global_target, LLVMTypeRef* _global_destination, unsigned int _global_length, struct _global_Context* bnb){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(LLVMTypeRef),bnb);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_llvm_LLVMValueRef(LLVMValueRef* _global_target, LLVMValueRef* _global_destination, unsigned int _global_length, struct _global_Context* bnb){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(LLVMValueRef),bnb);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_Maybe_llvm_LLVMValueRef_(struct _global_Maybe_llvm_LLVMValueRef* _global_target, struct _global_Maybe_llvm_LLVMValueRef* _global_destination, unsigned int _global_length, struct _global_Context* bnb){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct _global_Maybe_llvm_LLVMValueRef),bnb);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct _global_Maybe_llvm_LLVMBasicBlockRef* tmpllvmbD(struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bnb) {
+static inline struct _global_Maybe_llvm_LLVMBasicBlockRef* tmpllvmbd(struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bnb) {
 struct _global_Maybe_llvm_LLVMBasicBlockRef* bpb =(*_global_self)->data;
 if(bpb != NULL){struct _global_Maybe_llvm_LLVMBasicBlockRef* _global_data = bpb;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),bnb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Maybe_llvm_LLVMBasicBlockRef* _global_newData;_global_newData = (struct _global_Maybe_llvm_LLVMBasicBlockRef*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Maybe_llvm_LLVMBasicBlockRef),bnb));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_Maybe_llvm_LLVMBasicBlockRef_(_global_newData,_global_data,(*_global_self)->length,bnb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,bnb);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(bpb == NULL){return (struct _global_Maybe_llvm_LLVMBasicBlockRef*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Maybe_llvm_LLVMBasicBlockRef),bnb));}
 }
 void _global_Array_reserve_Maybe_llvm_LLVMBasicBlockRef_(struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_* _global_self, unsigned int _global_newSize, struct _global_Context* bnb){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(bnb)->allocator,bnb);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpllvmbD(&_global_self,&_global_newSize,&_global_allocator, bnb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpllvmbd(&_global_self,&_global_newSize,&_global_allocator, bnb);;
 ;}
 
-static inline LLVMTypeRef* tmpllvmbF(struct _global_Array_llvm_LLVMTypeRef** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bnb) {
+static inline LLVMTypeRef* tmpllvmbf(struct _global_Array_llvm_LLVMTypeRef** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bnb) {
 LLVMTypeRef* bpb =(*_global_self)->data;
 if(bpb != NULL){LLVMTypeRef* _global_data = bpb;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),bnb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 LLVMTypeRef* _global_newData;_global_newData = (LLVMTypeRef*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(LLVMTypeRef),bnb));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_llvm_LLVMTypeRef(_global_newData,_global_data,(*_global_self)->length,bnb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,bnb);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(bpb == NULL){return (LLVMTypeRef*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(LLVMTypeRef),bnb));}
 }
 void _global_Array_reserve_llvm_LLVMTypeRef(struct _global_Array_llvm_LLVMTypeRef* _global_self, unsigned int _global_newSize, struct _global_Context* bnb){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(bnb)->allocator,bnb);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpllvmbF(&_global_self,&_global_newSize,&_global_allocator, bnb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpllvmbf(&_global_self,&_global_newSize,&_global_allocator, bnb);;
 ;}
 
-static inline LLVMValueRef* tmpllvmbG(struct _global_Array_llvm_LLVMValueRef** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bnb) {
+static inline LLVMValueRef* tmpllvmbg(struct _global_Array_llvm_LLVMValueRef** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bnb) {
 LLVMValueRef* bpb =(*_global_self)->data;
 if(bpb != NULL){LLVMValueRef* _global_data = bpb;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),bnb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 LLVMValueRef* _global_newData;_global_newData = (LLVMValueRef*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(LLVMValueRef),bnb));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_llvm_LLVMValueRef(_global_newData,_global_data,(*_global_self)->length,bnb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,bnb);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(bpb == NULL){return (LLVMValueRef*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(LLVMValueRef),bnb));}
 }
 void _global_Array_reserve_llvm_LLVMValueRef(struct _global_Array_llvm_LLVMValueRef* _global_self, unsigned int _global_newSize, struct _global_Context* bnb){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(bnb)->allocator,bnb);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpllvmbG(&_global_self,&_global_newSize,&_global_allocator, bnb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpllvmbg(&_global_self,&_global_newSize,&_global_allocator, bnb);;
 ;}
 
-static inline struct _global_Maybe_llvm_LLVMValueRef* tmpllvmbH(struct _global_Array_Maybe_llvm_LLVMValueRef_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bnb) {
+static inline struct _global_Maybe_llvm_LLVMValueRef* tmpllvmbh(struct _global_Array_Maybe_llvm_LLVMValueRef_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* bnb) {
 struct _global_Maybe_llvm_LLVMValueRef* bpb =(*_global_self)->data;
 if(bpb != NULL){struct _global_Maybe_llvm_LLVMValueRef* _global_data = bpb;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),bnb);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Maybe_llvm_LLVMValueRef* _global_newData;_global_newData = (struct _global_Maybe_llvm_LLVMValueRef*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Maybe_llvm_LLVMValueRef),bnb));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_Maybe_llvm_LLVMValueRef_(_global_newData,_global_data,(*_global_self)->length,bnb);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,bnb);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(bpb == NULL){return (struct _global_Maybe_llvm_LLVMValueRef*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_Maybe_llvm_LLVMValueRef),bnb));}
 }
 void _global_Array_reserve_Maybe_llvm_LLVMValueRef_(struct _global_Array_Maybe_llvm_LLVMValueRef_* _global_self, unsigned int _global_newSize, struct _global_Context* bnb){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(bnb)->allocator,bnb);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpllvmbH(&_global_self,&_global_newSize,&_global_allocator, bnb);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpllvmbh(&_global_self,&_global_newSize,&_global_allocator, bnb);;
 ;}
 void _global_Array_append_Maybe_llvm_LLVMBasicBlockRef_(struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_* _global_self, struct _global_Maybe_llvm_LLVMBasicBlockRef _global_value, struct _global_Context* bnb){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_Maybe_llvm_LLVMBasicBlockRef_(_global_self,1,bnb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_Maybe_llvm_LLVMBasicBlockRef_(_global_self,(_global_self)->capacity*2,bnb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct _global_Maybe_llvm_LLVMBasicBlockRef*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_llvm_LLVMTypeRef(struct _global_Array_llvm_LLVMTypeRef* _global_self, LLVMTypeRef _global_value, struct _global_Context* bnb){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_llvm_LLVMTypeRef(_global_self,1,bnb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_llvm_LLVMTypeRef(_global_self,(_global_self)->capacity*2,bnb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((LLVMTypeRef*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 LLVMValueRef _global_Array_pop_llvm_LLVMValueRef(struct _global_Array_llvm_LLVMValueRef* _global_self, struct _global_Context* bnb){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->length==0){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(25,"trying to pop empty array"),bnb);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 LLVMValueRef _global_tmp;_global_tmp = *(_global_Array_op_get_llvm_LLVMValueRef(_global_self,(unsigned int)(_global_self)->length-1,bnb));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return _global_tmp;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_llvm_LLVMValueRef(struct _global_Array_llvm_LLVMValueRef* _global_self, LLVMValueRef _global_value, struct _global_Context* bnb){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_llvm_LLVMValueRef(_global_self,1,bnb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_llvm_LLVMValueRef(_global_self,(_global_self)->capacity*2,bnb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((LLVMValueRef*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct _global_StaticArray_1_llvm_LLVMTypeRef* _global_box__1_llvm_LLVMTypeRef(struct _global_StaticArray_1_llvm_LLVMTypeRef _global_value, struct _global_Context* bnb){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct _global_StaticArray_1_llvm_LLVMTypeRef* _global_pointer;_global_pointer = (struct _global_StaticArray_1_llvm_LLVMTypeRef*)(_global_Allocator_alloc((bnb)->allocator,(uint64_t)sizeof(struct _global_StaticArray_1_llvm_LLVMTypeRef),bnb));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_Array_append_Maybe_llvm_LLVMValueRef_(struct _global_Array_Maybe_llvm_LLVMValueRef_* _global_self, struct _global_Maybe_llvm_LLVMValueRef _global_value, struct _global_Context* bnb){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_Maybe_llvm_LLVMValueRef_(_global_self,1,bnb);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_Maybe_llvm_LLVMValueRef_(_global_self,(_global_self)->capacity*2,bnb);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct _global_Maybe_llvm_LLVMValueRef*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-static inline struct _global_Maybe_llvm_LLVMValueRef tmpllvmbJ(struct _global_Maybe_Maybe_T bsb) {
+static inline struct _global_Maybe_llvm_LLVMValueRef tmpllvmbj(struct _global_Maybe_Maybe_T bsb) {
 struct _global_Maybe_llvm_LLVMValueRef brb;brb.tag = bsb.tag;brb.cases = *(union _global_Maybe_llvm_LLVMValueRef_cases*) &(bsb.cases);return brb;
 }
 void insertByID_insert_at_index_llvm_LLVMValueRef(struct _global_Array_Maybe_llvm_LLVMValueRef_* insertByID_arr, unsigned int insertByID_id, LLVMValueRef insertByID_data, struct _global_Context* bnb){;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 if(insertByID_id>=(insertByID_arr)->length){;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 struct _global_Range bpb =_global_RangeInit(0,(insertByID_id-(insertByID_arr)->length+1));
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 for (unsigned int bqb = bpb.start; bqb < bpb.end; bqb++) {
 unsigned int insertByID_c;insertByID_c = bqb;
-;_global_Array_append_Maybe_llvm_LLVMValueRef_(insertByID_arr,tmpllvmbJ(_global_None),bnb);
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
+;_global_Array_append_Maybe_llvm_LLVMValueRef_(insertByID_arr,tmpllvmbj(_global_None),bnb);
 }
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;};
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 *(_global_Array_op_get_Maybe_llvm_LLVMValueRef_((struct _global_Array_Maybe_llvm_LLVMValueRef_*)insertByID_arr,(unsigned int)insertByID_id,bnb)) = _global_Some_llvm_LLVMValueRef(insertByID_data,bnb);;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;}
-static inline struct _global_Maybe_llvm_LLVMBasicBlockRef tmpllvmbK(struct _global_Maybe_Maybe_T bsb) {
+static inline struct _global_Maybe_llvm_LLVMBasicBlockRef tmpllvmbk(struct _global_Maybe_Maybe_T bsb) {
 struct _global_Maybe_llvm_LLVMBasicBlockRef brb;brb.tag = bsb.tag;brb.cases = *(union _global_Maybe_llvm_LLVMBasicBlockRef_cases*) &(bsb.cases);return brb;
 }
 void insertByID_insert_at_index_llvm_LLVMBasicBlockRef(struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_* insertByID_arr, unsigned int insertByID_id, LLVMBasicBlockRef insertByID_data, struct _global_Context* bnb){;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 if(insertByID_id>=(insertByID_arr)->length){;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 struct _global_Range bpb =_global_RangeInit(0,(insertByID_id-(insertByID_arr)->length+1));
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 for (unsigned int bqb = bpb.start; bqb < bpb.end; bqb++) {
 unsigned int insertByID_c;insertByID_c = bqb;
-;_global_Array_append_Maybe_llvm_LLVMBasicBlockRef_(insertByID_arr,tmpllvmbK(_global_None),bnb);
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
+;_global_Array_append_Maybe_llvm_LLVMBasicBlockRef_(insertByID_arr,tmpllvmbk(_global_None),bnb);
 }
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;};
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 *(_global_Array_op_get_Maybe_llvm_LLVMBasicBlockRef_((struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_*)insertByID_arr,(unsigned int)insertByID_id,bnb)) = _global_Some_llvm_LLVMBasicBlockRef(insertByID_data,bnb);;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//insertByID.top"
 ;}
 struct _global_Maybe_llvm_LLVMBasicBlockRef* _global_Array_op_get_Maybe_llvm_LLVMBasicBlockRef_(struct _global_Array_Maybe_llvm_LLVMBasicBlockRef_* _global_self, unsigned int _global_index, struct _global_Context* bnb){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),bnb);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct _global_Maybe_llvm_LLVMBasicBlockRef*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 LLVMBasicBlockRef _global_Maybe_expect_llvm_LLVMBasicBlockRefByValue(struct _global_Maybe_llvm_LLVMBasicBlockRef _global_self, struct _global_String _global_mesg, struct _global_Context* bnb){;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 LLVMBasicBlockRef _global_x;;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 struct _global_Maybe_llvm_LLVMBasicBlockRef bpb =_global_self;if(bpb.tag==0){_global_x = bpb.cases.Some.field0;
 
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 else if(1){
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 _global_panic(_global_mesg,bnb);
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;return _global_x;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
 static inline LLVMBasicBlockRef _global_Maybe_expect_llvm_LLVMBasicBlockRef(struct _global_Maybe_llvm_LLVMBasicBlockRef* bqb,struct _global_String brb,struct _global_Context* bnb){
 return _global_Maybe_expect_llvm_LLVMBasicBlockRefByValue(*bqb,brb,bnb);
 }struct _global_Maybe_llvm_LLVMValueRef* _global_Array_op_get_Maybe_llvm_LLVMValueRef_(struct _global_Array_Maybe_llvm_LLVMValueRef_* _global_self, unsigned int _global_index, struct _global_Context* bnb){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),bnb);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct _global_Maybe_llvm_LLVMValueRef*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 LLVMValueRef _global_Maybe_unwrap_llvm_LLVMValueRefByValue(struct _global_Maybe_llvm_LLVMValueRef _global_self, struct _global_Context* bnb){;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 LLVMValueRef _global_x;;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 struct _global_Maybe_llvm_LLVMValueRef bpb =_global_self;if(bpb.tag==0){_global_x = bpb.cases.Some.field0;
 
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 else if(1){
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 _global_panic(_global_StringInit(38,"Trying to unwrap maybe, which was None"),bnb);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;return _global_x;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/maybe.top"
 ;}
 static inline LLVMValueRef _global_Maybe_unwrap_llvm_LLVMValueRef(struct _global_Maybe_llvm_LLVMValueRef* bqb,struct _global_Context* bnb){
 return _global_Maybe_unwrap_llvm_LLVMValueRefByValue(*bqb,bnb);
 }LLVMValueRef* _global_Array_op_get_llvm_LLVMValueRef(struct _global_Array_llvm_LLVMValueRef* _global_self, unsigned int _global_index, struct _global_Context* bnb){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),bnb);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((LLVMValueRef*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_shorten_llvm_LLVMValueRef(struct _global_Array_llvm_LLVMValueRef* _global_self, unsigned int _global_num, struct _global_Context* bnb){;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 37 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(((int)(_global_self)->length)-(int)_global_num<(int)0){;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(21,"Shorten out of bounds"),bnb);
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-_global_num;;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct _global_String print_obj_toString_mir_OpCode(struct mir_OpCode print_t, struct _global_Context* bnb){;
-#line 91 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 struct stringBuilder_StringBuilder print_s;print_s = stringBuilder_make_StringBuilder(bnb);;
-#line 92 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 print_type_to_string(_global_TypeFromStruct(mir_OpCode_get_type(NULL,bnb),&rEnumType_VTABLE_FOR_Type,rEnumType_VTABLE_FOR_Type.type, &_global_EnumType_toString, &_global_EnumType_get_size),(void*)&(print_t),_global_StringInit(0,""),&(print_s),bnb);
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;return stringBuilder_StringBuilder_toString(&(print_s),bnb);
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
 
 void llvmInitTypes() { 
@@ -17583,150 +13569,83 @@ rStructType_VTABLE_FOR_Type.type
 ; }
 void llvmInit() { 
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 70 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 86 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 89 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 90 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 92 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 110 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 112 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 116 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 120 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 121 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 123 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 135 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 136 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 138 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 144 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 148 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 150 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 151 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 152 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 154 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 156 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 157 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 159 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/llvmWrapper.top"
 ;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/llvm/mirToLLVM.top"
 ;
 };
 
-#define process__popen(c,d,f) _popen(c,d)
+#define process__popen(c,d,f) popen(c,d)
 
-#define process__pclose(g,h) _pclose(g)
+#define process__pclose(g,h) pclose(g)
 
 #define process__fgetc(j,k) fgetc(j)
 
 #define process__eof EOF
 struct pintcstringp process_popen(struct _global_String process_cmd, struct _global_Context* l){;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 struct FILE* process_p;;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 struct FILE* m =process__popen(_global_String_to_c_stringByValue(process_cmd,l),_global_String_to_c_stringByValue(_global_StringInit(1,"r"),l),l);if(m != NULL){process_p = m;
 
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;}
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 else if(1){
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 return pintcstringpInit((int)1,_global_StringInit(22,"Unable to open process"));
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;}
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 struct stringBuilder_StringBuilder process_s;process_s = stringBuilder_make_StringBuilder(l);;
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;while(1){char process_ch;process_ch = process__fgetc(process_p,l);;if(process_ch==process__eof){;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 break;;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;};_global_Array_append_char(&((process_s).chars),process_ch,l);};
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 int process_status;process_status = process__pclose(process_p,l);;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;return pintcstringpInit(process_status,stringBuilder_StringBuilder_toString(&(process_s),l));
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;}
 
 void processInitTypes() { 
@@ -17734,62 +13653,37 @@ void processInitTypes() {
  }
 void processInit() { 
 ;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//process.top"
 ;
 };
 void linker_Linker_link(struct linker_Linker* linker_self, struct _global_Context* d){;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 struct stringBuilder_StringBuilder linker_s;linker_s = stringBuilder_make_StringBuilder(d);;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 stringBuilder_StringBuilder_append(&(linker_s),(linker_self)->linker,d);
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 stringBuilder_StringBuilder_append(&(linker_s),_global_StringInit(1," "),d);
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 stringBuilder_StringBuilder_append(&(linker_s),(linker_self)->path_to_runtime,d);
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 stringBuilder_StringBuilder_append(&(linker_s),_global_StringInit(1," "),d);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 struct _global_StaticArray_StaticArray_S_string f =(linker_self)->object_files;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 for (unsigned int g = 0;g < f.length; g++) {
 struct _global_String linker_obj;linker_obj = *_global_StaticArray_op_get_StaticArray_S_string(&f, g, d);
 ;unsigned int linker_i;linker_i = g;
 stringBuilder_StringBuilder_append(&(linker_s),linker_obj,d);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 stringBuilder_StringBuilder_append(&(linker_s),_global_StringInit(1," "),d);
-#line 19 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 }
 ;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 stringBuilder_StringBuilder_append(&(linker_s),_global_StringInit(3,"-o "),d);
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 stringBuilder_StringBuilder_append(&(linker_s),(linker_self)->path_to_exe,d);
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 int linker_status;struct _global_String linker_output;struct pintcstringp h;h = process_popen(stringBuilder_StringBuilder_toString(&(linker_s),d),d);linker_status=h.field0;linker_output=h.field1;;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 _global_log_string(linker_output,d);
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 if(linker_status!=(int)0){;
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 _global_panic(_global_StringInit(14,"Failed to link"),d);
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 ;};
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 ;}
 void linker_Linker_run(struct linker_Linker* linker_self, struct _global_Context* d){;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 int linker_status;struct _global_String linker_output;struct pintcstringp f;f = process_popen(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(2,"./"),((linker_self)->path_to_exe),d),_global_StringInit(0,""),d),d);linker_status=f.field0;linker_output=f.field1;;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 _global_log_string(linker_output,d);
-#line 32 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 ;}
 
 void linkerInitTypes() { 
@@ -17856,183 +13750,124 @@ rStringType_VTABLE_FOR_Type.type
 ; }
 void linkerInit() { 
 processInit();;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 ;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//linker.top"
 ;
 };
+struct _global_String _global_toString_lexer_Token(struct lexer_Token _global_s, struct _global_Context* d);
+struct _global_String _global_StaticArray_join_StaticArray_S_lexer_Token(struct _global_StaticArray_StaticArray_S_lexer_Token* _global_self, struct _global_String _global_delimiter, struct _global_Context* d);
+struct _global_String _global_StaticArray_toString_StaticArray_S_lexer_Token(struct _global_StaticArray_StaticArray_S_lexer_Token* _global_self, struct _global_Context* d);
 struct _global_String print_obj_toString_mir_Program(struct mir_Program print_t, struct _global_Context* d);
+void _global_log___lexer_Token(struct _global_StaticArray_StaticArray_S_lexer_Token _global_s, struct _global_Context* d);
 void print_print_obj_mir_Program(struct mir_Program print_t, struct _global_Context* d);
 void compiler_log_memory_usage(struct _global_Context* d){_global_log_string(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(6,"USED: "),_global_u64_toStringByValue((_global_Allocator_get_occupied((d)->allocator,d)+_global_Allocator_get_occupied((d)->longterm_storage,d)),d),d),_global_StringInit(0,""),d),d);
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;}
-struct _global_StaticArray_StaticArray_S_string tmpcompilerbL(struct _global_StaticArray_1_string* l) {
+struct _global_StaticArray_StaticArray_S_string tmpcompilerbl(struct _global_StaticArray_1_string* l) {
 return _global_StaticArray_StaticArray_S_stringInit(l->data, 1);};
-static inline struct _global_Result_string_Result_T tmpcompilerbM(struct _global_Result_Result_E_Result_T p) {
+static inline struct _global_Result_string_Result_T tmpcompilerbm(struct _global_Result_Result_E_Result_T p) {
 struct _global_Result_string_Result_T n;n.tag = p.tag;n.cases = *(union _global_Result_string_Result_T_cases*) &(p.cases);return n;
 }
 struct _global_Result_string_Result_T compiler_compile_file(struct _global_String compiler_filename, struct _global_Context* d){;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 struct _global_File compiler_f;;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 struct _global_Maybe_File f =_global_open(compiler_filename,_global_ReadFile,d);if(f.tag==0){compiler_f = f.cases.Some.field0;
 
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;}
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 else if(1){
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 return _global_Error_string_Result_T(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(20,"could Not open file "),(compiler_filename),d),_global_StringInit(0,""),d),d);
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;}
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 struct _global_File g = compiler_f;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 struct _global_String compiler_src;compiler_src = _global_StringInit(0,"");;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 struct _global_Context compiler_new_context;compiler_new_context = *(d);;
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 (compiler_new_context).allocator = &(_global_malloc_as_allocator);;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 compiler_src = _global_File_read(&(compiler_f),&compiler_new_context);;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 _global_log_string(_global_StringInit(25,"=== read source files ==="),d);
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 compiler_log_memory_usage(d);
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 struct _global_StaticArray_StaticArray_S_lexer_Token compiler_tokens;struct error_CompilerError* compiler_lex_e;;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 struct _global_Result_rerror_CompilerError___lexer_Token h =lexer_lex(compiler_src,compiler_filename,d);if(h.tag==0){compiler_tokens = h.cases.Ok.field0;
 
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;}
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 else if(h.tag==1){compiler_lex_e = h.cases.Error.field0;
 
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 _global_File_freeByValue(g,d);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 return _global_Error_string_Result_T(error_CompilerError_toString(compiler_lex_e,d),d);
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;}
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 _global_Allocator_dealloc((compiler_new_context).allocator,(void*)(_global_String_to_c_stringByValue(compiler_src,d)),d);
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 _global_log_string(_global_StringInit(16,"=== tokenize ==="),d);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
-compiler_log_memory_usage(d);
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
+_global_log___lexer_Token(compiler_tokens,d);
 struct ast_AST* compiler_syntax_tree;struct error_CompilerError* compiler_ast_e;;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 struct _global_Result_rerror_CompilerError_rast_AST j =parser_parse(compiler_tokens,compiler_filename,d);if(j.tag==0){compiler_syntax_tree = j.cases.Ok.field0;
 
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;}
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 else if(j.tag==1){compiler_ast_e = j.cases.Error.field0;
 
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 _global_File_freeByValue(g,d);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 return _global_Error_string_Result_T(error_CompilerError_toString(compiler_ast_e,d),d);
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;}
-#line 39 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
-#line 38 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 _global_log_string(_global_StringInit(13,"=== parsed =="),d);
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 compiler_log_memory_usage(d);
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 struct error_CompilerError* k =validator_validate(compiler_syntax_tree,d);if(k != NULL){struct error_CompilerError* compiler_validation_error = k;
 
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 _global_File_freeByValue(g,d);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 return _global_Error_string_Result_T(error_CompilerError_toString(compiler_validation_error,d),d);
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
-#line 45 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;}
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 else if(1){
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 _global_log_string(_global_StringInit(17,"=== validated ==="),d);
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 compiler_log_memory_usage(d);
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 struct mir_Program compiler_ir;compiler_ir = mir_convert(compiler_syntax_tree,d);;
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 _global_log_string(_global_StringInit(21,"=== generated ir ===="),d);
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 compiler_log_memory_usage(d);
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 print_print_obj_mir_Program(compiler_ir,d);
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 interpreter_exec(compiler_ir,d);
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 _global_log_string(_global_StringInit(16,"=== llvm ir ===="),d);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 compiler_log_memory_usage(d);
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 llvm_convert_to_LLVMModule(&(compiler_ir),d);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 _global_log_string(_global_StringInit(15,"=== linking ==="),d);
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 struct _global_StaticArray_1_string compiler_object_files;compiler_object_files = _global_StaticArray_1_stringInit(_global_StringInit(11,"test/main.o"));;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
-struct linker_Linker compiler_l;compiler_l = linker_LinkerInit(_global_StringInit(13,"test/prog.exe"),_global_StringInit(14,"test/runtime.o"),tmpcompilerbL(&(compiler_object_files)),_global_StringInit(5,"clang"));;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
+struct linker_Linker compiler_l;compiler_l = linker_LinkerInit(_global_StringInit(13,"test/prog.exe"),_global_StringInit(14,"test/runtime.o"),tmpcompilerbl(&(compiler_object_files)),_global_StringInit(5,"clang"));;
 linker_Linker_link(&(compiler_l),d);
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 _global_log_string(_global_StringInit(26,"=== running executable ==="),d);
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 linker_Linker_run(&(compiler_l),d);
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
-;struct _global_Result_string_Result_T m =tmpcompilerbM(_global_Ok_Result_E_Result_T(NULL,d));
-#line 81 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;struct _global_Result_string_Result_T m =tmpcompilerbm(_global_Ok_Result_E_Result_T(NULL,d));
 _global_File_freeByValue(g,d);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 return m;
- }struct _global_String print_obj_toString_mir_Program(struct mir_Program print_t, struct _global_Context* d){;
-#line 91 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
+ }struct _global_String _global_toString_lexer_Token(struct lexer_Token _global_s, struct _global_Context* d){;
+;return lexer_Token_toString(&(_global_s),d);
+;}
+struct _global_String _global_StaticArray_join_StaticArray_S_lexer_Token(struct _global_StaticArray_StaticArray_S_lexer_Token* _global_self, struct _global_String _global_delimiter, struct _global_Context* d){;
+;
+;unsigned int f =(_global_self)->length;
+if(f==0){return _global_StringInit(0,"");}else if(f==1){return _global_toString_lexer_Token(*(_global_StaticArray_op_get_StaticArray_S_lexer_Token(_global_self,(unsigned int)0,d)),d);}else if(1){struct _global_String _global_s;_global_s = _global_StringInit(0,"");;
+unsigned int _global_i;_global_i = 0;;
+;while(_global_i<(_global_self)->length-1){_global_s = _global_String_op_addByValue(_global_s,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),lexer_Token_toStringByValue((*(_global_StaticArray_op_get_StaticArray_S_lexer_Token(_global_self,(unsigned int)_global_i,d))),d),d),_global_StringInit(0,""),d),(_global_delimiter),d),_global_StringInit(0,""),d),d);;_global_i = _global_i+1;;};
+return _global_String_op_addByValue(_global_s,_global_toString_lexer_Token(*(_global_StaticArray_op_get_StaticArray_S_lexer_Token(_global_self,(unsigned int)(_global_self)->length-1,d)),d),d);};
+;}
+struct _global_String _global_StaticArray_toString_StaticArray_S_lexer_Token(struct _global_StaticArray_StaticArray_S_lexer_Token* _global_self, struct _global_Context* d){;
+;return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(2,"[ "),(_global_StaticArray_join_StaticArray_S_lexer_Token(_global_self,_global_StringInit(2,", "),d)),d),_global_StringInit(2," ]"),d);
+;}
+struct _global_String print_obj_toString_mir_Program(struct mir_Program print_t, struct _global_Context* d){;
 struct stringBuilder_StringBuilder print_s;print_s = stringBuilder_make_StringBuilder(d);;
-#line 92 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 print_type_to_string(_global_TypeFromStruct(mir_Program_get_type(NULL,d),&rStructType_VTABLE_FOR_Type,rStructType_VTABLE_FOR_Type.type, &_global_StructType_toString, &_global_StructType_get_size),(void*)&(print_t),_global_StringInit(0,""),&(print_s),d);
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;return stringBuilder_StringBuilder_toString(&(print_s),d);
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
+;}
+void _global_log___lexer_Token(struct _global_StaticArray_StaticArray_S_lexer_Token _global_s, struct _global_Context* d){;
+_global_c_log(_global_StaticArray_toString_StaticArray_S_lexer_Token(&(_global_s),d),d);
 ;}
 void print_print_obj_mir_Program(struct mir_Program print_t, struct _global_Context* d){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 struct _global_Allocator* f = (d)->allocator;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 uint64_t g = _global_Allocator_get_occupied((d)->allocator,d);
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 _global_log_string(print_obj_toString_mir_Program(print_t,d),d);
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 _global_Allocator_reset_to(f,g,d);
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//print.top"
 ;}
 
 void compilerInitTypes() { 
@@ -18151,21 +13986,13 @@ _global_Result_Result_E_Result_TType.cases.length = 2;
  }
 void compilerInit() { 
 lexerInit();;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 parserInit();;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 mirInit();;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 interpreterInit();;
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 llvmInit();;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 linkerInit();;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//compiler.top"
 ;
 };
 
@@ -18174,20 +14001,13 @@ void mainInitTypes() {
  }
 void mainInit() { 
 compilerInit();;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//main.top"
 struct _global_Result_string_Result_T b =compiler_compile_file(_global_StringInit(13,"test/main.top"),(&_global_context));if(b.tag==1){struct _global_String main_e = b.cases.Error.field0;
 
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 _global_panic(main_e,(&_global_context));
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//main.top"
 ;}
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//main.top"
 else if(1){
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;
 };
 int main() { 

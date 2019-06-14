@@ -109,6 +109,17 @@ def Parser.pop_last(&self) Result[&ast.AST, &error.CompilerError] =
 def Parser.eval(using &self) Maybe[&error.CompilerError] =
     self.eval_not_func_call false
 
+def Parser.parse(rbp: int) int =
+    t := current!
+    token = next!
+    left := t.nud!
+    while rbp < token.lbp do
+        t = token
+        token = next!
+        left = t.led left
+
+    left
+
 def Parser.eval_not_func_call(using &self, ignore_func_call: bool) Maybe[&error.CompilerError] =
     token := self.current!
 
@@ -153,9 +164,8 @@ def Parser.eval_not_func_call(using &self, ignore_func_call: bool) Maybe[&error.
                 "," -> Some error.make_Error self, "Unexpected ,"
                 "\n" -> None
                 ")" ->
-                    self.num_paren -= 1
                     if self.num_paren > 0 then
-                        //self.num_paren -= 1
+                        self.num_paren -= 1
                         None
                     else
                         Some error.make_Error self, "Unexpected )"
@@ -188,7 +198,7 @@ def Parser.pop_current_node(using &self) Maybe[&CompilerError] =
 
 def Parser.pop(&self, mesg: string) Result[&ast.AST, &CompilerError] =
     if self.current_node.nodes.length == 0 then
-        return Error error.make_Error self, mesg
+        return Error error.make_Error self, "pop: {mesg}"
 
     Ok self.current_node.nodes.pop!
 
@@ -198,7 +208,7 @@ def Parser.push_paren(&self) uint =
 
 def Parser.expect_tag(&self, typ: lexer.TokenType, mesg: string) Maybe[&CompilerError] =
     if self.current!.kind.tag != typ.tag then
-        Some error.make_Error self, mesg
+        Some error.make_Error self, "Expect tag: {mesg}"
     else
         None
 
@@ -208,7 +218,7 @@ def Parser.expect_next_tag(&self, typ: lexer.TokenType, mesg: string) Maybe[&Com
 
 def Parser.expect_token(&self, tok: string, mesg: string) Maybe[&CompilerError] =
     if self.current!.value != tok then
-        Some error.make_Error self, mesg
+        Some error.make_Error self, "Expect token: {mesg}"
     else
         None
 

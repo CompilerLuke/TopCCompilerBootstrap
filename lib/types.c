@@ -4,7 +4,6 @@ struct types_FuncPtr* _global_box_types_FuncPtr(struct types_FuncPtr _global_val
 struct types_StructInfo* _global_box_types_StructInfo(struct types_StructInfo _global_value, struct _global_Context* D);
 struct error_CompilerError* error_make_Error_rparser_Parser(struct parser_Parser* error_self, struct _global_String error_mesg, struct _global_Context* D);
 struct _global_String types_CompilerType_toStringByValue(struct types_CompilerType types_self, struct _global_Context* D){;
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;struct types_CompilerType F =types_self;
 if(F.tag==0){return _global_StringInit(4,"none");}else if(F.tag==1){return _global_StringInit(6,"string");}else if(F.tag==2){return _global_StringInit(4,"bool");}else if(F.tag==3){_Bool types_unsigned = F.cases.Int.field0;
 unsigned int types_size = F.cases.Int.field1;
@@ -12,37 +11,24 @@ return types_int_to_string(types_unsigned,types_size,D);}else if(F.tag==4){unsig
 return types_float_to_string(types_size,D);}else if(F.tag==5){struct types_StructInfo* types_info = F.cases.Struct.field0;
 return types_StructInfo_toString(types_info,D);}else if(F.tag==6){struct types_FuncPtr* types_info = F.cases.Func.field0;
 return types_FuncPtr_toString(types_info,D);};
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;}
 static inline struct _global_String types_CompilerType_toString(struct types_CompilerType* G,struct _global_Context* D){
 return types_CompilerType_toStringByValue(*G,D);
 }struct error_CompilerError* types_CompilerType_expect_equalsByValue(struct types_CompilerType types_self, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
-;return NULL;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;return (types_CompilerType_equalsByValue(types_self,types_other,D) ? NULL:(error_make_Error_error_Thrower(types_thrower,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(10,"Expecting "),types_CompilerType_toStringByValue((types_self),D),D),_global_StringInit(6,", not "),D),types_CompilerType_toStringByValue((types_other),D),D),_global_StringInit(0,""),D),D)));
 ;}
 static inline struct error_CompilerError* types_CompilerType_expect_equals(struct types_CompilerType* F,struct types_CompilerType G,struct error_Thrower H,struct _global_Context* D){
 return types_CompilerType_expect_equalsByValue(*F,G,H,D);
 }_Bool types_CompilerType_equalsByValue(struct types_CompilerType types_self, struct types_CompilerType types_other, struct _global_Context* D){;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 types_self = types_CompilerType_to_real_typeByValue(types_self,D);;
-#line 30 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 types_other = types_CompilerType_to_real_typeByValue(types_other,D);;
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 if((types_self).tag!=(types_other).tag){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 return 0;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;};
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;struct ptypes_CompilerTypectypes_CompilerTypep F =ptypes_CompilerTypectypes_CompilerTypepInit(types_self,types_other);
 if((F.field0.tag==3&&F.field1.tag==3)){_Bool types_unsigned1 = F.field0.cases.Int.field0;
 unsigned int types_size1 = F.field0.cases.Int.field1;
@@ -55,16 +41,12 @@ struct types_StructInfo* types_info2 = F.field1.cases.Struct.field0;
 return types_StructInfo_op_eq(types_info1,types_info2,D);}else if((F.field0.tag==6&&F.field1.tag==6)){struct types_FuncPtr* types_info1 = F.field0.cases.Func.field0;
 struct types_FuncPtr* types_info2 = F.field1.cases.Func.field0;
 return types_FuncPtr_op_eq(types_info1,types_info2,D);}else if(1){return 1;};
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;}
 static inline _Bool types_CompilerType_equals(struct types_CompilerType* G,struct types_CompilerType H,struct _global_Context* D){
 return types_CompilerType_equalsByValue(*G,H,D);
 }struct error_CompilerError* types_CompilerType_duck_typeByValue(struct types_CompilerType types_self, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;struct types_CompilerType F =types_self;
 if(F.tag==0||F.tag==1||F.tag==2){return types_CompilerType_expect_equalsByValue(types_self,types_other,types_thrower,D);}else if(F.tag==3){_Bool types_unsigned = F.cases.Int.field0;
 unsigned int types_size = F.cases.Int.field1;
@@ -72,226 +54,143 @@ return types_int_duck_type(types_unsigned,types_size,types_other,types_thrower,D
 return types_float_duck_type(types_size,types_other,types_thrower,D);}else if(F.tag==5){struct types_StructInfo* types_info = F.cases.Struct.field0;
 return types_StructInfo_duck_type(types_info,types_other,types_thrower,D);}else if(F.tag==6){struct types_FuncPtr* types_info = F.cases.Func.field0;
 return types_FuncPtr_duck_type(types_info,types_other,types_thrower,D);};
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;}
 static inline struct error_CompilerError* types_CompilerType_duck_type(struct types_CompilerType* G,struct types_CompilerType H,struct error_Thrower J,struct _global_Context* D){
 return types_CompilerType_duck_typeByValue(*G,H,J,D);
 }struct types_CompilerType types_CompilerType_to_real_typeByValue(struct types_CompilerType types_self, struct _global_Context* D){;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;struct types_CompilerType F =types_self;
 if(1){return types_self;};
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;}
 static inline struct types_CompilerType types_CompilerType_to_real_type(struct types_CompilerType* G,struct _global_Context* D){
 return types_CompilerType_to_real_typeByValue(*G,D);
 }_Bool types_CompilerType_is_typeByValue(struct types_CompilerType types_self, struct types_CompilerType types_other, struct _global_Context* D){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;return (types_CompilerType_to_real_typeByValue(types_self,D)).tag==(types_CompilerType_to_real_typeByValue(types_other,D)).tag;
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;}
 static inline _Bool types_CompilerType_is_type(struct types_CompilerType* F,struct types_CompilerType G,struct _global_Context* D){
 return types_CompilerType_is_typeByValue(*F,G,D);
 }struct types_CompilerType types_func_type;struct types_CompilerType types_struct_type;struct _global_String types_float_to_string(unsigned int types_size, struct _global_Context* D){;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/float.top"
 ;return _global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(1,"f"),_global_uint_toStringByValue((types_size),D),D),_global_StringInit(0,""),D);
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* types_float_duck_type(unsigned int types_size, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/float.top"
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/float.top"
 ;
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/float.top"
-;return NULL;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;struct types_CompilerType F =types_CompilerType_to_real_typeByValue(types_other,D);
+if(F.tag==4){unsigned int types_size2 = F.cases.Float.field0;
+return NULL;}else if(F.tag==3){_Bool types_unsigned = F.cases.Int.field0;
+unsigned int types_size2 = F.cases.Int.field1;
+return NULL;}else if(1){return error_make_Error_error_Thrower(types_thrower,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(10,"Expecting "),(types_float_to_string(types_size,D)),D),_global_StringInit(5," not "),D),types_CompilerType_toStringByValue((types_other),D),D),_global_StringInit(0,""),D),D);};
 ;}
 struct types_CompilerType types_make_Float(struct _global_Context* D){;return types_Float(32,D);
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/float.top"
 ;}
 struct _global_String types_int_to_string(_Bool types_unsigned, unsigned int types_size, struct _global_Context* D){;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 struct _global_String types_prefix;types_prefix = (types_unsigned ? _global_StringInit(1,"u"):(_global_StringInit(1,"i")));;
-#line 2 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;return _global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(0,""),(types_prefix),D),_global_StringInit(0,""),D),_global_uint_toStringByValue((types_size),D),D),_global_StringInit(0,""),D);
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* types_int_duck_type(_Bool types_unsigned, unsigned int types_size, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;struct types_CompilerType F =types_CompilerType_to_real_typeByValue(types_other,D);
 if(F.tag==3){_Bool types_unsigned2 = F.cases.Int.field0;
 unsigned int types_size2 = F.cases.Int.field1;
 return (types_unsigned&&!(types_unsigned2) ? error_make_Error_error_Thrower(types_thrower,_global_StringInit(42,"Cannot convert from signed to unsigned int"),D) : (types_size2>types_size) ? error_make_Error_error_Thrower(types_thrower,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(36,"Loosing information by casting from "),types_CompilerType_toStringByValue((types_other),D),D),_global_StringInit(2,", "),D),(types_int_to_string(types_unsigned,types_size,D)),D),_global_StringInit(0,""),D),D):(NULL));}else if(1){return error_make_Error_error_Thrower(types_thrower,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(10,"Expecting "),(types_int_to_string(types_unsigned,types_size,D)),D),_global_StringInit(6,", not "),D),types_CompilerType_toStringByValue((types_other),D),D),_global_StringInit(0,""),D),D);};
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;}
 struct types_CompilerType types_make_Int(struct _global_Context* D){;return types_Int(0,32,D);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/int.top"
 ;}
 struct _global_String types_FuncPtr_toString(struct types_FuncPtr* types_self, struct _global_Context* D){;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 struct stringBuilder_StringBuilder types_s;types_s = stringBuilder_make_StringBuilder(D);;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 stringBuilder_StringBuilder_append(&(types_s),_global_StringInit(4,"def("),D);
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 struct _global_StaticArray_StaticArray_S_types_CompilerType F =(types_self)->args;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 for (unsigned int G = 0;G < F.length; G++) {
 struct types_CompilerType types_arg;types_arg = *_global_StaticArray_op_get_StaticArray_S_types_CompilerType(&F, G, D);
 ;unsigned int types_i;types_i = G;
 stringBuilder_StringBuilder_append(&(types_s),types_CompilerType_toStringByValue(types_arg,D),D);
-#line 13 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 if(types_i<((types_self)->args).length-1){;
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 stringBuilder_StringBuilder_append(&(types_s),_global_StringInit(1,","),D);
-#line 15 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;};
-#line 14 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 }
 ;
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 stringBuilder_StringBuilder_append(&(types_s),_global_StringInit(1,")"),D);
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;return stringBuilder_StringBuilder_toString(&(types_s),D);
-#line 18 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;}
 static inline struct _global_String types_FuncPtr_toStringByValue(struct types_FuncPtr H,struct _global_Context* D){
 return types_FuncPtr_toString(&H,D);
 }struct error_CompilerError* types_FuncPtr_duck_type(struct types_FuncPtr* types_self, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;return NULL;
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 _Bool types_FuncPtr_op_eq(struct types_FuncPtr* types_self, struct types_FuncPtr* types_other, struct _global_Context* D){;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;return 1;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;}
 unsigned int types_FuncPtr_calc_size(struct types_FuncPtr* types_self, struct _global_Context* D){;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;return 8;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;}
 struct types_FuncPtr* types_make_FuncPtr(struct _global_Context* D){;return _global_box_types_FuncPtr(types_FuncPtrInit(_global_StaticArray_StaticArray_S_types_CompilerTypeInit(NULL, 0),types_Void,0),D);
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/funcPtr.top"
 ;}
 struct _global_String types_StructInfo_toString(struct types_StructInfo* types_self, struct _global_Context* D){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;return (types_self)->name;
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;}
 static inline struct _global_String types_StructInfo_toStringByValue(struct types_StructInfo F,struct _global_Context* D){
 return types_StructInfo_toString(&F,D);
 }_Bool types_StructInfo_equals(struct types_StructInfo* types_self, struct types_CompilerType types_other, struct _global_Context* D){;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;struct types_CompilerType F =types_CompilerType_to_real_typeByValue(types_other,D);
 if(F.tag==5){struct types_StructInfo* types_o = F.cases.Struct.field0;
 return _global_String_op_eqByValue((types_o)->name,(types_self)->name,D);}else if(1){return 0;};
-#line 12 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;}
 struct error_CompilerError* types_StructInfo_duck_type(struct types_StructInfo* types_self, struct types_CompilerType types_other, struct error_Thrower types_thrower, struct _global_Context* D){;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
-#line 16 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
-;return NULL;
-#line 17 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;return (types_StructInfo_equals(types_self,types_other,D) ? NULL:(error_make_Error_error_Thrower(types_thrower,_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(10,"Expecting "),types_StructInfo_toString((types_self),D),D),_global_StringInit(5," not "),D),types_CompilerType_toStringByValue((types_other),D),D),_global_StringInit(0,""),D),D)));
 ;}
 _Bool types_StructInfo_op_eq(struct types_StructInfo* types_self, struct types_StructInfo* types_other, struct _global_Context* D){;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;return _global_String_op_eqByValue((types_self)->name,(types_other)->name,D);
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct types_StructInfo* types_make_StructInfo(struct _global_String types_name, struct hashMap_HashMap_types_CompilerType types_fields, struct _global_Context* D){;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
-#line 23 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;return _global_box_types_StructInfo(types_StructInfoInit(types_name,types_fields),D);
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;}
-static inline struct _global_Result_Result_E_types_CompilerType tmptypesK(struct _global_Result_rerror_CompilerError_Result_T K) {
+static inline struct _global_Result_Result_E_types_CompilerType tmptypesp(struct _global_Result_rerror_CompilerError_Result_T K) {
 struct _global_Result_Result_E_types_CompilerType J;J.tag = K.tag;J.cases = *(union _global_Result_Result_E_types_CompilerType_cases*) &(K.cases);return J;
 }
-static inline struct _global_Result_rerror_CompilerError_types_CompilerType tmptypesH(struct _global_Result_Result_E_types_CompilerType G) {
+static inline struct _global_Result_rerror_CompilerError_types_CompilerType tmptypesm(struct _global_Result_Result_E_types_CompilerType G) {
 struct _global_Result_rerror_CompilerError_types_CompilerType F;F.tag = G.tag;F.cases = *(union _global_Result_rerror_CompilerError_types_CompilerType_cases*) &(G.cases);return F;
 }
 
-static inline struct _global_Result_Result_E_types_CompilerType tmptypesJ(struct parser_Parser** types_self, struct _global_Context* D) {
+static inline struct _global_Result_Result_E_types_CompilerType tmptypesn(struct parser_Parser** types_self, struct _global_Context* D) {
 struct _global_String H =(parser_Parser_current(*types_self,D)).value;
-if(_global_String_op_eqByValue(H,_global_StringInit(3,"int"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Int(0,32,D),D);}else if(_global_String_op_eqByValue(H,_global_StringInit(5,"float"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Float(32,D),D);}else if(_global_String_op_eqByValue(H,_global_StringInit(4,"none"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Void,D);}else if(1){return tmptypesK(_global_Error_rerror_CompilerError_Result_T(error_make_Error_rparser_Parser(*types_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(14,"Unknown type: "),((parser_Parser_current(*types_self,D)).value),D),_global_StringInit(0,""),D),D),D));}
+if(_global_String_op_eqByValue(H,_global_StringInit(3,"int"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Int(0,32,D),D);}else if(_global_String_op_eqByValue(H,_global_StringInit(5,"float"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Float(32,D),D);}else if(_global_String_op_eqByValue(H,_global_StringInit(4,"none"),NULL)){return _global_Ok_Result_E_types_CompilerType(types_Void,D);}else if(1){return tmptypesp(_global_Error_rerror_CompilerError_Result_T(error_make_Error_rparser_Parser(*types_self,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(14,"Unknown type: "),((parser_Parser_current(*types_self,D)).value),D),_global_StringInit(0,""),D),D),D));}
 }
 struct _global_Result_rerror_CompilerError_types_CompilerType types_parse_type(struct parser_Parser* types_self, struct _global_Context* D){;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/parseType.top"
-;return tmptypesH(tmptypesJ(&types_self, D));
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
+;return tmptypesm(tmptypesn(&types_self, D));
 ;}
 struct error_CompilerError* error_make_Error_error_Thrower(struct error_Thrower error_self, struct _global_String error_mesg, struct _global_Context* D){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-struct error_CompilerError* error_err;error_err = _global_box_longterm_error_CompilerError(error_CompilerErrorInit(error_Thrower_get_filename(&(error_self),D),error_Thrower_get_line(&(error_self),D),error_mesg,error_Thrower_get_column(&(error_self),D)),D);;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-_global_panic(error_CompilerError_toString(error_err,D),D);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-;return error_err;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
+;return _global_box_longterm_error_CompilerError(error_CompilerErrorInit(error_Thrower_get_filename(&(error_self),D),error_Thrower_get_line(&(error_self),D),error_mesg,error_Thrower_get_column(&(error_self),D)),D);
 ;}
 struct types_CompilerType* _global_StaticArray_op_get_StaticArray_S_types_CompilerType(struct _global_StaticArray_StaticArray_S_types_CompilerType* _global_self, unsigned int _global_index, struct _global_Context* D){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),D);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 struct types_FuncPtr* _global_box_types_FuncPtr(struct types_FuncPtr _global_value, struct _global_Context* D){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct types_FuncPtr* _global_pointer;_global_pointer = (struct types_FuncPtr*)(_global_Allocator_alloc((D)->allocator,(uint64_t)sizeof(struct types_FuncPtr),D));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct types_StructInfo* _global_box_types_StructInfo(struct types_StructInfo _global_value, struct _global_Context* D){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct types_StructInfo* _global_pointer;_global_pointer = (struct types_StructInfo*)(_global_Allocator_alloc((D)->allocator,(uint64_t)sizeof(struct types_StructInfo),D));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct error_CompilerError* error_make_Error_rparser_Parser(struct parser_Parser* error_self, struct _global_String error_mesg, struct _global_Context* D){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-struct error_CompilerError* error_err;error_err = _global_box_longterm_error_CompilerError(error_CompilerErrorInit(parser_Parser_get_filename(error_self,D),parser_Parser_get_line(error_self,D),error_mesg,parser_Parser_get_column(error_self,D)),D);;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-_global_panic(error_CompilerError_toString(error_err,D),D);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-;return error_err;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
+;return _global_box_longterm_error_CompilerError(error_CompilerErrorInit(parser_Parser_get_filename(error_self,D),parser_Parser_get_line(error_self,D),error_mesg,parser_Parser_get_column(error_self,D)),D);
 ;}
 
 void typesInitTypes() { 
@@ -703,16 +602,10 @@ _global_Result_Result_E_types_CompilerTypeType.cases.length = 2;
  }
 void typesInit() { 
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 hashMapInit();;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 scopeInit();;
-#line 4 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 types_func_type = types_Func((struct types_FuncPtr*)0,(&_global_context));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 types_struct_type = types_Struct((struct types_StructInfo*)0,(&_global_context));;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/types.top"
 ;
-#line 1 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/types/struct.top"
 ;
 };

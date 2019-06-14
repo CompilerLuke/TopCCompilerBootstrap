@@ -20,9 +20,12 @@ def StringBuilder.toString(&self) string =
     */
 
     self.chars.append `\0` //null terminated
+
     s := make_String self.chars.length - 1, self.chars.data.unwrap! //unwrap is safe as we just added one char
     _ := self.chars.pop!
 
     s
+
+
 def make_StringBuilder() StringBuilder =
     StringBuilder{ [..]char }

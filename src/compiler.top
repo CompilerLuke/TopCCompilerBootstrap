@@ -33,7 +33,7 @@ def compile_file(filename: string) Result[_,string] =
     new_context.allocator.dealloc(src.to_c_string!)
 
     log "=== tokenize ==="
-    log_memory_usage!
+    log tokens
 
     guard Ok syntax_tree := parser.parse tokens, filename
     elif Error ast_e then return Error ast_e.toString!

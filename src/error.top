@@ -14,10 +14,10 @@ def CompilerError.before(&self, mesg: string) &CompilerError =
 def CompilerError.toString(&self) string =
     s_buffer := stringBuilder.make_StringBuilder!
 
-    s_buffer.append "Compilation Error\n\nFile '{self.filename}', line {self.line}\n\t"
+    s_buffer.append "Compilation Error\n\nFile '{self.filename}', line {self.line}\n    "
     s_buffer.append self.mesg
-    s_buffer.append "\n\n\t"
 
+    s_buffer.append "\n\n\t"
 
     guard Some source_file := open self.filename, ReadFile
     else return "{s_buffer}\nCould not load source file"
@@ -51,16 +51,11 @@ type Thrower with
     def get_column() uint
 
 def make_Error[T: Thrower](self: T, mesg: string) &CompilerError =
-    err := box_longterm CompilerError{
+    box_longterm CompilerError{
         filename = self.get_filename!
         line = self.get_line!
         mesg = mesg
         column = self.get_column!
     }
-
-    panic err.toString!
-
-
-    err
 
 type CompilerResult[T] is Result[T, &CompilerError]

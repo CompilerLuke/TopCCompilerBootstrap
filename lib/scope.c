@@ -28,620 +28,359 @@ struct scope_DeclInfo* hashMap_HashMap_op_get_scope_DeclInfo(struct hashMap_Hash
 struct error_CompilerError* error_make_Error_rast_AST(struct ast_AST* error_self, struct _global_String error_mesg, struct _global_Context* m);
 void hashMap_HashMap_insert_scope_DeclInfo(struct hashMap_HashMap_scope_DeclInfo* hashMap_self, struct _global_String hashMap_key, struct scope_DeclInfo hashMap_value, struct _global_Context* m);
 struct scope_DeclInfo scope_make_DeclInfo(struct types_CompilerType scope__type, struct _global_Context* m){;
-#line 10 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;return scope_DeclInfoInit(scope__type,0);
-#line 11 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 struct scope_ScopeBlock scope_make_ScopeBlock(struct _global_Context* m){struct hashMap_HashMap_scope_DeclInfo scope_vars;scope_vars = hashMap_make_HashMap_size_scope_DeclInfo(powf(2,3),&(_global_malloc_as_allocator),m);;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;return scope_ScopeBlockInit(scope_vars);
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 void scope_ScopeBlock_free(struct scope_ScopeBlock* scope_self, struct _global_Context* m){;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 hashMap_HashMap_free_scope_DeclInfo(&((scope_self)->vars),m);
-#line 27 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 struct scope_Scope* scope_make_Scope(struct _global_Context* m){struct _global_Array_scope_ScopeBlock scope_blocks;scope_blocks = _global_Array_scope_ScopeBlockInit(0, 0, NULL, NULL);;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 _global_Array_append_scope_ScopeBlock(&(scope_blocks),scope_make_ScopeBlock(m),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;return _global_box_scope_Scope(scope_ScopeInit(scope_blocks),m);
-#line 36 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 void scope_Scope_free(struct scope_Scope* scope_self, struct _global_Context* m){;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 struct _global_Range n =_global_RangeInit(0,((scope_self)->blocks).length);
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int scope_i;scope_i = p;
 ;scope_ScopeBlock_free(&(*(_global_Array_op_get_scope_ScopeBlock(&((scope_self)->blocks),(unsigned int)scope_i,m))),m);
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 }
 ;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 _global_Array_free_scope_ScopeBlock(&((scope_self)->blocks),m);
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 void scope_Scope_push(struct scope_Scope* scope_self, struct _global_Context* m){;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 _global_Array_append_scope_ScopeBlock(&((scope_self)->blocks),scope_make_ScopeBlock(m),m);
-#line 47 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 void scope_Scope_pop(struct scope_Scope* scope_self, struct _global_Context* m){;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 scope_ScopeBlock_free(&(*(_global_Array_op_get_scope_ScopeBlock(&((scope_self)->blocks),(unsigned int)((scope_self)->blocks).length-1,m))),m);
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 _global_Array_pop_scope_ScopeBlock(&((scope_self)->blocks),m);
-#line 51 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 struct scope_DeclInfo* scope_Scope_get_var(struct scope_Scope* scope_self, struct _global_String scope_name, struct _global_Context* m){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 struct _global_Range n =_global_RangeInit(0,((scope_self)->blocks).length);
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int scope_i;scope_i = p;
 ;struct hashMap_HashMap_scope_DeclInfo* scope_vars;scope_vars = &((*(_global_Array_op_get_scope_ScopeBlock(&((scope_self)->blocks),(unsigned int)((scope_self)->blocks).length-1-scope_i,m))).vars);;
-#line 55 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 if(hashMap_HashMap_contains_scope_DeclInfo(scope_vars,scope_name,m)){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 return &(*(hashMap_HashMap_op_get_scope_DeclInfo(scope_vars,(struct _global_String)scope_name,m)));
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;};
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 }
 ;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;return NULL;
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/.top"
 ;}
 struct error_CompilerError* scope_Scope_create_decl(struct scope_Scope* scope_self, struct _global_String scope_name, struct scope_DeclInfo* scope_info, struct ast_AST* scope_node, struct _global_Context* m){;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 _global_assert(((scope_self)->blocks).length>0,_global_StringInit(20,"Missing global scope"),m);
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 struct scope_ScopeBlock* scope_outer_block;scope_outer_block = &(*(_global_Array_op_get_scope_ScopeBlock(&((scope_self)->blocks),(unsigned int)((scope_self)->blocks).length-1,m)));;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 (scope_info)->is_global = ((scope_self)->blocks).length==1;;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;if(hashMap_HashMap_contains_scope_DeclInfo(&((scope_outer_block)->vars),scope_name,m)){;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 return error_make_Error_rast_AST(scope_node,_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(4,"Var "),(scope_name),m),_global_StringInit(15," already exists"),m),m);}
 else{hashMap_HashMap_insert_scope_DeclInfo(&((scope_outer_block)->vars),scope_name,*(scope_info),m);
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 return NULL;};
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;}
 void _global_memcpy_hashMap_HashBucket_scope_DeclInfo_(struct hashMap_HashBucket_scope_DeclInfo* _global_target, struct hashMap_HashBucket_scope_DeclInfo* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct hashMap_HashBucket_scope_DeclInfo),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_string(struct _global_String* _global_target, struct _global_String* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct _global_String),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 void _global_memcpy_scope_DeclInfo(struct scope_DeclInfo* _global_target, struct scope_DeclInfo* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct scope_DeclInfo),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct hashMap_HashBucket_scope_DeclInfo* tmpscopeC(struct _global_Array_hashMap_HashBucket_scope_DeclInfo_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct hashMap_HashBucket_scope_DeclInfo* tmpscopeh(struct _global_Array_hashMap_HashBucket_scope_DeclInfo_** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct hashMap_HashBucket_scope_DeclInfo* n =(*_global_self)->data;
 if(n != NULL){struct hashMap_HashBucket_scope_DeclInfo* _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct hashMap_HashBucket_scope_DeclInfo* _global_newData;_global_newData = (struct hashMap_HashBucket_scope_DeclInfo*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct hashMap_HashBucket_scope_DeclInfo),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_hashMap_HashBucket_scope_DeclInfo_(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct hashMap_HashBucket_scope_DeclInfo*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct hashMap_HashBucket_scope_DeclInfo),m));}
 }
 void _global_Array_reserve_hashMap_HashBucket_scope_DeclInfo_(struct _global_Array_hashMap_HashBucket_scope_DeclInfo_* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpscopeC(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpscopeh(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 void _global_Array_free_string(struct _global_Array_string* _global_self, struct _global_Context* m){;
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 128 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_String* n =(_global_self)->data;if(n != NULL){struct _global_String* _global_data = n;
 
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_free((void*)_global_data,m);
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 else if(n == NULL){
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 130 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_free_scope_DeclInfo(struct _global_Array_scope_DeclInfo* _global_self, struct _global_Context* m){;
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 128 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct scope_DeclInfo* n =(_global_self)->data;if(n != NULL){struct scope_DeclInfo* _global_data = n;
 
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_free((void*)_global_data,m);
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 else if(n == NULL){
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 130 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_memcpy_scope_ScopeBlock(struct scope_ScopeBlock* _global_target, struct scope_ScopeBlock* _global_destination, unsigned int _global_length, struct _global_Context* m){;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;
-#line 8 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 _global_c_memcpy((void*)_global_target,(void*)_global_destination,(uint64_t)_global_length*sizeof(struct scope_ScopeBlock),m);
-#line 9 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 
-static inline struct _global_String* tmpscopeD(struct _global_Array_string** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct _global_String* tmpscopej(struct _global_Array_string** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct _global_String* n =(*_global_self)->data;
 if(n != NULL){struct _global_String* _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_String* _global_newData;_global_newData = (struct _global_String*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_String),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_string(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct _global_String*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct _global_String),m));}
 }
 void _global_Array_reserve_string(struct _global_Array_string* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpscopeD(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpscopej(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 
-static inline struct scope_DeclInfo* tmpscopeF(struct _global_Array_scope_DeclInfo** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct scope_DeclInfo* tmpscopek(struct _global_Array_scope_DeclInfo** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct scope_DeclInfo* n =(*_global_self)->data;
 if(n != NULL){struct scope_DeclInfo* _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct scope_DeclInfo* _global_newData;_global_newData = (struct scope_DeclInfo*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct scope_DeclInfo),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_scope_DeclInfo(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct scope_DeclInfo*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct scope_DeclInfo),m));}
 }
 void _global_Array_reserve_scope_DeclInfo(struct _global_Array_scope_DeclInfo* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpscopeF(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpscopek(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 struct hashMap_HashBucket_scope_DeclInfo hashMap_make_HashBucket_scope_DeclInfo(struct _global_Allocator* hashMap_allocator, struct _global_Context* m){;
-#line 24 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string hashMap_keys;hashMap_keys = _global_Array_stringInit(0, 0, NULL, NULL);;
-#line 25 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_scope_DeclInfo hashMap_values;hashMap_values = _global_Array_scope_DeclInfoInit(0, 0, NULL, NULL);;
-#line 26 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_keys).allocator = hashMap_allocator;;
-#line 28 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_values).allocator = hashMap_allocator;;
-#line 29 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return hashMap_HashBucket_scope_DeclInfoInit(hashMap_keys,hashMap_values);
-#line 31 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 void _global_Array_append_hashMap_HashBucket_scope_DeclInfo_(struct _global_Array_hashMap_HashBucket_scope_DeclInfo_* _global_self, struct hashMap_HashBucket_scope_DeclInfo _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_hashMap_HashBucket_scope_DeclInfo_(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_hashMap_HashBucket_scope_DeclInfo_(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct hashMap_HashBucket_scope_DeclInfo*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void hashMap_HashBucket_free_scope_DeclInfo(struct hashMap_HashBucket_scope_DeclInfo* hashMap_self, struct _global_Context* m){;
-#line 20 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_free_string(&((hashMap_self)->keys),m);
-#line 21 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_free_scope_DeclInfo(&((hashMap_self)->values),m);
-#line 22 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct hashMap_HashBucket_scope_DeclInfo* _global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;
-#line 5 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 6 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;return ((_global_self)->data + (int64_t)_global_index);
-#line 7 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/array.top"
 ;}
 
-static inline struct scope_ScopeBlock* tmpscopeG(struct _global_Array_scope_ScopeBlock** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
+static inline struct scope_ScopeBlock* tmpscopel(struct _global_Array_scope_ScopeBlock** _global_self,unsigned int* _global_newSize,struct _global_Allocator** _global_allocator, struct _global_Context* m) {
 struct scope_ScopeBlock* n =(*_global_self)->data;
 if(n != NULL){struct scope_ScopeBlock* _global_data = n;
 _global_assert(*_global_newSize>=(*_global_self)->length,_global_StringInit(16,"Truncating array"),m);
-#line 82 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct scope_ScopeBlock* _global_newData;_global_newData = (struct scope_ScopeBlock*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct scope_ScopeBlock),m));;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_memcpy_scope_ScopeBlock(_global_newData,_global_data,(*_global_self)->length,m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Allocator_dealloc(*_global_allocator,(void*)_global_data,m);
-#line 87 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 return _global_newData;}else if(n == NULL){return (struct scope_ScopeBlock*)(_global_Allocator_alloc(*_global_allocator,(uint64_t)(*_global_self)->capacity*sizeof(struct scope_ScopeBlock),m));}
 }
 void _global_Array_reserve_scope_ScopeBlock(struct _global_Array_scope_ScopeBlock* _global_self, unsigned int _global_newSize, struct _global_Context* m){;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->allocator = _global_allocator;;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->capacity = _global_newSize;;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
-(_global_self)->data = tmpscopeG(&_global_self,&_global_newSize,&_global_allocator, m);;
-#line 80 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
+(_global_self)->data = tmpscopel(&_global_self,&_global_newSize,&_global_allocator, m);;
 ;}
 struct _global_String* _global_Array_op_get_string(struct _global_Array_string* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct _global_String*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct scope_DeclInfo* _global_Array_op_get_scope_DeclInfo(struct _global_Array_scope_DeclInfo* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct scope_DeclInfo*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_string(struct _global_Array_string* _global_self, struct _global_String _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_string(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_string(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct _global_String*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_append_scope_DeclInfo(struct _global_Array_scope_DeclInfo* _global_self, struct scope_DeclInfo _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_scope_DeclInfo(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_scope_DeclInfo(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct scope_DeclInfo*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct hashMap_HashMap_scope_DeclInfo hashMap_make_HashMap_size_scope_DeclInfo(unsigned int hashMap_size, struct _global_Allocator* hashMap_allocator, struct _global_Context* m){;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 94 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_hashMap_HashBucket_scope_DeclInfo_ hashMap_buckets;hashMap_buckets = _global_Array_hashMap_HashBucket_scope_DeclInfo_Init(0, 0, NULL, NULL);;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_buckets).allocator = hashMap_allocator;;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Range n =_global_RangeInit(0,hashMap_size);
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int p = n.start; p < n.end; p++) {
 unsigned int hashMap_i;hashMap_i = p;
 ;_global_Array_append_hashMap_HashBucket_scope_DeclInfo_(&(hashMap_buckets),hashMap_make_HashBucket_scope_DeclInfo(hashMap_allocator,m),m);
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return hashMap_HashMap_scope_DeclInfoInit(_global_StaticArray_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_Init(hashMap_buckets.data, hashMap_buckets.length),0);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 void hashMap_HashMap_free_scope_DeclInfo(struct hashMap_HashMap_scope_DeclInfo* hashMap_self, struct _global_Context* m){;
-#line 83 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_ n =(hashMap_self)->buckets;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int p = 0;p < n.length; p++) {
 struct hashMap_HashBucket_scope_DeclInfo hashMap_bucket;hashMap_bucket = *_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&n, p, m);
 ;unsigned int hashMap_i;hashMap_i = p;
 hashMap_HashBucket_free_scope_DeclInfo(&(hashMap_bucket),m);
-#line 85 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 84 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 void _global_Array_append_scope_ScopeBlock(struct _global_Array_scope_ScopeBlock* _global_self, struct scope_ScopeBlock _global_value, struct _global_Context* m){;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 unsigned int _global_newLength;_global_newLength = (_global_self)->length+1;;
-#line 98 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if(_global_newLength>(_global_self)->capacity){;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->capacity==0){;
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_Array_reserve_scope_ScopeBlock(_global_self,1,m);
-#line 101 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 else{_global_Array_reserve_scope_ScopeBlock(_global_self,(_global_self)->capacity*2,m);
-#line 103 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 100 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 *((((struct scope_ScopeBlock*)(_global_self)->data + (int64_t)(_global_self)->length))) = _global_value;;
-#line 105 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = _global_newLength;;
-#line 106 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct scope_Scope* _global_box_scope_Scope(struct scope_Scope _global_value, struct _global_Context* m){;
-#line 95 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 struct scope_Scope* _global_pointer;_global_pointer = (struct scope_Scope*)(_global_Allocator_alloc((m)->allocator,(uint64_t)sizeof(struct scope_Scope),m));;
-#line 96 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 *(_global_pointer) = _global_value;;
-#line 97 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;return _global_pointer;
-#line 99 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/memory.top"
 ;}
 struct scope_ScopeBlock* _global_Array_op_get_scope_ScopeBlock(struct _global_Array_scope_ScopeBlock* _global_self, unsigned int _global_index, struct _global_Context* m){;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 33 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_assert(_global_index<(_global_self)->length,_global_StringInit(13,"Out of bounds"),m);
-#line 34 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return ((struct scope_ScopeBlock*)(_global_self)->data + (int64_t)_global_index);
-#line 35 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 void _global_Array_free_scope_ScopeBlock(struct _global_Array_scope_ScopeBlock* _global_self, struct _global_Context* m){;
-#line 127 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct _global_Allocator* _global_allocator;_global_allocator = _global_Maybe_default_rAllocatorByValue((_global_self)->allocator,(m)->allocator,m);;
-#line 128 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct scope_ScopeBlock* n =(_global_self)->data;if(n != NULL){struct scope_ScopeBlock* _global_data = n;
 
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_free((void*)_global_data,m);
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 131 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 else if(n == NULL){
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
-#line 132 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;
-#line 130 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 struct scope_ScopeBlock _global_Array_pop_scope_ScopeBlock(struct _global_Array_scope_ScopeBlock* _global_self, struct _global_Context* m){;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 if((_global_self)->length==0){;
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 _global_panic(_global_StringInit(25,"trying to pop empty array"),m);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;};
-#line 58 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 struct scope_ScopeBlock _global_tmp;_global_tmp = *(_global_Array_op_get_scope_ScopeBlock(_global_self,(unsigned int)(_global_self)->length-1,m));;
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 (_global_self)->length = (_global_self)->length-1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;return _global_tmp;
-#line 63 "C:\\Users\\User\\Desktop\\TopCCompiler\\TopCompiler\\TopRuntime/src/_global/dynamic_array.top"
 ;}
 _Bool hashMap_HashMap_contains_scope_DeclInfo(struct hashMap_HashMap_scope_DeclInfo* hashMap_self, struct _global_String hashMap_key, struct _global_Context* m){;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 74 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,m);;
-#line 75 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_scope_DeclInfo* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,m)));;
-#line 76 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string n =(hashMap_bucket)->keys;
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int p = 0;p < n.length; p++) {
 struct _global_String hashMap_b_key;hashMap_b_key = *_global_Array_op_get_string(&n, p, m);
 ;unsigned int hashMap_i;hashMap_i = p;
 if(_global_String_op_eqByValue(hashMap_b_key,hashMap_key,m)){;
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 return 1;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 79 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 78 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 77 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return 0;
-#line 81 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct scope_DeclInfo* hashMap_HashMap_op_get_scope_DeclInfo(struct hashMap_HashMap_scope_DeclInfo* hashMap_self, struct _global_String hashMap_key, struct _global_Context* m){;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,m);;
-#line 65 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_scope_DeclInfo* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,m)));;
-#line 66 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Array_string n =(hashMap_bucket)->keys;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int p = 0;p < n.length; p++) {
 struct _global_String hashMap_b_key;hashMap_b_key = *_global_Array_op_get_string(&n, p, m);
 ;unsigned int hashMap_i;hashMap_i = p;
 if(_global_String_op_eqByValue(hashMap_b_key,hashMap_key,m)){;
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 return &(*(_global_Array_op_get_scope_DeclInfo(&((hashMap_bucket)->values),(unsigned int)hashMap_i,m)));
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 69 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 68 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 67 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_panic(_global_String_op_addByValue(_global_String_op_addByValue(_global_StringInit(3,"No "),(hashMap_key),m),_global_StringInit(12," in hash map"),m),m);
-#line 71 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;return (struct scope_DeclInfo*)0;
-#line 72 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 struct error_CompilerError* error_make_Error_rast_AST(struct ast_AST* error_self, struct _global_String error_mesg, struct _global_Context* m){;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
 ;
-#line 53 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-struct error_CompilerError* error_err;error_err = _global_box_longterm_error_CompilerError(error_CompilerErrorInit(ast_AST_get_filename(error_self,m),ast_AST_get_line(error_self,m),error_mesg,ast_AST_get_column(error_self,m)),m);;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-_global_panic(error_CompilerError_toString(error_err,m),m);
-#line 61 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
-;return error_err;
-#line 64 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//error.top"
+;return _global_box_longterm_error_CompilerError(error_CompilerErrorInit(ast_AST_get_filename(error_self,m),ast_AST_get_line(error_self,m),error_mesg,ast_AST_get_column(error_self,m)),m);
 ;}
 void hashMap_HashMap_insert_scope_DeclInfo(struct hashMap_HashMap_scope_DeclInfo* hashMap_self, struct _global_String hashMap_key, struct scope_DeclInfo hashMap_value, struct _global_Context* m){;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;
-#line 40 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 if((hashMap_self)->length>((hashMap_self)->buckets).length/3*4){;
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_assert(((hashMap_self)->buckets).length>0,_global_StringInit(24,"Resizing empty hash map!"),m);
-#line 42 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_Allocator* hashMap_hash_map_allocator;hashMap_hash_map_allocator = _global_Maybe_default_rAllocatorByValue(((*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&((hashMap_self)->buckets),(unsigned int)0,m))).keys).allocator,(m)->allocator,m);;
-#line 44 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashMap_scope_DeclInfo hashMap_new_hash;hashMap_new_hash = hashMap_make_HashMap_size_scope_DeclInfo(((hashMap_self)->buckets).length*2,hashMap_hash_map_allocator,m);;
-#line 46 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct _global_StaticArray_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_ n =(hashMap_self)->buckets;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int p = 0;p < n.length; p++) {
 struct hashMap_HashBucket_scope_DeclInfo hashMap_per_bucket;hashMap_per_bucket = *_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&n, p, m);
 ;unsigned int hashMap_i;hashMap_i = p;
 struct _global_Range q =_global_RangeInit(0,((hashMap_per_bucket).keys).length);
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 for (unsigned int r = q.start; r < q.end; r++) {
 unsigned int hashMap_c;hashMap_c = r;
 ;hashMap_HashMap_insert_scope_DeclInfo(&(hashMap_new_hash),*(_global_Array_op_get_string(&((hashMap_per_bucket).keys),(unsigned int)hashMap_c,m)),*(_global_Array_op_get_scope_DeclInfo(&((hashMap_per_bucket).values),(unsigned int)hashMap_c,m)),m);
-#line 50 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 49 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 }
 ;
-#line 48 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 hashMap_HashMap_free_scope_DeclInfo(hashMap_self,m);
-#line 52 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 *(hashMap_self) = hashMap_new_hash;;
-#line 54 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;};
-#line 41 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 unsigned int hashMap_hash;hashMap_hash = hashMap_hash_string(hashMap_key,((hashMap_self)->buckets).length,m);;
-#line 56 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 struct hashMap_HashBucket_scope_DeclInfo* hashMap_bucket;hashMap_bucket = &(*(_global_StaticArray_op_get_StaticArray_S_hashMap_HashBucket_scope_DeclInfo_(&((hashMap_self)->buckets),(unsigned int)hashMap_hash,m)));;
-#line 57 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_append_string(&((hashMap_bucket)->keys),hashMap_key,m);
-#line 59 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 _global_Array_append_scope_DeclInfo(&((hashMap_bucket)->values),hashMap_value,m);
-#line 60 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 (hashMap_self)->length = (hashMap_self)->length+1;;
-#line 62 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src//hashMap.top"
 ;}
 
 void scopeInitTypes() { 
@@ -1656,6 +1395,5 @@ rStructType_VTABLE_FOR_Type.type
 ; }
 void scopeInit() { 
 ;
-#line 3 "C:\\Users\\User\\Desktop\\TopCCompilerBootstrap/src/validation/scope.top"
 ;
 };
